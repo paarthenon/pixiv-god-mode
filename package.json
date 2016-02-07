@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/paarthk/pixiv-assistant/issues"
   },
-  "homepage": "https://github.com/paarthk/pixiv-assistant#readme"
+  "homepage": "https://github.com/paarthk/pixiv-assistant#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2"
+  }
 }
