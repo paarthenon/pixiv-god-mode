@@ -23,6 +23,7 @@
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
     "gulp-header": "^1.7.1",
-    "gulp-rename": "^1.2.2"
+    "gulp-rename": "^1.2.2",
+    "reflect-metadata": "^0.1.3"
   }
 }
