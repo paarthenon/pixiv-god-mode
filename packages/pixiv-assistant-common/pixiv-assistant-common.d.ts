@@ -1,4 +1,4 @@
-namespace Model {
+declare module Model {
 	export interface Artist {
 		id: number
 		name: string
@@ -11,7 +11,7 @@ namespace Model {
 }
 
 
-namespace Message {
+declare module Message {
 	export interface ArtistListResponse {
 		artists: Model.Artist[]
 	}
