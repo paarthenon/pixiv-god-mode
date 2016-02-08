@@ -18,7 +18,12 @@ export class PixivAssistantApp {
 	}
 
 	public getImagesForArtistId(artistId:number):Model.Image[] {
-		return this.db.getImagesForArtist(this.db.getArtistById(artistId));
+		let artist = this.db.getArtistById(artistId)
+		if (artist) {
+			return this.db.getImagesForArtist(artist);
+		} else {
+			return [];
+		}
 	}
 
 	public openFolder(artist:Model.Artist) {
