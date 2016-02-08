@@ -10,5 +10,8 @@
 // @grant       GM_registerMenuCommand
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab
+// @grant       GM_setValue
+// @grant       GM_getValue
+// @grant       GM_listValues
 // @grant       unsafeWindow
 // ==/UserScript==

@@ -1,4 +1,6 @@
-let server_url = 'http://localhost:9002'
+import Config from './utils/config'
+
+let server_url = Config.get('server_url');
 
 class HTTP {
 	static GET = 'GET'; 
