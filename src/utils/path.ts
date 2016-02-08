@@ -13,3 +13,6 @@ export function getMaxSizeImageUrl(url: string):string {
 		.replace(/c\/(:600x600|1200x1200)\/img-master/, 'img-original')
 		.replace('_master1200', '');
 }
+export function getResultFromBadge(badgeText:string):number{
+	return parseInt(extract(badgeText, /^([0-9]+)/));
+}

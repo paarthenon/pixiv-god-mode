@@ -6,7 +6,7 @@
 // @include     http://www.pixiv.net/bookmark_add.php*
 // @include     http://www.pixiv.net/bookmark_detail.php*
 
-// @version     1
+// @version     0.0.1
 // @grant       GM_registerMenuCommand
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab

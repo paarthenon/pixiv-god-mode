@@ -1,8 +1,9 @@
 import * as pathUtils from '../utils/path'
 import * as services from '../services'
 import {BasePage, RegisteredAction, ExecuteOnLoad} from './base'
+import {GalleryPage} from './gallery'
 
-export class WorksPage extends BasePage {
+export class WorksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);
 	}
