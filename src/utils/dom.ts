@@ -59,7 +59,7 @@ export function initialize() {
 		    display:none; 
 		    padding:5px 5px; 
 		    margin-left:10px;
-		    margin-top:20px
+		    margin-top:10px;
 		    line-height:16px;
 		    white-space: nowrap;
 		}
@@ -81,10 +81,16 @@ export function initialize() {
 	let sidebarCss = `
 		#pixiv-assistant-sidebar {
 			position: fixed;
-			top: 50%;
 			left: 10px;
+		}
+		#pixiv-assistant-sidebar.open {
+			top: 50%;
 			transform: translateY(-50%);
 		}
+		#pixiv-assistant-sidebar.closed {
+			bottom: 10px;
+		}
+
 		li.pa-sidebar-entry {
 		    transition: opacity 0.3s;
 		    opacity: 0.6;

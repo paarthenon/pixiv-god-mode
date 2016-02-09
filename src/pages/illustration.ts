@@ -31,7 +31,7 @@ export class IllustrationPage extends BasePage {
 		unsafeWindow.prompt('Copy the url below', url);
 	}
 
-	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'mug', color: 'yellow'})
+	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'mug', color: 'brown'})
 	public openFolder(): void {
 		services.openFolder({id: this.artistId, name: this.artistName});
 	}
