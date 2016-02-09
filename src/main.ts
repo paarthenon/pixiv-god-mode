@@ -11,7 +11,7 @@ DomUtils.initialize();
 
 let sidebar = DomUtils.createSidebar();
 page.actionCache.forEach(action => {
-	let button = DomUtils.createButton(action.id, action.label, action.execute);
+	let button = DomUtils.createButton(action);
 	sidebar.append(button);
 })
 

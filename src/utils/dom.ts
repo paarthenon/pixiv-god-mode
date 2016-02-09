@@ -1,4 +1,5 @@
 declare var $: JQueryStatic;
+import {Action} from '../pages/base'
 
 export var fontString = {
 	icomoon: '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'
@@ -54,9 +55,13 @@ export function initialize() {
 		a.pa-tooltip strong {line-height:30px;}
 		a.pa-tooltip:hover {text-decoration:none;}
 		a.pa-tooltip span.pa-tooltip-body {
-		    z-index:10;display:none; padding:5px 5px;
-		    margin-top:-10px; margin-left:10px;
+		    z-index:10;
+		    display:none; 
+		    padding:5px 5px; 
+		    margin-left:10px;
+		    margin-top:20px
 		    line-height:16px;
+		    white-space: nowrap;
 		}
 		a.pa-tooltip:hover span.pa-tooltip-body {
 		    display:inline; 
@@ -88,6 +93,7 @@ export function initialize() {
 		    background-color: #000;
 	    	border-radius: 24px;
 		    cursor: pointer;
+		    color: white;
 		}
 		li.pa-sidebar-entry:hover {
 		    opacity: 1;
@@ -111,11 +117,13 @@ export function createImage(b64Image:string) {
 	return $(`<img src="data:image/png;base64,${b64Image}" />`);
 }
 
-export function createButton(id:string,text:string,callback:(...args:any[])=>any) {
-	return $(`<li id="${id}" class="pa-sidebar-entry"></li>`)
-		.on('click', callback)
+export function createButton(action:Action) {
+	console.log(action);
+	return $(`<li id="pa-button-${action.id}" class="pa-sidebar-entry"></li>`)
+		.css('background-color', action.color || '#000')
+		.on('click', action.execute)
 		// .append(createImage(imageStrings.arrow))
-		.append($(`<a class="pa-tooltip"><span class="pa-icon pa-icon-images"></span><span class="pa-tooltip-body">${text}</span></span></a>'`))
+		.append($(`<a class="pa-tooltip"><span class="pa-icon pa-icon-${action.icon || 'images'}"></span><span class="pa-tooltip-body">${action.label}</span></span></a>'`))
 }
 
 export function createSidebar() {

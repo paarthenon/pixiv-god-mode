@@ -5,12 +5,16 @@ import {log} from '../utils/log'
 interface ActionDescriptor {
 	id: string,
 	label: string,
+	icon?: string,
+	color?: string,
 	onLoad?: boolean //TODO: in future blend onload and registeredaction
 }
 
-interface Action extends ActionDescriptor {
+interface HasExecutable {
 	execute: () => void
 }
+
+export type Action = ActionDescriptor & HasExecutable;
 
 export class BasePage {
 	public get actionCache():Action[] {
@@ -33,7 +37,10 @@ export class BasePage {
 
 export function RegisteredAction(desc:ActionDescriptor) {
 	return (target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
-		ReflectExt.pushToMetadata('custom:page-action-cache', { id: desc.id, label: desc.label, execute: descriptor.value }, target);
+		let newDesc = <any>desc;
+		newDesc.execute = descriptor.value;
+
+		ReflectExt.pushToMetadata('custom:page-action-cache', <Action>newDesc, target);
 		return descriptor;
 	}
 }

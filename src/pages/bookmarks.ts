@@ -23,7 +23,7 @@ export class BookmarkIllustrationPage extends BasePage {
 		services.getArtistList((artists)=>this.darkenInList(artists));
 	}
 
-	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks'})
+	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks',})
 	public loadAllBookmarks() {
 		for (let i = 0; i < 15; i++) { 
 			(<any>unsafeWindow).pixiv.illustRecommend.load();
