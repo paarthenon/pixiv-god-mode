@@ -7,6 +7,8 @@ import {log} from './utils/log'
 
 let page = dispatch(unsafeWindow.location.href, $);
 
+DomUtils.initialize();
+
 let sidebar = DomUtils.createSidebar();
 page.actionCache.forEach(action => {
 	let button = DomUtils.createButton(action.id, action.label, action.execute);

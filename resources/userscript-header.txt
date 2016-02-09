@@ -13,5 +13,6 @@
 // @grant       GM_setValue
 // @grant       GM_getValue
 // @grant       GM_listValues
+// @grant       GM_addStyle
 // @grant       unsafeWindow
 // ==/UserScript==
