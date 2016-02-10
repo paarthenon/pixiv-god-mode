@@ -26,7 +26,7 @@ export class ArtistImageDatabase  implements Database{
 	}
 
 	protected fileNameToImage(fileName:string):Model.Image {
-		var match = fileName.match(/^([0-9]+)_p([0-9]+)\.(.*)/);
+		var match = fileName.match(/^([0-9]+)_p([0-9]+)(?:_master[0-9]+)?\.(.*)/);
 		if(match && match.length === 4) {
 			return {
 				id: parseInt(match[1]),
