@@ -12,7 +12,36 @@ export class MangaPage extends BasePage {
 		return parseInt((<any>unsafeWindow).pixiv.context.userId);
 	}
 
+	public get illustId(): number {
+		return (<any>unsafeWindow).pixiv.context.illustId;
+	}
+
 	@ExecuteOnLoad
+	public autoEmbiggenFixImages(): void{
+		(<any>(<any>unsafeWindow).pixiv.api.illust.detail([this.illustId], {})).then((response: any) => { 
+			let extension = response.body[this.illustId].illust_ext;
+			let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
+			//this.correctFileType(response.body[this.illustId].illust_ext) 
+
+			this.jQuery('img.image').toArray().forEach(image => {
+				let jQImage = this.jQuery(image);
+				// pixiv lazy loads image data, the full url is stored in data-src
+				// and copied over to the source attribute once a user comes into view.
+				let src = jQImage.attr('data-src');
+				let newSrc = pathUtils.getMaxSizeImageUrl(src).replace(/\.(\w+)$/, extensionWithDot);
+
+				log(`rewriting image src from [${src}] to [${newSrc}]`);
+
+				// Have to alter the data-src as well because if we don't, pixiv will 
+				// automatically copy over data-src again
+				jQImage.attr('data-src-backup', src);
+				jQImage.attr('data-src', newSrc);
+				jQImage.attr('src', newSrc);
+				jQImage.removeAttr('style');
+			});
+		});
+	}
+
 	@RegisteredAction({ id: 'pa_embiggen_manga_images', label: 'Embiggen' })
 	public embiggenImages(): void {
 		this.jQuery('img.image').toArray().forEach(image => {
@@ -57,8 +86,7 @@ export class MangaPage extends BasePage {
 
 	@RegisteredAction({ id: 'pa_autocorrect_file_type', label: 'Autocorrect File Type' })
 	public autoCorrectFileType(): void {
-		let illust_id = (<any>unsafeWindow).pixiv.context.illustId;
-		(<any>(<any>unsafeWindow).pixiv.api.illust.detail([illust_id], {})).then((response:any) => {this.correctFileType(response.body[illust_id].illust_ext) });
+		(<any>(<any>unsafeWindow).pixiv.api.illust.detail([this.illustId], {})).then((response:any) => {this.correctFileType(response.body[this.illustId].illust_ext) });
 	}
 
 	@RegisteredAction({ id: 'pa_alter_file_type', label: 'New File Type' })
