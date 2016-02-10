@@ -34,7 +34,7 @@ export class WorksPage extends GalleryPage {
 
 	@ExecuteOnLoad
 	public darkenImages():void {
-		services.getArtistImages(this.artistId, this.darkenInList);
+		services.getArtistImages(this.artistId, (pictures) => this.darkenInList(pictures));
 	}
 
 	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder'})

@@ -1,6 +1,10 @@
 import Config from './utils/config'
 
 let server_url = Config.get('server_url');
+if(!server_url){
+	server_url = window.prompt("Server url?", 'http://localhost:9002');
+	Config.set('server_url', server_url);
+}
 
 class HTTP {
 	static GET = 'GET'; 
