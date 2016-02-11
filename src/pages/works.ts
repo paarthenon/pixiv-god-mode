@@ -11,6 +11,10 @@ export class WorksPage extends GalleryPage {
 		return this.jQuery('h1.user').text();
 	}
 
+	public get artist():Model.Artist {
+		return { id: this.artistId, name: this.artistName };
+	}
+
 	private darkenInList(pictures:Model.Image[]):void {
 		this.jQuery('li.image-item').toArray().forEach(image => {
 			let imageId = pathUtils.getImageId($(image).find('a.work').attr('href'));
@@ -39,7 +43,27 @@ export class WorksPage extends GalleryPage {
 
 	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder'})
 	public openFolder():void {
-		services.openFolder({ id: this.artistId, name: this.artistName });
+		services.openFolder(this.artist);
+	}
+
+	@RegisteredAction({id: 'pa_button_download_all_user_images', label: 'Download All Images (Expensive)'})
+	public downloadAllImagesForArtist():void {
+		(<any>unsafeWindow).pixiv.api.userProfile({
+			user_ids: this.artistId,
+			illust_num: Number.MAX_VALUE
+        }, {}).then((result: any) => {
+			let combined_urls = result.body[0].illusts.map((illust: any) => {
+				let url = illust.url[Object.keys(illust.url)[0]];
+				let pages = illust.illust_page_count;
+
+				let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
+				let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
+
+				return urls;
+			}).reduce((previous: string[], current: string[]) => previous.concat(current));
+
+			services.downloadMulti(this.artist, combined_urls);
+        });
 	}
 
 }

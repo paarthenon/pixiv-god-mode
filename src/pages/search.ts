@@ -17,6 +17,6 @@ export class SearchPage extends GalleryPage {
 
 	@ExecuteOnLoad
 	public darkenImages(): void {
-		services.getArtistList(this.darkenInList);
+		services.getArtistList((artists) => this.darkenInList(artists));
 	}
 }
