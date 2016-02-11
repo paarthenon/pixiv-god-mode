@@ -5,12 +5,13 @@ import * as XRegExp from "xregexp"
 
 import {Database} from './dbModel'
 import {log} from './utils/log'
+import * as pathUtils from './utils/path'
 
 export class ArtistImageDatabase  implements Database{
 	constructor(protected path:string) { }
 
 	protected artistToFolderName(artist:Model.Artist):string {
-		return `[${artist.id}] - ${artist.name}`
+		return pathUtils.avoidTrailingDot(`[${artist.id}] - ${artist.name}`);
 	}
 	protected folderNameToArtist(folderName:string):Model.Artist {
 		let match = XRegExp('^\\[([0-9]+)\\]\\ -\\ (.+)$').exec(folderName);
@@ -39,7 +40,7 @@ export class ArtistImageDatabase  implements Database{
 		return undefined;
 	}
 	protected imageToFileName(image:Model.Image):string {
-		return `${image.id}_p${image.page || 0}.${image.ext || '.jpg'}`;
+		return pathUtils.avoidTrailingDot(`${image.id}_p${image.page || 0}.${image.ext || '.jpg'}`);
 	}
 	
 	public get Artists():Model.Artist[] {
