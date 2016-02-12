@@ -1,4 +1,5 @@
-import {BasePage, RegisteredAction} from './base'
+import {BasePage} from './base'
+import {RegisteredAction} from '../utils/actionDecorators'
 import * as services from '../services'
 
 export class BookmarkIllustrationPage extends BasePage {

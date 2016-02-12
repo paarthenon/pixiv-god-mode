@@ -1,6 +1,7 @@
 import * as pathUtils from '../utils/path'
 import * as services from '../services'
-import {BasePage, RegisteredAction, ExecuteOnLoad} from './base'
+import {BasePage} from './base'
+import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 
 export class SearchPage extends GalleryPage {

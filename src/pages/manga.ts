@@ -1,6 +1,6 @@
 import * as pathUtils from '../utils/path'
-import {BasePage, RegisteredAction, ExecuteOnLoad} from './base'
-
+import {BasePage} from './base'
+import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {log} from '../utils/log'
 import * as services from '../services'
 

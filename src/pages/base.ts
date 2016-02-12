@@ -1,20 +1,6 @@
 import 'reflect-metadata'
-import * as ReflectExt from '../utils/reflect'
 import {log} from '../utils/log'
-
-interface ActionDescriptor {
-	id: string,
-	label: string,
-	icon?: string,
-	color?: string,
-	onLoad?: boolean //TODO: in future blend onload and registeredaction
-}
-
-interface HasExecutable {
-	execute: () => void
-}
-
-export type Action = ActionDescriptor & HasExecutable;
+import {Action, ActionDescriptor} from '../actionModel'
 
 export class BasePage {
 	public get actionCache():Action[] {
@@ -35,17 +21,3 @@ export class BasePage {
 	}
 }
 
-export function RegisteredAction(desc:ActionDescriptor) {
-	return (target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
-		let newDesc = <any>desc;
-		newDesc.execute = descriptor.value;
-
-		ReflectExt.pushToMetadata('custom:page-action-cache', <Action>newDesc, target);
-		return descriptor;
-	}
-}
-
-export function ExecuteOnLoad(target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
-	ReflectExt.pushToMetadata('custom:page-on-load-functions', descriptor.value, target);
-	return descriptor;
-}
