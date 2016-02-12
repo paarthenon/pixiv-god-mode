@@ -68,4 +68,10 @@ export class WorksPage extends GalleryPage {
         });
 	}
 
+	@RegisteredAction({id: 'pa_button_temp_translate', label: 'Translate tag badge'})
+	public translateTagBadge():void{
+		let tagBadge = this.jQuery('span.tag-badge');
+		this.translateTags([tagBadge]);
+	}
+
 }
