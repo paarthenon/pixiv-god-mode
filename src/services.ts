@@ -1,9 +1,10 @@
 import Config from './utils/config'
+import ConfigKeys from './configKeys'
 
-let server_url = Config.get('server_url');
+let server_url = Config.get(ConfigKeys.server_url);
 if(!server_url){
 	server_url = window.prompt("Server url?", 'http://localhost:9002');
-	Config.set('server_url', server_url);
+	Config.set(ConfigKeys.server_url, server_url);
 }
 
 class HTTP {

@@ -18,7 +18,8 @@ export class WorksPage extends GalleryPage {
 	private darkenInList(pictures:Model.Image[]):void {
 		this.jQuery('li.image-item').toArray().forEach(image => {
 			let imageId = pathUtils.getImageId($(image).find('a.work').attr('href'));
-			// Picture format is <imgnum>_<page>_master<size>.<filetype> or imgnum.<filetype>
+			// Picture format is <imgnum>_<page>_master<size>.<filetype> or imgnum_p<pagenum>.<filetype>
+			// TODO: ^ is wrong, _square1200 is also a valid option, fix.
 			if (pictures.some(picture => picture.id === imageId)) {
 				this.jQuery(image).css('background-color', '#333334');
 			}
