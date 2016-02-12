@@ -1,6 +1,6 @@
 import * as pathUtils from '../utils/path'
 import * as services from '../services'
-import {BasePage} from './base'
+import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 

@@ -1,10 +1,10 @@
 import * as pathUtils from '../utils/path'
-import {BasePage} from './base'
+import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {log} from '../utils/log'
 import * as services from '../services'
 
-export class MangaPage extends BasePage {
+export class MangaPage extends RootPage {
 	public get artistName(): string {
 		return this.jQuery('section.thumbnail-container a.user').text();
 	}

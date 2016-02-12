@@ -1,9 +1,9 @@
 import * as pathUtils from '../utils/path'
 import * as services from '../services'
-import {BasePage} from './base'
+import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 
-export class GalleryPage extends BasePage {
+export class GalleryPage extends RootPage {
 	public get imageCountInPage(): number {
 		return this.jQuery('li.image-item').length;
 	}

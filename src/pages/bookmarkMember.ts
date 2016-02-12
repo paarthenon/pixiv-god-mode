@@ -1,9 +1,9 @@
-import {BasePage} from './base'
+import {RootPage} from './root'
 import {RegisteredAction} from '../utils/actionDecorators'
 import * as services from '../services'
 import {log} from '../utils/log'
 
-export class BookmarkMember extends BasePage {
+export class BookmarkMember extends RootPage {
 	public get artistId():number {
 		return parseInt((<any>unsafeWindow).pixiv.context.userId);
 	}

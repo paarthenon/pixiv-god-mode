@@ -1,9 +1,9 @@
 import * as pathUtils from '../utils/path'
-import {BasePage} from './base'
+import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import * as services from '../services'
 
-export class IllustrationPage extends BasePage {
+export class IllustrationPage extends RootPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.jQuery('a.user-link').attr('href'));
 	}
