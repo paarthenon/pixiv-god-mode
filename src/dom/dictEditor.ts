@@ -1,12 +1,22 @@
 import {Dictionary} from '../utils/dict'
-import {Component, AbstractComponent} from './component'
+import {Component, AbstractComponent, renderComponent} from './component'
 
 class AddNewInput extends AbstractComponent {
-	constructor(protected dict: Dictionary) { super(); }
+	constructor (
+		protected dict: Dictionary, 
+		protected onAdd?:(key:string)=>any
+	) { 
+		super(); 
+	}
 	public render():JQuery {
 		let keyInput = $('<input placeholder="japanese">');
 		let valueInput = $('<input placeholder="english">');
-		let button = $('<button>Add</button>').click((event) => this.dict.set(keyInput.val(), valueInput.val()));
+		let button = $('<button>Add</button>').click((event) => {
+			this.dict.set(keyInput.val(), valueInput.val());
+			if (this.onAdd) {
+				this.onAdd(keyInput.val());
+			}
+		});
 		return $('<div class="pa-assistant-add-dictionary-item-container"></div>')
 			.append(keyInput)
 			.append(valueInput)
@@ -78,7 +88,7 @@ export class DictionaryEditor extends AbstractComponent {
 	}
 
 	public get children():Component[] {
-		let addNewInput = new AddNewInput(this.dict);
+		let addNewInput = new AddNewInput(this.dict, (key) => this.self.append(renderComponent(new DictionaryEntryEditor(this.dict, key))));
 		let kvEditors = this.dict.keys.map(key => new DictionaryEntryEditor(this.dict, key));
 		let components: Component[] = [addNewInput];
 		return components.concat(kvEditors);
