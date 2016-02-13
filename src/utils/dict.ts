@@ -9,21 +9,7 @@ export interface Dictionary {
 	set: (key:string, value:string) => void
 }
 
-class NaiveDictionary implements Dictionary {
-	constructor(protected dict: stringMap) { }
-
-	public get keys() {
-		return Object.keys(this.dict);
-	}
-	public get(key: string): string {
-		return this.dict[key];
-	}
-	public set(key: string, value: string): void {
-		this.dict[key] = value;
-	}
-}
-
-export class SingleConfigDict implements Dictionary {
+class SingleConfigDict implements Dictionary {
 	protected dict: stringMap;
 	constructor(protected configKey:string) {
 		this.dict = <stringMap>Config.get(configKey);
@@ -32,9 +18,11 @@ export class SingleConfigDict implements Dictionary {
 		return (this.dict) ? Object.keys(this.dict) : [];
 	}
 	public get(key:string):string {
+		console.log(this.keys);
 		return (this.dict) ? this.dict[key] : undefined;
 	}
 	public set(key:string, value:string):void {
+		console.log(this.keys);
 		if (!this.dict) {
 			this.dict = {};
 		}
@@ -44,6 +32,7 @@ export class SingleConfigDict implements Dictionary {
 			delete this.dict[key];
 		}
 		Config.set(this.configKey, this.dict);
+		console.log(this.keys);
 	}
 }
 
@@ -67,16 +56,12 @@ class SpreadConfigDict implements Dictionary {
 	}
 }
 
-let localDict: stringMap = {
-	'眼鏡': 'glasses'
-}
-
 class DictBroker {
-	constructor(protected dictionaries:Dictionary[]) { }
-	get (key:string):string {
-		for(let dict of this.dictionaries) {
+	constructor(protected dictionaries: Dictionary[]) { }
+	get(key: string): string {
+		for (let dict of this.dictionaries) {
 			let value = dict.get(key);
-			if(value){
+			if (value) {
 				return value;
 			}
 		}
@@ -84,12 +69,16 @@ class DictBroker {
 	}
 }
 
-let broker = new DictBroker([
-	new SingleConfigDict(ConfigKeys.user_dict),
-	new SingleConfigDict(ConfigKeys.official_dict),
-	new NaiveDictionary(localDict)
-]);
+export module DictionaryService {
+	export let userDictionary = new SingleConfigDict(ConfigKeys.user_dict);
+	let baseDictionary = new SingleConfigDict(ConfigKeys.official_dict);
 
-export function getTranslation(tag:string):string {
-	return broker.get(tag);
+	let broker = new DictBroker([
+		userDictionary,
+		baseDictionary
+	]);
+
+	export function getTranslation(tag:string):string {
+		return broker.get(tag);
+	}
 }

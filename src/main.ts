@@ -6,7 +6,7 @@ import {dispatch} from './dispatch'
 import {log} from './utils/log'
 
 import ConfigKeys from './configKeys'
-import {SingleConfigDict} from './utils/dict'
+import {DictionaryService} from './utils/dict'
 
 let page = dispatch(unsafeWindow.location.href, $);
 
@@ -33,6 +33,6 @@ actions.push(showEditor);
 
 let sidebar = DomUtils.createSidebar(actions);
 
-let editor = DomUtils.createDictionaryEditor(new SingleConfigDict(ConfigKeys.official_dict));
+let editor = DomUtils.createDictionaryEditor(DictionaryService.userDictionary);
 $('body').append(sidebar);
 $('body').append(editor);

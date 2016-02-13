@@ -24,13 +24,15 @@ class DictionaryEntryEditor extends AbstractComponent {
 	}
 	protected deleteEntry() {
 		this.dict.set(this.key, undefined);
+		this.self.remove();
 	}
+	private self = $('<div class="dictionary-config-container">');
 	public render():JQuery {
 		let keyLabel = $(`<label>${this.key}</label>`);
 		let valueInput = $(`<input data-dict-key="${this.key}" value="${this.value}" />`);
 		let updateButton = $('<button>Update</button>').click(event => this.update(valueInput.val()));
 		let deleteButton = $('<button>Delete</button>').click(event => this.deleteEntry());
-		return $('<div class="dictionary-config-container">')
+		return this.self
 			.append(keyLabel)
 			.append(valueInput)
 			.append(updateButton)
