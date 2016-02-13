@@ -3,13 +3,18 @@ import ConfigKeys from '../configKeys'
 
 type stringMap = { [id: string]: string }
 
-interface Dictionary {
+export interface Dictionary {
+	keys: string[]
 	get: (key:string) => string
 	set: (key:string, value:string) => void
 }
 
 class NaiveDictionary implements Dictionary {
 	constructor(protected dict: stringMap) { }
+
+	public get keys() {
+		return Object.keys(this.dict);
+	}
 	public get(key: string): string {
 		return this.dict[key];
 	}
@@ -18,19 +23,23 @@ class NaiveDictionary implements Dictionary {
 	}
 }
 
-class SingleConfigDict implements Dictionary {
+export class SingleConfigDict implements Dictionary {
 	protected dict: stringMap;
 	constructor(protected configKey:string) {
 		this.dict = <stringMap>Config.get(configKey);
+	}
+	public get keys(){
+		return (this.dict) ? Object.keys(this.dict) : [];
 	}
 	public get(key:string):string {
 		return (this.dict) ? this.dict[key] : undefined;
 	}
 	public set(key:string, value:string):void {
-		if (this.dict) {
-			this.dict[key] = value;
-			Config.set(this.configKey, this.dict);
+		if (!this.dict) {
+			this.dict = {};
 		}
+		this.dict[key] = value;
+		Config.set(this.configKey, this.dict);
 	}
 }
 
@@ -41,6 +50,11 @@ class SpreadConfigDict implements Dictionary {
 		return `${this.configKey}::${word}`;
 	}
 
+	public get keys() {
+		//return GM_listValues().filter(key => key.match(new RegExp(`${this.configKey}::`)) != undefined);
+		// TODO: Code this properly if this class ends up being used.
+		return <string[]>[];
+	}
 	public get(key: string):string {
 		return <string>Config.get(this.getConfigKeyForWord(key));
 	}

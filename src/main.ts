@@ -5,6 +5,9 @@ import * as PathUtils from './utils/path'
 import {dispatch} from './dispatch'
 import {log} from './utils/log'
 
+import ConfigKeys from './configKeys'
+import {SingleConfigDict} from './utils/dict'
+
 let page = dispatch(unsafeWindow.location.href, $);
 
 DomUtils.initialize();
@@ -33,6 +36,20 @@ function populateNav(){
 		execute: () => collapseNav()
 	});
 
+	let showDictEditor = DomUtils.createButton({
+		id: 'pa_show_dict_editor',
+		label: 'Show Dictionary',
+		color: 'green',
+		execute: () => $('body').append(DomUtils.createDictionaryEditor(new SingleConfigDict(ConfigKeys.official_dict)))
+	});
+
+	let showConfig = DomUtils.createButton({
+		id: 'pa_show_config_editor',
+		label: 'Show Config',
+		color: 'green',
+		execute: () => $('body').append(DomUtils.createRawConfigEditor())
+	});
+
 	sidebar.empty();
 
 	// I must explicitly call createButton each time because I need to apply the event listener
@@ -40,6 +57,8 @@ function populateNav(){
 	// handlers will spoil after the element is removed. TODO: Rebuild this using display: none
 	// and CSS based on the .closed class rather than jQuery. That's a more elegant solution anyway.
 	page.actionCache.forEach(action => sidebar.append(DomUtils.createButton(action)));
+	sidebar.append(showDictEditor);
+	sidebar.append(showConfig);
 	sidebar.append(collapseNavButton);
 	sidebar.removeClass('closed');
 	sidebar.addClass('open');
@@ -48,3 +67,4 @@ function populateNav(){
 populateNav();
 
 $('body').append(sidebar);
+
