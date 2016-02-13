@@ -1,4 +1,5 @@
 import {BasePage} from './pages/base'
+import {RootPage} from './pages/root'
 import {IllustrationPage} from './pages/illustration'
 import {WorksPage} from './pages/works'
 import {BookmarkIllustrationPage} from './pages/bookmarks'
@@ -42,5 +43,5 @@ export function dispatch(path:string, jquery:JQueryStatic):BasePage {
 	if (path.match(patterns.search)) {
 		return new SearchPage(path, jquery);
 	}
-	return new BasePage(path, jquery);
+	return new RootPage(path, jquery);
 }
