@@ -36,11 +36,18 @@ function populateNav(){
 		execute: () => collapseNav()
 	});
 
-	let showDictEditor = DomUtils.createButton({
+	let hideEditor = DomUtils.createButton({
+		id: 'pa_hide_dict_editor',
+		label: 'Hide Dictionary',
+		color: 'green',
+		execute: () => DomUtils.hideEditor()
+	});
+
+	let showEditor = DomUtils.createButton({
 		id: 'pa_show_dict_editor',
 		label: 'Show Dictionary',
 		color: 'green',
-		execute: () => $('body').append(DomUtils.createDictionaryEditor(new SingleConfigDict(ConfigKeys.official_dict)))
+		execute: () => DomUtils.showEditor()
 	});
 
 	let showConfig = DomUtils.createButton({
@@ -57,7 +64,8 @@ function populateNav(){
 	// handlers will spoil after the element is removed. TODO: Rebuild this using display: none
 	// and CSS based on the .closed class rather than jQuery. That's a more elegant solution anyway.
 	page.actionCache.forEach(action => sidebar.append(DomUtils.createButton(action)));
-	sidebar.append(showDictEditor);
+	sidebar.append(hideEditor);
+	sidebar.append(showEditor);
 	sidebar.append(showConfig);
 	sidebar.append(collapseNavButton);
 	sidebar.removeClass('closed');
@@ -66,5 +74,6 @@ function populateNav(){
 
 populateNav();
 
+let editor = DomUtils.createDictionaryEditor(new SingleConfigDict(ConfigKeys.official_dict));
 $('body').append(sidebar);
-
+$('body').append(editor);
