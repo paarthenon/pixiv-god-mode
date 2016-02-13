@@ -9,6 +9,7 @@ export class RootPage extends BasePage {
 			// TODO: Handle elements that have children
 			let translatedText = DictionaryService.getTranslation(tagElement.text());
 			if(translatedText){
+				tagElement.attr('data-pa-translation-backup', tagElement.text());
 				tagElement.text(translatedText);
 			}
 		});
