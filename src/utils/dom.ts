@@ -192,13 +192,20 @@ export function createAddNewButton(callback:(key:string, value:string) => void) 
 		.append(valueInput)
 		.append(button)
 }
+
+export function createDictionaryEntryEditor(dict:Dictionary, key:string){
+	let keyLabel = $(`<label>${key}</label>`);
+	let valueInput = $(`<input data-dict-key="${key}" value="${dict.get(key)}" />`);
+	let updateButton = $('<button>Update</button>').click(event => dict.set(key, valueInput.val()));
+	let deleteButton = $('<button>Delete</button>').click(event => dict.set(key, undefined));
+	return $('<div class="dictionary-config-container">')
+		.append(keyLabel)
+		.append(valueInput)
+		.append(updateButton)
+		.append(deleteButton)
+}
 export function createDictionaryEditor(dict:Dictionary) {
-	let inputs = dict.keys.map(key => $(`
-			<div class="dictionary-config-container">
-				<label>${key}</label>
-				<input data-dict-key="${key}" value="${dict.get(key)}" />
-			</div>
-		`));
+	let inputs = dict.keys.map(key => createDictionaryEntryEditor(dict, key));
 
 	let addNewArea = createAddNewButton((key, value) => { unsafeWindow.console.log(key, value); dict.set(key, value) });
 

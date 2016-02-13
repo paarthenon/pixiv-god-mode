@@ -38,7 +38,11 @@ export class SingleConfigDict implements Dictionary {
 		if (!this.dict) {
 			this.dict = {};
 		}
-		this.dict[key] = value;
+		if (value){
+			this.dict[key] = value;
+		}else{
+			delete this.dict[key];
+		}
 		Config.set(this.configKey, this.dict);
 	}
 }
