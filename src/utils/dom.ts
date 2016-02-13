@@ -9,37 +9,9 @@ import {DictionaryEditor} from '../dom/dictEditor'
 import {generateFontTemplate, fontString} from '../dom/fontSetup'
 
 import {renderComponent} from '../dom/component'
-
+import {SidebarButton} from '../dom/sidebar'
 
 export function initialize() {
-	let tooltipCSS = `
-		a.pa-tooltip {outline:none; }
-		a.pa-tooltip strong {line-height:30px;}
-		a.pa-tooltip:hover {text-decoration:none;}
-		a.pa-tooltip span.pa-tooltip-body {
-		    z-index:10;
-		    display:none; 
-		    padding:5px 5px; 
-		    margin-left:10px;
-		    margin-top:10px;
-		    line-height:16px;
-		    white-space: nowrap;
-		}
-		a.pa-tooltip:hover span.pa-tooltip-body {
-		    display:inline; 
-		    position:absolute; 
-		    color:#111;
-		    border:1px solid #888; 
-		    background:#dfdfdf;
-		    opacity: 100%;
-		}
-
-		a.pa-tooltip span.pa-tooltip-body
-		{
-		    border-radius:4px;
-		    box-shadow: 5px 5px 8px #CCC;
-		}`;
-
 	let sidebarCss = `
 		#pixiv-assistant-sidebar {
 			position: fixed;
@@ -90,7 +62,6 @@ export function initialize() {
 
 
 	GM_addStyle(sidebarCss);
-	GM_addStyle(tooltipCSS);
 	GM_addStyle(configEditorCss);
 	GM_addStyle(generateFontTemplate(fontString.icomoon));
 }
@@ -100,12 +71,7 @@ export function createImage(b64Image:string) {
 }
 
 export function createButton(action:Action) {
-	console.log(action);
-	return $(`<li id="pa-button-${action.id}" class="pa-sidebar-entry"></li>`)
-		.css('background-color', action.color || '#000')
-		.on('click', action.execute)
-		// .append(createImage(imageStrings.arrow))
-		.append($(`<a class="pa-tooltip"><span class="pa-icon pa-icon-${action.icon || 'images'}"></span><span class="pa-tooltip-body">${action.label}</span></span></a>'`))
+	return renderComponent(new SidebarButton(action));
 }
 
 export function createSidebar() {
