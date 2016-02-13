@@ -9,45 +9,9 @@ import {DictionaryEditor} from '../dom/dictEditor'
 import {generateFontTemplate, fontString} from '../dom/fontSetup'
 
 import {renderComponent} from '../dom/component'
-import {SidebarButton} from '../dom/sidebar'
+import {Sidebar} from '../dom/sidebar'
 
 export function initialize() {
-	let sidebarCss = `
-		#pixiv-assistant-sidebar {
-			position: fixed;
-			left: 10px;
-		}
-		#pixiv-assistant-sidebar.open {
-			top: 50%;
-			transform: translateY(-50%);
-		}
-		#pixiv-assistant-sidebar.closed {
-			bottom: 10px;
-		}
-
-		li.pa-sidebar-entry {
-		    transition: opacity 0.3s;
-		    opacity: 0.6;
-		    display: block;
-		    margin-top: 10px;
-		    background-color: #000;
-	    	border-radius: 24px;
-		    cursor: pointer;
-		    color: white;
-		}
-		li.pa-sidebar-entry:hover {
-		    opacity: 1;
-		}
-		.pa-icon {
-			display: inline-block;
-			height: 24px;
-			width: 24px;
-			padding:12px;
-			font-size:1.7em;
-		}
-
-	`;
-
 	let configEditorCss = `
 		#pa-assistant-raw-configuration-editor {
 			position: fixed;
@@ -61,21 +25,12 @@ export function initialize() {
 	`;
 
 
-	GM_addStyle(sidebarCss);
 	GM_addStyle(configEditorCss);
 	GM_addStyle(generateFontTemplate(fontString.icomoon));
 }
 
-export function createImage(b64Image:string) {
-	return $(`<img src="data:image/png;base64,${b64Image}" />`);
-}
-
-export function createButton(action:Action) {
-	return renderComponent(new SidebarButton(action));
-}
-
-export function createSidebar() {
-	return $('<ul id="pixiv-assistant-sidebar"></ul>');
+export function createSidebar(actions:Action[]){
+	return renderComponent(new Sidebar(actions));
 }
 
 export function createRawConfigEditor() {

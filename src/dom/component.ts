@@ -11,11 +11,15 @@ export abstract class AbstractComponent implements Component{
 	public abstract render():JQuery;
 }
 
+let stringCache:string[] = [];
 export function renderComponent(component:Component):JQuery {
-	GM_addStyle(component.css);
+	if(stringCache.indexOf(component.css) < 0){
+		GM_addStyle(component.css);
+		stringCache.push(component.css);
+	}
 	let renderedComponent = component.render();
 	if (component.children) {
-		component.children.forEach(child => renderedComponent.append(child.render()));
+		component.children.forEach(child => renderedComponent.append(renderComponent(child)));
 	}
 	return renderedComponent;
 }
