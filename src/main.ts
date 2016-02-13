@@ -14,22 +14,14 @@ DomUtils.initialize();
 
 let actions = page.actionCache.slice(0);
 
-let hideEditor = {
-	id: 'pa_hide_dict_editor',
-	label: 'Hide Dictionary',
+let toggleEditor = {
+	id: 'pa_toggle_dict_editor',
+	label: 'Toggle Dictionary',
 	color: 'green',
-	execute: () => DomUtils.hideEditor()
+	execute: () => DomUtils.toggleEditor()
 };
 
-let showEditor = {
-	id: 'pa_show_dict_editor',
-	label: 'Show Dictionary',
-	color: 'green',
-	execute: () => DomUtils.showEditor()
-};
-
-actions.push(hideEditor);
-actions.push(showEditor);
+actions.push(toggleEditor);
 
 let sidebar = DomUtils.createSidebar(actions);
 

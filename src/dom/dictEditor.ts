@@ -55,15 +55,26 @@ export class DictionaryEditor extends AbstractComponent {
 		}
 	`;
 
-	protected self = $('<div class="pa-assistant-dictionary-config-editor"></div>');
+	protected self = $('<div class="pa-assistant-dictionary-config-editor hidden"></div>');
+
+	protected visible: boolean = false;
 
 	constructor(protected dict: Dictionary) { super(); }
 
 	public hide(){
+		this.visible = false;
 		this.self.addClass('hidden');
 	}
 	public show(){
+		this.visible = true;
 		this.self.removeClass('hidden');
+	}
+	public toggleVisibility(){
+		if(this.visible) {
+			this.hide();
+		} else{
+			this.show();
+		}
 	}
 
 	public get children():Component[] {

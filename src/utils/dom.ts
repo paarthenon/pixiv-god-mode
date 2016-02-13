@@ -57,9 +57,6 @@ export function createDictionaryEditor(dict:Dictionary):JQuery {
 	return renderComponent(editor);
 	// return createDictionaryEditor(dict);
 }
-export function hideEditor():void {
-	dictEditor.hide();
-}
-export function showEditor():void {
-	dictEditor.show();
+export function toggleEditor():void {
+	dictEditor.toggleVisibility();
 }
