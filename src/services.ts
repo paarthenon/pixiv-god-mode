@@ -1,6 +1,8 @@
 import Config from './utils/config'
 import ConfigKeys from './configKeys'
 
+import {log} from './utils/log'
+
 let server_url = Config.get(ConfigKeys.server_url);
 if(!server_url){
 	server_url = window.prompt("Server url?", 'http://localhost:9002');
@@ -13,6 +15,7 @@ class HTTP {
 }
 
 export function getArtistList(callback:(artists:Model.Artist[]) => any):void {
+	log('SERVICES getArtistList called');
 	GM_xmlhttpRequest({
 		method: HTTP.GET,
 		url: `${server_url}/list`,
@@ -21,6 +24,7 @@ export function getArtistList(callback:(artists:Model.Artist[]) => any):void {
 }
 
 export function getArtistImages(artistId:number, callback:(items:Model.Image[]) => any):void {
+	log(`SERVICES getArtistImages called with artist id [${artistId}]`);
 	GM_xmlhttpRequest({
 		method: HTTP.GET,
 		url: `${server_url}/artist/${artistId}`,
@@ -29,6 +33,7 @@ export function getArtistImages(artistId:number, callback:(items:Model.Image[]) 
 }
 
 export function openFolder(artist:Model.Artist):void {
+	log(`SERVICES getArtistImages called with artist { id: ${artist.id}, name: ${artist.name} }`);
 	GM_xmlhttpRequest({
 		method: HTTP.POST,
 		url: `${server_url}/openFolder/${artist.id}`,
@@ -40,6 +45,7 @@ export function openFolder(artist:Model.Artist):void {
 }
 
 export function download(artist:Model.Artist, imageUrl:string):void {
+	log(`SERVICES getArtistImages called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
 	GM_xmlhttpRequest({
 		method: HTTP.POST,
 		url: `${server_url}/download`,
@@ -51,6 +57,7 @@ export function download(artist:Model.Artist, imageUrl:string):void {
 }
 
 export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
+	log(`SERVICES getArtistImages called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
 	let toSend = { artist: artist, urls: imageUrls };
 	GM_xmlhttpRequest({
 		method: HTTP.POST,
