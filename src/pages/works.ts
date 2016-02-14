@@ -11,9 +11,14 @@ export class WorksPage extends GalleryPage {
 	public get artistName():string {
 		return this.jQuery('h1.user').text();
 	}
-
 	public get artist():Model.Artist {
 		return { id: this.artistId, name: this.artistName };
+	}
+
+	protected getTagElements() {
+		return [
+			this.jQuery('span.tag-badge')
+		].concat(super.getTagElements());
 	}
 
 	private darkenInList(pictures:Model.Image[]):void {
@@ -67,11 +72,4 @@ export class WorksPage extends GalleryPage {
 			services.downloadMulti(this.artist, combined_urls);
         });
 	}
-
-	@RegisteredAction({id: 'pa_button_temp_translate', label: 'Translate tag badge'})
-	public translateTagBadge():void{
-		let tagBadge = this.jQuery('span.tag-badge');
-		this.translateTags([tagBadge]);
-	}
-
 }
