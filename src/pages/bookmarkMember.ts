@@ -24,6 +24,6 @@ export class BookmarkMember extends RootPage {
 
 	@RegisteredAction({ id: 'pa_darken_member_recommendation', label: 'Darken Recommendations' })
 	public darken(){
-		services.getArtistList(this.darkenRecommendation);
+		services.getArtistList((artists) => this.darkenRecommendation(artists));
 	}
 }

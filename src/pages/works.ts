@@ -32,7 +32,7 @@ export class WorksPage extends GalleryPage {
 		});
 	}
 
-	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs' })
+	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'address-book' })
 	public openTabs():void {
 		this.jQuery('li.image-item a.work').toArray().forEach(image => {
 			let path = this.jQuery(image).attr('href');
@@ -48,12 +48,12 @@ export class WorksPage extends GalleryPage {
 		services.getArtistImages(this.artistId, (pictures) => this.darkenInList(pictures));
 	}
 
-	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder'})
+	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open'})
 	public openFolder():void {
 		services.openFolder(this.artist);
 	}
 
-	@RegisteredAction({id: 'pa_button_download_all_user_images', label: 'Download All Images (Expensive)'})
+	@RegisteredAction({id: 'pa_button_download_all_user_images', label: 'Download All Images (Expensive)', icon: 'folder-download'})
 	public downloadAllImagesForArtist():void {
 		(<any>unsafeWindow).pixiv.api.userProfile({
 			user_ids: this.artistId,

@@ -19,12 +19,12 @@ export class BookmarkIllustrationPage extends RootPage {
 		});
 	}
 
-	@RegisteredAction({id: 'pa_darken_bookmark_suggestions', label: 'Darken Bookmarks'})
+	@RegisteredAction({id: 'pa_darken_bookmark_suggestions', label: 'Darken Bookmarks', icon: 'paint-format'})
 	public darkenBookmarks() {
 		services.getArtistList((artists)=>this.darkenInList(artists));
 	}
 
-	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks',})
+	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks', icon: 'spinner2'})
 	public loadAllBookmarks() {
 		for (let i = 0; i < 15; i++) { 
 			(<any>unsafeWindow).pixiv.illustRecommend.load();

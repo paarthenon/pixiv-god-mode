@@ -32,12 +32,12 @@ export class IllustrationPage extends RootPage {
 		unsafeWindow.prompt('Copy the url below', url);
 	}
 
-	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'mug', color: 'brown'})
+	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
 	public openFolder(): void {
 		services.openFolder({id: this.artistId, name: this.artistName});
 	}
 
-	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image' })
+	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-disk' })
 	public download():void {
 		services.download({ id: this.artistId, name: this.artistName }, this.fullImageUrl);
 	}
