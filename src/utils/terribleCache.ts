@@ -1,16 +1,16 @@
-type Action = () => any;
+import {Action} from '../actionModel'
 
-let cache: { [id: string]: Action[] } = {};
-
-export module TerribleCache {
-	export function get(name:string): Action[] {
-		return cache[name] || [];
-	}
-	export function push(name:string, action:Action) {
-		if (!(name in cache)){
-			cache[name] = [];
-		}
-		cache[name].push(action);
-	}
+export module CacheRegistry {
+	export var registeredActionCache: { [id: string]: Action[] } = {};
+	export var onLoadFunctionCache: { [id: string]: (() => void)[] } = {};
 }
 
+export function pushToArrayCache<T>(cache: { [id: string]: T[] }, key: string, value: T) {
+	let arr = cache[key];
+	if (arr) {
+		arr.push(value);
+	} else {
+		arr = [value];
+	}
+	cache[key] = arr;
+}

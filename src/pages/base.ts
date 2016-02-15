@@ -1,13 +1,16 @@
-import 'reflect-metadata'
 import {log} from '../utils/log'
 import {Action, ActionDescriptor} from '../actionModel'
 
+import {CacheRegistry} from '../utils/terribleCache'
+
 export class BasePage {
 	public get actionCache():Action[] {
-		return Reflect.getMetadata('custom:page-action-cache', this) || [];
+		let name = (<any>this)['constructor']['name'];
+		return CacheRegistry.registeredActionCache[name] || [];
 	}
 	protected get onLoadFunctions():(()=>void)[] {
-		return Reflect.getMetadata('custom:page-on-load-functions', this) || [];
+		let name = (<any>this)['constructor']['name'];
+		return CacheRegistry.onLoadFunctionCache[name] || [];
 	}
 
 	constructor(

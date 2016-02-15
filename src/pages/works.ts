@@ -31,6 +31,13 @@ export class WorksPage extends GalleryPage {
 			}
 		});
 	}
+	
+	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements. 
+	// Make this action only visible if we are not already on the last page. 
+	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'last' })
+	public goToLastPage() {
+		super.goToLastPage();
+	} 
 
 	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'address-book' })
 	public openTabs():void {
@@ -72,4 +79,6 @@ export class WorksPage extends GalleryPage {
 			services.downloadMulti(this.artist, combined_urls);
         });
 	}
+
+
 }
