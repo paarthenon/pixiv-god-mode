@@ -4,12 +4,20 @@ import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {DictionaryService} from '../utils/dict'
 
 export class RootPage extends BasePage {
+	constructor(
+		protected path: string,
+		protected jQuery: JQueryStatic
+	) {
+		super(path, jQuery);
+
+		this.translateTagsOnPage();
+	}
 	protected getTagElements():JQuery[] {
 		return [];
 	}
 
-	@ExecuteOnLoad
-	public translateTagsOnPage():void {
+	protected translateTagsOnPage():void {
+		console.log('translating tags');
 		this.getTagElements().forEach(tagElement => {
 			// TODO: Handle elements that have children
 			let translatedText = DictionaryService.getTranslation(tagElement.text());

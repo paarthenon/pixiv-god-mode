@@ -23,7 +23,7 @@ export class IllustrationPage extends RootPage {
 		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
 	}
 
-	@RegisteredAction({id:'pa_get_zip_url_button',label:'Zip Url'})
+	@RegisteredAction({ id: 'pa_get_zip_url_button', label: 'Zip Url' })
 	public getZipUrl():void {
 		var url = "";
 		try {

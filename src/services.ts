@@ -33,7 +33,7 @@ export function getArtistImages(artistId:number, callback:(items:Model.Image[]) 
 }
 
 export function openFolder(artist:Model.Artist):void {
-	log(`SERVICES getArtistImages called with artist { id: ${artist.id}, name: ${artist.name} }`);
+	log(`SERVICES openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
 	GM_xmlhttpRequest({
 		method: HTTP.POST,
 		url: `${server_url}/openFolder/${artist.id}`,
@@ -45,7 +45,7 @@ export function openFolder(artist:Model.Artist):void {
 }
 
 export function download(artist:Model.Artist, imageUrl:string):void {
-	log(`SERVICES getArtistImages called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
+	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
 	GM_xmlhttpRequest({
 		method: HTTP.POST,
 		url: `${server_url}/download`,
@@ -57,7 +57,7 @@ export function download(artist:Model.Artist, imageUrl:string):void {
 }
 
 export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
-	log(`SERVICES getArtistImages called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
+	log(`SERVICES downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
 	let toSend = { artist: artist, urls: imageUrls };
 	GM_xmlhttpRequest({
 		method: HTTP.POST,
