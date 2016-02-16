@@ -3,6 +3,7 @@
         "module": "commonjs",
         "target": "es5",
         "noImplicitAny": true,
+        "removeComments": true,
         "outDir": "build",
         "rootDir": ".",
         "sourceMap": false,
