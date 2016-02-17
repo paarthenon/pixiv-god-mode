@@ -5,11 +5,11 @@ export class SidebarButton extends AbstractComponent {
 	public css = `
 		li.pa-sidebar-entry {
 		    transition: opacity 0.3s;
-		    opacity: 0.6;
+		    opacity: 0.8;
 		    display: block;
 		    margin-top: 10px;
 		    background-color: #000;
-	    	border-radius: 24px;
+	    	border-radius: 60px;
 		    cursor: pointer;
 		    color: white;
 		}
@@ -18,10 +18,10 @@ export class SidebarButton extends AbstractComponent {
 		}
 		.pa-icon {
 			display: inline-block;
-			height: 24px;
-			width: 24px;
-			padding:12px;
-			font-size:1.7em;
+			height: 20px;
+			width: 20px;
+			padding:16px;
+			font-size:20px;
 		}
 
 		a.pa-tooltip {outline:none; }
