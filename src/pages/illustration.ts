@@ -18,7 +18,6 @@ export class IllustrationPage extends RootPage {
 	}
 
 	@ExecuteOnLoad
-	@RegisteredAction({ id: 'pa_open_image_fullsize', label: 'Open Image' })
 	public openImage(): void {
 		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
 	}
