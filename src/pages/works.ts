@@ -64,7 +64,7 @@ export class WorksPage extends GalleryPage {
 	public downloadAllImagesForArtist():void {
 		(<any>unsafeWindow).pixiv.api.userProfile({
 			user_ids: this.artistId,
-			illust_num: Number.MAX_VALUE
+			illust_num: 1000000
         }, {}).then((result: any) => {
 			let combined_urls = result.body[0].illusts.map((illust: any) => {
 				let url = illust.url[Object.keys(illust.url)[0]];

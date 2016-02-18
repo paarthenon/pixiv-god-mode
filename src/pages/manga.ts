@@ -42,6 +42,11 @@ export class MangaPage extends RootPage {
 		});
 	}
 
+	@RegisteredAction({ id: 'pa_go_to_previous_image', label: 'Previous', icon:'arrow-left2' })
+	public goToPreviousPage():void {
+		(<any>unsafeWindow).pixiv.mangaViewer.listView.prev();
+	}
+
 	@RegisteredAction({ id: 'pa_reverse_embiggen_manga_images', label: 'Reverse Embiggen' })
 	public reverseEmbiggen(): void {
 		this.jQuery('img.image').toArray().forEach(image => {
