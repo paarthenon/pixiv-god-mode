@@ -24,6 +24,10 @@ export class SidebarButton extends AbstractComponent {
 			font-size:20px;
 		}
 
+		li.pa-sidebar-entry a.pa-tooltip span.pa-icon {
+			color: white;
+		}
+
 		a.pa-tooltip {outline:none; }
 		a.pa-tooltip strong {line-height:30px;}
 		a.pa-tooltip:hover {text-decoration:none;}
