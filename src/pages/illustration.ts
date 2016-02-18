@@ -3,6 +3,7 @@ import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import * as services from '../services'
 
+
 export class IllustrationPage extends RootPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.jQuery('a.user-link').attr('href'));
@@ -22,7 +23,16 @@ export class IllustrationPage extends RootPage {
 		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
 	}
 
-	@RegisteredAction({ id: 'pa_get_zip_url_button', label: 'Zip Url' })
+	public get isAnimation(): boolean {
+		return 'ugokuIllustData' in (<any>unsafeWindow).pixiv.context;
+	}
+
+	@RegisteredAction({ 
+		id: 'pa_get_zip_url_button', 
+		label: 'Zip Url',
+		icon: 'file-zip',
+		if: function() { return this.isAnimation } 
+	})
 	public getZipUrl():void {
 		var url = "";
 		try {

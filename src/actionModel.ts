@@ -1,4 +1,4 @@
-export interface ActionDescriptor {
+export interface ActionDescriptor extends IsConditional {
 	id: string,
 	label: string,
 	icon?: string,
@@ -14,5 +14,5 @@ interface IsConditional {
 	if?: () => boolean
 }
 
-export type Action = ActionDescriptor & HasExecutable & IsConditional;
+export type Action = ActionDescriptor & HasExecutable;
 export type OnLoadFunc = HasExecutable & IsConditional;
