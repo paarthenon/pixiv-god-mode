@@ -26,4 +26,16 @@ export class BookmarkMember extends RootPage {
 	public darken(){
 		services.getArtistList((artists) => this.darkenRecommendation(artists));
 	}
+
+	@RegisteredAction({ id: 'pa_load_all_member_recommendation', label: 'Load All Recommendations' })
+	public loadAll(){
+		this.jQuery('#wrapper ul.user-recommendation-items > li[data-user_id]').toArray().forEach(unloadedRecommendation => {
+			let userId = this.jQuery(unloadedRecommendation).attr('data-user_id');
+			(<any>unsafeWindow).pixiv.followingBooster.replace(userId, {
+				user_ids: userId,
+				illust_num: 4,
+				get_illust_count: 1
+            }, {});
+		});
+	}
 }

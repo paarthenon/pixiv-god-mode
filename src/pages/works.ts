@@ -39,7 +39,7 @@ export class WorksPage extends GalleryPage {
 		super.goToLastPage();
 	} 
 
-	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'address-book' })
+	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-tab' })
 	public openTabs():void {
 		this.jQuery('li.image-item a.work').toArray().forEach(image => {
 			let path = this.jQuery(image).attr('href');
