@@ -1,8 +1,8 @@
-import {Action} from '../actionModel'
+import {Action, OnLoadFunc} from '../actionModel'
 
 export module CacheRegistry {
 	export var registeredActionCache: { [id: string]: Action[] } = {};
-	export var onLoadFunctionCache: { [id: string]: (() => void)[] } = {};
+	export var onLoadFunctionCache: { [id: string]: OnLoadFunc[] } = {};
 }
 
 export function pushToArrayCache<T>(cache: { [id: string]: T[] }, key: string, value: T) {

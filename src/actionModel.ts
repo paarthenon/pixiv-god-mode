@@ -10,4 +10,9 @@ interface HasExecutable {
 	execute: () => void
 }
 
-export type Action = ActionDescriptor & HasExecutable;
+interface IsConditional {
+	if?: () => boolean
+}
+
+export type Action = ActionDescriptor & HasExecutable & IsConditional;
+export type OnLoadFunc = HasExecutable & IsConditional;

@@ -1,5 +1,5 @@
 import {log} from '../utils/log'
-import {Action, ActionDescriptor} from '../actionModel'
+import {Action, ActionDescriptor, OnLoadFunc} from '../actionModel'
 
 import {CacheRegistry} from '../utils/terribleCache'
 
@@ -8,7 +8,7 @@ export class BasePage {
 		let name = (<any>this)['constructor']['name'];
 		return CacheRegistry.registeredActionCache[name] || [];
 	}
-	protected get onLoadFunctions():(()=>void)[] {
+	protected get onLoadFunctions():OnLoadFunc[] {
 		let name = (<any>this)['constructor']['name'];
 		return CacheRegistry.onLoadFunctionCache[name] || [];
 	}
@@ -20,7 +20,7 @@ export class BasePage {
 		// Need to bind these functions to the 'this' object, they were stored at design time
 		// when no instance existed
 		this.actionCache.forEach(action => action.execute = action.execute.bind(this));
-		this.onLoadFunctions.forEach(func => func.call(this));
+		this.onLoadFunctions.filter(f => f.if()).forEach(f => f.execute.call(this));
 	}
 }
 
