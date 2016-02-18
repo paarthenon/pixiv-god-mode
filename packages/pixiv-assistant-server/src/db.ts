@@ -14,7 +14,7 @@ export class ArtistImageDatabase  implements Database{
 		return pathUtils.avoidTrailingDot(`[${artist.id}] - ${artist.name}`);
 	}
 	protected folderNameToArtist(folderName:string):Model.Artist {
-		let match = XRegExp('^\\[([0-9]+)\\]\\ -\\ (.+)$').exec(folderName);
+		let match = XRegExp('^\\[([0-9]+)\\]\\ -\\ (.*)$').exec(folderName);
 		if(match && match.length === 3) {
 			return {
 				id: parseInt(match[1]),
