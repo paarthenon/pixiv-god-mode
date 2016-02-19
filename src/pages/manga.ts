@@ -34,10 +34,26 @@ export class MangaPage extends RootPage {
 
 				// Have to alter the data-src as well because if we don't, pixiv will 
 				// automatically copy over data-src again
+
 				jQImage.attr('data-src-backup', src);
 				jQImage.attr('data-src', newSrc);
 				jQImage.attr('src', newSrc);
 				jQImage.removeAttr('style');
+
+				jQImage.on('load', () => {
+					// Treat the window as the bounding box for the image. This produces some rendering
+					// artifacts, but makes extra-large images viewable.
+					let widthRatio = 1.0 * jQImage.width() / unsafeWindow.innerWidth;
+					let heightRatio = 1.0 * jQImage.height() / unsafeWindow.innerHeight;
+
+					let higherRatio = Math.max(widthRatio, heightRatio);
+
+					if (higherRatio > 1) {
+						// Apparently you only need to set one, and jQuery keeps the aspect ratio aligned. 
+						// News to me.
+						jQImage.height(jQImage.height() / higherRatio);
+					}
+				});
 			});
 		});
 	}
