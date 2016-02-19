@@ -11,6 +11,9 @@ export class IllustrationPage extends RootPage {
 	public get artistName():string {
 		return this.jQuery('a.user-link h1').text();
 	}
+	public get artist():Model.Artist {
+		return { id: this.artistId, name: this.artistName };
+	}
 	public get thumbUrl():string {
 		return this.jQuery('.boxbody center img').attr('src');
 	}
@@ -28,26 +31,30 @@ export class IllustrationPage extends RootPage {
 	}
 
 	@RegisteredAction({ 
-		id: 'pa_get_zip_url_button', 
-		label: 'Zip Url',
+		id: 'pa_download_zip_button', 
+		label: 'Download Animation as Zip',
 		icon: 'file-zip',
 		if: function() { return this.isAnimation } 
 	})
-	public getZipUrl():void {
+	public downloadZip():void {
 		var url = "";
 		try {
 			url = (<any>unsafeWindow).pixiv.context.ugokuIllustFullscreenData.src;
 		} catch (e) { }
-		unsafeWindow.prompt('Copy the url below', url);
+		if(url.length > 0){
+			services.downloadZip(this.artist, url);
+		}
+		// unsafeWindow.prompt('Copy the url below', url);
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
 	public openFolder(): void {
-		services.openFolder({id: this.artistId, name: this.artistName});
+		services.openFolder(this.artist);
 	}
 
 	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-disk' })
 	public download():void {
-		services.download({ id: this.artistId, name: this.artistName }, this.fullImageUrl);
+		services.download(this.artist, this.fullImageUrl);
 	}
+
 }

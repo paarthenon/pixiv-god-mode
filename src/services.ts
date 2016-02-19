@@ -56,6 +56,18 @@ export function download(artist:Model.Artist, imageUrl:string):void {
 	});
 }
 
+export function downloadZip(artist: Model.Artist, zipUrl: string): void {
+	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
+	GM_xmlhttpRequest({
+		method: HTTP.POST,
+		url: `${server_url}/downloadZip`,
+		data: `id=${artist.id}&name=${artist.name}&url=${zipUrl}`,
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		}
+	});
+}
+
 export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
 	log(`SERVICES downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
 	let toSend = { artist: artist, urls: imageUrls };
