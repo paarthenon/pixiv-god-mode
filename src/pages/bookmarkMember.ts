@@ -22,6 +22,12 @@ export class BookmarkMember extends RootPage {
 		});
 	}
 
+	@RegisteredAction({ id: 'pa_load_then_darken_member_recommendation', label: 'Load And Darken' })
+	public loadAndDarken() {
+		this.loadAll();
+		this.darken();
+	}
+
 	@RegisteredAction({ id: 'pa_darken_member_recommendation', label: 'Darken Recommendations' })
 	public darken(){
 		services.getArtistList((artists) => this.darkenRecommendation(artists));
