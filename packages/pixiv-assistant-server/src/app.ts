@@ -59,6 +59,15 @@ export class PixivAssistantApp {
 	}
 
 	protected downloadFromPixiv(urlString:string, pathString:string, callback:(success:boolean)=>any) {
+		let dir = path.dirname(pathString);
+		mkdirp(dir, err => {
+			if (err) {
+				log(`Error creating folder [${dir}], err: [${err}]`);
+				callback(false);
+				return;
+			}
+		});
+		
 		let referer = urllib.resolve(urlString, '/');
 		let url = urllib.parse(urlString);
 
@@ -73,6 +82,14 @@ export class PixivAssistantApp {
 		}, (response) => {
 			response.pipe(fs.createWriteStream(pathString));
 		});
+	}
+
+	public downloadZip(artist: Model.Artist, zipUrl: string, callback: (success: boolean) => any) {
+		let zipName = path.basename(zipUrl);
+		let zipPath = path.join(this.db.getPathForArtist(artist), 'zip', zipName);
+
+		log(`writing image from [${zipUrl}] to [${zipPath}]`);
+		this.downloadFromPixiv(zipUrl, zipPath, callback);
 	}
 
 	public download(artist: Model.Artist, imageUrl: string, callback: (success: boolean) => any) {

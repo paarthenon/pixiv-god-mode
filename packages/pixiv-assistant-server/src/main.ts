@@ -42,6 +42,17 @@ app.post('/download', (req, res) => {
 	});
 });
 
+app.post('/downloadZip', (req, res) => {
+	let id: number = parseInt(req.body.id);
+	let name: string = req.body.name;
+
+	let url: string = req.body.url;
+
+	pa.downloadZip({ id, name }, url, (success) => {
+		return res.json({ success });
+	});
+});
+
 interface MultiDownloadStatus {
 	success: boolean
 	failures?: string[]
