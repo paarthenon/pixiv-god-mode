@@ -1,8 +1,9 @@
 import * as pathUtils from '../utils/path'
 import * as services from '../services'
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
+import {settingKeys, getSetting} from '../userSettings'
 
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
@@ -78,6 +79,16 @@ export class WorksPage extends GalleryPage {
 
 			services.downloadMulti(this.artist, combined_urls);
         });
+	}
+
+	@ExecuteIf(() => getSetting(settingKeys.pages.works.mangaLinkToFull))
+	public replaceMangaThumbnailLinksToFull(){
+		this.jQuery('li.image-item a.work.multiple').toArray().forEach(manga => {
+			let path = this.jQuery(manga).attr('href')
+			let mangaPath = path.replace('medium', 'manga');
+			this.jQuery(manga).attr('data-backup-href', path);
+			this.jQuery(manga).attr('href', mangaPath);
+		})
 	}
 
 

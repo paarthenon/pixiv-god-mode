@@ -13,7 +13,8 @@ export let settingKeys = {
 		},
 		works: {
 			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',
-			directToManga: 'WORKS_PAGE_OPEN_MANGA_DIRECTLY'
+			directToManga: 'WORKS_PAGE_OPEN_MANGA_DIRECTLY',
+			mangaLinkToFull: 'WORKS_PAGE_REPLACE_MANGA_LINKS_TO_FULL_SIZE'
 		}
 	}
 };
@@ -26,7 +27,8 @@ let defaultTuples: [string, boolean][] = [
 	[settingKeys.pages.manga.loadFullSize, true],
 	[settingKeys.pages.manga.boxImages, true],
 	[settingKeys.pages.works.autoDarken, true],
-	[settingKeys.pages.works.directToManga, true]
+	[settingKeys.pages.works.directToManga, true],
+	[settingKeys.pages.works.mangaLinkToFull, true]
 ];
 
 defaultTuples.forEach(tuple => {
