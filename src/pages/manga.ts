@@ -1,8 +1,10 @@
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
 import {log} from '../utils/log'
 import * as services from '../services'
+
+import {settingKeys, getSetting} from '../userSettings'
 
 export class MangaPage extends RootPage {
 	public get artistName(): string {
@@ -16,7 +18,7 @@ export class MangaPage extends RootPage {
 		return (<any>unsafeWindow).pixiv.context.illustId;
 	}
 
-	@ExecuteOnLoad
+	@ExecuteIf(() => getSetting(settingKeys.pages.manga.loadFullSize))
 	public autoEmbiggenFixImages(): void{
 		(<any>(<any>unsafeWindow).pixiv.api.illust.detail([this.illustId], {})).then((response: any) => { 
 			let extension = response.body[this.illustId].illust_ext;
