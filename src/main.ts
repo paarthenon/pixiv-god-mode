@@ -1,49 +1,27 @@
-
 import * as DomUtils from './utils/dom'
 import * as PathUtils from './utils/path'
 
 import {dispatch} from './dispatch'
 import {log} from './utils/log'
 
-import ConfigKeys from './configKeys'
 import {DictionaryService} from './utils/dict'
 
-import * as ghUtils from './utils/github'
-
-let page = dispatch(unsafeWindow.location.href, $);
+import {Sidebar} from './dom/sidebar'
+import {ControlPanel} from './dom/controlPanel'
 
 DomUtils.initialize();
 
-let actions = page.actionCache.slice(0);
+let page = dispatch(unsafeWindow.location.href, $);
 
-let toggleEditor = {
-	id: 'pa_toggle_dict_editor',
-	label: 'Toggle Dictionary',
+let controlPanel = new ControlPanel(DictionaryService.userDictionary);
+let togglePanel = {
+	id: 'pa_toggle_control Panel',
+	label: 'Control Panel',
 	color: 'green',
-	execute: () => DomUtils.toggleEditor()
+	icon: 'equalizer',
+	execute: () => controlPanel.toggleVisibility()
 };
 
-function updateDictionary(){
-	let ghPath:string = 'pixiv-assistant/dictionary';
-	ghUtils.getMasterCommit(ghPath, (hash) => {
-		ghUtils.getDictionaryObject(ghPath, hash, (object) => {
-			console.log(JSON.stringify(object));
-		})
-	});
-}
+let sidebar = new Sidebar(page.actionCache.concat(togglePanel));
 
-let getDictionaryFromGH = {
-	id: 'pa_get_github_dict',
-	label: 'Download Dictionary',
-	color: 'brown',
-	execute: () => updateDictionary()
-}
-
-actions.push(toggleEditor);
-actions.push(getDictionaryFromGH);
-
-let sidebar = DomUtils.createSidebar(actions);
-
-let editor = DomUtils.createDictionaryEditor(DictionaryService.userDictionary);
-$('body').append(sidebar);
-$('body').append(editor);
+DomUtils.render([sidebar, controlPanel]);

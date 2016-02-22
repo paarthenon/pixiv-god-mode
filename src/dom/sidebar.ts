@@ -1,4 +1,4 @@
-import {Component, AbstractComponent, renderComponent} from './component'
+import {Component, AbstractComponent} from './component'
 import {Action} from '../actionModel'
 
 export class SidebarButton extends AbstractComponent {

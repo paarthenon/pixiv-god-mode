@@ -1,18 +1,20 @@
 declare var $: JQueryStatic;
-import {Action} from '../actionModel'
 
 import Config from './config'
 
-import {Dictionary} from './dict'
-
-import {DictionaryEditor} from '../dom/dictEditor'
 import {generateFontTemplate, fontString} from '../dom/fontSetup'
-
-import {renderComponent} from '../dom/component'
-import {Sidebar} from '../dom/sidebar'
-
+import {Component,renderComponent} from '../dom/component'
 
 let globalCSS = `
+	#pixiv-assistant-control-panel {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        transform: translate(-50%, -50%);
+	}
+
 	#pixiv-assistant-sidebar {
 		position: fixed;
 		left: 10px;
@@ -24,7 +26,7 @@ let globalCSS = `
 	#pixiv-assistant-sidebar.closed {
 		bottom: 10px;
 	}
-		
+
 	li.pa-sidebar-entry {
 	    transition: opacity 0.3s;
 	    opacity: 0.8;
@@ -106,8 +108,8 @@ export function initialize() {
 	GM_addStyle(generateFontTemplate(fontString.icomoon));
 }
 
-export function createSidebar(actions:Action[]){
-	return renderComponent(new Sidebar(actions));
+export function render(components:Component[]) {
+	components.forEach(component => $('body').append(renderComponent(component)));
 }
 
 export function createRawConfigEditor() {
@@ -125,15 +127,4 @@ export function createRawConfigEditor() {
 		container.append(jQInput);
 	});
 	return container;
-}
-
-let dictEditor:DictionaryEditor = undefined;
-export function createDictionaryEditor(dict:Dictionary):JQuery {
-	let editor = new DictionaryEditor(dict);
-	dictEditor = editor;
-	return renderComponent(editor);
-	// return createDictionaryEditor(dict);
-}
-export function toggleEditor():void {
-	dictEditor.toggleVisibility();
 }
