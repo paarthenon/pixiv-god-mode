@@ -5,7 +5,7 @@ import {DictionaryEditor} from '../dom/dictEditor'
 
 
 export class ControlPanel extends AbstractComponent {
-	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden">Hello</div>');
+	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden">Pixiv Assistant Control Panel</div>');
 
 	protected visible: boolean = false;
 
@@ -31,7 +31,7 @@ export class ControlPanel extends AbstractComponent {
 
 	public get children(): Component[] {
 		let components: Component[] = [
-			// new DictionaryEditor(this.userDictionary)
+			new DictionaryEditor(this.userDictionary)
 		];
 		return components;
 	}

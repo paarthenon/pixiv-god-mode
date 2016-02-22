@@ -11,6 +11,14 @@ let globalCSS = `
         left: 50%;
         box-sizing: border-box;
         transform: translate(-50%, -50%);
+        z-index:10;
+
+        width:800px;
+        min-height:200px;
+
+        border: 1px solid;
+		border-color: #aaa #999 #888;
+		background-color: #FDFDFD;
 	}
 
 	#pixiv-assistant-sidebar {
@@ -75,30 +83,6 @@ let globalCSS = `
 	{
 	    border-radius:4px;
 	    box-shadow: 5px 5px 8px #CCC;
-	}
-
-	.pa-assistant-dictionary-config-editor {
-		position: fixed;
-		bottom:10px;
-		width: 80%;
-		height: 30%;
-		left:50%;
-		transform: translateX(-50%);
-		background-color: rgba(0, 0, 0, 0.2);
-	}
-	.pa-assistant-dictionary-config-editor.hidden {
-		display:none;
-	}
-
-
-	#pa-assistant-raw-configuration-editor {
-		position: fixed;
-		bottom:10px;
-		width: 80%;
-		height: 30%;
-		left:50%;
-		transform: translateX(-50%);
-		background-color: rgba(0, 0, 0, 0.2);
 	}
 `;
 export function initialize() {
