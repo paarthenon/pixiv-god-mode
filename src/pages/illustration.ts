@@ -21,6 +21,14 @@ export class IllustrationPage extends RootPage {
 		return this.jQuery('._illust_modal img').attr('data-src');
 	}
 
+	protected getTagElements():JQuery[] {
+		return [
+			'.tags-container li.tag a.text',
+			'div.user-tags li a',
+		].map(selector => this.jQuery(selector))
+		.concat(super.getTagElements());
+	}
+
 	@ExecuteOnLoad
 	public openImage(): void {
 		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
