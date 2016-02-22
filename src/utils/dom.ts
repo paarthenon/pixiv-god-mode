@@ -1,7 +1,5 @@
 declare var $: JQueryStatic;
 
-import Config from './config'
-
 import {generateFontTemplate, fontString} from '../dom/fontSetup'
 import {Component,renderComponent} from '../dom/component'
 
@@ -110,21 +108,4 @@ export function initialize() {
 
 export function render(components:Component[]) {
 	components.forEach(component => $('body').append(renderComponent(component)));
-}
-
-export function createRawConfigEditor() {
-	let inputs = Config.Keys.map(key => {
-		console.log(Config.get(key)); return $(`
-			<div class="config-entry-container">
-				<label for="pa-config-key-${key}">${key}"</label>
-				<input name="pa-config-key-${key}" value="${Config.get(key)}" />
-			</div>
-		`)
-	});
-
-	let container = $('<div id="pa-assistant-raw-configuration-editor"></div>');
-	inputs.forEach(jQInput => {
-		container.append(jQInput);
-	});
-	return container;
 }
