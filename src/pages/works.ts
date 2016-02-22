@@ -18,8 +18,10 @@ export class WorksPage extends GalleryPage {
 
 	protected getTagElements() {
 		return [
-			this.jQuery('span.tag-badge')
-		].concat(super.getTagElements());
+			'span.tag-badge',
+			'div.user-tags li a'
+		].map(selector => this.jQuery(selector))
+		.concat(super.getTagElements());
 	}
 
 	private darkenInList(pictures:Model.Image[]):void {

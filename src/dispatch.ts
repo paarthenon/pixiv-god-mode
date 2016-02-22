@@ -18,7 +18,8 @@ let patterns = {
 	bookmarkDetail: /^http:\/\/www.pixiv.net\/bookmark_detail.php\?illust_id=[0-9]+/,
 	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php\?id=[0-9]+/,
 	bookmarkMember: /^http:\/\/www.pixiv.net\/bookmark_add.php$/,
-	search: /^http:\/\/www.pixiv.net\/search.php/
+	search: /^http:\/\/www.pixiv.net\/search.php/,
+	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php?id=[0-9]+/
 }
 
 export function dispatch(path:string, jquery:JQueryStatic):BasePage {
@@ -42,6 +43,9 @@ export function dispatch(path:string, jquery:JQueryStatic):BasePage {
 	}
 	if (path.match(patterns.search)) {
 		return new SearchPage(path, jquery);
+	}
+	if (path.match(patterns.artistTagList)) {
+		
 	}
 	return new RootPage(path, jquery);
 }
