@@ -50,21 +50,6 @@ class DictionaryEntryEditor extends AbstractComponent {
 	}
 }
 export class DictionaryEditor extends AbstractComponent {
-	public css = `
-		.pa-assistant-dictionary-config-editor {
-			position: fixed;
-			bottom:10px;
-			width: 80%;
-			height: 30%;
-			left:50%;
-			transform: translateX(-50%);
-			background-color: rgba(0, 0, 0, 0.2);
-		}
-		.pa-assistant-dictionary-config-editor.hidden {
-			display:none;
-		}
-	`;
-
 	protected self = $('<div class="pa-assistant-dictionary-config-editor hidden"></div>');
 
 	protected visible: boolean = false;
