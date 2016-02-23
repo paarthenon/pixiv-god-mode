@@ -1,10 +1,7 @@
 // ==UserScript==
 // @name        Pixiv Assistant
 // @namespace   Paarth
-// @include     http://www.pixiv.net/member_illust.php*
-// @include     http://www.pixiv.net/bookmark.php*
-// @include     http://www.pixiv.net/bookmark_add.php*
-// @include     http://www.pixiv.net/bookmark_detail.php*
+// @include     http://www.pixiv.net/*
 
 // @version     0.0.1
 // @grant       GM_registerMenuCommand
