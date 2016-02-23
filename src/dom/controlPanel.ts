@@ -7,6 +7,8 @@ import {DictionaryView} from './dictView'
 
 import {Tab, TabbedView} from './tabbedView'
 
+import {ConfigEditor} from './rawConfigEditor'
+
 
 export class ControlPanel extends AbstractComponent {
 	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden">Pixiv Assistant Control Panel</div>');
@@ -39,7 +41,8 @@ export class ControlPanel extends AbstractComponent {
 			new TabbedView([
 				new Tab('Settings', new UserSettings(this.officialDictionary)),
 				new Tab('User Dictionary', new DictionaryEditor(this.userDictionary)),
-				new Tab('Official Dictionary', new DictionaryView(this.officialDictionary))
+				new Tab('Official Dictionary', new DictionaryView(this.officialDictionary)),
+				new Tab('Raw Config', new ConfigEditor())
 			])
 		];
 		return components;

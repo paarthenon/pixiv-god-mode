@@ -19,6 +19,8 @@ let globalCSS = `
 
         width:800px;
         min-height:200px;
+        max-height:1000px;
+        overflow:scroll;
 
         border: 1px solid;
 		border-color: #aaa #999 #888;

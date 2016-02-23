@@ -20,11 +20,9 @@ class SingleConfigDict implements Dictionary {
 		return (this.dict) ? Object.keys(this.dict) : [];
 	}
 	public get(key:string):string {
-		console.log(this.keys);
 		return (this.dict) ? this.dict[key] : undefined;
 	}
 	public set(key:string, value:string):void {
-		console.log(this.keys);
 		if (!this.dict) {
 			this.dict = {};
 		}
@@ -34,7 +32,6 @@ class SingleConfigDict implements Dictionary {
 			delete this.dict[key];
 		}
 		Config.set(this.configKey, this.dict);
-		console.log(this.keys);
 	}
 }
 
@@ -96,6 +93,7 @@ export module DictionaryService {
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			ghUtils.getDictionaryObject(ghPath, commitHash, obj => {
 				Config.set(ConfigKeys.official_dict, obj);
+				Config.set(ConfigKeys.official_dict_hash, commitHash);
 				if(onComplete){
 					onComplete();
 				}
