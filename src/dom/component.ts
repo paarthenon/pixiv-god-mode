@@ -9,7 +9,6 @@ export abstract class AbstractComponent implements Component{
 	public abstract render():JQuery;
 }
 
-let stringCache:string[] = [];
 export function renderComponent(component:Component):JQuery {
 	let renderedComponent = component.render();
 	if (component.children) {

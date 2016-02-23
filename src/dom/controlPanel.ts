@@ -1,7 +1,11 @@
 import {Component, AbstractComponent} from './component'
 
+import {UserSettings} from './userSettings'
 import {Dictionary} from '../utils/dict'
-import {DictionaryEditor} from '../dom/dictEditor'
+import {DictionaryEditor} from './dictEditor'
+import {DictionaryView} from './dictView'
+
+import {Tab, TabbedView} from './tabbedView'
 
 
 export class ControlPanel extends AbstractComponent {
@@ -10,7 +14,8 @@ export class ControlPanel extends AbstractComponent {
 	protected visible: boolean = false;
 
 	constructor(
-		protected userDictionary:Dictionary
+		protected userDictionary:Dictionary,
+		protected officialDictionary:Dictionary
 	) { super(); }
 
 	public hide() {
@@ -31,7 +36,11 @@ export class ControlPanel extends AbstractComponent {
 
 	public get children(): Component[] {
 		let components: Component[] = [
-			new DictionaryEditor(this.userDictionary)
+			new TabbedView([
+				new Tab('Settings', new UserSettings(this.officialDictionary)),
+				new Tab('User Dictionary', new DictionaryEditor(this.userDictionary)),
+				new Tab('Official Dictionary', new DictionaryView(this.officialDictionary))
+			])
 		];
 		return components;
 	}

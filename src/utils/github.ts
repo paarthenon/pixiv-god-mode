@@ -12,7 +12,7 @@ export function getMasterCommit(githubPath:string, callback:(hash:string) => any
 }
 
 //https://cdn.rawgit.com/pixiv-assistant/dictionary/f9ac206a5a1adb584a142e55d5d7e04af0e3d472/en-US.json
-export function getDictionaryObject(githubPath:string, commitSHA:string, callback:(hash:string) => any) {
+export function getDictionaryObject(githubPath:string, commitSHA:string, callback:(dict:Object) => any) {
 	GM_xmlhttpRequest({
 		method: 'GET',
 		url: `https://cdn.rawgit.com/${githubPath}/${commitSHA}/en-US.json`,

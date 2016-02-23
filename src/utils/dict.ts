@@ -1,6 +1,8 @@
 import Config from './config'
 import ConfigKeys from '../configKeys'
 
+import * as ghUtils from './github'
+
 type stringMap = { [id: string]: string }
 
 export interface Dictionary {
@@ -71,7 +73,7 @@ class DictBroker {
 
 export module DictionaryService {
 	export let userDictionary = new SingleConfigDict(ConfigKeys.user_dict);
-	let baseDictionary = new SingleConfigDict(ConfigKeys.official_dict);
+	export let baseDictionary = new SingleConfigDict(ConfigKeys.official_dict);
 
 	let broker = new DictBroker([
 		userDictionary,
@@ -80,5 +82,24 @@ export module DictionaryService {
 
 	export function getTranslation(tag:string):string {
 		return broker.get(tag);
+	}
+
+	let ghPath = 'pixiv-assistant/dictionary'
+	export function updateAvailable(callback:(available:boolean) => any) {
+		ghUtils.getMasterCommit(ghPath, commitHash => {
+			let currentHash = Config.get(ConfigKeys.official_dict_hash);
+			callback(!currentHash || currentHash !== commitHash);
+		});
+	}
+
+	export function updateDictionary(onComplete?:()=>any) {
+		ghUtils.getMasterCommit(ghPath, commitHash => {
+			ghUtils.getDictionaryObject(ghPath, commitHash, obj => {
+				Config.set(ConfigKeys.official_dict, obj);
+				if(onComplete){
+					onComplete();
+				}
+			})
+		});
 	}
 }

@@ -4,6 +4,10 @@ import {generateFontTemplate, fontString} from '../dom/fontSetup'
 import {Component,renderComponent} from '../dom/component'
 
 let globalCSS = `
+	.pa-tabbed-view > ul > li {
+		display: inline;
+		color: blue;
+	}
 	#pixiv-assistant-control-panel {
         display: block;
         position: fixed;
