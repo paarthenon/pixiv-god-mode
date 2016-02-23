@@ -16,6 +16,14 @@ export class SearchPage extends GalleryPage {
 		});
 	}
 
+	protected getTagElements() {
+		return [
+			'nav.breadcrumb > span > a > span',
+			'a.self',
+			'dl.column-related ul.tags li.tag a.text'
+		].map(x => this.jQuery(x)).concat(super.getTagElements());
+	}
+
 	@ExecuteOnLoad
 	public darkenImages(): void {
 		services.getArtistList((artists) => this.darkenInList(artists));
