@@ -7,6 +7,12 @@ export class BookmarkIllustrationPage extends RootPage {
 		return parseInt((<any>unsafeWindow).pixiv.context.userId)
 	}
 
+	public getTagElements() {
+		return [
+			'ul.tags a'
+		].map(x => this.jQuery(x)).concat(super.getTagElements());
+	}
+
 	protected darkenInList(artists:Model.Artist[]): void {
 		this.jQuery('section#illust-recommend li.image-item').toArray().forEach(image => {
 			let artistId = parseInt(this.jQuery(image).find('a.user').attr('data-user_id'));
