@@ -16,6 +16,9 @@ class AddNewInput extends AbstractComponent {
 			if (this.onAdd) {
 				this.onAdd(keyInput.val());
 			}
+
+			keyInput.val('');
+			valueInput.val('');
 		});
 		return $('<div class="pa-assistant-add-dictionary-item-container"></div>')
 			.append(keyInput)
