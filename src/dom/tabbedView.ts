@@ -46,7 +46,7 @@ export class TabbedView extends AbstractComponent {
 
 	public render():JQuery {
 		let tabs = Object.keys(this.tabs).map(tabLabel => $(`<li>${tabLabel}</li>`).on('click',() => this.selectTab(tabLabel)));
-		let tabBar = $('<ul></ul>');
+		let tabBar = $('<ul class="tabs"></ul>');
 		tabBar.append(tabs);
 		return $('<div class="pa-tabbed-view"></div>').append(tabBar);
 	}

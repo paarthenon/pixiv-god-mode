@@ -11,7 +11,7 @@ import {ConfigEditor} from './rawConfigEditor'
 
 
 export class ControlPanel extends AbstractComponent {
-	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden">Pixiv Assistant Control Panel</div>');
+	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden"><h1>Pixiv Assistant Control Panel</h1></div>');
 
 	protected visible: boolean = false;
 

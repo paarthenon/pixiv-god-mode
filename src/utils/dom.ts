@@ -4,9 +4,15 @@ import {generateFontTemplate, fontString} from '../dom/fontSetup'
 import {Component,renderComponent} from '../dom/component'
 
 let globalCSS = `
-	.pa-tabbed-view > ul > li {
+	.pa-tabbed-view > ul.tabs > li {
 		display: inline;
 		color: blue;
+		border: 1px solid #aaaaaa;
+		border-bottom: none;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+		padding:3px;
+		margin-right:5px;
 	}
 	#pixiv-assistant-control-panel {
         display: block;
