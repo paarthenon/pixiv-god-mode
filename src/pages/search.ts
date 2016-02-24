@@ -3,6 +3,7 @@ import * as services from '../services'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
+import {DictionaryService} from '../utils/dict'
 
 export class SearchPage extends GalleryPage {
 	protected darkenInList(artists: Model.Artist[]): void {
@@ -22,6 +23,21 @@ export class SearchPage extends GalleryPage {
 			'a.self',
 			'dl.column-related ul.tags li.tag a.text'
 		].map(x => this.jQuery(x)).concat(super.getTagElements());
+	}
+
+	@ExecuteOnLoad
+	public changeTitle(): void {
+		let titleMatch = document.title.match(/「(.*)」/);
+		if(titleMatch && titleMatch[1]){
+			let translatedText = DictionaryService.getTranslation(titleMatch[1]);
+			if (translatedText) {
+				let newTitle = document.title.replace(/「(.*)」/, `「${translatedText}」`);
+				// If I set the title directly pixiv will eventually try to set the title
+				// again, reverting my changes. This sets the field that pixiv's own functions
+				// use. They'll do my work for me.
+				(<any>unsafeWindow).pixiv.title.original = newTitle;
+			}
+		}
 	}
 
 	@ExecuteOnLoad
