@@ -27,14 +27,20 @@ export class PixivAssistantApp {
 	}
 
 	public openFolder(artist:Model.Artist) {
-		let artistFolder = this.db.getPathForArtist(artist);
-		mkdirp(artistFolder, (err) => {
-			if (err) {
-				log(`Error creating folder [${artistFolder}], err: [${err}]`);
-			} else {
-				open(artistFolder);
-			}
-		});
+		let dbArtist = this.db.getArtistById(artist.id);
+		if (dbArtist) {
+			let artistFolder = this.db.getPathForArtist(dbArtist);
+			open(artistFolder);
+		} else {
+			let artistFolder = this.db.getPathForArtist(artist);
+			mkdirp(artistFolder, (err) => {
+				if (err) {
+					log(`Error creating folder [${artistFolder}], err: [${err}]`);
+				} else {
+					open(artistFolder);
+				}
+			});
+		}
 	}
 
 	// This is intentionally duplicated from db.ts. While this code is the same,
