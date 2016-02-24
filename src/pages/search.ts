@@ -25,7 +25,6 @@ export class SearchPage extends GalleryPage {
 		].map(x => this.jQuery(x)).concat(super.getTagElements());
 	}
 
-	@ExecuteOnLoad
 	public changeTitle(): void {
 		let titleMatch = document.title.match(/「(.*)」/);
 		if(titleMatch && titleMatch[1]){
@@ -38,6 +37,11 @@ export class SearchPage extends GalleryPage {
 				(<any>unsafeWindow).pixiv.title.original = newTitle;
 			}
 		}
+	}
+
+	protected translateTagsOnPage(): void {
+		this.changeTitle();
+		super.translateTagsOnPage();
 	}
 
 	@ExecuteOnLoad
