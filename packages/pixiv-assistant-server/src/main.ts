@@ -16,6 +16,10 @@ let app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/ping', (req, res) => {
+	res.json(true);
+});
+
 app.get('/list', (req, res) => {
 	res.json(pa.getArtists());
 });
