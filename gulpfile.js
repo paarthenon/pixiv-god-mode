@@ -33,7 +33,7 @@ gulp.task('header', ['browserify'], function(){
 
 gulp.task('deploy', ['header'], function(){
 	return gulp.src('build/final/main.js')
-		.pipe(rename('userscript.js'))
+		.pipe(rename('pixiv-assistant.user.js'))
 		.pipe(gulp.dest('dist'))
 });
 
