@@ -1,3 +1,8 @@
+language: node_js
 before_script:
   - npm install -g gulp
+  - npm install -g typescript
+  - npm install -g tsd
+  - npm install
+  - tsd install
 script: gulp
