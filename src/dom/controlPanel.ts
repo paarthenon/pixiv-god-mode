@@ -49,15 +49,20 @@ export class ControlPanel extends AbstractComponent {
 		}
 	}
 
-	public setupNewTranslationListener(editor: DictionaryEditor) {
+	public setupTranslationListener(editor: DictionaryEditor) {
 		editor.listen(DictionaryEditor.events.newTranslation, () => {
 			this.page.translateTagsOnPage();
-		})
+		});
+
+		editor.listen(DictionaryEditor.events.updatedTranslation, () => {
+			this.page.revertTagTranslations();
+			this.page.translateTagsOnPage();
+		});
 	}
 
 	public get children(): Component[] {
 		let userDictEditor = new DictionaryEditor(this.userDictionary);
-		this.setupNewTranslationListener(userDictEditor);
+		this.setupTranslationListener(userDictEditor);
 
 		let components: Component[] = [
 			new TabbedView([

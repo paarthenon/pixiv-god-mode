@@ -29,16 +29,29 @@ class AddNewInput extends AbstractComponent {
 }
 
 class DictionaryEntryEditor extends AbstractComponent {
+	public static events = {
+		itemUpdated: 'ITEM_UPDATED',
+		itemDeleted: 'ITEM_DELETED'
+	}
+
 	constructor(protected dict: Dictionary, protected key: string) { super(); }
 	protected get value():string {
 		return this.dict.get(this.key);
 	}
 	protected update(value: string):void {
+		let oldValue = this.value;
 		this.dict.set(this.key, value);
+		this.shout(DictionaryEntryEditor.events.itemUpdated,
+			{
+				key: this.key,
+				oldValue: oldValue,
+				newValue: value
+			});
 	}
 	protected deleteEntry() {
 		this.dict.set(this.key, undefined);
 		this.self.remove();
+		this.shout(DictionaryEntryEditor.events.itemDeleted);
 	}
 	private self = $('<div class="dictionary-config-container">');
 	public render():JQuery {
@@ -55,7 +68,8 @@ class DictionaryEntryEditor extends AbstractComponent {
 }
 export class DictionaryEditor extends AbstractComponent {
 	public static events = {
-		newTranslation: 'NEW_TRANSLATION'
+		newTranslation: 'NEW_TRANSLATION',
+		updatedTranslation: 'UPDATED_TRANSLATION'
 	};
 
 	protected self = $('<div class="pa-assistant-dictionary-config-editor"></div>');
@@ -64,12 +78,18 @@ export class DictionaryEditor extends AbstractComponent {
 
 	constructor(protected dict: Dictionary) { super(); }
 
-	public get children():Component[] {
+	public get children(): Component[] {
 		let addNewInput = new AddNewInput(this.dict, (key) => {
 			this.self.append(renderComponent(new DictionaryEntryEditor(this.dict, key)));
 			this.shout(DictionaryEditor.events.newTranslation);
 		});
-		let kvEditors = this.dict.keys.map(key => new DictionaryEntryEditor(this.dict, key));
+		let kvEditors = this.dict.keys.map(key => {
+			let editor = new DictionaryEntryEditor(this.dict, key);
+			editor.listen(DictionaryEntryEditor.events.itemUpdated, (event) => {
+				this.shout(DictionaryEditor.events.updatedTranslation, event);
+			});
+			return editor;
+		});
 		let components: Component[] = [addNewInput];
 		return components.concat(kvEditors);
 	}
