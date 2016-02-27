@@ -9,16 +9,29 @@ import {Tab, TabbedView} from './tabbedView'
 
 import {ConfigEditor} from './rawConfigEditor'
 
+import {BasePage} from '../pages/base'
+
+export interface ControlPanelInput {
+	userDictionary: Dictionary
+	rootDictionary: Dictionary
+	page: BasePage
+}
 
 export class ControlPanel extends AbstractComponent {
+	protected officialDictionary: Dictionary;
+	protected userDictionary: Dictionary;
+	protected page: BasePage;
+
 	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden"><h1>Pixiv Assistant Control Panel</h1></div>');
 
 	protected visible: boolean = false;
 
-	constructor(
-		protected userDictionary:Dictionary,
-		protected officialDictionary:Dictionary
-	) { super(); }
+	constructor (globals: ControlPanelInput) { 
+		super();
+		this.officialDictionary = globals.rootDictionary;
+		this.userDictionary = globals.userDictionary;
+		this.page = globals.page;
+	}
 
 	public hide() {
 		this.visible = false;

@@ -13,7 +13,12 @@ DomUtils.initialize();
 
 let page = dispatch(unsafeWindow.location.href, $);
 
-let controlPanel = new ControlPanel(DictionaryService.userDictionary, DictionaryService.baseDictionary);
+let controlPanel = new ControlPanel({
+	userDictionary: DictionaryService.userDictionary,
+	rootDictionary: DictionaryService.baseDictionary,
+	page: page
+});
+
 let togglePanel = {
 	id: 'pa_toggle_control Panel',
 	label: 'Control Panel',
