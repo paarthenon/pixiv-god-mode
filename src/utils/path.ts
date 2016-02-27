@@ -32,3 +32,8 @@ export function explodeImagePathPages(url:string, pages:number):string[]{
 	}
 	return urls;
 }
+
+export function getPotentialTag(url:string):string {
+	let tag = extract(url, /tag=([^&]+)/);
+	return (tag) ? decodeURI(tag) : '';
+}

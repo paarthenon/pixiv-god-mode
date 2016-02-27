@@ -2,6 +2,22 @@ import {Dictionary} from '../utils/dict'
 import {Component, AbstractComponent, renderComponent} from './component'
 
 export class AddNewInput extends AbstractComponent {
+	protected keyInput = $('<input placeholder="japanese">');
+	protected valueInput = $('<input placeholder="english">');
+
+	public get japanese() {
+		return this.keyInput.val();
+	}
+	public set japanese(value:string) {
+		this.keyInput.val(value);
+	}
+
+	public get english() {
+		return this.valueInput.val();
+	}
+	public set english(value:string) {
+		this.valueInput.val(value);
+	}
 
 	constructor (
 		protected dict: Dictionary, 
@@ -10,20 +26,18 @@ export class AddNewInput extends AbstractComponent {
 		super(); 
 	}
 	public render():JQuery {
-		let keyInput = $('<input placeholder="japanese">');
-		let valueInput = $('<input placeholder="english">');
 		let button = $('<button>Add</button>').click((event) => {
-			this.dict.set(keyInput.val(), valueInput.val());
+			this.dict.set(this.japanese, this.english);
 			if (this.onAdd) {
-				this.onAdd(keyInput.val());
+				this.onAdd(this.japanese);
 			}
 
-			keyInput.val('');
-			valueInput.val('');
+			this.japanese = '';
+			this.english = '';
 		});
 		return $('<div class="pa-assistant-add-dictionary-item-container"></div>')
-			.append(keyInput)
-			.append(valueInput)
+			.append(this.keyInput)
+			.append(this.valueInput)
 			.append(button)
 	}
 }

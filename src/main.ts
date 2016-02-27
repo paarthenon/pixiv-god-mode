@@ -20,7 +20,8 @@ let controlPanel = new ControlPanel({
 	page: page
 });
 
-let translationModal = new MiniTranslationModal(DictionaryService.userDictionary);
+let potentialTag = PathUtils.getPotentialTag(unsafeWindow.location.href);
+let translationModal = new MiniTranslationModal(DictionaryService.userDictionary, potentialTag);
 translationModal.listen(MiniTranslationModal.events.addedTranslation, () => {
 	page.translateTagsOnPage();
 	translationModal.toggleVisibility();
