@@ -23,6 +23,7 @@ let controlPanel = new ControlPanel({
 let translationModal = new MiniTranslationModal(DictionaryService.userDictionary);
 translationModal.listen(MiniTranslationModal.events.addedTranslation, () => {
 	page.translateTagsOnPage();
+	translationModal.toggleVisibility();
 });
 
 let togglePanel = {
