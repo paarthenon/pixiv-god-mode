@@ -8,6 +8,7 @@ import {MangaPage} from './pages/manga'
 import {ArtistBookmarksPage} from './pages/artistBookmarks'
 import {SearchPage} from './pages/search'
 import {BookmarkAddPage} from './pages/bookmarkAdd'
+import {ArtistTagListPage} from './pages/artistTagList'
 
 import {log} from './utils/log'
 
@@ -24,7 +25,7 @@ let patterns = {
 	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php?id=[0-9]+/
 }
 
-export function dispatch(path:string, jquery:JQueryStatic):BasePage {
+export function dispatch(path:string, jquery:JQueryStatic):RootPage {
 	if (path.match(patterns.illust)) {
 		return new IllustrationPage(path, jquery);
 	}
@@ -50,7 +51,7 @@ export function dispatch(path:string, jquery:JQueryStatic):BasePage {
 		return new SearchPage(path, jquery);
 	}
 	if (path.match(patterns.artistTagList)) {
-		
+		return new ArtistTagListPage(path, jquery);
 	}
 	return new RootPage(path, jquery);
 }

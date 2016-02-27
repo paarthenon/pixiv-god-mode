@@ -9,18 +9,18 @@ import {Tab, TabbedView} from './tabbedView'
 
 import {ConfigEditor} from './rawConfigEditor'
 
-import {BasePage} from '../pages/base'
+import {RootPage} from '../pages/root'
 
 export interface ControlPanelInput {
 	userDictionary: Dictionary
 	rootDictionary: Dictionary
-	page: BasePage
+	page: RootPage
 }
 
 export class ControlPanel extends AbstractComponent {
 	protected officialDictionary: Dictionary;
 	protected userDictionary: Dictionary;
-	protected page: BasePage;
+	protected page: RootPage;
 
 	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden"><h1>Pixiv Assistant Control Panel</h1></div>');
 
@@ -49,11 +49,20 @@ export class ControlPanel extends AbstractComponent {
 		}
 	}
 
+	public setupNewTranslationListener(editor: DictionaryEditor) {
+		editor.listen(DictionaryEditor.events.newTranslation, () => {
+			this.page.translateTagsOnPage();
+		})
+	}
+
 	public get children(): Component[] {
+		let userDictEditor = new DictionaryEditor(this.userDictionary);
+		this.setupNewTranslationListener(userDictEditor);
+
 		let components: Component[] = [
 			new TabbedView([
 				new Tab('Settings', new UserSettings(this.officialDictionary)),
-				new Tab('User Dictionary', new DictionaryEditor(this.userDictionary)),
+				new Tab('User Dictionary', userDictEditor),
 				new Tab('Official Dictionary', new DictionaryView(this.officialDictionary)),
 				new Tab('Raw Config', new ConfigEditor())
 			])

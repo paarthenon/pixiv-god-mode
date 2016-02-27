@@ -16,7 +16,7 @@ export class RootPage extends BasePage {
 		return [];
 	}
 
-	protected translateTagsOnPage():void {
+	public translateTagsOnPage():void {
 		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => this.jQuery(x)).forEach(tagElement => {
 			let textNode = tagElement.contents().filter(function() {
 				return this.nodeType === Node.TEXT_NODE;
@@ -28,7 +28,7 @@ export class RootPage extends BasePage {
 			}
 		}));
 	}
-	protected revertTagTranslations():void {
+	public revertTagTranslations():void {
 		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => this.jQuery(x)).forEach(tagElement => {
 			let textNode = tagElement.contents().filter(function() {
 				return this.nodeType === Node.TEXT_NODE;

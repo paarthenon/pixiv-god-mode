@@ -2,6 +2,7 @@ import {Dictionary} from '../utils/dict'
 import {Component, AbstractComponent, renderComponent} from './component'
 
 class AddNewInput extends AbstractComponent {
+
 	constructor (
 		protected dict: Dictionary, 
 		protected onAdd?:(key:string)=>any
@@ -53,6 +54,10 @@ class DictionaryEntryEditor extends AbstractComponent {
 	}
 }
 export class DictionaryEditor extends AbstractComponent {
+	public static events = {
+		newTranslation: 'NEW_TRANSLATION'
+	};
+
 	protected self = $('<div class="pa-assistant-dictionary-config-editor"></div>');
 
 	protected visible: boolean = false;
@@ -60,7 +65,10 @@ export class DictionaryEditor extends AbstractComponent {
 	constructor(protected dict: Dictionary) { super(); }
 
 	public get children():Component[] {
-		let addNewInput = new AddNewInput(this.dict, (key) => this.self.append(renderComponent(new DictionaryEntryEditor(this.dict, key))));
+		let addNewInput = new AddNewInput(this.dict, (key) => {
+			this.self.append(renderComponent(new DictionaryEntryEditor(this.dict, key)));
+			this.shout(DictionaryEditor.events.newTranslation);
+		});
 		let kvEditors = this.dict.keys.map(key => new DictionaryEntryEditor(this.dict, key));
 		let components: Component[] = [addNewInput];
 		return components.concat(kvEditors);

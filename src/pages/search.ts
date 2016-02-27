@@ -39,7 +39,7 @@ export class SearchPage extends GalleryPage {
 		}
 	}
 
-	protected translateTagsOnPage(): void {
+	public translateTagsOnPage(): void {
 		this.changeTitle();
 		super.translateTagsOnPage();
 	}
