@@ -22,15 +22,19 @@ let globalCSS = `
         box-sizing: border-box;
         transform: translate(-50%, -50%);
         z-index:10;
-
+        overflow:auto;
+        
         width:800px;
         min-height:200px;
         max-height:1000px;
-        overflow:scroll;
 
         border: 1px solid;
 		border-color: #aaa #999 #888;
 		background-color: #FDFDFD;
+
+		border-radius: 10px;
+		box-shadow: 0 0 100px #444;
+		padding: 20px;
 	}
 
 	#pa-assistant-mini-translation-modal {
