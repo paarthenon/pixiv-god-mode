@@ -1,7 +1,7 @@
 import {Dictionary} from '../utils/dict'
 import {Component, AbstractComponent, renderComponent} from './component'
 
-class AddNewInput extends AbstractComponent {
+export class AddNewInput extends AbstractComponent {
 
 	constructor (
 		protected dict: Dictionary, 
@@ -69,7 +69,8 @@ class DictionaryEntryEditor extends AbstractComponent {
 export class DictionaryEditor extends AbstractComponent {
 	public static events = {
 		newTranslation: 'NEW_TRANSLATION',
-		updatedTranslation: 'UPDATED_TRANSLATION'
+		updatedTranslation: 'UPDATED_TRANSLATION',
+		deletedTranslation: 'DELETED_TRANSLATION'
 	};
 
 	protected self = $('<div class="pa-assistant-dictionary-config-editor"></div>');
@@ -88,6 +89,9 @@ export class DictionaryEditor extends AbstractComponent {
 			editor.listen(DictionaryEntryEditor.events.itemUpdated, (event) => {
 				this.shout(DictionaryEditor.events.updatedTranslation, event);
 			});
+			editor.listen(DictionaryEntryEditor.events.itemDeleted, () => {
+				this.shout(DictionaryEditor.events.deletedTranslation);
+			})
 			return editor;
 		});
 		let components: Component[] = [addNewInput];

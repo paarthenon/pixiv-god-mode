@@ -33,6 +33,31 @@ let globalCSS = `
 		background-color: #FDFDFD;
 	}
 
+	#pa-assistant-mini-translation-modal {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        transform: translate(-50%, -50%);
+        z-index:10;
+
+        border: 1px solid;
+		border-color: #aaa #999 #888;
+		background-color: #FDFDFD;
+
+		border-radius: 10px;
+		box-shadow: 0 0 100px #444;
+		padding: 20px;
+	}
+	#pa-assistant-mini-translation-modal input {
+		display: block;
+	}
+	#pa-assistant-mini-translation-modal button {
+		display: block;
+		width: 100%;
+	}
+
 	#pixiv-assistant-sidebar {
 		position: fixed;
 		left: 10px;

@@ -8,6 +8,7 @@ import {DictionaryService} from './utils/dict'
 
 import {Sidebar} from './dom/sidebar'
 import {ControlPanel} from './dom/controlPanel'
+import {MiniTranslationModal} from './dom/miniTranslationModal'
 
 DomUtils.initialize();
 
@@ -19,14 +20,27 @@ let controlPanel = new ControlPanel({
 	page: page
 });
 
+let translationModal = new MiniTranslationModal(DictionaryService.userDictionary);
+translationModal.listen(MiniTranslationModal.events.addedTranslation, () => {
+	page.translateTagsOnPage();
+});
+
 let togglePanel = {
-	id: 'pa_toggle_control Panel',
+	id: 'pa_toggle_control_panel',
 	label: 'Control Panel',
 	color: 'green',
 	icon: 'equalizer',
 	execute: () => controlPanel.toggleVisibility()
 };
 
-let sidebar = new Sidebar(page.actionCache.concat(togglePanel));
+let toggleTranslationModal = {
+	id: 'pa_toggle_translation_modal',
+	label: 'Add Translation',
+	color: 'green',
+	icon: 'plus',
+	execute: () => translationModal.toggleVisibility()
+};
 
-DomUtils.render([sidebar, controlPanel]);
+let sidebar = new Sidebar(page.actionCache.concat([toggleTranslationModal, togglePanel]));
+
+DomUtils.render([sidebar, controlPanel, translationModal]);
