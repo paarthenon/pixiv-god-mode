@@ -2,6 +2,7 @@ import {ActionDescriptor, Action, OnLoadFunc} from '../actionModel'
 import {BasePage} from '../pages/base'
 
 import {CacheRegistry, pushToArrayCache} from './terribleCache'
+import {log} from './log'
 
 export function RegisteredAction(desc:ActionDescriptor) {
 	return (target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
@@ -10,6 +11,7 @@ export function RegisteredAction(desc:ActionDescriptor) {
 
 		let name = (<any>target)['constructor']['name'];
 
+		log(`Registered Action | registering function ${propertyKey} for ${name}`);
 		pushToArrayCache(CacheRegistry.registeredActionCache, name, <Action>newDesc);
 		return descriptor;
 	}
@@ -24,6 +26,7 @@ export function ExecuteIf(predicate:() => boolean) {
 			execute: descriptor.value
 		};
 		
+		log(`ExecuteIf | registering function ${propertyKey} for ${name}`);
 		pushToArrayCache<OnLoadFunc>(CacheRegistry.onLoadFunctionCache, name, onload);
 		return descriptor;
 	}

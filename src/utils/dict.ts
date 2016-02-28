@@ -2,6 +2,7 @@ import Config from './config'
 import ConfigKeys from '../configKeys'
 
 import * as ghUtils from './github'
+import {log} from './log'
 
 type stringMap = { [id: string]: string }
 
@@ -78,20 +79,26 @@ export module DictionaryService {
 	]);
 
 	export function getTranslation(tag:string):string {
-		return broker.get(tag);
+		let translation = broker.get(tag);
+		log(`DictionaryService.getTranslation | for [${tag}] found [${translation}]`);
+		return translation;
 	}
 
 	let ghPath = 'pixiv-assistant/dictionary'
 	export function updateAvailable(callback:(available:boolean) => any) {
+		log('DictionaryService.updateAvailable | entered');
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			let currentHash = Config.get(ConfigKeys.official_dict_hash);
-			callback(!currentHash || currentHash !== commitHash);
+			let isNewer:boolean = !currentHash || currentHash !== commitHash;
+			log(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer)?'':'not '} newer than [${currentHash}]`);
 		});
 	}
 
 	export function updateDictionary(onComplete?:()=>any) {
+		log('DictionaryService.updateDictionary | entered');
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			ghUtils.getDictionaryObject(ghPath, commitHash, obj => {
+				log(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
 				Config.set(ConfigKeys.official_dict, obj);
 				Config.set(ConfigKeys.official_dict_hash, commitHash);
 				if(onComplete){
