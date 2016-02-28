@@ -74,6 +74,13 @@ let globalCSS = `
 		bottom: 10px;
 	}
 
+	.green {
+		color: green;
+	}
+	.wide {
+		margin: 0px 5px;
+	}
+
 	li.pa-sidebar-entry {
 	    transition: opacity 0.3s;
 	    opacity: 0.8;

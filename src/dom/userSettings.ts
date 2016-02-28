@@ -12,11 +12,17 @@ export class UserSettings extends AbstractComponent {
 		this.refreshUpdateStatus();
 	}
 
-	protected dictionaryStatus = $('<span></span>');
+	protected dictionaryStatus = $('<p>Central Dictionary Update Status: </p>');
+
+	protected dictionaryStatusPositive = $('<span class="wide">New Update Available</span>')
+		.append($('<button class="wide">RefreshDict</button>').on('click', () => this.refreshDictionary()));
+
+	protected dictionaryStatusNegative = $('<span class="wide green">Up To Date</span>')
 	protected refreshUpdateStatus() {
 		DictionaryService.updateAvailable(available => {
-			let availableText = (available) ? 'New Update Available' : 'Up To Date';
-			this.dictionaryStatus.text(availableText);
+			this.dictionaryStatusNegative.remove();
+			this.dictionaryStatusPositive.remove();
+			this.dictionaryStatus.append((available) ? this.dictionaryStatusPositive : this.dictionaryStatusNegative);
 		});
 	}
 
@@ -31,12 +37,8 @@ export class UserSettings extends AbstractComponent {
 	}
 
 	public render():JQuery {
-		let self = $('<div class="pa-options-view">User Settings</div>');
-		self.append($('<span>Dictionary Update Status</span>'));
+		let self = $('<div class="pa-options-view"><h2>User Settings</h2></div>');
 		self.append(this.dictionaryStatus);
-		if (this.dictionaryStatus) {
-			self.append($('<button>RefreshDict</button>').on('click',()=> this.refreshDictionary()))
-		}
 		self.append($('<button>Import User Dictionary</button>').on('click', () => this.importUserDictionary()));
 		self.append($('<textarea id="pa-dictionary-scratchpad"></textarea>'));
 		return self;
