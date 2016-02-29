@@ -53,6 +53,19 @@ export class WorksPage extends GalleryPage {
 		});
 	}
 
+	@RegisteredAction({ id: 'pa_button_open_all_in_tabs', label: 'Open all artist works', icon: 'new-tab', color: 'red'})
+	public openAllInTabs(): void {
+		(<any>unsafeWindow).pixiv.api.userProfile({
+			user_ids: this.artistId,
+			illust_num: 1000000
+        }, {}).then((result: any) => {
+			let combined_urls = result.body[0].illusts.map((illust: any) =>
+				`http://www.pixiv.net/member_illust.php?mode=${(parseInt(illust.illust_page_count) > 1) ? 'manga' : 'medium'}&illust_id=${illust.illust_id}`);
+			combined_urls.forEach((url:string) => GM_openInTab(url));
+        });
+	}
+
+
 	@ExecuteOnLoad
 	public darkenImages():void {
 		services.getArtistImages(this.artistId, (pictures) => this.darkenInList(pictures));
@@ -62,6 +75,7 @@ export class WorksPage extends GalleryPage {
 	public openFolder():void {
 		services.openFolder(this.artist);
 	}
+
 
 	@RegisteredAction({id: 'pa_button_download_all_user_images', label: 'Download All Images (Expensive)', icon: 'folder-download'})
 	public downloadAllImagesForArtist():void {
