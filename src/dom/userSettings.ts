@@ -6,6 +6,26 @@ import ConfigKeys from '../configKeys'
 
 import * as ghUtils from '../utils/github'
 
+export class DebugModeSetting extends AbstractComponent {
+	public get currentSetting():boolean {
+		return <boolean>Config.get(ConfigKeys.debug_mode);
+	}
+	public set currentSetting(val:boolean){
+		Config.set(ConfigKeys.debug_mode, val);
+	}
+
+	public render():JQuery {
+		let self = $('<div class="pa-options-debug-mode"></div>');
+		self.append($(`<span>Debug Mode: ${(this.currentSetting) ? 'On' : 'Off'}</span>`));
+		self.append(
+			$('<button>Toggle</button>').on('click',()=>{
+				this.currentSetting = !this.currentSetting;
+			})
+		);
+
+		return self;
+	}
+}
 export class UserSettings extends AbstractComponent {
 	constructor(protected dict: Dictionary) { 
 		super();
@@ -34,6 +54,10 @@ export class UserSettings extends AbstractComponent {
 
 	public importUserDictionary() {
 		Config.set(ConfigKeys.user_dict, JSON.parse($('#pa-dictionary-scratchpad').val()));
+	}
+
+	public get children() {
+		return [new DebugModeSetting()];
 	}
 
 	public render():JQuery {

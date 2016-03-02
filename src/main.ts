@@ -11,6 +11,8 @@ import {ControlPanel} from './dom/controlPanel'
 import {MiniTranslationModal} from './dom/miniTranslationModal'
 
 import Debug from './debug'
+import Config from './utils/config'
+import ConfigKeys from './configKeys'
 
 DomUtils.initialize();
 
@@ -49,5 +51,7 @@ let sidebar = new Sidebar(page.actionCache.concat([toggleTranslationModal, toggl
 
 DomUtils.render([sidebar, controlPanel, translationModal]);
 
-Debug.page = page;
-(<any>unsafeWindow).paDebug = Debug;
+if (Config.get(ConfigKeys.debug_mode)) {
+	Debug.page = page;
+	(<any>unsafeWindow).paDebug = Debug;
+}

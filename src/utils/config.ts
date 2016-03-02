@@ -1,4 +1,4 @@
-type potentialData = string|number|Object
+type potentialData = boolean|string|number|Object
 
 interface configValue {
 	data: potentialData

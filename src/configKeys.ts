@@ -8,7 +8,8 @@ var configKeys = {
 	official_dict_hash: 'OFFICIAL_DICTIONARY_CURRENT_VERSION_HASH',
 	user_dict: 'USER_DICTIONARY',
 
-	user_settings: 'USER_SETTINGS'
+	user_settings: 'USER_SETTINGS',
+	debug_mode: 'DEBUG_MODE'
 }
 
 export default configKeys;
