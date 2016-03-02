@@ -33,6 +33,7 @@ app.post('/openFolder/:id', (req, res) => {
 	let name: string = req.body.name;
 
 	pa.openFolder({ id, name });
+	res.json(true);
 });
 
 app.post('/download', (req, res) => {
@@ -42,7 +43,7 @@ app.post('/download', (req, res) => {
 	let url: string = req.body.url;
 
 	pa.download({ id, name }, url, (success) => {
-		return res.json({ success });
+		res.json({ success });
 	});
 });
 
@@ -53,7 +54,7 @@ app.post('/downloadZip', (req, res) => {
 	let url: string = req.body.url;
 
 	pa.downloadZip({ id, name }, url, (success) => {
-		return res.json({ success });
+		res.json({ success });
 	});
 });
 
@@ -68,9 +69,9 @@ app.post('/downloadMulti', (req, res) => {
 
 	pa.downloadMulti(artist, urls, (errors) => {
 		if (errors.length > 0) {
-			return { success: true }
+			res.json({ success: true });
 		} else {
-			return { success: false, failures: errors }
+			res.json({ success: false, failures: errors });
 		}
 	});
 });
