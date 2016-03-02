@@ -1,5 +1,6 @@
 import {BasePage} from './base'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {Debug} from '../utils/debugDecorator'
 
 import {DictionaryService} from '../utils/dict'
 
@@ -16,6 +17,7 @@ export class RootPage extends BasePage {
 		return [];
 	}
 
+	@Debug
 	public translateTagsOnPage():void {
 		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => this.jQuery(x)).forEach(tagElement => {
 			let textNode = tagElement.contents().filter(function() {

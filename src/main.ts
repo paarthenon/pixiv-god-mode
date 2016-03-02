@@ -10,6 +10,8 @@ import {Sidebar} from './dom/sidebar'
 import {ControlPanel} from './dom/controlPanel'
 import {MiniTranslationModal} from './dom/miniTranslationModal'
 
+import Debug from './debug'
+
 DomUtils.initialize();
 
 let page = dispatch(unsafeWindow.location.href, $);
@@ -46,3 +48,6 @@ let toggleTranslationModal = {
 let sidebar = new Sidebar(page.actionCache.concat([toggleTranslationModal, togglePanel]));
 
 DomUtils.render([sidebar, controlPanel, translationModal]);
+
+Debug.page = page;
+(<any>unsafeWindow).paDebug = Debug;
