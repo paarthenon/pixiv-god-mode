@@ -10,6 +10,8 @@ import * as urllib from 'url'
 import * as fs from 'fs'
 import * as path from 'path'
 
+var spawn = require('child_process').spawn;
+
 export class PixivAssistantApp {
 	constructor(protected db:Database) { }
 
@@ -37,7 +39,7 @@ export class PixivAssistantApp {
 				if (err) {
 					log(`Error creating folder [${artistFolder}], err: [${err}]`);
 				} else {
-					open(artistFolder);
+					spawn('explorer.exe', [artistFolder]);
 				}
 			});
 		}
