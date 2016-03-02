@@ -52,7 +52,9 @@ export class ArtistImageDatabase  implements Database{
 	}
 
 	public getImagesForArtist(artist:Model.Artist):Model.Image[] {
-		return fs.readdirSync(this.getPathForArtist(artist)).map(name => this.fileNameToImage(name));
+		return fs.readdirSync(this.getPathForArtist(artist))
+				.map(name => this.fileNameToImage(name))
+				.filter(image => image != undefined);
 	}
 
 	public getPathForArtist(artist:Model.Artist):string {
