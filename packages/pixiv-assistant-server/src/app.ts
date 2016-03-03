@@ -1,6 +1,6 @@
 import {Database} from './dbModel'
 import {log} from './utils/log'
-import open = require('open')
+const opn = require('opn')
 
 import * as mkdirp from 'mkdirp'
 import * as underscore from 'underscore'
@@ -9,6 +9,7 @@ import * as http from 'http'
 import * as urllib from 'url'
 import * as fs from 'fs'
 import * as path from 'path'
+
 
 var spawn = require('child_process').spawn;
 
@@ -32,14 +33,18 @@ export class PixivAssistantApp {
 		let dbArtist = this.db.getArtistById(artist.id);
 		if (dbArtist) {
 			let artistFolder = this.db.getPathForArtist(dbArtist);
-			open(artistFolder);
+			log(`opening folder ${artistFolder}`);
+
+			opn(artistFolder);
 		} else {
 			let artistFolder = this.db.getPathForArtist(artist);
+			log(`opening folder ${artistFolder}`);
 			mkdirp(artistFolder, (err) => {
 				if (err) {
 					log(`Error creating folder [${artistFolder}], err: [${err}]`);
 				} else {
-					spawn('explorer.exe', [artistFolder]);
+					// spawn('explorer.exe', [artistFolder]);
+					opn(artistFolder);
 				}
 			});
 		}
