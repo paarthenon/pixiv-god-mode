@@ -3,6 +3,8 @@ import {Component, AbstractComponent, renderComponent} from './component'
 
 import {AddNewInput} from './dictEditor'
 
+import * as services from '../services'
+
 export class MiniTranslationModal extends AbstractComponent {
 	public static events = {
 		addedTranslation: 'NEW_TRANSLATION',
@@ -20,6 +22,13 @@ export class MiniTranslationModal extends AbstractComponent {
 			this.shout(MiniTranslationModal.events.addedTranslation);
 		});
 		addNewInput.japanese = this.potentialTag || '';
+		if (this.potentialTag) {
+			services.googleTranslate(this.potentialTag, englishTranslation => {
+				if (!addNewInput.english) {
+					addNewInput.english = englishTranslation;
+				}
+			});
+		}
 		return [addNewInput];
 	}
 
