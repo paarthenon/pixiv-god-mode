@@ -20,7 +20,7 @@ let patterns = {
 	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php\?id=[0-9]+/,
 	bookmarkAddIllust: /^http:\/\/www.pixiv.net\/bookmark_add.php\?type=illust&illust_id=[0-9]+/,
 	search: /^http:\/\/www.pixiv.net\/search.php/,
-	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php?id=[0-9]+/
+	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php\?id=[0-9]+/
 }
 
 export function dispatch(path:string, jquery:JQueryStatic):RootPage {
