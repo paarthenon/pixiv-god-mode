@@ -14,6 +14,8 @@ import Debug from './debug'
 import Config from './utils/config'
 import ConfigKeys from './configKeys'
 
+import * as appServices from './services'
+
 DomUtils.initialize();
 
 let page = dispatch(unsafeWindow.location.href, $);
@@ -54,4 +56,5 @@ DomUtils.render([sidebar, controlPanel, translationModal]);
 if (Config.get(ConfigKeys.debug_mode)) {
 	Debug.page = page;
 	(<any>unsafeWindow).paDebug = Debug;
+	(<any>unsafeWindow).paServices = appServices;
 }

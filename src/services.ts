@@ -80,3 +80,8 @@ export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
 		}
 	});
 }
+
+
+export function executeManual(obj:any) {
+	GM_xmlhttpRequest(obj);
+}

@@ -3,7 +3,6 @@ import {RootPage} from './pages/root'
 import {IllustrationPage} from './pages/illustration'
 import {WorksPage} from './pages/works'
 import {BookmarkIllustrationPage} from './pages/bookmarks'
-import {BookmarkMember} from './pages/bookmarkMember'
 import {MangaPage} from './pages/manga'
 import {ArtistBookmarksPage} from './pages/artistBookmarks'
 import {SearchPage} from './pages/search'
@@ -20,7 +19,6 @@ let patterns = {
 	bookmarkDetail: /^http:\/\/www.pixiv.net\/bookmark_detail.php\?illust_id=[0-9]+/,
 	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php\?id=[0-9]+/,
 	bookmarkAddIllust: /^http:\/\/www.pixiv.net\/bookmark_add.php\?type=illust&illust_id=[0-9]+/,
-	bookmarkMember: /^http:\/\/www.pixiv.net\/bookmark_add.php$/,
 	search: /^http:\/\/www.pixiv.net\/search.php/,
 	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php?id=[0-9]+/
 }
@@ -40,9 +38,6 @@ export function dispatch(path:string, jquery:JQueryStatic):RootPage {
 	}
 	if (path.match(patterns.bookmarkDetail) || path.match(patterns.bookmarkDetailAdd)) {
 		return new BookmarkIllustrationPage(path, jquery);
-	}
-	if (path.match(patterns.bookmarkMember)) {
-		return new BookmarkMember(path, jquery);
 	}
 	if (path.match(patterns.bookmarkAddIllust)) {
 		return new BookmarkAddPage(path, jquery);

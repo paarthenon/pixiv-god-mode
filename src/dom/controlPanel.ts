@@ -4,10 +4,11 @@ import {UserSettings} from './userSettings'
 import {Dictionary} from '../utils/dict'
 import {DictionaryEditor} from './dictEditor'
 import {DictionaryView} from './dictView'
+import {ConfigEditor} from './rawConfigEditor'
+import {GoogleTranslateView} from './googleTranslate'
 
 import {Tab, TabbedView} from './tabbedView'
 
-import {ConfigEditor} from './rawConfigEditor'
 
 import {RootPage} from '../pages/root'
 
@@ -69,7 +70,8 @@ export class ControlPanel extends AbstractComponent {
 				new Tab('Settings', new UserSettings(this.officialDictionary)),
 				new Tab('User Dictionary', userDictEditor),
 				new Tab('Official Dictionary', new DictionaryView(this.officialDictionary)),
-				new Tab('Raw Config', new ConfigEditor())
+				new Tab('Raw Config', new ConfigEditor()),
+				new Tab('Google Translate', new GoogleTranslateView())
 			])
 		];
 		return components;
