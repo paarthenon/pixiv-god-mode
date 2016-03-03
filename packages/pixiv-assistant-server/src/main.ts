@@ -4,9 +4,9 @@ import {PixivAssistantApp} from './app'
 import * as express from "express"
 import * as bodyParser from "body-parser"
 
-var config = require('./config');
 
-let path = config.db.path;
+let path = process.argv[2] || 'pixivRepository';
+console.log(`Setting repo to path [${path}]`);
 
 let db = new ArtistImageDatabase(path);
 let pa = new PixivAssistantApp(db);
