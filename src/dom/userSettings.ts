@@ -29,20 +29,26 @@ export class DebugModeSetting extends AbstractComponent {
 export class UserSettings extends AbstractComponent {
 	constructor(protected dict: Dictionary) { 
 		super();
+
 		this.refreshUpdateStatus();
 	}
 
-	protected dictionaryStatus = $('<p>Central Dictionary Update Status: </p>');
+	protected dictionaryStatus = $('<p></p>');
 
-	protected dictionaryStatusPositive = $('<span class="wide">New Update Available</span>')
-		.append($('<button class="wide">RefreshDict</button>').on('click', () => this.refreshDictionary()));
-
-	protected dictionaryStatusNegative = $('<span class="wide green">Up To Date</span>')
+	protected genDictionaryStatus(container:JQuery, updateAvailable:boolean){
+		container.append($('<span>Central Dictionary Update Status: </span>'));
+		if (updateAvailable) {
+			let button = $('<button class="wide">RefreshDict</button>').on('click', () => this.refreshDictionary());
+			let statusPositive = $('<span class="wide">New Update Available</span>').append(button);
+			container.append(statusPositive);
+		} else {
+			container.append($('<span class="wide green">Up To Date</span>'));
+		}
+	}
 	protected refreshUpdateStatus() {
 		DictionaryService.updateAvailable(available => {
-			this.dictionaryStatusNegative.remove();
-			this.dictionaryStatusPositive.remove();
-			this.dictionaryStatus.append((available) ? this.dictionaryStatusPositive : this.dictionaryStatusNegative);
+			this.dictionaryStatus.empty();
+			this.genDictionaryStatus(this.dictionaryStatus, available);
 		});
 	}
 

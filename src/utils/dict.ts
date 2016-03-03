@@ -91,6 +91,7 @@ export module DictionaryService {
 			let currentHash = Config.get(ConfigKeys.official_dict_hash);
 			let isNewer:boolean = !currentHash || currentHash !== commitHash;
 			log(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer)?'':'not '} newer than [${currentHash}]`);
+			callback(isNewer);
 		});
 	}
 
