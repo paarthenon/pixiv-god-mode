@@ -81,6 +81,21 @@ export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
 	});
 }
 
+export function googleTranslate(japanese:string, callback:(english:string) => any) {
+	let serviceUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ja&tl=en&dt=t&q=${encodeURI(japanese)}`;
+	GM_xmlhttpRequest({
+		method: HTTP.GET,
+		url: serviceUrl,
+		onload: (response) => {
+			let match = response.responseText.match(/\[\[\[\"([^\"]+)\",/);
+			if (match && match.length > 1) {
+				callback(match[1]);
+			}
+			callback(undefined);
+		}
+	});
+}
+
 
 export function executeManual(obj:any) {
 	GM_xmlhttpRequest(obj);
