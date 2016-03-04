@@ -8,14 +8,32 @@ import {DictionaryService} from '../utils/dict'
 import {log} from '../utils/log'
 
 export class SearchPage extends GalleryPage {
-	protected darkenInList(artists: Model.Artist[]): void {
-		this.jQuery('li.image-item').toArray().forEach(image => {
-			unsafeWindow.console.log('analyzing image');
-			let artistId = parseInt(this.jQuery(image).find('a.user').attr('data-user_id'));
-			// Artist save format is [<id>] - <username>
-			if (artists.some(artist => artist.id === artistId)) {
-				this.jQuery(image).addClass('pa-hidden-thumbnail');
-			}
+	protected artistFromJQImage(image:JQuery):Model.Artist {
+		return {
+			id: parseInt(image.find('a.user').attr('data-user_id')),
+			name: image.find('a.user').attr('data-user_name')
+		}
+	}
+	protected imageFromJQImage(image:JQuery):Model.Image {
+		return {
+			id: pathUtils.getImageId(image.find('a.work').attr('href'))
+		}
+	}
+
+	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
+		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
+	}
+
+	@ExecuteOnLoad
+	public experimentalFade() {
+		this.executeOnEachImage(image => {
+			let artist = this.artistFromJQImage(image);
+			let imageObj = this.imageFromJQImage(image);
+			services.imageExistsInDatabase(artist, imageObj, exists => {
+				if (exists) {
+					image.addClass('pa-hidden-thumbnail');
+				}
+			})
 		});
 	}
 
@@ -45,11 +63,6 @@ export class SearchPage extends GalleryPage {
 	public translateTagsOnPage(): void {
 		this.changeTitle();
 		super.translateTagsOnPage();
-	}
-
-	@ExecuteOnLoad
-	public darkenImages(): void {
-		services.getArtistList((artists) => this.darkenInList(artists));
 	}
 
 	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements. 

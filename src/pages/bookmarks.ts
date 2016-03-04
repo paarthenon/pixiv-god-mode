@@ -1,6 +1,7 @@
 import {RootPage} from './root'
 import {RegisteredAction} from '../utils/actionDecorators'
 import * as services from '../services'
+import * as pathUtils from '../utils/path'
 
 export class BookmarkIllustrationPage extends RootPage {
 	public get artistId():number {
@@ -13,21 +14,33 @@ export class BookmarkIllustrationPage extends RootPage {
 		].map(x => this.jQuery(x)).concat(super.getTagElements());
 	}
 
-	protected darkenInList(artists:Model.Artist[]): void {
-		this.jQuery('section#illust-recommend li.image-item').toArray().forEach(image => {
-			let artistId = parseInt(this.jQuery(image).find('a.user').attr('data-user_id'));
-
-			// Artist save format is [<id>] - <username>
-			if (artistId === this.artistId || artists.some(artist => artist.id === artistId)) {
-				unsafeWindow.console.log('deciding to darken');
-				this.jQuery(image).addClass('pa-hidden-thumbnail');
-			}
-		});
+	protected artistFromJQImage(image: JQuery): Model.Artist {
+		return {
+			id: parseInt(image.find('a.user').attr('data-user_id')),
+			name: image.find('a.user').attr('data-user_name')
+		}
+	}
+	protected imageFromJQImage(image: JQuery): Model.Image {
+		return {
+			id: pathUtils.getImageId(image.find('a.work').attr('href'))
+		}
 	}
 
-	@RegisteredAction({id: 'pa_darken_bookmark_suggestions', label: 'Darken Bookmarks', icon: 'paint-format'})
-	public darkenBookmarks() {
-		services.getArtistList((artists)=>this.darkenInList(artists));
+	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
+		this.jQuery('section#illust-recommend li.image-item').toArray().forEach(image => func(this.jQuery(image)));
+	}
+
+	@RegisteredAction({ id: 'pa_fade_bookmark_suggestions', label: 'Fade Downloaded Bookmarks', icon: 'paint-format' })
+	public experimentalFade() {
+		this.executeOnEachImage(image => {
+			let artist = this.artistFromJQImage(image);
+			let imageObj = this.imageFromJQImage(image);
+			services.imageExistsInDatabase(artist, imageObj, exists => {
+				if (exists) {
+					image.addClass('pa-hidden-thumbnail');
+				}
+			})
+		});
 	}
 
 	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks', icon: 'spinner2'})

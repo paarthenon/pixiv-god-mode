@@ -81,6 +81,23 @@ export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
 	});
 }
 
+export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback:(param:boolean) => any) : void {
+	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
+	let message = {
+		artist,
+		image
+	};
+	GM_xmlhttpRequest({
+		method: HTTP.POST,
+		url: `${server_url}/imageExists`,
+		data: JSON.stringify(message),
+		headers: {
+			"Content-Type": "application/json"
+		},
+		onload: response => callback(JSON.parse(response.responseText)['exists'])
+	});
+}
+
 export function googleTranslate(japanese:string, callback:(english:string) => any) {
 	let serviceUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ja&tl=en&dt=t&q=${encodeURI(japanese)}`;
 	GM_xmlhttpRequest({

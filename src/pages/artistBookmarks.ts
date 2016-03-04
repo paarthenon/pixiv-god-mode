@@ -4,19 +4,33 @@ import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 
 export class ArtistBookmarksPage extends GalleryPage {
-	protected darkenInList(artists: Model.Artist[]): void {
-		this.jQuery('li.image-item').toArray().forEach(image => {
-			unsafeWindow.console.log('analyzing image');
-			let artistId = parseInt(this.jQuery(image).find('a.user').attr('data-user_id'));
-			// Artist save format is [<id>] - <username>
-			if (artists.some(artist => artist.id === artistId)) {
-				this.jQuery(image).addClass('pa-hidden-thumbnail');
-			}
-		});
+
+	protected artistFromJQImage(image: JQuery): Model.Artist {
+		return {
+			id: parseInt(image.find('a.user').attr('data-user_id')),
+			name: image.find('a.user').attr('data-user_name')
+		}
+	}
+	protected imageFromJQImage(image: JQuery): Model.Image {
+		return {
+			id: pathUtils.getImageId(image.find('a.work').attr('href'))
+		}
+	}
+
+	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
+		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
 	}
 
 	@ExecuteOnLoad
-	public darkenImages(): void {
-		services.getArtistList((artists) => this.darkenInList(artists));
+	public experimentalFade() {
+		this.executeOnEachImage(image => {
+			let artist = this.artistFromJQImage(image);
+			let imageObj = this.imageFromJQImage(image);
+			services.imageExistsInDatabase(artist, imageObj, exists => {
+				if (exists) {
+					image.addClass('pa-hidden-thumbnail');
+				}
+			})
+		});
 	}
 }

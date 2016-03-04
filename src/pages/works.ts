@@ -24,16 +24,23 @@ export class WorksPage extends GalleryPage {
 		.concat(super.getTagElements());
 	}
 
-	private darkenInList(pictures:Model.Image[]):void {
-		this.jQuery('li.image-item').toArray().forEach(image => {
-			let imageId = pathUtils.getImageId($(image).find('a.work').attr('href'));
+	protected executeOnEachImage<T>(func:(image:JQuery) => T) {
+		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
+	}
+
+	public experimentalFade() {
+		this.executeOnEachImage(image => {
+			let imageId = pathUtils.getImageId(image.find('a.work').attr('href'));
 			// Picture format is <imgnum>_<page>_master<size>.<filetype> or imgnum_p<pagenum>.<filetype>
 			// TODO: ^ is wrong, _square1200 is also a valid option, fix.
-			if (pictures.some(picture => picture.id === imageId)) {
-				this.jQuery(image).addClass('pa-hidden-thumbnail');
-			}
+			services.imageExistsInDatabase(this.artist, {id: imageId}, exists => {
+				if (exists) {
+					image.addClass('pa-hidden-thumbnail');
+				}
+			})
 		});
 	}
+
 	
 	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements. 
 	// Make this action only visible if we are not already on the last page. 
@@ -62,12 +69,6 @@ export class WorksPage extends GalleryPage {
 				`http://www.pixiv.net/member_illust.php?mode=${(parseInt(illust.illust_page_count) > 1) ? 'manga' : 'medium'}&illust_id=${illust.illust_id}`);
 			combined_urls.forEach((url:string) => GM_openInTab(url));
         });
-	}
-
-
-	@ExecuteOnLoad
-	public darkenImages():void {
-		services.getArtistImages(this.artistId, (pictures) => this.darkenInList(pictures));
 	}
 
 	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open'})
