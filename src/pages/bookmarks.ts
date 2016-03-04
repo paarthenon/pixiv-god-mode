@@ -2,6 +2,7 @@ import {RootPage} from './root'
 import {RegisteredAction} from '../utils/actionDecorators'
 import * as services from '../services'
 import * as pathUtils from '../utils/path'
+import * as jQUtils from '../utils/jq'
 
 export class BookmarkIllustrationPage extends RootPage {
 	public get artistId():number {
@@ -14,18 +15,6 @@ export class BookmarkIllustrationPage extends RootPage {
 		].map(x => this.jQuery(x)).concat(super.getTagElements());
 	}
 
-	protected artistFromJQImage(image: JQuery): Model.Artist {
-		return {
-			id: parseInt(image.find('a.user').attr('data-user_id')),
-			name: image.find('a.user').attr('data-user_name')
-		}
-	}
-	protected imageFromJQImage(image: JQuery): Model.Image {
-		return {
-			id: pathUtils.getImageId(image.find('a.work').attr('href'))
-		}
-	}
-
 	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
 		this.jQuery('section#illust-recommend li.image-item').toArray().forEach(image => func(this.jQuery(image)));
 	}
@@ -33,8 +22,8 @@ export class BookmarkIllustrationPage extends RootPage {
 	@RegisteredAction({ id: 'pa_fade_bookmark_suggestions', label: 'Fade Downloaded Bookmarks', icon: 'paint-format' })
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
-			let artist = this.artistFromJQImage(image);
-			let imageObj = this.imageFromJQImage(image);
+			let artist = jQUtils.artistFromJQImage(image);
+			let imageObj = jQUtils.imageFromJQImage(image);
 			services.imageExistsInDatabase(artist, imageObj, exists => {
 				if (exists) {
 					image.addClass('pa-hidden-thumbnail');
