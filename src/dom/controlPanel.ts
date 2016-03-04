@@ -9,8 +9,9 @@ import {GoogleTranslateView} from './googleTranslate'
 
 import {Tab, TabbedView} from './tabbedView'
 
-
 import {RootPage} from '../pages/root'
+
+import * as Deps from '../deps'
 
 export interface ControlPanelInput {
 	userDictionary: Dictionary
@@ -23,7 +24,7 @@ export class ControlPanel extends AbstractComponent {
 	protected userDictionary: Dictionary;
 	protected page: RootPage;
 
-	protected self = $('<div id="pixiv-assistant-control-panel" class="hidden"><h1>Pixiv Assistant Control Panel</h1></div>');
+	protected self = Deps.jQ('<div id="pixiv-assistant-control-panel" class="hidden"><h1>Pixiv Assistant Control Panel</h1></div>');
 
 	protected visible: boolean = false;
 

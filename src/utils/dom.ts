@@ -1,7 +1,9 @@
-declare var $: JQueryStatic;
+// declare var $: JQueryStatic;
 
 import {generateFontTemplate, fontString} from '../dom/fontSetup'
 import {Component,renderComponent} from '../dom/component'
+
+import * as Deps from '../deps'
 
 let globalCSS = `
 	.pa-tabbed-view > ul.tabs > li {
@@ -26,7 +28,7 @@ let globalCSS = `
         
         width:800px;
         min-height:200px;
-        max-height:1000px;
+        max-height:80%;
 
         border: 1px solid;
 		border-color: #aaa #999 #888;
@@ -138,6 +140,11 @@ export function initialize() {
 	GM_addStyle(generateFontTemplate(fontString.icomoon));
 }
 
-export function render(components:Component[]) {
-	components.forEach(component => $('body').append(renderComponent(component)));
+export function render(jQuery:JQueryStatic, components:Component[]) {
+	components.forEach(component => {
+		unsafeWindow.console.log('DomUtils | render | rendering component', component);
+		let renderedComponent = renderComponent(component);
+		unsafeWindow.console.log('DomUtils | render | completed rendering component', component);
+		Deps.jQ('body').append(renderedComponent);
+	});
 }

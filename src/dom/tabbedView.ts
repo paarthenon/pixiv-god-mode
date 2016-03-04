@@ -1,7 +1,9 @@
 import {Component, AbstractComponent, renderComponent} from './component'
 
+import * as Deps from '../deps'
+
 export class Tab {
-	protected self = $('<div class="pa-tab-content"></div>');
+	protected self = Deps.jQ('<div class="pa-tab-content"></div>');
 	constructor(public label:string, public content:Component) {
 		this.self.hide();
 	}
@@ -45,9 +47,9 @@ export class TabbedView extends AbstractComponent {
 	}
 
 	public render():JQuery {
-		let tabs = Object.keys(this.tabs).map(tabLabel => $(`<li>${tabLabel}</li>`).on('click',() => this.selectTab(tabLabel)));
-		let tabBar = $('<ul class="tabs"></ul>');
+		let tabs = Object.keys(this.tabs).map(tabLabel => Deps.jQ(`<li>${tabLabel}</li>`).on('click', () => this.selectTab(tabLabel)));
+		let tabBar = Deps.jQ('<ul class="tabs"></ul>');
 		tabBar.append(tabs);
-		return $('<div class="pa-tabbed-view"></div>').append(tabBar);
+		return Deps.jQ('<div class="pa-tabbed-view"></div>').append(tabBar);
 	}
 }

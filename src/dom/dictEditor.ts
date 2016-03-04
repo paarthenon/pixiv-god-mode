@@ -1,9 +1,11 @@
 import {Dictionary} from '../utils/dict'
 import {Component, AbstractComponent, renderComponent} from './component'
 
+import * as Deps from '../deps'
+
 export class AddNewInput extends AbstractComponent {
-	protected keyInput = $('<input placeholder="japanese">');
-	protected valueInput = $('<input placeholder="english">');
+	protected keyInput = Deps.jQ('<input placeholder="japanese">');
+	protected valueInput = Deps.jQ('<input placeholder="english">');
 
 	public get japanese() {
 		return this.keyInput.val();
@@ -26,7 +28,7 @@ export class AddNewInput extends AbstractComponent {
 		super(); 
 	}
 	public render():JQuery {
-		let button = $('<button>Add</button>').click((event) => {
+		let button = Deps.jQ('<button>Add</button>').click((event) => {
 			this.dict.set(this.japanese, this.english);
 			if (this.onAdd) {
 				this.onAdd(this.japanese);
@@ -35,7 +37,7 @@ export class AddNewInput extends AbstractComponent {
 			this.japanese = '';
 			this.english = '';
 		});
-		return $('<div class="pa-assistant-add-dictionary-item-container"></div>')
+		return Deps.jQ('<div class="pa-assistant-add-dictionary-item-container"></div>')
 			.append(this.keyInput)
 			.append(this.valueInput)
 			.append(button)
@@ -67,12 +69,12 @@ class DictionaryEntryEditor extends AbstractComponent {
 		this.self.remove();
 		this.shout(DictionaryEntryEditor.events.itemDeleted);
 	}
-	private self = $('<div class="dictionary-config-container">');
+	private self = Deps.jQ('<div class="dictionary-config-container">');
 	public render():JQuery {
-		let keyLabel = $(`<label>${this.key}</label>`);
-		let valueInput = $(`<input data-dict-key="${this.key}" value="${this.value}" />`);
-		let updateButton = $('<button>Update</button>').click(event => this.update(valueInput.val()));
-		let deleteButton = $('<button>Delete</button>').click(event => this.deleteEntry());
+		let keyLabel = Deps.jQ(`<label>${this.key}</label>`);
+		let valueInput = Deps.jQ(`<input data-dict-key="${this.key}" value="${this.value}" />`);
+		let updateButton = Deps.jQ('<button>Update</button>').click(event => this.update(valueInput.val()));
+		let deleteButton = Deps.jQ('<button>Delete</button>').click(event => this.deleteEntry());
 		return this.self
 			.append(keyLabel)
 			.append(valueInput)
@@ -87,7 +89,7 @@ export class DictionaryEditor extends AbstractComponent {
 		deletedTranslation: 'DELETED_TRANSLATION'
 	};
 
-	protected self = $('<div class="pa-assistant-dictionary-config-editor"></div>');
+	protected self = Deps.jQ('<div class="pa-assistant-dictionary-config-editor"></div>');
 
 	protected visible: boolean = false;
 

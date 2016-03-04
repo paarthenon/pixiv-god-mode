@@ -5,12 +5,14 @@ import {AddNewInput} from './dictEditor'
 
 import * as services from '../services'
 
+import * as Deps from '../deps'
+
 export class MiniTranslationModal extends AbstractComponent {
 	public static events = {
 		addedTranslation: 'NEW_TRANSLATION',
 	};
 
-	protected self = $('<div id="pa-assistant-mini-translation-modal"></div>');
+	protected self = Deps.jQ('<div id="pa-assistant-mini-translation-modal"></div>');
 
 	constructor(protected dict: Dictionary, protected potentialTag:string) { 
 		super(); 
@@ -33,6 +35,7 @@ export class MiniTranslationModal extends AbstractComponent {
 	}
 
 	public toggleVisibility() {
+		unsafeWindow.console.log('MiniTranslationModal | toggleVisibility | called');
 		this.self.toggle();
 	}
 
