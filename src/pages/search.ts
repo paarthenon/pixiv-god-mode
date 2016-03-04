@@ -14,7 +14,7 @@ export class SearchPage extends GalleryPage {
 			let artistId = parseInt(this.jQuery(image).find('a.user').attr('data-user_id'));
 			// Artist save format is [<id>] - <username>
 			if (artists.some(artist => artist.id === artistId)) {
-				this.jQuery(image).css('background-color', '#333334');
+				this.jQuery(image).addClass('pa-hidden-thumbnail');
 			}
 		});
 	}

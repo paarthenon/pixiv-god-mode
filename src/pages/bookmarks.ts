@@ -20,7 +20,7 @@ export class BookmarkIllustrationPage extends RootPage {
 			// Artist save format is [<id>] - <username>
 			if (artistId === this.artistId || artists.some(artist => artist.id === artistId)) {
 				unsafeWindow.console.log('deciding to darken');
-				this.jQuery(image).css('background-color', '#333334');
+				this.jQuery(image).addClass('pa-hidden-thumbnail');
 			}
 		});
 	}

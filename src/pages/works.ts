@@ -30,7 +30,7 @@ export class WorksPage extends GalleryPage {
 			// Picture format is <imgnum>_<page>_master<size>.<filetype> or imgnum_p<pagenum>.<filetype>
 			// TODO: ^ is wrong, _square1200 is also a valid option, fix.
 			if (pictures.some(picture => picture.id === imageId)) {
-				this.jQuery(image).css('background-color', '#333334');
+				this.jQuery(image).addClass('pa-hidden-thumbnail');
 			}
 		});
 	}

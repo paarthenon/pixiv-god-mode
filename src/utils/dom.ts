@@ -6,6 +6,13 @@ import {Component,renderComponent} from '../dom/component'
 import * as Deps from '../deps'
 
 let globalCSS = `
+	.pa-hidden-thumbnail {
+		opacity: .2;
+		transition: .3s;
+	}
+	.pa-hidden-thumbnail:hover {
+		opacity: 1;
+	}
 	.pa-tabbed-view > ul.tabs > li {
 		display: inline;
 		color: blue;
