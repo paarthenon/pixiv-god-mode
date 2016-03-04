@@ -53,8 +53,7 @@ export class WorksPage extends GalleryPage {
 		});
 	}
 
-	@RegisteredAction({ id: 'pa_button_open_all_in_tabs', label: 'Open all artist works', icon: 'new-tab', color: 'red'})
-	public openAllInTabs(): void {
+	public debugOpenAllArtistImagesInTabs(): void {
 		(<any>unsafeWindow).pixiv.api.userProfile({
 			user_ids: this.artistId,
 			illust_num: 1000000
@@ -77,8 +76,7 @@ export class WorksPage extends GalleryPage {
 	}
 
 
-	@RegisteredAction({id: 'pa_button_download_all_user_images', label: 'Download All Images (Expensive)', icon: 'folder-download'})
-	public downloadAllImagesForArtist():void {
+	public debugDownloadAllImagesForArtist():void {
 		(<any>unsafeWindow).pixiv.api.userProfile({
 			user_ids: this.artistId,
 			illust_num: 1000000
