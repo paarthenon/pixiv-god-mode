@@ -15,13 +15,7 @@ export class SidebarButton extends AbstractComponent {
 		log('SidebarButton | render | adding background color');
 		self.css('background-color', this.action.color || '#000');
 		log('SidebarButton | render | adding callback');
-		try {
-			self.on('click', this.action.execute);
-		}
-		catch (e) {
-			// statements to handle any exceptions
-			unsafeWindow.console.log(e); // pass exception object to error handler
-		}
+		self.on('click', this.action.execute);
 		log('SidebarButton | render | creating tooltip');
 		let tooltip = Deps.jQ(`<a class="pa-tooltip"><span class="pa-icon pa-icon-${this.action.icon || 'images'}"></span><span class="pa-tooltip-body">${this.action.label}</span></span></a>'`);
 		log('SidebarButton | render | appending tooltip');
