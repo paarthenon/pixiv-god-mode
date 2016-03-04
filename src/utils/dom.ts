@@ -7,7 +7,7 @@ import * as Deps from '../deps'
 
 let globalCSS = `
 	.pa-hidden-thumbnail {
-		opacity: .2;
+		opacity: .12;
 		transition: .3s;
 	}
 	.pa-hidden-thumbnail:hover {
