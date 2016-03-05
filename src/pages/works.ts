@@ -28,6 +28,7 @@ export class WorksPage extends GalleryPage {
 		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
 	}
 
+	@ExecuteOnLoad
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
 			let imageId = pathUtils.getImageId(image.find('a.work').attr('href'));
