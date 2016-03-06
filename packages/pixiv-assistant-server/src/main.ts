@@ -76,6 +76,14 @@ app.post('/downloadMulti', (req, res) => {
 	});
 });
 
+app.post('/imageExists', (req, res) => {
+	let artist: Model.Artist = req.body.artist;
+	let image: Model.Image = req.body.image;
+
+	let result = pa.imageExists(artist, image);
+	res.json({ exists: result });
+});
+
 app.listen('9002', () => {
 	console.log('listening on port 9002');
 })

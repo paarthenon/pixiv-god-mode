@@ -50,6 +50,10 @@ export class PixivAssistantApp {
 		}
 	}
 
+	public imageExists(artist:Model.Artist, image: Model.Image) {
+		return this.db.getImagesForArtist(artist).filter(img => img.id === image.id).length > 0;
+	}
+
 	// This is intentionally duplicated from db.ts. While this code is the same,
 	// there are actually two different intentions. The database is concerned with
 	// converting between the filename stored on disk and the file object. This is
