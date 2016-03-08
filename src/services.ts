@@ -14,24 +14,6 @@ class HTTP {
 	static POST = 'POST'; 
 }
 
-export function getArtistList(callback:(artists:Model.Artist[]) => any):void {
-	log('SERVICES getArtistList called');
-	GM_xmlhttpRequest({
-		method: HTTP.GET,
-		url: `${server_url}/list`,
-		onload: (response) => callback(JSON.parse(response.responseText))
-	});
-}
-
-export function getArtistImages(artistId:number, callback:(items:Model.Image[]) => any):void {
-	log(`SERVICES getArtistImages called with artist id [${artistId}]`);
-	GM_xmlhttpRequest({
-		method: HTTP.GET,
-		url: `${server_url}/artist/${artistId}`,
-		onload: (response) => callback(JSON.parse(response.responseText))
-	});
-}
-
 export function openFolder(artist:Model.Artist):void {
 	log(`SERVICES openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
 	GM_xmlhttpRequest({
