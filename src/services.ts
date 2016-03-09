@@ -3,6 +3,8 @@ import ConfigKeys from './configKeys'
 
 import {log} from './utils/log'
 
+import {Features, Messages} from '../common/proto'
+
 let server_url = Config.get(ConfigKeys.server_url);
 if(!server_url){
 	server_url = window.prompt("Server url?", 'http://localhost:9002');
@@ -95,6 +97,23 @@ export function googleTranslate(japanese:string, callback:(english:string) => an
 	});
 }
 
+function callService<Req, Res>(feature:string, request:Req, callback?:(response:Res) => any) {
+	GM_xmlhttpRequest({
+		method: HTTP.POST,
+		url: `${server_url}/${feature}`,
+		data: JSON.stringify(request),
+		headers: { "Content-Type": "application/json" },
+		onload: (response) => {
+			if (callback) {
+				callback(JSON.parse(response.responseText));
+			}
+		}
+	})
+}
+
+export function sampleCall(request:Messages.ImageRequest, callback:(resp:Messages.Response<boolean>)=>any) {
+	callService(Features.OpenToRepo, request, callback);
+}
 
 export function executeManual(obj:any) {
 	GM_xmlhttpRequest(obj);
