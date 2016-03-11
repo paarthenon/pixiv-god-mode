@@ -41,4 +41,13 @@ export module Messages {
 	export interface ImageRequest {
 		image :Model.Image
 	}
+	export interface ArtistRequest {
+		artist: Model.Artist
+	}
+	export interface UrlRequest {
+		url: string
+	}
+	export type ArtistImageRequest = ArtistRequest & ImageRequest
+	export type ArtistUrlRequest = ArtistRequest & UrlRequest
+
 }
