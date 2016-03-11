@@ -10,7 +10,7 @@ export class ActionCache {
 	}
 
 	public bind(actualThis: Object) {
-		underscore.mapObject(this.actions, val => val.bind(actualThis));
+		this.actions = underscore.mapObject(this.actions, val => val.bind(actualThis));
 	}
 
 	public register(name: string) {

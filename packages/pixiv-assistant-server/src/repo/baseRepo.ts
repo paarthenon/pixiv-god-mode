@@ -4,6 +4,10 @@ import {ActionCache} from '../utils/actionCache'
 export abstract class BaseRepo implements PixivRepo {
 	protected abstract getCache(): ActionCache;
 
+	constructor(protected repoPath:string) {
+		this.getCache().bind(this);
+	}
+
 	public supports(action:string) {
 		return action in this.getCache().registry;
 	}
