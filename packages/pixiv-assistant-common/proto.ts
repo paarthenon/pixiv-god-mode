@@ -5,7 +5,7 @@ export const Features = {
 	DownloadManga: 'downloadManga',
 	DownloadAnimation: 'downloadAnimation',
 	ImageExists: 'imageExists',
-	ImageExistsForArtist: 'imageExists'
+	ImageExistsForArtist: 'imageExistsForArtist'
 }
 
 export module Model {
