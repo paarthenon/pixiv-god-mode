@@ -5,7 +5,9 @@ export const Features = {
 	DownloadManga: 'downloadManga',
 	DownloadAnimation: 'downloadAnimation',
 	ImageExists: 'imageExists',
-	ImageExistsForArtist: 'imageExistsForArtist'
+	ImageExistsForArtist: 'imageExistsForArtist',
+	ListArtists: 'listArtists',
+
 }
 
 export module Model {
@@ -49,5 +51,8 @@ export module Messages {
 	}
 	export type ArtistImageRequest = ArtistRequest & ImageRequest
 	export type ArtistUrlRequest = ArtistRequest & UrlRequest
+	export interface BulkArtistUrlRequest {
+		items: ArtistUrlRequest[]
+	}
 
 }
