@@ -18,6 +18,8 @@ import * as XRegExp from "xregexp"
 
 import * as pathUtils from '../utils/path'
 
+import * as Q from 'q'
+
 const opn = require('opn');
 
 class ArtistImageDatabase {
@@ -84,6 +86,10 @@ class ArtistImageDatabase {
 }
 
 
+interface DownloadMessage {
+	url :string
+	path :string
+}
 
 export class ArtistImageRepo extends BaseRepo {
 	private static actions = new ActionCache();
@@ -97,11 +103,6 @@ export class ArtistImageRepo extends BaseRepo {
 	constructor(protected path:string) {
 		super(path);
 		this.db = new ArtistImageDatabase(path);
-	}
-
-	@ArtistImageRepo.actions.register('five')
-	public getArtists():Model.Artist[] {
-		return this.db.Artists;
 	}
 
 	public getImagesForArtistId(artistId:number):Model.Image[] {
@@ -166,66 +167,69 @@ export class ArtistImageRepo extends BaseRepo {
 		return undefined;
 	}
 
-	protected downloadFromPixiv(urlString:string, pathString:string, callback:(success:boolean)=>any) {
-		let dir = path.dirname(pathString);
-		mkdirp(dir, err => {
-			if (err) {
-				log(`Error creating folder [${dir}], err: [${err}]`);
-				callback(false);
-				return;
-			}
-		});
-		
-		let referer = urllib.resolve(urlString, '/');
-		let url = urllib.parse(urlString);
+	protected downloadFromPixiv(msg:DownloadMessage):Q.IPromise<boolean> {
+		let makeDerp = Q.denodeify(mkdirp);
 
-		http.get({
-			protocol: url.protocol,
-			hostname: url.hostname,
-			port: url.port,
-			path: url.path,
-			headers: {
-				referer: referer
-			}
-		}, (response) => {
-			response.pipe(fs.createWriteStream(pathString));
-		});
+		return Q(msg)
+			.then(msg => makeDerp(path.dirname(msg.path)).then(succ => msg, err => Q.reject(`Directory creation failed with err [${err}]`)))
+			.then((msg: DownloadMessage) => {
+				let referer = urllib.resolve(msg.url, '/');
+				let url = urllib.parse(msg.url);
+
+				let q = Q.defer();
+				http.get({
+					protocol: url.protocol,
+					hostname: url.hostname,
+					port: url.port,
+					path: url.path,
+					headers: {
+						referer: referer
+					}
+				}, (response) => {
+					response.pipe(fs.createWriteStream(msg.path))
+						.on('finish', () => q.resolve(msg))
+						.on('error', () => q.reject('error while writing to file'));
+				});
+
+				return q;
+			})
+			.then(msg => true, msg => false);
 	}
 
-	public downloadZip(artist: Model.Artist, zipUrl: string, callback: (success: boolean) => any) {
-		let zipName = path.basename(zipUrl);
-		let zipPath = path.join(this.db.getPathForArtist(artist), 'zip', zipName);
+	public downloadZip(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
+		let zipName = path.basename(request.url);
+		let zipPath = path.join(this.db.getPathForArtist(request.artist), 'zip', zipName);
 
-		log(`writing image from [${zipUrl}] to [${zipPath}]`);
-		this.downloadFromPixiv(zipUrl, zipPath, callback);
+		log(`writing image from [${request.url}] to [${zipPath}]`);
+		return this.downloadFromPixiv({ url: request.url, path: zipPath });
 	}
 
-	public download(artist: Model.Artist, imageUrl: string, callback: (success: boolean) => any) {
-		let imageName = path.basename(imageUrl);
+	public download(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
+		let imageName = path.basename(request.url);
 		let image = this.baseNameToImage(imageName);
 
-		let imagePath = this.db.getPathForImage(artist, image);
+		let imagePath = this.db.getPathForImage(request.artist, image);
 
-		log(`writing image from [${imageUrl}] to [${imagePath}]`);
-		this.downloadFromPixiv(imageUrl, imagePath, callback);
+		log(`writing image from [${request.url}] to [${imagePath}]`);
+		return this.downloadFromPixiv({ url: request.url, path: imagePath });
 	}
 
-	public downloadMulti(artist: Model.Artist, imageUrls: string[], callback: (failures: string[]) => any) {
-		let errors:string[] = [];
+	// public downloadMulti(artist: Model.Artist, imageUrls: string[], callback: (failures: string[]) => any) {
+	// 	let errors:string[] = [];
 
-		let delayedReturn = underscore.after(imageUrls.length, returnErrors);
+	// 	let delayedReturn = underscore.after(imageUrls.length, returnErrors);
 
-		imageUrls.forEach(imageUrl => {
-			this.download(artist, imageUrl, success => {
-				if (!success) {
-					errors.push(imageUrl);
-				}
-				delayedReturn();
-			});
-		})
+	// 	imageUrls.forEach(imageUrl => {
+	// 		this.download(artist, imageUrl, success => {
+	// 			if (!success) {
+	// 				errors.push(imageUrl);
+	// 			}
+	// 			delayedReturn();
+	// 		});
+	// 	})
 
-		function returnErrors(){
-			return errors;
-		}
-	}
+	// 	function returnErrors(){
+	// 		return errors;
+	// 	}
+	// }
 }
