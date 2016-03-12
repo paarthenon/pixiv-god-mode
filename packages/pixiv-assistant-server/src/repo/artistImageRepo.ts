@@ -99,6 +99,7 @@ export class ArtistImageRepo extends BaseRepo {
 		this.db = new ArtistImageDatabase(path);
 	}
 
+	@ArtistImageRepo.actions.register('five')
 	public getArtists():Model.Artist[] {
 		return this.db.Artists;
 	}
@@ -110,6 +111,11 @@ export class ArtistImageRepo extends BaseRepo {
 		} else {
 			return [];
 		}
+	}
+
+	@ArtistImageRepo.actions.register('four')
+	public returnFour(){
+		return 4;
 	}
 
 	@ArtistImageRepo.actions.register(Features.OpenToArtist)
