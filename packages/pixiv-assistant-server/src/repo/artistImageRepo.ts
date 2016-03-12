@@ -214,22 +214,7 @@ export class ArtistImageRepo extends BaseRepo {
 		return this.downloadFromPixiv({ url: request.url, path: imagePath });
 	}
 
-	// public downloadMulti(artist: Model.Artist, imageUrls: string[], callback: (failures: string[]) => any) {
-	// 	let errors:string[] = [];
-
-	// 	let delayedReturn = underscore.after(imageUrls.length, returnErrors);
-
-	// 	imageUrls.forEach(imageUrl => {
-	// 		this.download(artist, imageUrl, success => {
-	// 			if (!success) {
-	// 				errors.push(imageUrl);
-	// 			}
-	// 			delayedReturn();
-	// 		});
-	// 	})
-
-	// 	function returnErrors(){
-	// 		return errors;
-	// 	}
-	// }
+	public downloadMulti(request: Messages.BulkArtistUrlRequest) {
+		return Q.all(request.items.map(msg => this.download(msg)));
+	}
 }
