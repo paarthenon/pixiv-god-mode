@@ -3,6 +3,7 @@ import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import * as services from '../services'
 
+import {Model} from '../../common/proto'
 
 export class IllustrationPage extends RootPage {
 	public get artistId():number {

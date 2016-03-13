@@ -15,7 +15,6 @@
     ],
     "files": [
         "typings/tsd.d.ts",
-        "common/pixiv-assistant-common.d.ts",
         "src/main.ts"
     ]
 }

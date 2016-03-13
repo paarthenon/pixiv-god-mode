@@ -5,6 +5,8 @@ import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorat
 import {GalleryPage} from './gallery'
 import {settingKeys, getSetting} from '../userSettings'
 
+import {Model} from '../../common/proto'
+
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);

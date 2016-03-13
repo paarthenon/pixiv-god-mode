@@ -3,7 +3,7 @@ import ConfigKeys from './configKeys'
 
 import {log} from './utils/log'
 
-import {Features, Messages} from '../common/proto'
+import {Features, Model, Messages} from '../common/proto'
 
 let server_url = Config.get(ConfigKeys.server_url);
 if(!server_url){
@@ -16,69 +16,49 @@ class HTTP {
 	static POST = 'POST'; 
 }
 
-export function openFolder(artist:Model.Artist):void {
-	log(`SERVICES openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
+function callService<Req, Res>(feature: string, request: Req, callback?: (response: Res) => any) {
 	GM_xmlhttpRequest({
 		method: HTTP.POST,
-		url: `${server_url}/openFolder/${artist.id}`,
-		data: `name=${artist.name}`,
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded"
+		url: `${server_url}/${feature}`,
+		data: JSON.stringify(request),
+		headers: { "Content-Type": "application/json" },
+		onload: (response) => {
+			if (callback) {
+				callback(JSON.parse(response.responseText));
+			}
 		}
-	});
+	})
 }
+
+export function openFolder(artist: Model.Artist): void {
+	log(`SERVICES openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
+	callService(Features.OpenToArtist, artist);
+}
+
 
 export function download(artist:Model.Artist, imageUrl:string):void {
 	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
-	GM_xmlhttpRequest({
-		method: HTTP.POST,
-		url: `${server_url}/download`,
-		data: `id=${artist.id}&name=${artist.name}&url=${imageUrl}`,
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded"
-		}
-	});
+	let msg: Messages.ArtistUrlRequest = { artist: artist, url: imageUrl };
+	callService(Features.DownloadImage, msg);
 }
 
 export function downloadZip(artist: Model.Artist, zipUrl: string): void {
 	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
-	GM_xmlhttpRequest({
-		method: HTTP.POST,
-		url: `${server_url}/downloadZip`,
-		data: `id=${artist.id}&name=${artist.name}&url=${zipUrl}`,
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded"
-		}
-	});
+	let msg: Messages.ArtistUrlRequest = { artist: artist, url: zipUrl };
+	callService(Features.DownloadAnimation, msg);
 }
 
 export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
 	log(`SERVICES downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
-	let toSend = { artist: artist, urls: imageUrls };
-	GM_xmlhttpRequest({
-		method: HTTP.POST,
-		url: `${server_url}/downloadMulti`,
-		data: JSON.stringify(toSend),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	});
+	let msg : Messages.BulkArtistUrlRequest = { items: imageUrls.map(url => ({ artist, url })) };
+	callService(Features.DownloadManga, msg);
 }
 
 export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback:(param:boolean) => any) : void {
 	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
-	let message = {
-		artist,
-		image
-	};
-	GM_xmlhttpRequest({
-		method: HTTP.POST,
-		url: `${server_url}/imageExists`,
-		data: JSON.stringify(message),
-		headers: {
-			"Content-Type": "application/json"
-		},
-		onload: response => callback(JSON.parse(response.responseText)['exists'])
+	let msg: Messages.ArtistImageRequest = { artist, image };
+	callService<Messages.ArtistImageRequest, Messages.PositiveResponse<boolean>>(Features.ImageExistsForArtist, msg, resp => {
+		callback(resp.success && resp.data);
 	});
 }
 
@@ -95,24 +75,6 @@ export function googleTranslate(japanese:string, callback:(english:string) => an
 			callback(undefined);
 		}
 	});
-}
-
-function callService<Req, Res>(feature:string, request:Req, callback?:(response:Res) => any) {
-	GM_xmlhttpRequest({
-		method: HTTP.POST,
-		url: `${server_url}/${feature}`,
-		data: JSON.stringify(request),
-		headers: { "Content-Type": "application/json" },
-		onload: (response) => {
-			if (callback) {
-				callback(JSON.parse(response.responseText));
-			}
-		}
-	})
-}
-
-export function sampleCall(request:Messages.ImageRequest, callback:(resp:Messages.Response<boolean>)=>any) {
-	callService(Features.OpenToRepo, request, callback);
 }
 
 export function executeManual(obj:any) {

@@ -1,3 +1,4 @@
+import {Model} from '../../common/proto'
 import * as pathUtils from './path'
 
 export function artistFromJQImage(image:JQuery):Model.Artist {
