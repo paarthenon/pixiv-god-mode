@@ -114,11 +114,6 @@ export class ArtistImageRepo extends BaseRepo {
 		}
 	}
 
-	@ArtistImageRepo.actions.register('four')
-	public returnFour(){
-		return 4;
-	}
-
 	@ArtistImageRepo.actions.register(Features.OpenToArtist)
 	public openFolder(artist:Model.Artist) {
 		let dbArtist = this.db.getArtistById(artist.id);
@@ -196,6 +191,7 @@ export class ArtistImageRepo extends BaseRepo {
 			.then(msg => true, msg => false);
 	}
 
+	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
 	public downloadZip(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
 		let zipName = path.basename(request.url);
 		let zipPath = path.join(this.db.getPathForArtist(request.artist), 'zip', zipName);
@@ -204,6 +200,7 @@ export class ArtistImageRepo extends BaseRepo {
 		return this.downloadFromPixiv({ url: request.url, path: zipPath });
 	}
 
+	@ArtistImageRepo.actions.register(Features.DownloadImage)
 	public download(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
 		let imageName = path.basename(request.url);
 		let image = this.baseNameToImage(imageName);
@@ -214,6 +211,7 @@ export class ArtistImageRepo extends BaseRepo {
 		return this.downloadFromPixiv({ url: request.url, path: imagePath });
 	}
 
+	@ArtistImageRepo.actions.register(Features.DownloadManga)
 	public downloadMulti(request: Messages.BulkArtistUrlRequest) {
 		return Q.all(request.items.map(msg => this.download(msg)));
 	}
