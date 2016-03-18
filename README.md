@@ -13,4 +13,31 @@ The other is a locally stored user dictionary for any definitions that the globa
 
 # Page Features
 
-TBD
+## Global
+
+### Control Panel
+
+### Add Translation
+
+A small modal to immediately add a translation to the user dictionary. On pages that focus on a specific tag (the search page for a single tag, the member tag works page) the modal will automatically load with the Japanese text and a machine translation to English.
+
+## Search Page
+
+ * Jump to last page
+
+## Works page
+
+ * Jump to last page
+ * Open to artist folder
+ * Open all images in new tabs
+
+## Illustration page
+
+ * Autoexpand image
+ * Open artist repo
+ * Download artist image
+
+## Manga page
+
+ * Automatically switch to expanded images
+ 
