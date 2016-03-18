@@ -27,9 +27,10 @@ app.get('/supports/:action', (req, res) => {
 	res.json(pas.supports(action));
 });
 
-app.get('/:action', (req, res) => {
+app.post('/:action', (req, res) => {
 	let action: string = req.params.action;
 	let message: any = req.body;
+	console.log('Action\n', action, '\nMessage\n', message, '\n\n');
 	q(message)
 		.then(msg => pas.dispatch(action, msg))
 		.then<Proto.Messages.Response<any>>(

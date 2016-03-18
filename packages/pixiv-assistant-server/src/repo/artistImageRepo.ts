@@ -63,7 +63,8 @@ class ArtistImageDatabase {
 	}
 
 	public getArtistById(artistId:number):Model.Artist {
-		return _.find(this.Artists, artist => artist.id === artistId);
+		let artist = underscore.find(this.Artists, artist => artist.id === artistId);
+		return artist;
 	}
 
 	public getImagesForArtist(artist:Model.Artist):Model.Image[] {
