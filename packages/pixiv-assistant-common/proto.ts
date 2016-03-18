@@ -23,20 +23,20 @@ export module Model {
 }
 
 export module Messages {
-	export interface Response<T> {
+	export interface Response {
 		success :boolean
 	}
-	export interface PositiveResponse<T> extends Response<T> {
+	export interface PositiveResponse<T> extends Response {
 		data :T
 	}
-	export interface NegativeResponse<T> extends Response<T> {
+	export interface NegativeResponse<T> extends Response {
 		errors: string[]
 	}
 
-	export function isPositiveResponse<T>(resp:Response<T>): resp is PositiveResponse<T> {
+	export function isPositiveResponse<T>(resp:Response): resp is PositiveResponse<T> {
 		return resp.success;
 	}
-	export function isNegativeResponse<T>(resp:Response<T>): resp is NegativeResponse<T> {
+	export function isNegativeResponse<T>(resp:Response): resp is NegativeResponse<T> {
 		return !resp.success;
 	}
 
