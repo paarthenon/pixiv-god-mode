@@ -7,6 +7,8 @@ import * as fs from 'fs'
 
 import * as pathLib from 'path'
 
+import {Features, Model, Messages} from '../../common/proto'
+
 const rrs = require('recursive-readdir-sync');
 const fileFinder = require('node-find-files');
 
@@ -74,5 +76,29 @@ export class ImageRepo extends BaseRepo {
 
 	public teardown() {
 		fs.writeFileSync('db.json', JSON.stringify({ date: new Date(), ids: this.imageCache }), 'utf-8');
+	}
+
+	@ImageRepo.actions.register(Features.OpenToRepo)
+	public openRepo(){
+		//stub
+	}
+
+	@ImageRepo.actions.register(Features.ImageExists)
+	@ImageRepo.actions.register(Features.ImageExistsForArtist)
+	public imageExists(msg:Messages.ArtistImageRequest):boolean {
+		return msg.image.id.toString() in this.imageCache;
+	}
+
+	@ImageRepo.actions.register(Features.DownloadImage)
+	public downloadImage(msg:Messages.ArtistImageRequest) {
+		//stub
+	}
+	@ImageRepo.actions.register(Features.DownloadManga)
+	public downloadManga(msg: Messages.BulkArtistUrlRequest) {
+		//stub
+	}
+	@ImageRepo.actions.register(Features.DownloadAnimation)
+	public downloadAnimation(msg: Messages.ArtistImageRequest) {
+		//stub
 	}
 }
