@@ -1,4 +1,5 @@
 export interface PixivRepo {
 	supports: (action: string) => boolean
-	dispatch: (action: string, message: any, callback:Function) => any
+	dispatch: <T> (action: string, message: any) => Q.IPromise<T>
+	teardown: () => void
 }

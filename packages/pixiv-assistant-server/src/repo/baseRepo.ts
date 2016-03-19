@@ -14,4 +14,6 @@ export abstract class BaseRepo implements PixivRepo {
 	public dispatch(action:string, msg:any):any {
 		return this.getCache().registry[action](msg);
 	}
+
+	public teardown():void { }
 }
