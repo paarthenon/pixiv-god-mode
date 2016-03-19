@@ -51,6 +51,9 @@ export module Messages {
 	}
 	export type ArtistImageRequest = ArtistRequest & ImageRequest
 	export type ArtistUrlRequest = ArtistRequest & UrlRequest
+	export interface BulkRequest<T> {
+		items: T[]
+	}
 	export interface BulkArtistUrlRequest {
 		items: ArtistUrlRequest[]
 	}
