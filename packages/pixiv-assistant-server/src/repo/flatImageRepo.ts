@@ -7,8 +7,11 @@ import * as fs from 'fs'
 
 import * as pathLib from 'path'
 
+import * as downloadUtils from '../utils/download'
+
 import {Features, Model, Messages} from '../../common/proto'
 
+const opn = require('opn');
 const rrs = require('recursive-readdir-sync');
 const fileFinder = require('node-find-files');
 
@@ -80,25 +83,24 @@ export class ImageRepo extends BaseRepo {
 
 	@ImageRepo.actions.register(Features.OpenToRepo)
 	public openRepo(){
-		//stub
+		opn(this.repoPath);
 	}
 
 	@ImageRepo.actions.register(Features.ImageExists)
-	@ImageRepo.actions.register(Features.ImageExistsForArtist)
-	public imageExists(msg:Messages.ArtistImageRequest):boolean {
+	public imageExists(msg:Messages.ImageRequest):boolean {
 		return msg.image.id.toString() in this.imageCache;
 	}
 
 	@ImageRepo.actions.register(Features.DownloadImage)
-	public downloadImage(msg:Messages.ArtistImageRequest) {
-		//stub
+	public downloadImage(msg:Messages.UrlRequest) {
+		return downloadUtils.downloadFromPixiv({ url: msg.url, path: pathLib.basename(msg.url) });
 	}
 	@ImageRepo.actions.register(Features.DownloadManga)
-	public downloadManga(msg: Messages.BulkArtistUrlRequest) {
-		//stub
+	public downloadManga(msg: Messages.BulkRequest<Messages.UrlRequest>) {
+		return Q.all(msg.items.map(x => this.downloadImage(x)));
 	}
 	@ImageRepo.actions.register(Features.DownloadAnimation)
-	public downloadAnimation(msg: Messages.ArtistImageRequest) {
-		//stub
+	public downloadAnimation(msg: Messages.UrlRequest) {
+		return this.downloadImage(msg);
 	}
 }

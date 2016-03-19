@@ -3,7 +3,6 @@ import {ActionCache} from '../utils/ActionCache'
 
 import {Model, Messages, Features} from '../../common/proto'
 
-/* Copied and pasted from previous file */
 import {log} from '../utils/log'
 
 import * as mkdirp from 'mkdirp'
@@ -19,6 +18,8 @@ import * as XRegExp from "xregexp"
 import * as pathUtils from '../utils/path'
 
 import * as Q from 'q'
+
+import * as downloadUtils from '../utils/download'
 
 const opn = require('opn');
 
@@ -84,12 +85,6 @@ class ArtistImageDatabase {
 	public getPathForImage(artist:Model.Artist, image:Model.Image):string {
 		return path.join(this.path, this.artistToFolderName(artist), this.imageToFileName(image));
 	}
-}
-
-
-interface DownloadMessage {
-	url :string
-	path :string
 }
 
 export class ArtistImageRepo extends BaseRepo {
@@ -163,34 +158,7 @@ export class ArtistImageRepo extends BaseRepo {
 		return undefined;
 	}
 
-	protected downloadFromPixiv(msg:DownloadMessage):Q.IPromise<boolean> {
-		let makeDerp = Q.denodeify(mkdirp);
 
-		return Q(msg)
-			.then(msg => makeDerp(path.dirname(msg.path)).then(succ => msg, err => Q.reject(`Directory creation failed with err [${err}]`)))
-			.then((msg: DownloadMessage) => {
-				let referer = urllib.resolve(msg.url, '/');
-				let url = urllib.parse(msg.url);
-
-				let q = Q.defer();
-				http.get({
-					protocol: url.protocol,
-					hostname: url.hostname,
-					port: url.port,
-					path: url.path,
-					headers: {
-						referer: referer
-					}
-				}, (response) => {
-					response.pipe(fs.createWriteStream(msg.path))
-						.on('finish', () => q.resolve(msg))
-						.on('error', () => q.reject('error while writing to file'));
-				});
-
-				return q;
-			})
-			.then(msg => true, msg => false);
-	}
 
 	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
 	public downloadZip(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
@@ -198,7 +166,7 @@ export class ArtistImageRepo extends BaseRepo {
 		let zipPath = path.join(this.db.getPathForArtist(request.artist), 'zip', zipName);
 
 		log(`writing image from [${request.url}] to [${zipPath}]`);
-		return this.downloadFromPixiv({ url: request.url, path: zipPath });
+		return downloadUtils.downloadFromPixiv({ url: request.url, path: zipPath });
 	}
 
 	@ArtistImageRepo.actions.register(Features.DownloadImage)
@@ -209,7 +177,7 @@ export class ArtistImageRepo extends BaseRepo {
 		let imagePath = this.db.getPathForImage(request.artist, image);
 
 		log(`writing image from [${request.url}] to [${imagePath}]`);
-		return this.downloadFromPixiv({ url: request.url, path: imagePath });
+		return downloadUtils.downloadFromPixiv({ url: request.url, path: imagePath });
 	}
 
 	@ArtistImageRepo.actions.register(Features.DownloadManga)
