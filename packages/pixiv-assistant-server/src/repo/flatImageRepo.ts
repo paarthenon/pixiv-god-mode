@@ -8,8 +8,14 @@ import * as fs from 'fs'
 import * as pathLib from 'path'
 
 const rrs = require('recursive-readdir-sync');
+const fileFinder = require('node-find-files');
 
 type IdSet = { [id: string]: boolean };
+
+interface ImageDb {
+	date :Date
+	ids :IdSet
+}
 
 export class ImageRepo extends BaseRepo {
 	private static actions = new ActionCache();
@@ -22,9 +28,12 @@ export class ImageRepo extends BaseRepo {
 
 	public constructor(path:string) {
 		super(path);
-		
+		let date: Date = undefined;
+
 		try {
-			this.imageCache = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
+			let savedObj:ImageDb = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
+			date = savedObj.date;
+			this.imageCache = savedObj.ids || {} ;
 		} catch (e) {
 			try {
 				let files: string[] = rrs(path);
@@ -40,6 +49,21 @@ export class ImageRepo extends BaseRepo {
 			}
 		}
 
+		let finder = new fileFinder({
+			rootFolder: path,
+			fileModifiedDate: date
+		});
+
+		finder.on("match", (path: string, stats: fs.Stats) => {
+			let image = pathUtils.fileNameToImage(pathLib.basename(path));
+			if (image) {
+				this.imageCache[image.id.toString()] = true;
+			}
+		});
+		finder.on("complete", function() {
+			console.log("Finished loading files since last update.")
+		});
+
 		chokidar.watch(path, { persistent: true })
 			.on('add', (filePath: string) => {
 				let baseName: string = pathLib.basename(filePath);
@@ -49,6 +73,6 @@ export class ImageRepo extends BaseRepo {
 	}
 
 	public teardown() {
-		fs.writeFileSync('db.json', JSON.stringify(this.imageCache), 'utf-8');
+		fs.writeFileSync('db.json', JSON.stringify({ date: new Date(), ids: this.imageCache }), 'utf-8');
 	}
 }

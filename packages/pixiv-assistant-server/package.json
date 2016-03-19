@@ -24,6 +24,7 @@
     "chokidar": "^1.4.3",
     "express": "^4.13.4",
     "mkdirp": "^0.5.1",
+    "node-find-files": "0.0.4",
     "opn": "paarthk/opn",
     "q": "^1.4.1",
     "recursive-readdir-sync": "^1.0.6",
