@@ -87,3 +87,7 @@ export function googleTranslate(japanese:string, callback:(english:string) => an
 export function executeManual(obj:any) {
 	GM_xmlhttpRequest(obj);
 }
+
+export function supportsFeature(feature:string) {
+	return callService(`supports/${feature}`, {});
+}
