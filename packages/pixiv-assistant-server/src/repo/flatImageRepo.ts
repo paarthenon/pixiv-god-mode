@@ -11,11 +11,15 @@ import * as downloadUtils from '../utils/download'
 
 import {Features, Model, Messages} from '../../common/proto'
 
+import * as log4js from 'log4js'
+
 const opn = require('opn');
 const rrs = require('recursive-readdir-sync');
 const fileFinder = require('node-find-files');
 
 type IdSet = { [id: string]: boolean };
+
+let logger = log4js.getLogger('Repo');
 
 interface ImageDb {
 	date :Date
@@ -31,29 +35,47 @@ export class ImageRepo extends BaseRepo {
 		return ImageRepo.actions;
 	}
 
+	protected loadImageCache() :ImageDb {
+		logger.info("Loading saved image cache");
+		return JSON.parse(fs.readFileSync('db.json', 'utf-8'));
+	}
+	protected filesInPath(repoPath:string):IdSet {
+		logger.info("Initializing file registry, manually reading all files in directory");
+		let cache: IdSet = {};
+
+		try {
+			let fileNames: string[] = rrs(repoPath);
+
+			logger.debug('Filenames loaded. Processing...');
+			fileNames
+				.map(x => pathLib.basename(x))
+				.map(x => pathUtils.fileNameToImage(x).id.toString())
+				.filter(x => !!x)
+				.forEach(x => cache[x] = true);
+
+			logger.info("Image cache constructed");
+		} catch (e) {
+			logger.error("Could not find files in the specified path, does the folder exist?");
+		}
+
+		return cache;
+	}
 	public constructor(path:string) {
 		super(path);
 		let date: Date = undefined;
 
 		try {
+			logger.info("Loading saved image cache");
 			let savedObj:ImageDb = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
 			date = savedObj.date;
 			this.imageCache = savedObj.ids || {} ;
+			logger.info("Completed loading saved image cache");
 		} catch (e) {
-			try {
-				let files: string[] = rrs(path);
-
-				files
-					.map(x => pathLib.basename(x))
-					.map(x => pathUtils.fileNameToImage(x).id.toString())
-					.filter(x => !!x)
-					.forEach(x => this.imageCache[x] = true);
-
-			} catch (e) {
-				console.log('Error occurred, does repo exist?');
-			}
+			logger.warn("No saved cache found");
+			this.imageCache = this.filesInPath(path);
 		}
 
+		logger.info("Finding files added since last execution");
 		let finder = new fileFinder({
 			rootFolder: path,
 			fileModifiedDate: date
@@ -66,19 +88,27 @@ export class ImageRepo extends BaseRepo {
 			}
 		});
 		finder.on("complete", function() {
-			console.log("Finished loading files since last update.")
+			logger.info("Found all files added while server offline");
 		});
 
+		logger.info("Watching for new files");
 		chokidar.watch(path, { persistent: true })
 			.on('add', (filePath: string) => {
 				let baseName: string = pathLib.basename(filePath);
 				let imageId: string = pathUtils.fileNameToImage(baseName).id.toString();
 				this.imageCache[imageId] = true;
 			});
+		logger.info("Repository initialized. Application ready");
 	}
 
 	public teardown() {
-		fs.writeFileSync('db.json', JSON.stringify({ date: new Date(), ids: this.imageCache }), 'utf-8');
+		logger.info("Tearing down repository. Saving in-memory repo DB to disk");
+		try {
+			fs.writeFileSync('db.json', JSON.stringify({ date: new Date(), ids: this.imageCache }), 'utf-8');
+			logger.info("Saved repo database");
+		} catch (e) {
+			logger.fatal("Error saving repo database");
+		}
 	}
 
 	@ImageRepo.actions.register(Features.OpenToRepo)
