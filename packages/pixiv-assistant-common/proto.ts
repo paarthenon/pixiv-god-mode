@@ -19,6 +19,7 @@ export module Model {
 		id: number
 		page?: number
 		ext?: string
+		animation?: boolean
 	}
 }
 
