@@ -3,7 +3,7 @@ import {ActionCache} from '../utils/ActionCache'
 
 import {Model, Messages, Features} from '../../common/proto'
 
-import {log} from '../utils/log'
+import * as log4js from 'log4js'
 
 import * as mkdirp from 'mkdirp'
 import * as underscore from 'underscore'
@@ -23,6 +23,8 @@ import * as downloadUtils from '../utils/download'
 
 const opn = require('opn');
 
+let logger = log4js.getLogger('Repo');
+
 class ArtistImageDatabase {
 	constructor(protected path:string) { }
 
@@ -37,7 +39,7 @@ class ArtistImageDatabase {
 				name: match[2]
 			};
 		} else {
-			log(`filename ${folderName} failed to match regex`);
+			logger.warn(`filename ${folderName} failed to match regex`);
 		}
 		return undefined;
 	}
@@ -51,7 +53,7 @@ class ArtistImageDatabase {
 				ext: match[3]
 			}
 		} else {
-			log(`filename ${fileName} failed to match regex`);
+			logger.error(`filename ${fileName} failed to match regex`);
 		}
 		return undefined;
 	}
@@ -115,15 +117,15 @@ export class ArtistImageRepo extends BaseRepo {
 		let dbArtist = this.db.getArtistById(artist.id);
 		if (dbArtist) {
 			let artistFolder = this.db.getPathForArtist(dbArtist);
-			log(`opening folder ${artistFolder}`);
+			logger.info(`opening folder ${artistFolder}`);
 
 			opn(artistFolder);
 		} else {
 			let artistFolder = this.db.getPathForArtist(artist);
-			log(`opening folder ${artistFolder}`);
+			logger.info(`opening folder ${artistFolder}`);
 			mkdirp(artistFolder, (err) => {
 				if (err) {
-					log(`Error creating folder [${artistFolder}], err: [${err}]`);
+					logger.error(`Error creating folder [${artistFolder}], err: [${err}]`);
 				} else {
 					opn(artistFolder);
 				}
@@ -153,7 +155,7 @@ export class ArtistImageRepo extends BaseRepo {
 				ext: match[3]
 			}
 		} else {
-			log(`filename ${fileName} failed to match regex`);
+			logger.warn(`filename ${fileName} failed to match regex`);
 		}
 		return undefined;
 	}
@@ -165,7 +167,7 @@ export class ArtistImageRepo extends BaseRepo {
 		let zipName = path.basename(request.url);
 		let zipPath = path.join(this.db.getPathForArtist(request.artist), 'zip', zipName);
 
-		log(`writing image from [${request.url}] to [${zipPath}]`);
+		logger.debug(`writing image from [${request.url}] to [${zipPath}]`);
 		return downloadUtils.downloadFromPixiv({ url: request.url, path: zipPath });
 	}
 
@@ -176,7 +178,7 @@ export class ArtistImageRepo extends BaseRepo {
 
 		let imagePath = this.db.getPathForImage(request.artist, image);
 
-		log(`writing image from [${request.url}] to [${imagePath}]`);
+		logger.debug(`writing image from [${request.url}] to [${imagePath}]`);
 		return downloadUtils.downloadFromPixiv({ url: request.url, path: imagePath });
 	}
 

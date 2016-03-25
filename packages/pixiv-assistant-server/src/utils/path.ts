@@ -1,6 +1,7 @@
 import {Model} from '../../common/proto'
-import {log} from './log'
+import * as log4js from 'log4js'
 
+let logger = log4js.getLogger('Utils | Path');
 export function avoidTrailingDot(path:string): string {
 	return (path[path.length - 1] === '.') ? path.substr(0, path.length - 1) : path
 }
@@ -14,7 +15,7 @@ export function fileNameToImage(fileName: string): Model.Image {
 			ext: match[3]
 		}
 	} else {
-		log(`filename ${fileName} failed to match regex`);
+		logger.error(`filename ${fileName} failed to match regex`);
 	}
 	return undefined;
 }
