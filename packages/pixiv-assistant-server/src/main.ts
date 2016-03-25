@@ -21,7 +21,6 @@ logger.setLevel(log4js.levels.ALL);
 
 let cliArgs = yargs
 				.usage('Usage: $0 --repo artist|flat --path <path_string>')
-				.demand(['path'])
 				.argv;
 
 let defaultPath = 'pixivRepository';
@@ -34,42 +33,47 @@ logger.info(`Setting repo to path [${path}]`);
 function decideRepo() : PixivRepo {
 	switch (cliArgs.repo) {
 		case "artist":
-			console.log('Using [root/artist/images*] repo format');
+			logger.info('Using [root/artist/images*] repo format');
 			return new aiRepo.ArtistImageRepo(path);
 		case "flat":
-			console.log('Using [root/images*] repo format');
+			logger.info('Using [root/images*] repo format');
 			return new fiRepo.ImageRepo(path);
 		default:
-			console.log('Using [root/artist/images*] repo format');
+			logger.warn('No repository format specified, using default');
+			logger.info('Using [root/artist/images*] repo format');
 			return new aiRepo.ArtistImageRepo(path);
 	}
 }
 let pas = decideRepo();
 
 process.on('SIGINT', function() {
-	console.log('Closing server');
+	let mainLogger = log4js.getLogger('Main');
+	mainLogger.warn('Closing server');
 	pas.teardown();
     process.exit();
 });
 
+let appLogger = log4js.getLogger('App');
 let app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/ping', (req, res) => {
+	appLogger.debug('Message Received | Ping');
 	res.json(true);
 });
 
 app.get('/supports/:action', (req, res) => {
 	let action: string = req.params.action;
+	appLogger.debug('Message Received | Supports action [', action, ']');
 	res.json(pas.supports(action));
 });
 
 app.post('/:action', (req, res) => {
 	let action: string = req.params.action;
 	let message: any = req.body;
-	console.log('Action\n', action, '\nMessage\n', message, '\n\n');
+	appLogger.debug('Message Received | Perform action [', action, ']');
 	q(message)
 		.then(msg => pas.dispatch(action, msg))
 		.then<Proto.Messages.Response>(
@@ -79,5 +83,6 @@ app.post('/:action', (req, res) => {
 });
 
 app.listen('9002', () => {
-	console.log('listening on port 9002');
+	let mainLogger = log4js.getLogger('Main');
+	mainLogger.info('listening on port 9002');
 })
