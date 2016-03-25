@@ -47,7 +47,7 @@ app.post('/:action', (req, res) => {
 	console.log('Action\n', action, '\nMessage\n', message, '\n\n');
 	q(message)
 		.then(msg => pas.dispatch(action, msg))
-		.then<Proto.Messages.Response<any>>(
+		.then<Proto.Messages.Response>(
 			successfulResponse => ({ success: true, data: successfulResponse }), 
 			failedResponse => ({ success: false, errors: failedResponse }))
 		.then(result => res.json(result));
