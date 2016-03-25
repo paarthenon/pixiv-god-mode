@@ -5,19 +5,31 @@ import * as aiRepo from './repo/artistImageRepo'
 import * as fiRepo from './repo/flatImageRepo'
 import {PixivRepo} from './repo/model'
 
-import * as q from 'q'
-
 import * as Proto from '../common/proto'
 
+import * as q from 'q'
 import * as yargs from 'yargs'
+import * as log4js from 'log4js'
+
+log4js.configure({
+	appenders: [
+		{ type: 'console' }
+	]
+});
+let logger = log4js.getLogger('Startup');
+logger.setLevel(log4js.levels.ALL);
 
 let cliArgs = yargs
-				.usage('Usage: $0 --repo [artist|flat] --path <path_string>')
+				.usage('Usage: $0 --repo artist|flat --path <path_string>')
 				.demand(['path'])
 				.argv;
 
-let path = cliArgs.path || 'pixivRepository';
-console.log(`Setting repo to path [${path}]`);
+let defaultPath = 'pixivRepository';
+if (!cliArgs.path) {
+	logger.warn('No path specified, using default');
+}
+let path = cliArgs.path || defaultPath;
+logger.info(`Setting repo to path [${path}]`);
 
 function decideRepo() : PixivRepo {
 	switch (cliArgs.repo) {

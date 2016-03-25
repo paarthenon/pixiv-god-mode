@@ -6,16 +6,16 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "ce8ae773688d2244ba11fdf3378fcd68f773e1c4"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "mime/mime.d.ts": {
-      "commit": "e69fe60f2d6377ea4fae539493997b098f52cad1"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "serve-static/serve-static.d.ts": {
-      "commit": "e69fe60f2d6377ea4fae539493997b098f52cad1"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "express/express.d.ts": {
-      "commit": "e69fe60f2d6377ea4fae539493997b098f52cad1"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "body-parser/body-parser.d.ts": {
       "commit": "e69fe60f2d6377ea4fae539493997b098f52cad1"
@@ -39,6 +39,12 @@
       "commit": "ce8ae773688d2244ba11fdf3378fcd68f773e1c4"
     },
     "yargs/yargs.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "log4js/log4js.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "express-serve-static-core/express-serve-static-core.d.ts": {
       "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     }
   }
