@@ -9,17 +9,30 @@ import * as q from 'q'
 
 import * as Proto from '../common/proto'
 
+import * as yargs from 'yargs'
 
-let path = process.argv[2] || 'pixivRepository';
+let cliArgs = yargs
+				.usage('Usage: $0 --repo [artist|flat] --path <path_string>')
+				.demand(['path'])
+				.argv;
+
+let path = cliArgs.path || 'pixivRepository';
 console.log(`Setting repo to path [${path}]`);
 
-//TODO: Actual logic with flags
 function decideRepo() : PixivRepo {
-	// return new aiRepo.ArtistImageRepo(path);
-	return new fiRepo.ImageRepo(path);
+	switch (cliArgs.repo) {
+		case "artist":
+			console.log('Using [root/artist/images*] repo format');
+			return new aiRepo.ArtistImageRepo(path);
+		case "flat":
+			console.log('Using [root/images*] repo format');
+			return new fiRepo.ImageRepo(path);
+		default:
+			console.log('Using [root/artist/images*] repo format');
+			return new aiRepo.ArtistImageRepo(path);
+	}
 }
 let pas = decideRepo();
-
 
 process.on('SIGINT', function() {
 	console.log('Closing server');

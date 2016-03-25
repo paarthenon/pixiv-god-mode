@@ -37,6 +37,9 @@
     },
     "chokidar/chokidar.d.ts": {
       "commit": "ce8ae773688d2244ba11fdf3378fcd68f773e1c4"
+    },
+    "yargs/yargs.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     }
   }
 }
