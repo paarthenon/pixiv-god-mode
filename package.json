@@ -23,7 +23,8 @@
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
     "gulp-header": "^1.7.1",
-    "gulp-rename": "^1.2.2"
+    "gulp-rename": "^1.2.2",
+    "log4js": "^0.6.33"
   },
   "dependencies": {
     "q": "^1.4.1"

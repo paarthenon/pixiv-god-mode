@@ -17,7 +17,19 @@ import ConfigKeys from './configKeys'
 import * as appServices from './services'
 import * as Deps from './deps'
 
+import * as log4js from 'log4js'
+
+log4js.configure({
+	appenders: [
+		{ type: 'console' }
+	]
+});
+let logger = log4js.getLogger('Startup');
+logger.setLevel(log4js.levels.ALL);
+
 let jQ: JQueryStatic = $;
+
+logger.warn('test message');
 
 log('Pixiv Assistant initializing');
 

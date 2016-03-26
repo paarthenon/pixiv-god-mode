@@ -12,10 +12,25 @@
       "commit": "86dbea8fc37d9473fee465da4f0a21bea4f8cbd9"
     },
     "node/node.d.ts": {
-      "commit": "3030a4be536b6530c06b80081f1333dc0de4d703"
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     },
     "q/Q.d.ts": {
       "commit": "441b647ef77afa221d898fa2a9de47d9501b44e3"
+    },
+    "express/express.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "log4js/log4js.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "serve-static/serve-static.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "mime/mime.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "express-serve-static-core/express-serve-static-core.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     }
   }
 }
