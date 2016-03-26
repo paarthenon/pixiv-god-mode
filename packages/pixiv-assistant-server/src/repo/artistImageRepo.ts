@@ -183,7 +183,7 @@ export class ArtistImageRepo extends BaseRepo {
 	}
 
 	@ArtistImageRepo.actions.register(Features.DownloadManga)
-	public downloadMulti(request: Messages.BulkArtistUrlRequest) {
+	public downloadMulti(request: Messages.BulkRequest<Messages.ArtistUrlRequest>) {
 		return Q.all(request.items.map(msg => this.download(msg)));
 	}
 }
