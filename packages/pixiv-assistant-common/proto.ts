@@ -7,7 +7,7 @@ export const Features = {
 	ImageExists: 'imageExists',
 	ImagesExist: 'imagesExist', // query multiple images
 	ImageExistsForArtist: 'imageExistsForArtist',
-	ImagesExistForArtist: 'imageExistsForArtist',
+	ImagesExistForArtist: 'imagesExistForArtist',
 	ListArtists: 'listArtists',
 
 }
