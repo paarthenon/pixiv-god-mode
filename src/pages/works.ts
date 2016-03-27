@@ -17,6 +17,9 @@ export class WorksPage extends GalleryPage {
 	public get artist():Model.Artist {
 		return { id: this.artistId, name: this.artistName };
 	}
+	public get allImages():JQuery[] {
+		return this.jQuery('li.image-item').toArray().map(x => this.jQuery(x));
+	}
 
 	protected getTagElements() {
 		return [
@@ -32,19 +35,21 @@ export class WorksPage extends GalleryPage {
 
 	@ExecuteOnLoad
 	public experimentalFade() {
-		this.executeOnEachImage(image => {
-			let imageId = pathUtils.getImageId(image.find('a.work').attr('href'));
-			// Picture format is <imgnum>_<page>_master<size>.<filetype> or imgnum_p<pagenum>.<filetype>
-			// TODO: ^ is wrong, _square1200 is also a valid option, fix.
-			services.imageExistsInDatabase(this.artist, {id: imageId}, exists => {
-				if (exists) {
-					image.addClass('pa-hidden-thumbnail');
-				}
-			})
-		});
+		let imageMap = this.allImages.reduce((acc: { [id:string] : JQuery }, cur:JQuery) => {
+			let imageId = pathUtils.getImageId(cur.find('a.work').attr('href'));
+			acc[imageId.toString()] = cur;
+			return acc;
+		}, <{ [id: string]: JQuery }> {});
+
+		let request = Object.keys(imageMap)
+						.map(id => ({ artist: this.artist, image: { id: parseInt(id) } }));
+
+		services.bulkImageExists(request)
+			.then(matchedImages => matchedImages
+				.map(match => match.image.id.toString())
+				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
 	}
 
-	
 	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements. 
 	// Make this action only visible if we are not already on the last page. 
 	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'last' })

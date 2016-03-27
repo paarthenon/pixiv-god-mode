@@ -69,6 +69,10 @@ export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, 
 		.then(callback);
 }
 
+export function bulkImageExists(entries: Messages.ArtistImageRequest[]) : Q.IPromise<Messages.ArtistImageRequest[]> {
+	return callService(Features.ImagesExistForArtist, { items: entries });
+}
+
 export function googleTranslate(japanese:string, callback:(english:string) => any) {
 	let serviceUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ja&tl=en&dt=t&q=${encodeURI(japanese)}`;
 	GM_xmlhttpRequest({
