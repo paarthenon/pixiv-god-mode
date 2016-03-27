@@ -17,11 +17,19 @@ log4js.configure({
 	]
 });
 let logger = log4js.getLogger('Startup');
-logger.setLevel(log4js.levels.ALL);
 
 let cliArgs = yargs
 				.usage('Usage: $0 --repo artist|flat --path <path_string>')
+				.count('verbose')
+			    .alias('v', 'verbose')
 				.argv;
+
+if (cliArgs.verbose && cliArgs.verbose > 0) {
+	log4js.setGlobalLogLevel(log4js.levels.ALL);
+	logger.warn('Setting to verbose mode');
+} else {
+	log4js.setGlobalLogLevel(log4js.levels.INFO);
+}
 
 let defaultPath = 'pixivRepository';
 if (!cliArgs.path) {
