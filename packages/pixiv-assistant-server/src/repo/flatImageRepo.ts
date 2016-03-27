@@ -121,6 +121,11 @@ export class ImageRepo extends BaseRepo {
 		return msg.image.id.toString() in this.imageCache;
 	}
 
+	@ImageRepo.actions.register(Features.ImagesExistForArtist)
+	public imagesExist(images: Messages.BulkRequest<Messages.ArtistImageRequest>) {
+		return images.items.map(x => this.imageExists(x));
+	}
+	
 	@ImageRepo.actions.register(Features.DownloadImage)
 	public downloadImage(msg:Messages.UrlRequest) {
 		return downloadUtils.downloadFromPixiv({ url: msg.url, path: pathLib.basename(msg.url) });
