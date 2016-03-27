@@ -63,10 +63,10 @@ export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
 }
 
 export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback:(param:boolean) => any) : void {
-	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
+	log(`SERVICES imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
 	let msg: Messages.ArtistImageRequest = { artist, image };
-	callService<Messages.ArtistImageRequest, Messages.PositiveResponse<boolean>>(Features.ImageExistsForArtist, msg)
-		.then(resp => callback(resp.success && resp.data));
+	callService<Messages.ArtistImageRequest, boolean>(Features.ImageExistsForArtist, msg)
+		.then(callback);
 }
 
 export function googleTranslate(japanese:string, callback:(english:string) => any) {
