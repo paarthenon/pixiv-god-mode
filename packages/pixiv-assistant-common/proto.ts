@@ -5,7 +5,9 @@ export const Features = {
 	DownloadManga: 'downloadManga',
 	DownloadAnimation: 'downloadAnimation',
 	ImageExists: 'imageExists',
+	ImagesExist: 'imagesExist', // query multiple images
 	ImageExistsForArtist: 'imageExistsForArtist',
+	ImagesExistForArtist: 'imageExistsForArtist',
 	ListArtists: 'listArtists',
 
 }
