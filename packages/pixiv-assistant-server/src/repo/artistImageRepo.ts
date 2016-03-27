@@ -23,7 +23,7 @@ import * as downloadUtils from '../utils/download'
 
 const opn = require('opn');
 
-let logger = log4js.getLogger('Repo');
+let logger = log4js.getLogger('ArtistRepo');
 
 class ArtistImageDatabase {
 	constructor(protected path:string) { }
@@ -72,7 +72,8 @@ class ArtistImageDatabase {
 
 	public getImagesForArtist(artist:Model.Artist):Model.Image[] {
 		try {
-			return fs.readdirSync(this.getPathForArtist(artist))
+			let actualArtist = this.getArtistById(artist.id) || artist;
+			return fs.readdirSync(this.getPathForArtist(actualArtist))
 			.map(name => this.fileNameToImage(name))
 			.filter(image => image != undefined);
 		}catch(e){
@@ -136,7 +137,10 @@ export class ArtistImageRepo extends BaseRepo {
 
 	@ArtistImageRepo.actions.register(Features.ImageExistsForArtist)
 	public imageExists(message:Messages.ArtistImageRequest) {
-		return this.db.getImagesForArtist(message.artist).filter(img => img.id === message.image.id).length > 0;
+		logger.trace('imageExists entered for image [', message.image.id, ']');
+		let exists = this.db.getImagesForArtist(message.artist).filter(img => img.id === message.image.id).length > 0;
+		logger.debug(`Image [${message.image.id}] exists? [${exists}]`);
+		return exists;
 	}
 
 	@ArtistImageRepo.actions.register(Features.ImagesExistForArtist)

@@ -1,6 +1,10 @@
 import {PixivRepo} from './model'
 import {ActionCache} from '../utils/actionCache'
 
+import * as log4js from 'log4js'
+
+let logger = log4js.getLogger('Repo');
+
 export abstract class BaseRepo implements PixivRepo {
 	protected abstract getCache(): ActionCache;
 
@@ -12,7 +16,9 @@ export abstract class BaseRepo implements PixivRepo {
 		return action in this.getCache().registry;
 	}
 	public dispatch(action:string, msg:any):any {
-		return this.getCache().registry[action](msg);
+		let actionFunc = this.getCache().registry[action];
+		logger.debug('Dispatching on ', action, ' method found', action != undefined);
+		return actionFunc(msg);
 	}
 
 	public teardown():void { }
