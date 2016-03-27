@@ -123,7 +123,7 @@ export class ImageRepo extends BaseRepo {
 
 	@ImageRepo.actions.register(Features.ImagesExistForArtist)
 	public imagesExist(images: Messages.BulkRequest<Messages.ArtistImageRequest>) {
-		return images.items.map(x => this.imageExists(x));
+		return images.items.filter(x => this.imageExists(x));
 	}
 	
 	@ImageRepo.actions.register(Features.DownloadImage)

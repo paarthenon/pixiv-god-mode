@@ -145,7 +145,7 @@ export class ArtistImageRepo extends BaseRepo {
 
 	@ArtistImageRepo.actions.register(Features.ImagesExistForArtist)
 	public imagesExist(images:Messages.BulkRequest<Messages.ArtistImageRequest>) {
-		return images.items.map(x => this.imageExists(x));
+		return images.items.filter(x => this.imageExists(x));
 	}
 
 	// This is intentionally duplicated from db.ts. While this code is the same,
