@@ -29,11 +29,6 @@ logger.setLevel(log4js.levels.ALL);
 
 let jQ: JQueryStatic = $;
 
-logger.warn('test message');
-
-log('Pixiv Assistant initializing');
-
-log('PA | initializing DOM utils');
 DomUtils.initialize();
 
 log('PA | dispatching on page');

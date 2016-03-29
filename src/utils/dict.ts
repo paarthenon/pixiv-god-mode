@@ -4,6 +4,8 @@ import ConfigKeys from '../configKeys'
 import * as ghUtils from './github'
 import {log} from './log'
 
+import * as log4js from 'log4js'
+
 type stringMap = { [id: string]: string }
 
 export interface Dictionary {
@@ -69,6 +71,7 @@ class DictBroker {
 	}
 }
 
+let logger = log4js.getLogger('Dictionary');
 export module DictionaryService {
 	export let userDictionary = new SingleConfigDict(ConfigKeys.user_dict);
 	export let baseDictionary = new SingleConfigDict(ConfigKeys.official_dict);
@@ -80,13 +83,13 @@ export module DictionaryService {
 
 	export function getTranslation(tag:string):string {
 		let translation = broker.get(tag);
-		log(`DictionaryService.getTranslation | for [${tag}] found [${translation}]`);
+		logger.debug(`DictionaryService.getTranslation | for [${tag}] found [${translation}]`);
 		return translation;
 	}
 
 	let ghPath = 'pixiv-assistant/dictionary'
 	export function updateAvailable(callback:(available:boolean) => any) {
-		log('DictionaryService.updateAvailable | entered');
+		logger.debug('DictionaryService.updateAvailable | entered');
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			let currentHash = Config.get(ConfigKeys.official_dict_hash);
 			let isNewer:boolean = !currentHash || currentHash !== commitHash;
@@ -96,7 +99,7 @@ export module DictionaryService {
 	}
 
 	export function updateDictionary(onComplete?:()=>any) {
-		log('DictionaryService.updateDictionary | entered');
+		logger.debug('DictionaryService.updateDictionary | entered');
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			ghUtils.getDictionaryObject(ghPath, commitHash, obj => {
 				log(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
