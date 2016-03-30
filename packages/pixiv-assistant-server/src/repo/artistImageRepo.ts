@@ -183,6 +183,8 @@ export class ArtistImageRepo extends BaseRepo {
 	@ArtistImageRepo.actions.register(Features.DownloadImage)
 	public download(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
 		let imageName = path.basename(request.url);
+
+		logger.info(`Downloading image [${imageName}]`);
 		let image = this.baseNameToImage(imageName);
 
 		let imagePath = this.db.getPathForImage(request.artist, image);
@@ -193,6 +195,7 @@ export class ArtistImageRepo extends BaseRepo {
 
 	@ArtistImageRepo.actions.register(Features.DownloadManga)
 	public downloadMulti(request: Messages.BulkRequest<Messages.ArtistUrlRequest>) {
+		logger.info('Beginning bulk download of', request.items.length, 'items');
 		return Q.all(request.items.map(msg => this.download(msg)));
 	}
 }
