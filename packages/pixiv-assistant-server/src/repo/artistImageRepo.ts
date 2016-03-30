@@ -44,19 +44,6 @@ class ArtistImageDatabase {
 		return undefined;
 	}
 
-	protected fileNameToImage(fileName:string):Model.Image {
-		var match = fileName.match(/^([0-9]+)(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/);
-		if(match && match.length === 4) {
-			return {
-				id: parseInt(match[1]),
-				page: parseInt(match[2]),
-				ext: match[3]
-			}
-		} else {
-			logger.error(`filename ${fileName} failed to match regex`);
-		}
-		return undefined;
-	}
 	protected imageToFileName(image:Model.Image):string {
 		return pathUtils.avoidTrailingDot(`${image.id}_p${image.page || 0}.${image.ext || '.jpg'}`);
 	}
@@ -73,8 +60,10 @@ class ArtistImageDatabase {
 	public getImagesForArtist(artist:Model.Artist):Model.Image[] {
 		try {
 			let actualArtist = this.getArtistById(artist.id) || artist;
-			return fs.readdirSync(this.getPathForArtist(actualArtist))
-			.map(name => this.fileNameToImage(name))
+			let artistFolder = this.getPathForArtist(actualArtist);
+			return fs.readdirSync(artistFolder)
+			.filter(name => fs.statSync(path.join(artistFolder, name)).isFile())
+			.map(name => pathUtils.fileNameToImage(name))
 			.filter(image => image != undefined);
 		}catch(e){
 			return [];
