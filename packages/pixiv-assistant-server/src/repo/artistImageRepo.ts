@@ -185,6 +185,10 @@ export class ArtistImageRepo extends BaseRepo {
 	@ArtistImageRepo.actions.register(Features.DownloadManga)
 	public downloadMulti(request: Messages.BulkRequest<Messages.ArtistUrlRequest>) {
 		logger.info('Beginning bulk download of', request.items.length, 'items');
-		return Q.all(request.items.map(msg => this.download(msg)));
+		return Q.all(request.items.map(msg => this.download(msg)))
+			.then(x => {
+				logger.info('Completed download of ', request.items.length, 'files');
+				return x;
+			});
 	}
 }
