@@ -6,10 +6,7 @@ export const Features = {
 	DownloadAnimation: 'downloadAnimation',
 	ImageExists: 'imageExists',
 	ImagesExist: 'imagesExist', // query multiple images
-	ImageExistsForArtist: 'imageExistsForArtist',
-	ImagesExistForArtist: 'imagesExistForArtist',
-	ListArtists: 'listArtists',
-
+	ListArtists: 'listArtists'
 }
 
 export module Model {
