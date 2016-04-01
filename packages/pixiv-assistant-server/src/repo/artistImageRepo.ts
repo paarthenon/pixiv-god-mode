@@ -124,7 +124,7 @@ export class ArtistImageRepo extends BaseRepo {
 	}
 
 
-	@ArtistImageRepo.actions.register(Features.ImageExistsForArtist)
+	@ArtistImageRepo.actions.register(Features.ImageExists)
 	public imageExists(message:Messages.ArtistImageRequest) {
 		logger.trace('imageExists entered for image [', message.image.id, ']');
 		let exists = this.db.getImagesForArtist(message.artist).filter(img => img.id === message.image.id).length > 0;
@@ -132,7 +132,7 @@ export class ArtistImageRepo extends BaseRepo {
 		return exists;
 	}
 
-	@ArtistImageRepo.actions.register(Features.ImagesExistForArtist)
+	@ArtistImageRepo.actions.register(Features.ImagesExist)
 	public imagesExist(images:Messages.BulkRequest<Messages.ArtistImageRequest>) {
 		return images.items.filter(x => this.imageExists(x));
 	}

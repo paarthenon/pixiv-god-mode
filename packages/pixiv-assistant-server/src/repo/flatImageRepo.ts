@@ -121,7 +121,7 @@ export class ImageRepo extends BaseRepo {
 		return msg.image.id.toString() in this.imageCache;
 	}
 
-	@ImageRepo.actions.register(Features.ImagesExistForArtist)
+	@ImageRepo.actions.register(Features.ImagesExist)
 	public imagesExist(images: Messages.BulkRequest<Messages.ArtistImageRequest>) {
 		return images.items.filter(x => this.imageExists(x));
 	}
