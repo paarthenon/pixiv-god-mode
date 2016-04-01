@@ -65,12 +65,12 @@ export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
 export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback:(param:boolean) => any) : void {
 	log(`SERVICES imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
 	let msg: Messages.ArtistImageRequest = { artist, image };
-	callService<Messages.ArtistImageRequest, boolean>(Features.ImageExistsForArtist, msg)
+	callService<Messages.ArtistImageRequest, boolean>(Features.ImageExists, msg)
 		.then(callback);
 }
 
 export function bulkImageExists(entries: Messages.ArtistImageRequest[]) : Q.IPromise<Messages.ArtistImageRequest[]> {
-	return callService(Features.ImagesExistForArtist, { items: entries });
+	return callService(Features.ImagesExist, { items: entries });
 }
 
 export function googleTranslate(japanese:string, callback:(english:string) => any) {
