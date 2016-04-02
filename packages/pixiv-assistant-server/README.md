@@ -4,7 +4,12 @@ This is the optional server component of the Pixiv Assistant extension. The brow
 
 While building, run as 
 
-	npm start <path>
+	npm start -- --repo [artist|flat] --path <path>
 
 Where path is the local or fixed path of the root folder of the repository.
 
+The Artist repo option assumes the folders are structured as:
+
+	repo/[<artist.id>] - <artist.name>/<image>
+
+The flat repo makes no assumptions.
