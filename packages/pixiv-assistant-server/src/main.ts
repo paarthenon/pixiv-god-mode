@@ -54,6 +54,8 @@ function decideRepo() : PixivRepo {
 }
 let pas = decideRepo();
 
+logger.warn('You MUST use <ctrl>+c to exit the server safely. Database may not save otherwise');
+
 process.on('SIGINT', function() {
 	let mainLogger = log4js.getLogger('Main');
 	mainLogger.warn('Closing server');
