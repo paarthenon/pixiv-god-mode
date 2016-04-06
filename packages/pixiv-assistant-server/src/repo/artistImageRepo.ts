@@ -187,7 +187,7 @@ export class ArtistImageRepo extends BaseRepo {
 		logger.info('Beginning bulk download of', request.items.length, 'items');
 		return Q.all(request.items.map(msg => this.download(msg)))
 			.then(x => {
-				logger.info('Completed download of ', request.items.length, 'files');
+				logger.info('Completed download of', request.items.length, 'files');
 				return x;
 			});
 	}
