@@ -1,5 +1,12 @@
 {
   "manifest_version": 2,
   "name": "Pixiv Assistant",
-  "version": "0.1"
+  "description": "Adds functionality for tag translation and other features for power users",
+  "version": "0.1",
+
+  "browser_action": {
+  	"default_icon": "icon-38.png",
+  	"default_title": "Pixiv Assistant",
+  	"default_popup": "popup.html"
+  }
 }

@@ -37,4 +37,12 @@ gulp.task('deploy', ['header'], function(){
 		.pipe(gulp.dest('dist'))
 });
 
+gulp.task('chrome', ['browserify'], function(){
+	gulp.src('build/merged/main.js')
+		.pipe(rename('pixiv-assistant.js'))
+		.pipe(gulp.dest('dist/chrome'))
+	gulp.src('vendor/chrome/*')
+		.pipe(gulp.dest('dist/chrome'))
+});
+
 gulp.task('default', ['deploy']);
