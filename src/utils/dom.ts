@@ -3,7 +3,7 @@
 import {generateFontTemplate, fontString} from '../dom/fontSetup'
 import {Component,renderComponent} from '../dom/component'
 
-import * as Deps from '../deps'
+import {Container as Deps} from '../deps'
 
 let globalCSS = `
 	.pa-hidden-thumbnail {

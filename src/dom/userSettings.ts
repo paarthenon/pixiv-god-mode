@@ -1,12 +1,12 @@
 import {Component, AbstractComponent, renderComponent} from './component'
 import {Dictionary, DictionaryService} from '../utils/dict'
 
-import Config from '../utils/config'
 import ConfigKeys from '../configKeys'
 
 import * as ghUtils from '../utils/github'
 
-import * as Deps from '../deps'
+import {Container as Deps} from '../deps'
+let Config = Deps.config;
 
 export class DebugModeSetting extends AbstractComponent {
 	public get currentSetting():boolean {

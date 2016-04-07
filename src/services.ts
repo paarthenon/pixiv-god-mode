@@ -1,7 +1,9 @@
-import Config from './utils/config'
+import * as Deps from './deps'
+let Config = Deps.Container.config;
 import ConfigKeys from './configKeys'
 
-import {log} from './utils/log'
+import * as log4js from 'log4js'
+let logger = log4js.getLogger('Services');
 
 import {Features, Model, Messages} from '../common/proto'
 
@@ -39,31 +41,31 @@ function callService<Req, Res>(feature: string, request: Req) :Q.IPromise<Res> {
 }
 
 export function openFolder(artist: Model.Artist): void {
-	log(`SERVICES openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
+	logger.debug(`SERVICES openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
 	callService(Features.OpenToArtist, artist);
 }
 
 
 export function download(artist:Model.Artist, imageUrl:string):void {
-	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
+	logger.debug(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
 	let msg: Messages.ArtistUrlRequest = { artist: artist, url: imageUrl };
 	callService(Features.DownloadImage, msg);
 }
 
 export function downloadZip(artist: Model.Artist, zipUrl: string): void {
-	log(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
+	logger.debug(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
 	let msg: Messages.ArtistUrlRequest = { artist: artist, url: zipUrl };
 	callService(Features.DownloadAnimation, msg);
 }
 
 export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
-	log(`SERVICES downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
+	logger.debug(`SERVICES downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
 	let msg : Messages.BulkArtistUrlRequest = { items: imageUrls.map(url => ({ artist, url })) };
 	callService(Features.DownloadManga, msg);
 }
 
-export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback:(param:boolean) => any) : void {
-	log(`SERVICES imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
+export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback: (param: boolean) => any): void {
+	logger.debug(`SERVICES imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
 	let msg: Messages.ArtistImageRequest = { artist, image };
 	callService<Messages.ArtistImageRequest, boolean>(Features.ImageExists, msg)
 		.then(callback);

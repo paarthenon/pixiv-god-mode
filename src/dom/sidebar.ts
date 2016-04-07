@@ -1,26 +1,27 @@
 import {Component, AbstractComponent} from './component'
 import {Action} from '../actionModel'
 
-import * as Deps from '../deps'
+import {Container as Deps} from '../deps'
 
-import {log} from '../utils/log'
+import * as log4js from 'log4js'
+var logger = log4js.getLogger('Sidebar Generation');
 
 export class SidebarButton extends AbstractComponent {
 	constructor(protected action: Action) {
 		super();
 	}
 	public render() {
-		log('SidebarButton | render | init');
+		logger.trace('SidebarButton | render | init');
 		let self = Deps.jQ(`<li id="pa-button-${this.action.id}" class="pa-sidebar-entry"></li>`);
-		log('SidebarButton | render | adding background color');
+		logger.trace('SidebarButton | render | adding background color');
 		self.css('background-color', this.action.color || '#000');
-		log('SidebarButton | render | adding callback');
+		logger.trace('SidebarButton | render | adding callback');
 		self.on('click', this.action.execute);
-		log('SidebarButton | render | creating tooltip');
+		logger.trace('SidebarButton | render | creating tooltip');
 		let tooltip = Deps.jQ(`<a class="pa-tooltip"><span class="pa-icon pa-icon-${this.action.icon || 'images'}"></span><span class="pa-tooltip-body">${this.action.label}</span></span></a>'`);
-		log('SidebarButton | render | appending tooltip');
+		logger.trace('SidebarButton | render | appending tooltip');
 		self.append(tooltip);
-		log('SidebarButton | render | returning');
+		logger.trace('SidebarButton | render | returning');
 		return self;
 	}
 }

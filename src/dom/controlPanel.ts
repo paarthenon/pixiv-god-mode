@@ -24,7 +24,7 @@ export class ControlPanel extends AbstractComponent {
 	protected userDictionary: Dictionary;
 	protected page: RootPage;
 
-	protected self = Deps.jQ('<div id="pixiv-assistant-control-panel" class="hidden"><h1>Pixiv Assistant Control Panel</h1></div>');
+	protected self = Deps.Container.jQ('<div id="pixiv-assistant-control-panel" class="hidden"><h1>Pixiv Assistant Control Panel</h1></div>');
 
 	protected visible: boolean = false;
 

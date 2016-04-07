@@ -1,7 +1,6 @@
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
-import {log} from '../utils/log'
 import * as services from '../services'
 
 import {settingKeys, getSetting} from '../userSettings'
@@ -31,8 +30,6 @@ export class MangaPage extends RootPage {
 				// and copied over to the source attribute once a user comes into view.
 				let src = jQImage.attr('data-src');
 				let newSrc = pathUtils.getMaxSizeImageUrl(src).replace(/\.(\w+)$/, extensionWithDot);
-
-				log(`rewriting image src from [${src}] to [${newSrc}]`);
 
 				// Have to alter the data-src as well because if we don't, pixiv will 
 				// automatically copy over data-src again

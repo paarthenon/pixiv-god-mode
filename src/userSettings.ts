@@ -1,4 +1,5 @@
-import Config from './utils/config'
+import * as Deps from './deps'
+let Config = Deps.Container.config;
 import ConfigKeys from './configKeys'
 
 export let settingKeys = {

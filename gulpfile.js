@@ -46,6 +46,7 @@ gulp.task('chrome-browserify', ['build'], function(){
 
 gulp.task('chrome', ['chrome-browserify'], function(){
 	gulp.src('build/merged/chrome.js')
+		.pipe(rename('pixiv-assistant.js'))
 		.pipe(gulp.dest('dist/chrome'));
 
 	gulp.src('vendor/chrome/*')

@@ -2,7 +2,6 @@ import * as DomUtils from './utils/dom'
 import * as PathUtils from './utils/path'
 
 import {dispatch} from './dispatch'
-import {log} from './utils/log'
 
 import {DictionaryService} from './utils/dict'
 
@@ -11,13 +10,19 @@ import {ControlPanel} from './dom/controlPanel'
 import {MiniTranslationModal} from './dom/miniTranslationModal'
 
 import Debug from './debug'
-import Config from './utils/config'
 import ConfigKeys from './configKeys'
 
 import * as appServices from './services'
-import * as Deps from './deps'
 
 import * as log4js from 'log4js'
+
+import * as Dependencies from './deps'
+
+function initialize(depsContent: Dependencies.IDependencyContainer) {
+	Dependencies.Container = depsContent;
+}
+
+var Config = Dependencies.Container.config;
 
 log4js.configure({
 	appenders: [
@@ -31,18 +36,18 @@ let jQ: JQueryStatic = $;
 
 DomUtils.initialize();
 
-log('PA | dispatching on page');
+logger.trace('PA | dispatching on page');
 let page = dispatch(unsafeWindow.location.href, jQ);
 unsafeWindow.console.log(page);
 
-log('PA | creating Control Panel');
+logger.trace('PA | creating Control Panel');
 let controlPanel = new ControlPanel({
 	userDictionary: DictionaryService.userDictionary,
 	rootDictionary: DictionaryService.baseDictionary,
 	page: page
 });
 
-log('PA | creating translation modal');
+logger.trace('PA | creating translation modal');
 let potentialTag = PathUtils.getPotentialTag(unsafeWindow.location.href);
 let translationModal = new MiniTranslationModal(DictionaryService.userDictionary, potentialTag);
 translationModal.listen(MiniTranslationModal.events.addedTranslation, () => {
@@ -50,7 +55,7 @@ translationModal.listen(MiniTranslationModal.events.addedTranslation, () => {
 	translationModal.toggleVisibility();
 });
 
-log('PA | creating action buttons');
+logger.trace('PA | creating action buttons');
 let togglePanel = {
 	id: 'pa_toggle_control_panel',
 	label: 'Control Panel',
@@ -67,21 +72,21 @@ let toggleTranslationModal = {
 	execute: () => translationModal.toggleVisibility()
 };
 
-log('PA | creating sidebar');
+logger.trace('PA | creating sidebar');
 let sidebar = new Sidebar(page.actionCache.concat([toggleTranslationModal, togglePanel]));
 
-log('PA | rendering components');
+logger.trace('PA | rendering components');
 DomUtils.render((<any>unsafeWindow).$, [sidebar, controlPanel, translationModal]);
 
-log('PA | attaching debug objects');
+logger.trace('PA | attaching debug objects');
 if (Config.get(ConfigKeys.debug_mode)) {
 	Debug.page = page;
 	(<any>unsafeWindow).paDebug = Debug;
 	(<any>unsafeWindow).paServices = appServices;
 } else {
-	(<any>unsafeWindow).paEnableDebugMode = Deps.inject(function() {
+	(<any>unsafeWindow).paEnableDebugMode = Dependencies.inject(function() {
 		setTimeout(function() { Config.set(ConfigKeys.debug_mode, true) }, 0);
 	});
 }
 
-log('PA | DebugObjects attached');
+logger.trace('PA | DebugObjects attached');

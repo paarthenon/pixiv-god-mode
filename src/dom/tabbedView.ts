@@ -1,6 +1,6 @@
 import {Component, AbstractComponent, renderComponent} from './component'
 
-import * as Deps from '../deps'
+import {Container as Deps} from '../deps'
 
 export class Tab {
 	protected self = Deps.jQ('<div class="pa-tab-content"></div>');

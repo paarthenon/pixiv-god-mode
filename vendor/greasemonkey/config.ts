@@ -1,15 +1,17 @@
+import IConfig from '../../src/IConfig'
+
 type potentialData = boolean|string|number|Object
 
 interface configValue {
 	data: potentialData
 }
 
-export default class Config {
-	public static get Keys():string[] {
+export default class Config implements IConfig {
+	public keys():string[] {
 		return GM_listValues();
 	}
 
-	public static get(key:string):potentialData {
+	public get(key:string):potentialData {
 		let value = GM_getValue(key);
 		if(value){
 			return JSON.parse(value).data;
@@ -17,7 +19,7 @@ export default class Config {
 		return undefined;
 	}
 
-	public static set(key:string, value:potentialData) {
+	public set(key:string, value:potentialData) {
 		GM_setValue(key, JSON.stringify({data: value})); 
 	}
 }

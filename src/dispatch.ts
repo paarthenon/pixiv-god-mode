@@ -9,8 +9,6 @@ import {SearchPage} from './pages/search'
 import {BookmarkAddPage} from './pages/bookmarkAdd'
 import {ArtistTagListPage} from './pages/artistTagList'
 
-import {log} from './utils/log'
-
 let patterns = {
 	illust: /^http:\/\/www.pixiv.net\/member_illust.php\?mode=medium&illust_id=[0-9]+/,
 	manga: /^http:\/\/www.pixiv.net\/member_illust.php\?mode=manga&illust_id=[0-9]+/,

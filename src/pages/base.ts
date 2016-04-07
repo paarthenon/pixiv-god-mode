@@ -1,4 +1,3 @@
-import {log} from '../utils/log'
 import {Action, ActionDescriptor, OnLoadFunc} from '../actionModel'
 
 import {CacheRegistry} from '../utils/terribleCache'

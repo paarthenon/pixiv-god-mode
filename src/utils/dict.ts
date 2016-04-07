@@ -1,8 +1,8 @@
-import Config from './config'
+import * as Deps from '../deps'
+let Config = Deps.Container.config;
 import ConfigKeys from '../configKeys'
 
 import * as ghUtils from './github'
-import {log} from './log'
 
 import * as log4js from 'log4js'
 
@@ -93,7 +93,7 @@ export module DictionaryService {
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			let currentHash = Config.get(ConfigKeys.official_dict_hash);
 			let isNewer:boolean = !currentHash || currentHash !== commitHash;
-			log(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer)?'':'not '} newer than [${currentHash}]`);
+			logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer)?'':'not '} newer than [${currentHash}]`);
 			callback(isNewer);
 		});
 	}
@@ -102,7 +102,7 @@ export module DictionaryService {
 		logger.debug('DictionaryService.updateDictionary | entered');
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			ghUtils.getDictionaryObject(ghPath, commitHash, obj => {
-				log(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
+				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
 				Config.set(ConfigKeys.official_dict, obj);
 				Config.set(ConfigKeys.official_dict_hash, commitHash);
 				if(onComplete){

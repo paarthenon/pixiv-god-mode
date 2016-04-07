@@ -1,7 +1,7 @@
-import Config from '../utils/config'
 import {Component, AbstractComponent, renderComponent} from './component'
 
-import * as Deps from '../deps'
+import {Container as Deps} from '../deps'
+let Config = Deps.config;
 
 class ConfigEntryEditor extends AbstractComponent {
 	constructor(protected key: string) { super(); }
@@ -36,7 +36,7 @@ export class ConfigEditor extends AbstractComponent {
 	constructor() { super(); }
 
 	public get children():Component[] {
-		let kvEditors = Config.Keys.map(key => new ConfigEntryEditor(key));
+		let kvEditors = Config.keys().map(key => new ConfigEntryEditor(key));
 		return kvEditors;
 	}
 

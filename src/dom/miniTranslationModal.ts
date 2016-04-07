@@ -12,7 +12,7 @@ export class MiniTranslationModal extends AbstractComponent {
 		addedTranslation: 'NEW_TRANSLATION',
 	};
 
-	protected self = Deps.jQ('<div id="pa-assistant-mini-translation-modal"></div>');
+	protected self = Deps.Container.jQ('<div id="pa-assistant-mini-translation-modal"></div>');
 
 	constructor(protected dict: Dictionary, protected potentialTag:string) { 
 		super(); 
