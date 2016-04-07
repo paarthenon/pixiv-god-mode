@@ -8,5 +8,14 @@
   	"default_icon": "icon-38.png",
   	"default_title": "Pixiv Assistant",
   	"default_popup": "popup.html"
-  }
+  },
+  "content_scripts": [{
+  	"matches": [
+  		"http://www.pixiv.net/*"
+  	],
+  	"js": [
+  		"jquery-2.2.3.min.js",
+  		"pixiv-assistant.js"
+  	]
+  }]
 }
