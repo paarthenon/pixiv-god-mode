@@ -45,4 +45,12 @@ gulp.task('chrome', ['browserify'], function(){
 		.pipe(gulp.dest('dist/chrome'))
 });
 
+gulp.task('firefox', ['browserify'], function(){
+	gulp.src('build/merged/main.js')
+		.pipe(rename('pixiv-assistant.js'))
+		.pipe(gulp.dest('dist/firefox'))
+	gulp.src('vendor/firefox/*')
+		.pipe(gulp.dest('dist/firefox'))
+});
+
 gulp.task('default', ['deploy']);
