@@ -15,6 +15,7 @@
     ],
     "files": [
         "typings/tsd.d.ts",
-        "src/main.ts"
+        "src/main.ts",
+        "vendor/chrome/chrome.ts"
     ]
 }

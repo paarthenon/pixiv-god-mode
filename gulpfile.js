@@ -6,43 +6,50 @@ var rename = require('gulp-rename');
 
 var exec = require('child_process').exec;
 
-gulp.task('build', function(callback){
-	exec('tsc -p .', function(error, stdout, stderr) {
-		if(stdout){ console.log(stdout) }
-		if(stderr){ console.log(stderr) }
 
-		if(error){
-			console.log('Typescript build error');
-		}else{
-			callback();
-		}
-	});
+gulp.task('build', function(callback){
+    exec('tsc -p .', function(error, stdout, stderr) {
+        if(stdout){ console.log(stdout) }
+        if(stderr){ console.log(stderr) }
+
+        if(error){
+                console.log('Typescript build error');
+        }else{
+                callback();
+        }
+   });
 });
 
-gulp.task('browserify', ['build'], function(){
+gulp.task('greasemonkey-browserify', ['build'], function(){
 	return gulp.src('build/src/main.js')
 		.pipe(browserify())
 		.pipe(gulp.dest('build/merged'))
 });
 
-gulp.task('header', ['browserify'], function(){
+gulp.task('greasemonkey-header', ['greasemonkey-browserify'], function(){
 	return gulp.src('build/merged/main.js')
 		.pipe(header(fs.readFileSync('resources/userscript-header.txt','utf8')))
-		.pipe(gulp.dest('build/final'))
+		.pipe(gulp.dest('build/merged'))
 });
 
-gulp.task('deploy', ['header'], function(){
-	return gulp.src('build/final/main.js')
+gulp.task('greasemonkey-deploy', ['greasemonkey-header'], function(){
+	return gulp.src('build/merged/main.js')
 		.pipe(rename('pixiv-assistant.user.js'))
 		.pipe(gulp.dest('dist'))
 });
 
-gulp.task('chrome', ['browserify'], function(){
-	gulp.src('build/merged/main.js')
-		.pipe(rename('pixiv-assistant.js'))
-		.pipe(gulp.dest('dist/chrome'))
+gulp.task('chrome-browserify', ['build'], function(){
+	return gulp.src('build/vendor/chrome/chrome.js')
+		.pipe(browserify())
+		.pipe(gulp.dest('build/merged'))
+});
+
+gulp.task('chrome', ['chrome-browserify'], function(){
+	gulp.src('build/merged/chrome.js')
+		.pipe(gulp.dest('dist/chrome'));
+
 	gulp.src('vendor/chrome/*')
-		.pipe(gulp.dest('dist/chrome'))
+		.pipe(gulp.dest('dist/chrome'));
 });
 
 gulp.task('firefox', ['browserify'], function(){
