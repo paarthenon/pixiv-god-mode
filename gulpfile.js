@@ -3,9 +3,7 @@ var header = require('gulp-header');
 var browserify = require('gulp-browserify');
 var fs = require('fs');
 var rename = require('gulp-rename');
-
 var exec = require('child_process').exec;
-
 
 gulp.task('build', function(callback){
     exec('tsc -p .', function(error, stdout, stderr) {
@@ -13,9 +11,9 @@ gulp.task('build', function(callback){
         if(stderr){ console.log(stderr) }
 
         if(error){
-                console.log('Typescript build error');
+            console.log('Typescript build error');
         }else{
-                callback();
+            callback();
         }
    });
 });
