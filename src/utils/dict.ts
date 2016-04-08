@@ -46,7 +46,7 @@ class SpreadConfigDict implements Dictionary {
 	}
 
 	public get keys() {
-		//return GM_listValues().filter(key => key.match(new RegExp(`${this.configKey}::`)) != undefined);
+		//return Config.keys().filter(key => key.match(new RegExp(`${this.configKey}::`)) != undefined);
 		// TODO: Code this properly if this class ends up being used.
 		return <string[]>[];
 	}

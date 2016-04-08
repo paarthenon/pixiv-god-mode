@@ -7,6 +7,8 @@ import {settingKeys, getSetting} from '../userSettings'
 
 import {Model} from '../../common/proto'
 
+import {Container as DepsContainer} from '../deps'
+
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);
@@ -64,7 +66,7 @@ export class WorksPage extends GalleryPage {
 			if (this.jQuery(image).attr('class').indexOf('multiple') >= 0) {
 				path = path.replace('medium', 'manga');
 			}
-			GM_openInTab(`//www.pixiv.net${path}`);
+			DepsContainer.openInTab(`//www.pixiv.net${path}`);
 		});
 	}
 
@@ -75,7 +77,7 @@ export class WorksPage extends GalleryPage {
         }, {}).then((result: any) => {
 			let combined_urls = result.body[0].illusts.map((illust: any) =>
 				`http://www.pixiv.net/member_illust.php?mode=${(parseInt(illust.illust_page_count) > 1) ? 'manga' : 'medium'}&illust_id=${illust.illust_id}`);
-			combined_urls.forEach((url:string) => GM_openInTab(url));
+			combined_urls.forEach((url:string) => DepsContainer.openInTab(url));
         });
 	}
 
