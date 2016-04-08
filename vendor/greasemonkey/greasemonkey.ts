@@ -1,6 +1,9 @@
+import {IDependencyContainer} from '../../src/deps'
+
 import Config from './config'
 
-let deps = {
+let deps : IDependencyContainer = {
 	jQ: $,
-	config: new Config()
+	config: new Config(),
+	openInTab: GM_openInTab
 }
