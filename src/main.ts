@@ -36,18 +36,18 @@ let jQ: JQueryStatic = $;
 
 DomUtils.initialize();
 
-logger.trace('PA | dispatching on page');
+logger.trace('dispatching on page');
 let page = dispatch(unsafeWindow.location.href, jQ);
 unsafeWindow.console.log(page);
 
-logger.trace('PA | creating Control Panel');
+logger.trace('creating Control Panel');
 let controlPanel = new ControlPanel({
 	userDictionary: DictionaryService.userDictionary,
 	rootDictionary: DictionaryService.baseDictionary,
 	page: page
 });
 
-logger.trace('PA | creating translation modal');
+logger.trace('creating translation modal');
 let potentialTag = PathUtils.getPotentialTag(unsafeWindow.location.href);
 let translationModal = new MiniTranslationModal(DictionaryService.userDictionary, potentialTag);
 translationModal.listen(MiniTranslationModal.events.addedTranslation, () => {
@@ -55,7 +55,7 @@ translationModal.listen(MiniTranslationModal.events.addedTranslation, () => {
 	translationModal.toggleVisibility();
 });
 
-logger.trace('PA | creating action buttons');
+logger.trace('creating action buttons');
 let togglePanel = {
 	id: 'pa_toggle_control_panel',
 	label: 'Control Panel',
@@ -72,13 +72,13 @@ let toggleTranslationModal = {
 	execute: () => translationModal.toggleVisibility()
 };
 
-logger.trace('PA | creating sidebar');
+logger.trace('creating sidebar');
 let sidebar = new Sidebar(page.actionCache.concat([toggleTranslationModal, togglePanel]));
 
-logger.trace('PA | rendering components');
+logger.trace('rendering components');
 DomUtils.render((<any>unsafeWindow).$, [sidebar, controlPanel, translationModal]);
 
-logger.trace('PA | attaching debug objects');
+logger.trace('attaching debug objects');
 if (Config.get(ConfigKeys.debug_mode)) {
 	Debug.page = page;
 	(<any>unsafeWindow).paDebug = Debug;
@@ -89,4 +89,4 @@ if (Config.get(ConfigKeys.debug_mode)) {
 	});
 }
 
-logger.trace('PA | DebugObjects attached');
+logger.trace('DebugObjects attached');
