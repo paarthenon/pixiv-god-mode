@@ -31,6 +31,18 @@
     },
     "express-serve-static-core/express-serve-static-core.d.ts": {
       "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "webrtc/MediaStream.d.ts": {
+      "commit": "ec9eb4b28c74665a602c22db3457f0a76fa0fa23"
+    },
+    "filewriter/filewriter.d.ts": {
+      "commit": "ec9eb4b28c74665a602c22db3457f0a76fa0fa23"
+    },
+    "filesystem/filesystem.d.ts": {
+      "commit": "ec9eb4b28c74665a602c22db3457f0a76fa0fa23"
+    },
+    "chrome/chrome.d.ts": {
+      "commit": "ec9eb4b28c74665a602c22db3457f0a76fa0fa23"
     }
   }
 }
