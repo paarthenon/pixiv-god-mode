@@ -19,6 +19,14 @@ gulp.task('build', function(callback){
    });
 });
 
+gulp.task('es5', ['build'], function() {
+	return gulp.src('build/es6/**/*.js')
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(gulp.dest('build/es5'));
+})
+
 gulp.task('greasemonkey-browserify', ['build'], function(){
 	return gulp.src('build/src/main.js')
 		.pipe(browserify())
@@ -37,12 +45,9 @@ gulp.task('greasemonkey-deploy', ['greasemonkey-header'], function(){
 		.pipe(gulp.dest('dist'))
 });
 
-gulp.task('chrome-pack', ['build'], function(){
-	return gulp.src('build/vendor/chrome/chrome.js')
+gulp.task('chrome-pack', ['es5'], function(){
+	return gulp.src('build/es5/vendor/chrome/chrome.js')
 		.pipe(browserify())
-		.pipe(babel({
-			presets: ['es2015']
-		}))
 		.pipe(gulp.dest('build/merged'))
 });
 

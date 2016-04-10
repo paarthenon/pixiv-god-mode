@@ -6,6 +6,6 @@ import Config from './config'
 
 let deps: IDependencyContainer = {
 	jQ: $,
-	config: undefined,
+	config: new Config(),
 	openInTab: (url:string)=>{}
 }
