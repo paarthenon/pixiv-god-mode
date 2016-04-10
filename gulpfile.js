@@ -4,7 +4,7 @@ var browserify = require('gulp-browserify');
 var fs = require('fs');
 var rename = require('gulp-rename');
 var exec = require('child_process').exec;
-var babel = require('babelify');
+var babel = require('gulp-babel');
 
 gulp.task('build', function(callback){
     exec('tsc -p .', function(error, stdout, stderr) {
@@ -18,7 +18,6 @@ gulp.task('build', function(callback){
         }
    });
 });
-
 
 gulp.task('greasemonkey-browserify', ['build'], function(){
 	return gulp.src('build/src/main.js')
@@ -38,13 +37,16 @@ gulp.task('greasemonkey-deploy', ['greasemonkey-header'], function(){
 		.pipe(gulp.dest('dist'))
 });
 
-gulp.task('chrome-browserify', ['build'], function(){
+gulp.task('chrome-pack', ['build'], function(){
 	return gulp.src('build/vendor/chrome/chrome.js')
-		.pipe(browserify().transform(babel))
+		.pipe(browserify())
+		.pipe(babel({
+			presets: ['es2015']
+		}))
 		.pipe(gulp.dest('build/merged'))
 });
 
-gulp.task('chrome', ['chrome-browserify'], function(){
+gulp.task('chrome', ['chrome-pack'], function(){
 	gulp.src('build/merged/chrome.js')
 		.pipe(rename('pixiv-assistant.js'))
 		.pipe(gulp.dest('dist/chrome'));
@@ -61,4 +63,4 @@ gulp.task('firefox', ['browserify'], function(){
 		.pipe(gulp.dest('dist/firefox'))
 });
 
-gulp.task('default', ['deploy']);
+gulp.task('default', ['chrome']);
