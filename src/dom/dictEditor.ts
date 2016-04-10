@@ -53,7 +53,7 @@ class DictionaryEntryEditor extends AbstractComponent {
 	}
 
 	constructor(protected dict: Dictionary, protected key: string) { super(); }
-	protected get value():string {
+	protected get value():Q.IPromise<string> {
 		return this.dict.get(this.key);
 	}
 	protected update(value: string):void {
@@ -102,7 +102,7 @@ export class DictionaryEditor extends AbstractComponent {
 			this.self.append(renderComponent(new DictionaryEntryEditor(this.dict, key)));
 			this.shout(DictionaryEditor.events.newTranslation);
 		});
-		let kvEditors = this.dict.keys.map(key => {
+		let kvEditors = this.dict.keys.then(keys => keys.map(key => {
 			let editor = new DictionaryEntryEditor(this.dict, key);
 			editor.listen(DictionaryEntryEditor.events.itemUpdated, (event) => {
 				this.shout(DictionaryEditor.events.updatedTranslation, event);
@@ -111,7 +111,7 @@ export class DictionaryEditor extends AbstractComponent {
 				this.shout(DictionaryEditor.events.deletedTranslation);
 			})
 			return editor;
-		});
+		}));
 		let components: Component[] = [addNewInput];
 		return components.concat(kvEditors);
 	}

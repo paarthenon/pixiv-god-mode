@@ -4,6 +4,7 @@ var browserify = require('gulp-browserify');
 var fs = require('fs');
 var rename = require('gulp-rename');
 var exec = require('child_process').exec;
+var babel = require('babelify');
 
 gulp.task('build', function(callback){
     exec('tsc -p .', function(error, stdout, stderr) {
@@ -17,6 +18,7 @@ gulp.task('build', function(callback){
         }
    });
 });
+
 
 gulp.task('greasemonkey-browserify', ['build'], function(){
 	return gulp.src('build/src/main.js')
@@ -38,7 +40,7 @@ gulp.task('greasemonkey-deploy', ['greasemonkey-header'], function(){
 
 gulp.task('chrome-browserify', ['build'], function(){
 	return gulp.src('build/vendor/chrome/chrome.js')
-		.pipe(browserify())
+		.pipe(browserify().transform(babel))
 		.pipe(gulp.dest('build/merged'))
 });
 

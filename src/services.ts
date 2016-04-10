@@ -10,10 +10,6 @@ import {Features, Model, Messages} from '../common/proto'
 import * as Q from 'q'
 
 let server_url = Config.get(ConfigKeys.server_url);
-if(!server_url){
-	server_url = window.prompt("Server url?", 'http://localhost:9002');
-	Config.set(ConfigKeys.server_url, server_url);
-}
 
 class HTTP {
 	static GET = 'GET'; 
