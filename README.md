@@ -1,7 +1,7 @@
-# Pixiv Assistant (Userscript)
+# Pixiv Assistant 
 [![Build Status](https://travis-ci.org/paarthk/pixiv-assistant.svg?branch=master)](https://travis-ci.org/paarthk/pixiv-assistant)
 
-Pixiv Assistant is an extension to the popular gallery site Pixiv providing translation services and quality of life improvements. Used in concert with the downloadable executable, the extension provides some repository management functionality. 
+Pixiv Assistant is a chrome extension adding functionality to the popular gallery site Pixiv providing translation services and quality of life improvements. Used in concert with the downloadable executable, the extension provides some repository management functionality. 
 
 # Translation features
 
