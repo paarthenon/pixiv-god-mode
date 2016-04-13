@@ -3,7 +3,7 @@ export interface ActionDescriptor extends IsConditional {
 	label: string,
 	icon?: string,
 	color?: string,
-	onLoad?: boolean //TODO: in future blend onload and registeredaction
+	onLoad?: boolean 
 }
 
 interface HasExecutable {
