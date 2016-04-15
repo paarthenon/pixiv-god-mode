@@ -16,7 +16,7 @@ The Artist repo option assumes the folders are structured as:
 
 	repo/[<artist.id>] - <artist.name>/<image>
 
-The flat repo makes no assumptions.
+The flat repo makes no assumptions, but will create a db.json file with the information that it has collected on folder structure on program exit. This file exists to avoid having to reload the folder structure every execution of the program. 
 
 ## To Build
 
