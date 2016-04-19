@@ -17,5 +17,8 @@
   		"jquery-2.2.3.min.js",
   		"pixiv-assistant.js"
   	]
-  }]
+  }],
+  "background": {
+    "scripts": ["background.js"]
+  }
 }
