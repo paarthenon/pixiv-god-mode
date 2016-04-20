@@ -1,6 +1,11 @@
 # Pixiv Assistant (Server)
 
-This is the optional server component of the Pixiv Assistant extension. The browser component is responsible for the user interface extensions and the translation functionality, this server component provides repository management and querying along with download functionality.
+The optional server component of the Pixiv Assistant extension. The browser component is responsible for the user interface extensions and the translation functionality, this server component provides several complementary features.
+
+The server supports:
+* Single and Bulk downloading of images
+* Opening of either the repository folder or a direct artist folder in the default system file browser
+* Reporting status of already downloaded images so that the browser extension can hide them
 
 If building yourself, run as 
 
