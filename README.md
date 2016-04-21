@@ -13,7 +13,11 @@ One is a global dictionary provided by the pixiv-assistant/dictionary repository
 
 The other is a locally stored user dictionary for any definitions that the global dictionary may not provide. The user dictionary takes priority over the global dictionary, meaning users can override translations from the global dictionary with their own custom translations
 
-# Page Features
+#Project Features (WIP)
+
+## Tag translation
+
+Last and first page buttons will be injected where possible.
 
 ## Global
 
@@ -22,10 +26,6 @@ The other is a locally stored user dictionary for any definitions that the globa
 ### Add Translation
 
 A small modal to immediately add a translation to the user dictionary. On pages that focus on a specific tag (the search page for a single tag, the member tag works page) the modal will automatically load with the Japanese text and a machine translation to English.
-
-## Search Page
-
- * Jump to last page
 
 ## Works page
 
