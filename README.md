@@ -1,5 +1,10 @@
-# Pixiv Assistant 
-[![Build Status](https://travis-ci.org/paarthk/pixiv-assistant.svg?branch=master)](https://travis-ci.org/paarthk/pixiv-assistant)
+# Pixiv Assistant (Defunct Greasemonkey Script)
+
+## **I am abandoning this repository as a greasemonkey scripts. The structure of chrome extensions is different enough that I will be picking up development in a new repository. This is left up in case anyone was interested in the greasemonkey code and the beginning of the transition**
+
+Final README below.
+
+****
 
 Pixiv Assistant is a chrome extension adding functionality to the popular gallery site Pixiv. The extension provides translation services and quality of life improvements. Used in concert with the downloadable executable ([paarthk/pixiv-assistant-server](https://github.com/paarthk/pixiv-assistant-server)), the extension provides bulk downloading, folder traversal, and information about images that have already been downloaded. 
 
