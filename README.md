@@ -5,6 +5,8 @@ Pixiv Assistant is a chrome extension adding functionality to the popular galler
 
 ## **Warning**: Pixiv Assistant is currently under heavy development as it is converted from a greasemonkey script to a chrome extension. 
 
+I'm realizing I'm going to have to throw away most of the patterns implemented during the greasemonkey work. The chrome extension architecture is just structured very differently. Content scripts are far more limited than user scripts. 
+
 # Translation features
 
 There are two dictionaries maintained by the extension. 
