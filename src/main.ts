@@ -1,26 +1,28 @@
-import * as DomUtils from './utils/dom'
-import * as PathUtils from './utils/path'
+// import * as DomUtils from './utils/dom'
+// import * as PathUtils from './utils/path'
 
 import {dispatch} from './dispatch'
 import {BasePage} from './pages/base'
 
-import {DictionaryService} from './utils/dict'
+// import {DictionaryService} from './utils/dict'
 
 // import {Sidebar} from './dom/sidebar'
 // import {ControlPanel} from './dom/controlPanel'
 // import {MiniTranslationModal} from './dom/miniTranslationModal'
 
-import Debug from './debug'
-import ConfigKeys from './configKeys'
-import * as appServices from './services'
+// import ConfigKeys from './configKeys'
+// import * as appServices from './services'
 
 import * as log4js from 'log4js'
 import * as Dependencies from './deps'
+
+import {DictionaryService} from './utils/dict'
 
 export default function Bootstrap(depsContent: Dependencies.IDependencyContainer):BasePage {
 	let logger = log4js.getLogger('Startup');
 	logger.info('Bootstrapping');
 	Dependencies.load(depsContent);
+	DictionaryService.initialize();
 	return dispatch(document.location.href, depsContent.jQ);
 }
 // logger.trace('creating Control Panel');

@@ -50,13 +50,20 @@ class DictBroker {
 
 let logger = log4js.getLogger('Dictionary');
 export module DictionaryService {
-	export let userDictionary = new SingleConfigDict(ConfigKeys.user_dict);
-	export let baseDictionary = new SingleConfigDict(ConfigKeys.official_dict);
+	export let userDictionary :SingleConfigDict = undefined;
+	export let baseDictionary :SingleConfigDict = undefined;
 
-	let broker = new DictBroker([
-		userDictionary,
-		baseDictionary
-	]);
+	let broker :DictBroker = undefined;
+
+	export function initialize(){
+		userDictionary = new SingleConfigDict(ConfigKeys.user_dict);
+		baseDictionary = new SingleConfigDict(ConfigKeys.official_dict);
+
+		let broker = new DictBroker([
+			userDictionary,
+			baseDictionary
+		]);
+	}
 
 	export function getTranslation(tag:string):Q.IPromise<string> {
 		return Q(broker.get(tag))

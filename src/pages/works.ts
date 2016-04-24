@@ -106,7 +106,8 @@ export class WorksPage extends GalleryPage {
         });
 	}
 
-	@ExecuteIf(() => getSetting(settingKeys.pages.works.mangaLinkToFull))
+	// TODO: Replace with newly worked if on 'settingKeys.pages.works.mangaLinkToFull'
+	@ExecuteOnLoad
 	public replaceMangaThumbnailLinksToFull(){
 		this.jQuery('li.image-item a.work.multiple').toArray().forEach(manga => {
 			let path = this.jQuery(manga).attr('href')

@@ -9,7 +9,7 @@ import {Features, Model, Messages} from '../common/proto'
 
 import * as Q from 'q'
 
-let server_url = Config.get(ConfigKeys.server_url);
+
 
 class HTTP {
 	static GET = 'GET'; 
@@ -17,23 +17,25 @@ class HTTP {
 }
 
 function callService<Req, Res>(feature: string, request: Req) :Q.IPromise<Res> {
-	let q = Q.defer<Res>();
-	GM_xmlhttpRequest({
-		method: HTTP.POST,
-		url: `${server_url}/${feature}`,
-		data: JSON.stringify(request),
-		headers: { "Content-Type": "application/json" },
-		onload: (response) => {
-			let parsedResponse: Messages.Response = JSON.parse(response.responseText);
+	return Config.get(ConfigKeys.server_url).then(server_url => {
+		let q = Q.defer<Res>();
+		GM_xmlhttpRequest({
+			method: HTTP.POST,
+			url: `${server_url}/${feature}`,
+			data: JSON.stringify(request),
+			headers: { "Content-Type": "application/json" },
+			onload: (response) => {
+				let parsedResponse: Messages.Response = JSON.parse(response.responseText);
 
-			if (Messages.isPositiveResponse<Res>(parsedResponse)) {
-				q.resolve(parsedResponse.data);
-			} else {
-				q.reject('Negative response');
+				if (Messages.isPositiveResponse<Res>(parsedResponse)) {
+					q.resolve(parsedResponse.data);
+				} else {
+					q.reject('Negative response');
+				}
 			}
-		}
-	});
-	return q.promise;
+		});
+		return q.promise;
+	})
 }
 
 export function openFolder(artist: Model.Artist): void {

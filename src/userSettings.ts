@@ -39,5 +39,6 @@ defaultTuples.forEach(tuple => {
 
 let userSettings:any = Config.get(ConfigKeys.user_settings);
 export function getSetting(key: string) {
-	return (userSettings && key in userSettings) ? userSettings[key] : defaultSettings[key];
+	return Config.get(ConfigKeys.user_settings).then((userSettings: { [id: string]: any }) => 
+		(userSettings && key in userSettings) ? userSettings[key] : defaultSettings[key])
 }

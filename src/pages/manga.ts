@@ -17,7 +17,8 @@ export class MangaPage extends RootPage {
 		return (<any>unsafeWindow).pixiv.context.illustId;
 	}
 
-	@ExecuteIf(() => getSetting(settingKeys.pages.manga.loadFullSize))
+	// TODO: Replace with newly worked if on 'settingKeys.pages.manga.loadFullSize'
+	@ExecuteOnLoad
 	public autoEmbiggenFixImages(): void{
 		(<any>(<any>unsafeWindow).pixiv.api.illust.detail([this.illustId], {})).then((response: any) => { 
 			let extension = response.body[this.illustId].illust_ext;
