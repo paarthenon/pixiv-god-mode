@@ -17,6 +17,7 @@
         "typings/tsd.d.ts",
         "src/main.ts",
         "vendor/chrome/chrome.ts",
+        "vendor/chrome/background.ts",
         "vendor/greasemonkey/greasemonkey.ts"
     ]
 }

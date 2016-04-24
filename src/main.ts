@@ -2,6 +2,7 @@ import * as DomUtils from './utils/dom'
 import * as PathUtils from './utils/path'
 
 import {dispatch} from './dispatch'
+import {BasePage} from './pages/base'
 
 import {DictionaryService} from './utils/dict'
 
@@ -11,35 +12,17 @@ import {DictionaryService} from './utils/dict'
 
 import Debug from './debug'
 import ConfigKeys from './configKeys'
-
 import * as appServices from './services'
 
 import * as log4js from 'log4js'
-
 import * as Dependencies from './deps'
 
-function initialize(depsContent: Dependencies.IDependencyContainer) {
+export default function Bootstrap(depsContent: Dependencies.IDependencyContainer):BasePage {
+	let logger = log4js.getLogger('Startup');
+	logger.info('Bootstrapping');
 	Dependencies.Container = depsContent;
+	return dispatch(document.location.href, depsContent.jQ);
 }
-
-var Config = Dependencies.Container.config;
-
-log4js.configure({
-	appenders: [
-		{ type: 'console' }
-	]
-});
-let logger = log4js.getLogger('Startup');
-logger.setLevel(log4js.levels.ALL);
-
-let jQ: JQueryStatic = $;
-
-// DomUtils.initialize();
-
-logger.trace('dispatching on page');
-let page = dispatch(unsafeWindow.location.href, jQ);
-unsafeWindow.console.log(page);
-
 // logger.trace('creating Control Panel');
 // let controlPanel = new ControlPanel({
 // 	userDictionary: DictionaryService.userDictionary,
