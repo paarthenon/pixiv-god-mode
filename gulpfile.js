@@ -56,6 +56,8 @@ gulp.task('chrome', ['chrome-pack'], function(){
 		.pipe(rename('pixiv-assistant.js'))
 		.pipe(gulp.dest('dist/chrome'));
 
+	gulp.src('build/es5/vendor/chrome/background.js')
+		.pipe(gulp.dest('dist/chrome'));
 	gulp.src('vendor/chrome/*')
 		.pipe(gulp.dest('dist/chrome'));
 });
