@@ -1,7 +1,6 @@
 import * as Deps from '../deps'
-let Config = Deps.Container.config;
+import IConfig from '../IConfig'
 import ConfigKeys from '../configKeys'
-
 import * as ghUtils from './github'
 
 import * as log4js from 'log4js'
@@ -16,9 +15,9 @@ export interface Dictionary {
 
 class SingleConfigDict implements Dictionary {
 	protected dict: Q.IPromise<stringMap>;
-	constructor(protected configKey:string) {
+	constructor(protected config:IConfig, protected configKey:string) {
 		// creates and sets default dict on initialization
-		this.dict = Config.get(configKey).then(dict => dict || {});
+		this.dict = config.get(configKey).then(dict => dict || {});
 	}
 	public get keys(){
 		return this.dict.then(dict => Object.keys(dict));
@@ -34,7 +33,7 @@ class SingleConfigDict implements Dictionary {
 				delete dict[key];
 			}
 
-			return Q(dict).tap(dict => Config.set(this.configKey, dict));
+			return Q(dict).tap(dict => this.config.set(this.configKey, dict));
 		});
 	}
 }
@@ -50,14 +49,18 @@ class DictBroker {
 
 let logger = log4js.getLogger('Dictionary');
 export module DictionaryService {
+	let cachedConfig :IConfig = undefined;
+
 	export let userDictionary :SingleConfigDict = undefined;
 	export let baseDictionary :SingleConfigDict = undefined;
 
 	let broker :DictBroker = undefined;
 
-	export function initialize(){
-		userDictionary = new SingleConfigDict(ConfigKeys.user_dict);
-		baseDictionary = new SingleConfigDict(ConfigKeys.official_dict);
+	export function initialize(config:IConfig){
+		cachedConfig = config;
+
+		userDictionary = new SingleConfigDict(config, ConfigKeys.user_dict);
+		baseDictionary = new SingleConfigDict(config, ConfigKeys.official_dict);
 
 		let broker = new DictBroker([
 			userDictionary,
@@ -74,7 +77,7 @@ export module DictionaryService {
 	export function updateAvailable(callback:(available:boolean) => any) {
 		logger.debug('DictionaryService.updateAvailable | entered');
 		ghUtils.getMasterCommit(ghPath, commitHash => {
-			Config.get(ConfigKeys.official_dict_hash).then(currentHash => {
+			cachedConfig.get(ConfigKeys.official_dict_hash).then(currentHash => {
 				let isNewer: boolean = !currentHash || currentHash !== commitHash;
 				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
 				callback(isNewer);
@@ -87,8 +90,8 @@ export module DictionaryService {
 		ghUtils.getMasterCommit(ghPath, commitHash => {
 			ghUtils.getDictionaryObject(ghPath, commitHash, obj => {
 				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
-				Config.set(ConfigKeys.official_dict, obj);
-				Config.set(ConfigKeys.official_dict_hash, commitHash);
+				cachedConfig.set(ConfigKeys.official_dict, obj);
+				cachedConfig.set(ConfigKeys.official_dict_hash, commitHash);
 				if(onComplete){
 					onComplete();
 				}

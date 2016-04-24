@@ -22,7 +22,7 @@ export default function Bootstrap(depsContent: Dependencies.IDependencyContainer
 	let logger = log4js.getLogger('Startup');
 	logger.info('Bootstrapping');
 	Dependencies.load(depsContent);
-	DictionaryService.initialize();
+	DictionaryService.initialize(depsContent.config);
 	return dispatch(document.location.href, depsContent.jQ);
 }
 // logger.trace('creating Control Panel');
