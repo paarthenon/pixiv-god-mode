@@ -20,7 +20,7 @@ import * as Dependencies from './deps'
 export default function Bootstrap(depsContent: Dependencies.IDependencyContainer):BasePage {
 	let logger = log4js.getLogger('Startup');
 	logger.info('Bootstrapping');
-	Dependencies.Container = depsContent;
+	Dependencies.load(depsContent);
 	return dispatch(document.location.href, depsContent.jQ);
 }
 // logger.trace('creating Control Panel');

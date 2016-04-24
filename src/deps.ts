@@ -12,6 +12,10 @@ export var Container: IDependencyContainer = {
 	openInTab: undefined
 }
 
+export function load(deps:IDependencyContainer) {
+	Container = deps;
+}
+
 declare var cloneInto: Function;
 export function inject(f: Function){
 	return cloneInto(f, unsafeWindow, { cloneFunctions: true });
