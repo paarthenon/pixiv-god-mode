@@ -37,8 +37,10 @@ A small modal to immediately add a translation to the user dictionary. On pages 
  * Autoexpand image
  * Open artist repo
  * Download artist image
+ * Download zip file of animation frames if on animation page.
 
 ## Manga page
 
  * Automatically switch to expanded images
+ * Bulk downloading of manga
  
