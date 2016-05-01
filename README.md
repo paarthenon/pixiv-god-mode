@@ -1,6 +1,6 @@
 # Pixiv Assistant
 
-Pixiv Assistant is a chrome extension adding functionality to the popular gallery site Pixiv. The extension provides translation services and quality of life improvements. Used in concert with the downloadable executable ([paarthk/pixiv-assistant-server](https://github.com/paarthk/pixiv-assistant-server)), the extension provides bulk downloading, folder traversal, and information about images that have already been downloaded. 
+Pixiv Assistant is a chrome extension adding functionality to the popular gallery site Pixiv. The extension provides translation services and various quality of life improvements like auto expanding images and forcing high resolution manga pages. Used in concert with the downloadable executable ([paarthk/pixiv-assistant-server](https://github.com/paarthk/pixiv-assistant-server)), the extension provides bulk downloading, folder traversal, and information about images that have already been downloaded. 
 
 ## **Warning**: Pixiv Assistant is currently under heavy development as it is converted from a greasemonkey script to a chrome extension. 
 
