@@ -19,7 +19,7 @@
         "src/main.ts",
         "vendor/chrome/chrome.ts",
         "vendor/chrome/background.ts",
-        "vendor/chrome/popup.tsx",
+        "vendor/chrome/popup/bootstrap.tsx",
         "vendor/greasemonkey/greasemonkey.ts"
     ]
 }
