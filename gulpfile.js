@@ -58,7 +58,7 @@ gulp.task('chrome', ['chrome-pack'], function(){
 
 	gulp.src('build/es5/vendor/chrome/background.js')
 		.pipe(gulp.dest('dist/chrome'));
-	gulp.src('vendor/chrome/*')
+	gulp.src('vendor/chrome/**/*')
 		.pipe(gulp.dest('dist/chrome'));
 });
 
