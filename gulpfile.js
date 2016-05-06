@@ -46,9 +46,12 @@ gulp.task('greasemonkey-deploy', ['greasemonkey-header'], function(){
 });
 
 gulp.task('chrome-pack', ['es5'], function(){
-	return gulp.src('build/es5/vendor/chrome/chrome.js')
+	gulp.src('build/es5/vendor/chrome/chrome.js')
 		.pipe(browserify())
-		.pipe(gulp.dest('build/merged'))
+		.pipe(gulp.dest('build/merged'));
+	gulp.src('build/es5/vendor/chrome/popup/bootstrap.js')
+		.pipe(browserify())
+		.pipe(gulp.dest('build/merged'));
 });
 
 gulp.task('chrome', ['chrome-pack'], function(){
@@ -56,8 +59,12 @@ gulp.task('chrome', ['chrome-pack'], function(){
 		.pipe(rename('pixiv-assistant.js'))
 		.pipe(gulp.dest('dist/chrome'));
 
+	gulp.src('build/merged/bootstrap.js')
+		.pipe(gulp.dest('dist/chrome/popup'));
+
 	gulp.src('build/es5/vendor/chrome/background.js')
 		.pipe(gulp.dest('dist/chrome'));
+		
 	gulp.src('vendor/chrome/**/*')
 		.pipe(gulp.dest('dist/chrome'));
 });
