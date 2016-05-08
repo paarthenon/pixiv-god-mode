@@ -44,3 +44,6 @@ A small modal to immediately add a translation to the user dictionary. On pages 
  * Automatically switch to expanded images
  * Bulk downloading of manga
  
+# Development
+
+The extension is written in Typescript + React. There are a collection of page definitions that are dispatched depending on the url path.
