@@ -46,4 +46,4 @@ A small modal to immediately add a translation to the user dictionary. On pages 
  
 # Development
 
-The extension is written in Typescript + React. There are a collection of page definitions that are dispatched depending on the url path.
+The extension is written in Typescript + React. Main application logic is stored under the 'src' folder. Build-specific information (chrome vs. firefox, etc.) is set up in vendor/<vendor> folders and loaded into the app's bootstrap function. There are a collection of page definitions that are dispatched depending on the url path.
