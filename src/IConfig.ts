@@ -1,11 +1,9 @@
-import * as Q from 'q'
-
 type potentialData = boolean|string|number|Object;
 
 interface IConfig {
-	keys: () => Q.IPromise<string[]>
-	get: (key: string) => Q.IPromise<potentialData>
-	set: (key: string, data: potentialData) => Q.IPromise<void>
+	keys: () => Promise<string[]>
+	get: (key: string) => Promise<potentialData>
+	set: (key: string, data: potentialData) => Promise<void>
 }
 
 export default IConfig;
