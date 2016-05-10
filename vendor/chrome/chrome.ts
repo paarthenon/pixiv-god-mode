@@ -1,6 +1,5 @@
 import {IDependencyContainer} from '../../src/deps'
 
-import * as Q from 'q'
 import * as log4js from 'log4js'
 
 

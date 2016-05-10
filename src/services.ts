@@ -7,34 +7,30 @@ let logger = log4js.getLogger('Services');
 
 import {Features, Model, Messages} from '../common/proto'
 
-import * as Q from 'q'
-
-
-
 class HTTP {
 	static GET = 'GET'; 
 	static POST = 'POST'; 
 }
 
-function callService<Req, Res>(feature: string, request: Req) :Q.IPromise<Res> {
+function callService<Req, Res>(feature: string, request: Req) :Promise<Res> {
 	return Config.get(ConfigKeys.server_url).then(server_url => {
-		let q = Q.defer<Res>();
-		GM_xmlhttpRequest({
-			method: HTTP.POST,
-			url: `${server_url}/${feature}`,
-			data: JSON.stringify(request),
-			headers: { "Content-Type": "application/json" },
-			onload: (response) => {
-				let parsedResponse: Messages.Response = JSON.parse(response.responseText);
+		return new Promise((resolve, reject) => {
+			GM_xmlhttpRequest({
+				method: HTTP.POST,
+				url: `${server_url}/${feature}`,
+				data: JSON.stringify(request),
+				headers: { "Content-Type": "application/json" },
+				onload: (response) => {
+					let parsedResponse: Messages.Response = JSON.parse(response.responseText);
 
-				if (Messages.isPositiveResponse<Res>(parsedResponse)) {
-					q.resolve(parsedResponse.data);
-				} else {
-					q.reject('Negative response');
+					if (Messages.isPositiveResponse<Res>(parsedResponse)) {
+						resolve(parsedResponse.data);
+					} else {
+						reject('Negative response');
+					}
 				}
-			}
+			});
 		});
-		return q.promise;
 	})
 }
 
@@ -69,7 +65,7 @@ export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, 
 		.then(callback);
 }
 
-export function bulkImageExists(entries: Messages.ArtistImageRequest[]) : Q.IPromise<Messages.ArtistImageRequest[]> {
+export function bulkImageExists(entries: Messages.ArtistImageRequest[]) : Promise<Messages.ArtistImageRequest[]> {
 	return callService(Features.ImagesExist, { items: entries });
 }
 

@@ -53,7 +53,7 @@ class DictionaryEntryEditor extends AbstractComponent {
 	}
 
 	constructor(protected dict: Dictionary, protected key: string) { super(); }
-	protected get value():Q.IPromise<string> {
+	protected get value():Promise<string> {
 		return this.dict.get(this.key);
 	}
 	protected update(value: string):void {
