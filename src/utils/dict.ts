@@ -8,13 +8,13 @@ import * as log4js from 'log4js'
 type stringMap = { [id: string]: string }
 
 export interface Dictionary {
-	keys: Q.IPromise<string[]>
-	get: (key:string) => Q.IPromise<string>
+	keys: Promise<string[]>
+	get: (key:string) => Promise<string>
 	set: (key:string, value:string) => void
 }
 
 class SingleConfigDict implements Dictionary {
-	protected dict: Q.IPromise<stringMap>;
+	protected dict: Promise<stringMap>;
 	constructor(protected config:IConfig, protected configKey:string) {
 		// creates and sets default dict on initialization
 		this.dict = config.get(configKey).then(dict => dict || {});
@@ -22,7 +22,7 @@ class SingleConfigDict implements Dictionary {
 	public get keys(){
 		return this.dict.then(dict => Object.keys(dict));
 	}
-	public get(key:string):Q.IPromise<string> {
+	public get(key:string):Promise<string> {
 		return this.dict.then(dict => dict[key]);
 	}
 	public set(key:string, value:string):void {
