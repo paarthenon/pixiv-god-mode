@@ -33,17 +33,20 @@ class SingleConfigDict implements Dictionary {
 				delete dict[key];
 			}
 
-			return Q(dict).tap(dict => this.config.set(this.configKey, dict));
+			return Promise.resolve(dict).then(dict => { 
+				this.config.set(this.configKey, dict); 
+				return dict; 
+			});
 		});
 	}
 }
 
 class DictBroker {
 	constructor(protected dictionaries: Dictionary[]) { }
-	get(key: string): Q.IPromise<string> {
-		let q = Q.defer<string>();
-		q.reject(undefined);
-		return this.dictionaries.reduce((acc, current) => acc.then(null, reject => current.get(key)), q.promise)
+	get(key: string): Promise<string> {
+		return this.dictionaries.reduce(
+			(acc, current) => acc.then(null, reject => current.get(key)), 
+			Promise.reject<string>(undefined));
 	}
 }
 
@@ -68,9 +71,12 @@ export module DictionaryService {
 		]);
 	}
 
-	export function getTranslation(tag:string):Q.IPromise<string> {
-		return Q(broker.get(tag))
-			.tap(translation => logger.debug(`DictionaryService.getTranslation | for [${tag}] found [${translation}]`));
+	export function getTranslation(tag:string):Promise<string> {
+		return Promise.resolve(broker.get(tag))
+			.then(translation => {
+				logger.debug(`DictionaryService.getTranslation | for [${tag}] found [${translation}]`);
+				return translation;
+			});
 	}
 
 	let ghPath = 'pixiv-assistant/dictionary'
