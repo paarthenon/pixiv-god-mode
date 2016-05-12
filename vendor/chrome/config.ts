@@ -17,7 +17,7 @@ function handleError<T>(value: T) {
 	
 }
 
-export default class Config implements IConfig {
+export default class BackgroundConfig implements IConfig {
 	public keys():Promise<string[]> {
 		return new Promise(resolve => {
 			chrome.storage.local.get(null, contents => resolve(handleError(Object.keys(contents))));

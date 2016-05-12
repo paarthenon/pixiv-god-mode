@@ -1,41 +1,28 @@
 
-export interface Message extends Object {
-	type:string
-}
-
-abstract class BaseMessage implements Message {
-	protected _type: string;
-	public get type():string {
-		return this._type;
-	}
-
-	public isType<T>(msg: new () => T):this is T {
+export abstract class Message<Payload> {
+	public isType<T>(msg: new (...args:any[]) => T):this is T {
 		return msg.name === this.constructor.name;
 	}
+	constructor(
+		public data: Payload
+	){}
 }
 
-export class ConfigGetMessage extends BaseMessage {
-	protected _type = 'ConfigGetMessage'
-
-	public nonce: string = 'hello';
+export class ConfigGetMessage extends Message<{ key: string }> { }
+export class ConfigSetMessage extends Message<{ key: string, value: string }> { }
+export abstract class ResponseMessage<T> extends Message<T> {
+	public success: boolean;
+	public errors: string[] = [];
 }
-
-
-interface Msg {
-	type: string;
+export class FailureResponse extends ResponseMessage<void> {
+	constructor(public errors: string[]) {
+		super(undefined);
+		this.success = false;
+	}
 }
-
-interface Msg2 extends Msg {
-	type: 'Msg2';
-}
-
-let a: Message = undefined;
-
-if(a instanceof ConfigGetMessage) {
-}
-
-function aaa<T>(a: new ()=>T, b:Message){
-
-	a.name
-
+export class SuccessResponse<T> extends ResponseMessage<T> {
+	constructor(public data: T){
+		super(data);
+		this.success = true;
+	}
 }
