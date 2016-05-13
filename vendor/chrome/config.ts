@@ -29,28 +29,19 @@ export default class ContentConfig implements IConfig {
 	}
 
 	public get(key: string): Promise<potentialData> {
-		logger.error('getttting', key);
-		return Mailman.send<Msg.ConfigGetMessage, Msg.ConfigGetResponse>
-			(new Msg.ConfigGetMessage({ key }))
+		return Mailman.getConfig({key})
 			.then(msg => {
 				logger.fatal('msssssssg', msg); 
-				return msg.data.value;
+				return msg.value;
 			})
 			.catch(error => {
 				logger.fatal('mssssssgerror', error);
+				return Promise.reject(error);
 			})
 	}
 
 	public set(key: string, value: potentialData) {
-		return Mailman.send<Msg.ConfigSetMessage, Msg.ConfigSetResponse>
-			(new Msg.ConfigSetMessage({ key, value }))
-			.then(msg => {
-				if (!msg.data) {
-					return Promise.reject(undefined)
-				}else{
-					return Promise.resolve();
-				}
-			});
+		return Mailman.getConfig({ key }).then(() => undefined);
 	}
 }
 

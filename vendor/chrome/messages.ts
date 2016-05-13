@@ -1,39 +1,39 @@
 import {potentialData as IConfigValue} from '../../src/IConfig'
 
-export abstract class Message<Payload> {
-	public type: string;
-
-	public isType<T>(msg: new (...args:any[]) => T):this is T {
-		return msg.name === this.type;
-	}
-	constructor(
-		public data: Payload
-	){
-		this.type = this.constructor.name;
-	}
+export interface Protocol {
+	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
+	setConfig: (msg: ConfigSetMessage) => Promise<ResponseMessage>
 }
 
+export interface RequestWrapper<T> {
+	name: string
+	body: T
+}
 /*
 	Config Messages
 */
-export class ConfigGetMessage extends Message<{ key: string }> { }
-export class ConfigSetMessage extends Message<{ key: string, value: IConfigValue }> { }
-export class ConfigGetResponse extends Message<{ value: IConfigValue }> { }
-export class ConfigSetResponse extends Message<boolean> { }
+export interface ConfigGetMessage {
+	key: string
+}
+export interface ConfigGetResponse {
+	value: IConfigValue
+}
+export interface ConfigSetMessage { 
+	key: string, 
+	value: IConfigValue 
+}
+export interface ResponseMessage {
+	success: boolean
+}
+export interface SuccessfulResponse<T> extends ResponseMessage {
+	data:T
+}
+export interface FailedResponse extends ResponseMessage {
+	errors: any
+}
+export function isSuccessfulResponse(msg: ResponseMessage): msg is SuccessfulResponse<any> { return msg.success }
+export function isFailedResponse(msg: ResponseMessage): msg is FailedResponse { return !msg.success }
 
-export abstract class ResponseMessage<T> extends Message<T> {
-	public success: boolean;
-	public errors: string[] = [];
-}
-export class FailureResponse extends ResponseMessage<void> {
-	constructor(public errors: string[]) {
-		super(undefined);
-		this.success = false;
-	}
-}
-export class SuccessResponse<T> extends ResponseMessage<T> {
-	constructor(public data: T){
-		super(data);
-		this.success = true;
-	}
-}
+// let a: ConfigGetResponse = {};
+let p = Promise.resolve({});
+let q: Promise<ConfigGetResponse> = p;

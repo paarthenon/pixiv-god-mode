@@ -4,45 +4,43 @@ import * as ChromeUtils from './utils'
 import * as log4js from 'log4js';
 let logger = log4js.getLogger('Background');
 
-class DispatchMap {
-	public map: { [id: string]: (msg: Msg.Message<any>) => any } = {};
-
-	public register<T extends Msg.Message<V>,V>(msg: new (...args:any[]) => T, func:(msg:T) => any) {
-		logger.info('registering', msg.name, '\'s function');
-		this.map[msg.name] = func;
+let protocolImplementation : Msg.Protocol = {
+	getConfig: msg => {
+		console.log('Searching for key', msg.key);
+		return ChromeUtils.getFromConfig(msg.key)
+			.then(contents => {
+				if (msg.key in contents) {
+					console.log('key found in contents');
+					return contents[msg.key];
+				} else {
+					console.log('key not found in contents');
+					return Promise.reject('Key not found in data store');
+				}
+			})
+			.then(contents => {
+				console.log('current contents', contents);
+				return ChromeUtils.handleError(contents);
+			})
+			.then<Msg.ConfigGetResponse>(value => {
+				console.log('current value', value);
+				return {value};
+			});
+	},
+	setConfig: msg => {
+		return Promise.resolve({});
 	}
-	public dispatch<T extends Msg.Message<V>,V>(msg: T) {
-
-		logger.info('dispatching on', msg.type);
-		this.map[msg.type](msg);
-	}
-
 }
 
-let dispatcher = new DispatchMap();
-
-
-
-console.log('test test');
-logger.fatal('test test');
-dispatcher.register(Msg.ConfigGetMessage, msg => {
-	return ChromeUtils.getFromConfig(msg.data.key)
-		.then(contents => {
-			console.log('ddddd', contents);
-			console.log('dddddd', msg);
-			logger.error('dddd', contents, msg);
-			let d = JSON.parse(contents[msg.data.key]).data;
-			return d;
-		})
-		.then(ChromeUtils.handleError)
-		.then(value => {
-			return new Msg.ConfigGetResponse({ value });
-		});
-});
-
-console.log(dispatcher.map);
+function dispatch(implementation: Msg.Protocol, message: Msg.RequestWrapper<any>) : Promise<any> {
+	return Promise.resolve((<any>implementation)[message.name](message.body));
+}
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-	console.log('msg sent', msg);
-	sendResponse(dispatcher.dispatch(msg));
+	let message: Msg.RequestWrapper<any> = msg;
+
+	dispatch(protocolImplementation, msg)
+		.then(content => sendResponse({ success: true, data: content }))
+		.catch(reason => sendResponse({ success: false, errors: reason}));
+		
+	return true;
 });
