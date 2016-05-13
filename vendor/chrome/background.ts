@@ -2,6 +2,8 @@ import * as Msg from './messages'
 import * as ChromeUtils from './utils'
 import * as log4js from 'log4js';
 
+import {AjaxRequest} from '../../src/IAjax'
+
 let logger = log4js.getLogger('Background');
 
 let protocolImplementation : Msg.Protocol = {
@@ -24,6 +26,20 @@ let protocolImplementation : Msg.Protocol = {
 	listConfig: () => {
 		return ChromeUtils.listConfigKeys()
 			.then(ChromeUtils.handleError)
+	},
+	ajax: req => {
+		return new Promise((resolve, reject) => {
+			let xhr = new XMLHttpRequest();
+			xhr.open(req.type, req.url, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.send(JSON.stringify(req.data));
+			xhr.onreadystatechange = () => {
+				console.log('xhr state changed', xhr);
+				if (xhr.readyState == XMLHttpRequest.DONE) {
+					resolve(xhr.response);
+				}
+			}
+		});
 	}
 }
 

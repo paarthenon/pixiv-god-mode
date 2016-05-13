@@ -1,9 +1,11 @@
 import {potentialData as IConfigValue} from '../../src/IConfig'
+import {AjaxRequest} from '../../src/IAjax'
 
 export interface Protocol {
 	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
 	setConfig: (msg: ConfigSetMessage) => Promise<void>
 	listConfig: () => Promise<string[]>
+	ajax: (req:AjaxRequest<any>) => Promise<any>
 }
 
 export interface RequestWrapper<T> {

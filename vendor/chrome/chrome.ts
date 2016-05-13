@@ -1,4 +1,5 @@
 import {IDependencyContainer} from '../../src/deps'
+import {AjaxRequest} from '../../src/IAjax'
 
 import * as log4js from 'log4js'
 
@@ -30,8 +31,6 @@ function openInTab(url:string) {
 	chrome.runtime.sendMessage({ type: 'openTab', url });
 }
 
-
-
 hook.inject(hook.pixivExec);
 
 class ExecBroker {
@@ -41,12 +40,7 @@ class ExecBroker {
 	public constructor(){
 		document.addEventListener('pixivExecResponse', (event) => {
 			let detail: { id: number, response: any } = (<any>event).detail;
-			logger.info('Broker get response', detail);
-
-			logger.info('this', this.resolvers, this);
-			let resolveFunc = this.resolvers[detail.id];
-			logger.info('resolveFunc', resolveFunc, resolveFunc.toString());
-			resolveFunc(detail.response);
+			this.resolvers[detail.id](detail.response);
 		})
 	}
 
@@ -68,13 +62,19 @@ class ExecBroker {
 	}
 }
 
-let broker = new ExecBroker;
+let broker = new ExecBroker();
+
+import Mailman from './mailman'
 
 let deps: IDependencyContainer = {
 	jQ: $,
 	config: new Config(),
 	openInTab: (url: string) => { },
-	execOnPixiv: (func: Function) => broker.queueExecution(func)
+	execOnPixiv: (func: Function) => broker.queueExecution(func),
+	ajaxCall: (req: AjaxRequest<any>) => Promise.resolve()
 }
 
-let page = Bootstrap(deps);
+Mailman.ajax({ type: 'GET', url: 'http://localhost:9002/ping' })
+	.then(resp => logger.fatal(resp));
+
+// let page = Bootstrap(deps);
