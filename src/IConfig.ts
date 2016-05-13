@@ -1,4 +1,4 @@
-type potentialData = boolean|string|number|Object;
+export type potentialData = boolean|string|number|Object;
 
 interface IConfig {
 	keys: () => Promise<string[]>

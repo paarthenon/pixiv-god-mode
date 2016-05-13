@@ -53,6 +53,10 @@ gulp.task('chrome-pack', ['es5'], function(){
 	gulp.src('build/es5/vendor/chrome/popup/bootstrap.js')
 		.pipe(browserify())
 		.pipe(gulp.dest('build/merged'));
+
+	gulp.src('build/es5/vendor/chrome/background.js')
+		.pipe(browserify())
+		.pipe(gulp.dest('build/merged'));
 });
 
 gulp.task('chrome', ['chrome-pack'], function(){
@@ -63,7 +67,7 @@ gulp.task('chrome', ['chrome-pack'], function(){
 	gulp.src('build/merged/bootstrap.js')
 		.pipe(gulp.dest('dist/chrome/popup'));
 
-	gulp.src('build/es5/vendor/chrome/background.js')
+	gulp.src('build/merged/background.js')
 		.pipe(gulp.dest('dist/chrome'));
 
 	gulp.src('vendor/chrome/**/*')

@@ -2,7 +2,6 @@ import {IDependencyContainer} from '../../src/deps'
 
 import * as log4js from 'log4js'
 
-
 import Config from './config'
 
 import Bootstrap from '../../src/main'
@@ -29,4 +28,8 @@ let deps: IDependencyContainer = {
 	openInTab: (url:string)=>{}
 }
 
-let page = Bootstrap(deps);
+deps.config.get('test').then(content => {
+	logger.fatal('tttttt', content);
+});
+
+// let page = Bootstrap(deps);
