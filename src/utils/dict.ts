@@ -87,7 +87,7 @@ export module DictionaryService {
 	let ghPath = 'pixiv-assistant/dictionary'
 	export function updateAvailable(callback:(available:boolean) => any) {
 		logger.debug('DictionaryService.updateAvailable | entered');
-		ghUtils.getMasterCommit(ghPath, commitHash => {
+		ghUtils.getMasterCommit(ghPath).then(commitHash => {
 			cachedConfig.get(ConfigKeys.official_dict_hash).then(currentHash => {
 				let isNewer: boolean = !currentHash || currentHash !== commitHash;
 				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
@@ -98,8 +98,8 @@ export module DictionaryService {
 
 	export function updateDictionary(onComplete?:()=>any) {
 		logger.debug('DictionaryService.updateDictionary | entered');
-		ghUtils.getMasterCommit(ghPath, commitHash => {
-			ghUtils.getDictionaryObject(ghPath, commitHash, obj => {
+		ghUtils.getMasterCommit(ghPath).then(commitHash => {
+			ghUtils.getDictionaryObject(ghPath, commitHash).then(obj => {
 				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
 				cachedConfig.set(ConfigKeys.official_dict, obj);
 				cachedConfig.set(ConfigKeys.official_dict_hash, commitHash);

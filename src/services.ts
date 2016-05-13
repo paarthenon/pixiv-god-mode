@@ -83,10 +83,6 @@ export function googleTranslate(japanese:string) : Promise<string> {
 	});
 }
 
-export function executeManual(obj:any) {
-	GM_xmlhttpRequest(obj);
-}
-
 export function supportsFeature(feature:string) {
 	return callService(`supports/${feature}`, {});
 }
