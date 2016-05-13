@@ -35,15 +35,10 @@ export class IllustrationPage extends RootPage {
 		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
 	}
 
-	public get isAnimation(): boolean {
-		return 'ugokuIllustData' in (<any>unsafeWindow).pixiv.context;
-	}
-
 	@RegisteredAction({ 
 		id: 'pa_download_zip_button', 
 		label: 'Download Animation as Zip',
 		icon: 'file-zip',
-		if: function() { return this.isAnimation } 
 	})
 	public downloadZip():void {
 		var url = "";
