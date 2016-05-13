@@ -7,6 +7,8 @@ let logger = log4js.getLogger('Services');
 
 import {Features, Model, Messages} from '../common/proto'
 
+import {resolve} from 'url'
+
 class HTTP {
 	static GET = 'GET'; 
 	static POST = 'POST'; 
@@ -14,54 +16,51 @@ class HTTP {
 
 function callService<Req, Res>(feature: string, request: Req) :Promise<Res> {
 	return Config.get(ConfigKeys.server_url).then(server_url => {
-		return new Promise((resolve, reject) => {
-			GM_xmlhttpRequest({
-				method: HTTP.POST,
-				url: `${server_url}/${feature}`,
-				data: JSON.stringify(request),
-				headers: { "Content-Type": "application/json" },
-				onload: (response) => {
-					let parsedResponse: Messages.Response = JSON.parse(response.responseText);
-
-					if (Messages.isPositiveResponse<Res>(parsedResponse)) {
-						resolve(parsedResponse.data);
-					} else {
-						reject('Negative response');
-					}
-				}
-			});
-		});
+		return Deps.Container.ajaxCall({
+			type: 'POST',
+			url: resolve(server_url.toString(),feature),
+			data: request
+		})
+		.then((response:any) => {
+			logger.fatal('response received', response);
+			let parsedResponse: Messages.Response = JSON.parse(response);
+			if(Messages.isPositiveResponse(parsedResponse)) {
+				return parsedResponse.data;
+			} else {
+				return Promise.reject('Negative response');
+			}
+		})
 	})
 }
 
-export function openFolder(artist: Model.Artist): void {
+export function openFolder(artist: Model.Artist) {
 	logger.debug(`SERVICES openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
-	callService(Features.OpenToArtist, artist);
+	return callService(Features.OpenToArtist, artist);
 }
 
 
-export function download(artist:Model.Artist, imageUrl:string):void {
+export function download(artist:Model.Artist, imageUrl:string) {
 	logger.debug(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
 	let msg: Messages.ArtistUrlRequest = { artist: artist, url: imageUrl };
-	callService(Features.DownloadImage, msg);
+	return callService(Features.DownloadImage, msg);
 }
 
-export function downloadZip(artist: Model.Artist, zipUrl: string): void {
+export function downloadZip(artist: Model.Artist, zipUrl: string) {
 	logger.debug(`SERVICES download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
 	let msg: Messages.ArtistUrlRequest = { artist: artist, url: zipUrl };
-	callService(Features.DownloadAnimation, msg);
+	return callService(Features.DownloadAnimation, msg);
 }
 
-export function downloadMulti(artist: Model.Artist, imageUrls: string[]): void {
+export function downloadMulti(artist: Model.Artist, imageUrls: string[]) {
 	logger.debug(`SERVICES downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
 	let msg : Messages.BulkArtistUrlRequest = { items: imageUrls.map(url => ({ artist, url })) };
-	callService(Features.DownloadManga, msg);
+	return callService(Features.DownloadManga, msg);
 }
 
-export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback: (param: boolean) => any): void {
+export function imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback: (param: boolean) => any) {
 	logger.debug(`SERVICES imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
 	let msg: Messages.ArtistImageRequest = { artist, image };
-	callService<Messages.ArtistImageRequest, boolean>(Features.ImageExists, msg)
+	return callService<Messages.ArtistImageRequest, boolean>(Features.ImageExists, msg)
 		.then(callback);
 }
 

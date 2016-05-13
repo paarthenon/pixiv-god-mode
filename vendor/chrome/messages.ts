@@ -36,7 +36,3 @@ export interface FailedResponse extends ResponseMessage {
 }
 export function isSuccessfulResponse(msg: ResponseMessage): msg is SuccessfulResponse<any> { return msg.success }
 export function isFailedResponse(msg: ResponseMessage): msg is FailedResponse { return !msg.success }
-
-// let a: ConfigGetResponse = {};
-let p = Promise.resolve({});
-let q: Promise<ConfigGetResponse> = p;

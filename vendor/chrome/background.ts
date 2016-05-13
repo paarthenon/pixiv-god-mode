@@ -29,6 +29,7 @@ let protocolImplementation : Msg.Protocol = {
 	},
 	ajax: req => {
 		return new Promise((resolve, reject) => {
+			console.log('request made with ', req);
 			let xhr = new XMLHttpRequest();
 			xhr.open(req.type, req.url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");

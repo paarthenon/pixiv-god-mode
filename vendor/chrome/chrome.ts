@@ -1,4 +1,4 @@
-import {IDependencyContainer} from '../../src/deps'
+import {IDependencyContainer, load as depsLoad} from '../../src/deps'
 import {AjaxRequest} from '../../src/IAjax'
 
 import * as log4js from 'log4js'
@@ -71,10 +71,14 @@ let deps: IDependencyContainer = {
 	config: new Config(),
 	openInTab: (url: string) => { },
 	execOnPixiv: (func: Function) => broker.queueExecution(func),
-	ajaxCall: (req: AjaxRequest<any>) => Promise.resolve()
+	ajaxCall: (req: AjaxRequest<any>) => 
+		Mailman.ajax(req)
 }
 
-Mailman.ajax({ type: 'GET', url: 'http://localhost:9002/ping' })
-	.then(resp => logger.fatal(resp));
 
+
+depsLoad(deps);
 // let page = Bootstrap(deps);
+
+import services = require('../../src/services');
+services.openFolder({ id: 3, name: 'me' });
