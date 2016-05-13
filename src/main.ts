@@ -1,6 +1,3 @@
-// import * as DomUtils from './utils/dom'
-// import * as PathUtils from './utils/path'
-
 import {dispatch} from './dispatch'
 import {BasePage} from './pages/base'
 
