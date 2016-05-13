@@ -18,7 +18,8 @@ let protocolImplementation : Msg.Protocol = {
 			.then<Msg.ConfigGetResponse>(value => ({ value }));
 	},
 	setConfig: msg => {
-		return Promise.resolve({});
+		return ChromeUtils.setConfig(msg.key, msg.value)
+			.then(ChromeUtils.handleError)
 	}
 }
 

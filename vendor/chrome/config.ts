@@ -37,25 +37,3 @@ export default class ContentConfig implements IConfig {
 		return Mailman.getConfig({ key }).then(() => undefined);
 	}
 }
-
-// export default class BackgroundConfig implements IConfig {
-// 	public keys():Promise<string[]> {
-// 		return new Promise(resolve => {
-// 			chrome.storage.local.get(null, contents => resolve(handleError(Object.keys(contents))));
-// 		});
-// 	}
-
-// 	public get(key:string):Promise<potentialData> {
-// 		return new Promise(resolve => 
-// 			chrome.storage.local.get(key, contents => resolve(handleError(JSON.parse(contents[key]).data)))
-// 		);
-// 	}
-
-// 	public set(key:string, value:potentialData) {
-// 		return new Promise<void>(resolve => 
-// 			chrome.storage.local.set({ [key]: value }, () => resolve(
-// 				handleError(undefined).then(()=>Promise.resolve())) // necessary to return Promise<void>
-// 			)
-// 		);
-// 	}
-// }

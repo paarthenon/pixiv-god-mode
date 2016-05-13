@@ -2,7 +2,7 @@ import {potentialData as IConfigValue} from '../../src/IConfig'
 
 export interface Protocol {
 	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
-	setConfig: (msg: ConfigSetMessage) => Promise<ResponseMessage>
+	setConfig: (msg: ConfigSetMessage) => Promise<void>
 }
 
 export interface RequestWrapper<T> {
