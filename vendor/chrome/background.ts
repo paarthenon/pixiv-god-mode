@@ -20,6 +20,10 @@ let protocolImplementation : Msg.Protocol = {
 	setConfig: msg => {
 		return ChromeUtils.setConfig(msg.key, msg.value)
 			.then(ChromeUtils.handleError)
+	},
+	listConfig: () => {
+		return ChromeUtils.listConfigKeys()
+			.then(ChromeUtils.handleError)
 	}
 }
 

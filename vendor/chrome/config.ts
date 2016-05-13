@@ -23,9 +23,7 @@ function handleError<T>(value: T) {
 }
 export default class ContentConfig implements IConfig {
 	public keys(): Promise<string[]> {
-		return new Promise(resolve => {
-			chrome.storage.local.get(null, contents => resolve(handleError(Object.keys(contents))));
-		});
+		return Mailman.listConfig();
 	}
 
 	public get(key: string): Promise<potentialData> {
@@ -34,6 +32,6 @@ export default class ContentConfig implements IConfig {
 	}
 
 	public set(key: string, value: potentialData) {
-		return Mailman.getConfig({ key }).then(() => undefined);
+		return Mailman.setConfig({ key, value });
 	}
 }

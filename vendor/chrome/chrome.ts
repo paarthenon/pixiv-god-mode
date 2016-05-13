@@ -33,11 +33,5 @@ let deps: IDependencyContainer = {
 	openInTab: (url:string)=>{}
 }
 
-deps.config.get('test').then(content => {
-	logger.fatal('tttttt', content);
-}).catch(text => {
-	logger.fatal('uuuuuu', text);
-})
-
 // let page = Bootstrap(deps);
 
