@@ -29,15 +29,8 @@ export default class ContentConfig implements IConfig {
 	}
 
 	public get(key: string): Promise<potentialData> {
-		return Mailman.getConfig({key})
-			.then(msg => {
-				logger.fatal('msssssssg', msg); 
-				return msg.value;
-			})
-			.catch(error => {
-				logger.fatal('mssssssgerror', error);
-				return Promise.reject(error);
-			})
+		return Mailman.getConfig({ key })
+			.then(msg => msg.value);
 	}
 
 	public set(key: string, value: potentialData) {

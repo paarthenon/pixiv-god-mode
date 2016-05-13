@@ -8,7 +8,12 @@ import Bootstrap from '../../src/main'
 
 log4js.configure({
 	appenders: [
-		{ type: 'console' }
+		{ 
+			type: 'console',
+			layout: {
+				type: 'basic'
+			}
+		 }
 	]
 });
 
