@@ -46,32 +46,38 @@ gulp.task('greasemonkey-deploy', ['greasemonkey-header'], function(){
 });
 
 gulp.task('chrome-pack', ['es5'], function(){
-	gulp.src('build/es5/vendor/chrome/chrome.js')
-		.pipe(browserify())
-		.pipe(gulp.dest('build/merged'));
-		
-	gulp.src('build/es5/vendor/chrome/popup/bootstrap.js')
-		.pipe(browserify())
-		.pipe(gulp.dest('build/merged'));
-
-	gulp.src('build/es5/vendor/chrome/background.js')
-		.pipe(browserify())
-		.pipe(gulp.dest('build/merged'));
+	return Promise.all([
+		new Promise(resolve => gulp.src('build/es5/vendor/chrome/chrome.js')
+			.pipe(browserify())
+			.pipe(gulp.dest('build/merged'))
+			.on('end', ()=>resolve())),
+		new Promise(resolve => gulp.src('build/es5/vendor/chrome/popup/bootstrap.js')
+			.pipe(browserify())
+			.pipe(gulp.dest('build/merged'))
+			.on('end', ()=>resolve())),
+		new Promise(resolve => gulp.src('build/es5/vendor/chrome/background.js')
+			.pipe(browserify())
+			.pipe(gulp.dest('build/merged'))
+			.on('end', ()=>resolve()))
+	]);
 });
 
 gulp.task('chrome', ['chrome-pack'], function(){
-	gulp.src('build/merged/chrome.js')
-		.pipe(rename('pixiv-assistant.js'))
-		.pipe(gulp.dest('dist/chrome'));
-
-	gulp.src('build/merged/bootstrap.js')
-		.pipe(gulp.dest('dist/chrome/popup'));
-
-	gulp.src('build/merged/background.js')
-		.pipe(gulp.dest('dist/chrome'));
-
-	gulp.src('vendor/chrome/**/*')
-		.pipe(gulp.dest('dist/chrome'));
+	return Promise.all([
+		new Promise(resolve => gulp.src('build/merged/chrome.js')
+			.pipe(rename('pixiv-assistant.js'))
+			.pipe(gulp.dest('dist/chrome'))
+			.on('end', resolve)),
+		new Promise(resolve => gulp.src('build/merged/bootstrap.js')
+			.pipe(gulp.dest('dist/chrome/popup'))
+			.on('end', resolve)),
+		new Promise(resolve => gulp.src('build/merged/background.js')
+			.pipe(gulp.dest('dist/chrome'))
+			.on('end', resolve)),
+		new Promise(resolve => gulp.src('vendor/chrome/**/*')
+			.pipe(gulp.dest('dist/chrome'))
+			.on('end', resolve))
+	]);
 });
 
 gulp.task('firefox', ['browserify'], function(){
