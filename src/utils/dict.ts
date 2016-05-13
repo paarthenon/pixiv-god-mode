@@ -17,7 +17,12 @@ class SingleConfigDict implements Dictionary {
 	protected dict: Promise<stringMap>;
 	constructor(protected config:IConfig, protected configKey:string) {
 		// creates and sets default dict on initialization
-		this.dict = config.get(configKey).then(dict => dict || {});
+		this.dict = config.get(configKey)
+			.then(dict => dict || {})
+			.catch(error => {
+				logger.warn('Unable to get dictionary. Creating');
+				return {};
+			});
 	}
 	public get keys(){
 		return this.dict.then(dict => Object.keys(dict));
@@ -65,7 +70,7 @@ export module DictionaryService {
 		userDictionary = new SingleConfigDict(config, ConfigKeys.user_dict);
 		baseDictionary = new SingleConfigDict(config, ConfigKeys.official_dict);
 
-		let broker = new DictBroker([
+		broker = new DictBroker([
 			userDictionary,
 			baseDictionary
 		]);
