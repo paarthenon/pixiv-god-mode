@@ -81,4 +81,4 @@ depsLoad(deps);
 // let page = Bootstrap(deps);
 
 import services = require('../../src/services');
-services.openFolder({ id: 3, name: 'me' });
+services.googleTranslate('カプコン').then(english => logger.fatal('english', english));
