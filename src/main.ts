@@ -29,6 +29,8 @@ function firstTimeSetup(deps: Dependencies.IDependencyContainer){
 				.catch(() => logger.error('failed to download new dictionary'))
 		});
 
+	deps.config.get(ConfigKeys.user_dict)
+		.catch(() => deps.config.set(ConfigKeys.user_dict, {}));
 
 	
 }

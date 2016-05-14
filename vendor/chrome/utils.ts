@@ -23,3 +23,14 @@ export function handleError<T>(value: T):Promise<T> {
 		}
 	});
 }
+
+export function queryTabs(obj:chrome.tabs.QueryInfo) : Promise<chrome.tabs.Tab[]> {
+	return new Promise((resolve, reject) => {
+		chrome.tabs.query(obj, result => resolve(result));
+	});
+}
+
+export function getCurrentTab() {
+	return queryTabs({ active: true, currentWindow: true })
+		.then(tabs => tabs[0]);
+}

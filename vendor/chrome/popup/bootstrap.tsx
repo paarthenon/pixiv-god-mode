@@ -2,5 +2,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import {MainPanel} from './mainPanel'
+import {ConfigPanel} from './configPanel'
 
-ReactDOM.render(<MainPanel />, document.getElementById('content'));
+ReactDOM.render(<ConfigPanel />, document.getElementById('content'));
