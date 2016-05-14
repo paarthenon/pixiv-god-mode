@@ -2,7 +2,7 @@ import * as Msg from './messages'
 import * as ChromeUtils from './utils'
 import * as log4js from 'log4js';
 
-import {AjaxRequest} from '../../src/IAjax'
+import {AjaxRequest} from '../../src/core/IAjax'
 
 let logger = log4js.getLogger('Background');
 

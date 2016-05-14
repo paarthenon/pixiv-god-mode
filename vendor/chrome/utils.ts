@@ -1,4 +1,4 @@
-import {potentialData as IConfigValue} from '../../src/IConfig'
+import {potentialData as IConfigValue} from '../../src/core/IConfig'
 
 export function getFromConfig(key: string): Promise<{[key:string]:IConfigValue}> {
 	return new Promise(resolve =>

@@ -1,5 +1,5 @@
 import {IDependencyContainer, load as depsLoad} from '../../src/deps'
-import {AjaxRequest} from '../../src/IAjax'
+import {AjaxRequest} from '../../src/core/IAjax'
 
 import * as log4js from 'log4js'
 

@@ -1,5 +1,5 @@
-import IConfig from './IConfig'
-import {AjaxRequest} from './IAjax'
+import IConfig from './core/IConfig'
+import {AjaxRequest} from './core/IAjax'
 
 export interface IDependencyContainer {
 	jQ: JQueryStatic

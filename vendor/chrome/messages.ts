@@ -1,5 +1,5 @@
-import {potentialData as IConfigValue} from '../../src/IConfig'
-import {AjaxRequest} from '../../src/IAjax'
+import {potentialData as IConfigValue} from '../../src/core/IConfig'
+import {AjaxRequest} from '../../src/core/IAjax'
 
 export interface Protocol {
 	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>

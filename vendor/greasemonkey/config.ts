@@ -1,4 +1,4 @@
-import IConfig from '../../src/IConfig'
+import IConfig from '../../src/core/IConfig'
 
 type potentialData = boolean|string|number|Object
 

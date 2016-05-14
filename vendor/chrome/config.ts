@@ -1,4 +1,4 @@
-import IConfig from '../../src/IConfig'
+import IConfig from '../../src/core/IConfig'
 import Mailman from './mailman'
 import * as Msg from './messages'
 

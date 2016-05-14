@@ -1,19 +1,13 @@
 import * as Deps from '../deps'
-import IConfig from '../IConfig'
+import IConfig from '../core/IConfig'
 import ConfigKeys from '../configKeys'
 import * as ghUtils from './github'
-
+import IDictionary from '../core/IDictionary'
 import * as log4js from 'log4js'
 
 type stringMap = { [id: string]: string }
 
-export interface Dictionary {
-	keys: Promise<string[]>
-	get: (key:string) => Promise<string>
-	set: (key:string, value:string) => void
-}
-
-class SingleConfigDict implements Dictionary {
+class SingleConfigDict implements IDictionary {
 	protected dict: Promise<stringMap>;
 	constructor(protected config:IConfig, protected configKey:string) {
 		// creates and sets default dict on initialization
@@ -47,7 +41,7 @@ class SingleConfigDict implements Dictionary {
 }
 
 class DictBroker {
-	constructor(protected dictionaries: Dictionary[]) { }
+	constructor(protected dictionaries: IDictionary[]) { }
 	get(key: string): Promise<string> {
 		return this.dictionaries.reduce(
 			(acc, current) => acc.then(null, reject => current.get(key)), 
