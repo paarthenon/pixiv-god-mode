@@ -75,10 +75,4 @@ let deps: IDependencyContainer = {
 		Mailman.ajax(req)
 }
 
-
-
-depsLoad(deps);
-// let page = Bootstrap(deps);
-
-import services = require('../../src/services');
-services.googleTranslate('カプコン').then(english => logger.fatal('english', english));
+let page = Bootstrap(deps);

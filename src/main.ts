@@ -8,6 +8,9 @@ import {DictionaryService} from './utils/dict'
 
 import ConfigKeys from './configKeys'
 
+let logger = log4js.getLogger('Startup');
+logger.info('Bootstrapping');
+
 function firstTimeSetup(deps: Dependencies.IDependencyContainer){
 	/* Server Url */
 	deps.config.get(ConfigKeys.server_url).catch(reason => {
@@ -15,13 +18,21 @@ function firstTimeSetup(deps: Dependencies.IDependencyContainer){
 		deps.config.set(ConfigKeys.server_url, url)
 			.then(() => window.alert('thanks!'))
 			.catch(() => window.alert('whoops... that didn\'t work. Lets try again later'));
-	})
+	});
+
+	/* Initialize Dictionary */
+	deps.config.get(ConfigKeys.official_dict_hash)
+		.catch(() => {
+			logger.warn('Global dictionary info not found, assuming first time load and redownloading');
+			DictionaryService.updateDictionary()
+				.then(() => logger.info('successfully downloaded new dictionary'))
+				.catch(() => logger.error('failed to download new dictionary'))
+		});
+
 
 	
 }
 export default function Bootstrap(depsContent: Dependencies.IDependencyContainer):BasePage {
-	let logger = log4js.getLogger('Startup');
-	logger.info('Bootstrapping');
 	Dependencies.load(depsContent);
 
 	firstTimeSetup(depsContent);

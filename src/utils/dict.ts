@@ -85,28 +85,25 @@ export module DictionaryService {
 	}
 
 	let ghPath = 'pixiv-assistant/dictionary'
-	export function updateAvailable(callback:(available:boolean) => any) {
+	export function updateAvailable() : Promise<boolean> {
 		logger.debug('DictionaryService.updateAvailable | entered');
-		ghUtils.getMasterCommit(ghPath).then(commitHash => {
-			cachedConfig.get(ConfigKeys.official_dict_hash).then(currentHash => {
+		return ghUtils.getMasterCommit(ghPath).then(commitHash => {
+			return cachedConfig.get(ConfigKeys.official_dict_hash).then(currentHash => {
 				let isNewer: boolean = !currentHash || currentHash !== commitHash;
 				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
-				callback(isNewer);
+				return isNewer;
 			});
 		});
 	}
 
-	export function updateDictionary(onComplete?:()=>any) {
+	export function updateDictionary() : Promise<void> {
 		logger.debug('DictionaryService.updateDictionary | entered');
-		ghUtils.getMasterCommit(ghPath).then(commitHash => {
-			ghUtils.getDictionaryObject(ghPath, commitHash).then(obj => {
+		return ghUtils.getMasterCommit(ghPath).then(commitHash => {
+			return ghUtils.getDictionaryObject(ghPath, commitHash).then(obj => {
 				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
 				cachedConfig.set(ConfigKeys.official_dict, obj);
 				cachedConfig.set(ConfigKeys.official_dict_hash, commitHash);
-				if(onComplete){
-					onComplete();
-				}
-			})
+			});
 		});
 	}
 }
