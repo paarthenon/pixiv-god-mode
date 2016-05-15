@@ -7,16 +7,19 @@ import * as log4js from 'log4js'
 
 import SingleConfigDict from '../core/singleConfigDictionary'
 
+let logger = log4js.getLogger('Dictionary');
+
 class DictBroker {
 	constructor(protected dictionaries: IDictionary[]) { }
 	get(key: string): Promise<string> {
 		return this.dictionaries.reduce(
-			(acc, current) => acc.then(null, reject => current.get(key)), 
+			(acc, current) => 
+				acc.then(null, reject => 
+						current.get(key).then(value => value || Promise.reject<string>('Not found'))),
 			Promise.reject<string>(undefined));
 	}
 }
 
-let logger = log4js.getLogger('Dictionary');
 export module DictionaryService {
 	let cachedConfig :IConfig = undefined;
 
@@ -38,11 +41,11 @@ export module DictionaryService {
 	}
 
 	export function getTranslation(tag:string):Promise<string> {
-		return Promise.resolve(broker.get(tag))
+		return broker.get(tag)
 			.then(translation => {
 				logger.debug(`DictionaryService.getTranslation | for [${tag}] found [${translation}]`);
 				return translation;
-			});
+			}).catch(() => undefined);
 	}
 
 	let ghPath = 'pixiv-assistant/dictionary'
