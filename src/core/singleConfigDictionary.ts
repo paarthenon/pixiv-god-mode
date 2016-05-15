@@ -7,7 +7,7 @@ type stringMap = { [id: string]: string }
 
 let logger = log4js.getLogger('Dictionary');
 
-export default class SingleConfigDictionary implements IDictionary {
+export class SingleConfigDictionary implements IDictionary {
 	protected dict: Promise<stringMap>;
 	constructor(protected config:IConfig, protected configKey:string) {
 		// creates and sets default dict on initialization
@@ -39,3 +39,5 @@ export default class SingleConfigDictionary implements IDictionary {
 		});
 	}
 }
+
+export default SingleConfigDictionary;
