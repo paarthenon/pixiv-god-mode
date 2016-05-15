@@ -10,7 +10,9 @@ interface DictViewerProps {
 	onAdd: (key:string, value:string) => any
 }
 
-export class DictViewer extends React.Component<DictViewerProps,void> {
+export class DictViewer extends React.Component<DictViewerProps,{currentSearch:string}> {
+	state = { currentSearch: '' };
+
 	public handleUpdate(key:string, newValue:string) {
 		console.log('updated', key, newValue)
 		this.props.onUpdate(key, newValue);
@@ -24,21 +26,46 @@ export class DictViewer extends React.Component<DictViewerProps,void> {
 		console.log('adding', key, newValue);
 		this.props.onAdd(key, newValue);
 	}
+	public get filteredData() {
+		return Object.keys(this.props.dict)
+			.map(key => ({ key, value: this.props.dict[key] }))
+			.filter(entry => entry.key.includes(this.state.currentSearch) || entry.value.includes(this.state.currentSearch))
+	}
 	public render() {
 		return (
 			<div>
 				<DictAdd onAdd={this.handleAdd.bind(this)} />
-				{Object.keys(this.props.dict).map(key => 
+				<Search onChange={(value) => this.setState({currentSearch:value})} />
+				{this.filteredData.map(entry => 
 					<DictEntry 
-						key={key}
-						japanese={key} 
-						translation={this.props.dict[key]}
+						key={entry.key}
+						japanese={entry.key} 
+						translation={entry.value}
 						onUpdate={this.handleUpdate.bind(this)}
 						onDelete={this.handleDelete.bind(this)}
 					/>
 				)}
 			</div>
 		);
+	}
+}
+
+export class Search extends React.Component<{ onChange: (search: string) => any }, { current: string }> {
+	state = { current: '' };
+
+	public handleChange(event:React.FormEvent) {
+		let newValue = (event.target as any).value;
+		this.setState({ current: newValue });
+		this.props.onChange(newValue);
+	}
+	public render() {
+		return <div>
+				<input 
+					placeholder="search" 
+					value={this.state.current} 
+					onChange={this.handleChange.bind(this)} 
+				/>
+			</div>
 	}
 }
 
