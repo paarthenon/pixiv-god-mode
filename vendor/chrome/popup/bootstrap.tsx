@@ -5,6 +5,7 @@ import {MainPanel} from './mainPanel'
 import {ConfigPanel} from './configPanel'
 import {Tabs} from './tabs'
 import {DictViewer} from './dict'
+import {ReadOnlyDictViewer} from './readOnlyDict'
 
 import configKeys from '../../../src/configKeys'
 
@@ -18,6 +19,12 @@ function updateDict(key: string, value: string) {
 	render()
 }
 
+let official_dict :any = {};
+
+import Mailman from '../mailman'
+Mailman.getConfig({ key: configKeys.official_dict })
+	.then(dict => { official_dict = dict.value; render(); });
+
 function render() {
 	let tabInfo: { [id: string]: JSX.Element } = {
 		config: <ConfigPanel />,
@@ -26,7 +33,8 @@ function render() {
 			onAdd={updateDict}
 			onUpdate={updateDict}
 			onDelete={(key: string) => { delete dictionary[key]; render(); } }
-			/>
+			/>,
+		officialDict: <ReadOnlyDictViewer dict={official_dict}/>
 	}
 
 	console.log('updating with', dictionary);
