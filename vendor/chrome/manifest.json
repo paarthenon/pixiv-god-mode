@@ -16,7 +16,8 @@
   	"js": [
   		"jquery-2.2.3.min.js",
   		"pixiv-assistant.js"
-  	]
+  	],
+    "css": ["inject.css"]
   }],
   "background": {
     "scripts": ["background.js"]

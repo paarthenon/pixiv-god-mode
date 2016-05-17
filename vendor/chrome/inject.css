@@ -1,0 +1,7 @@
+.pa-hidden-thumbnail {
+	opacity: .12;
+	transition: .3s;
+}
+.pa-hidden-thumbnail:hover {
+	opacity: 1;
+}

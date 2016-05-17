@@ -1,5 +1,4 @@
 import * as Deps from './deps'
-let Config = Deps.Container.config;
 import ConfigKeys from './configKeys'
 
 import * as log4js from 'log4js'
@@ -15,7 +14,7 @@ class HTTP {
 }
 
 function callService<Req, Res>(feature: string, request: Req) :Promise<Res> {
-	return Config.get(ConfigKeys.server_url).then(server_url => {
+	return Deps.Container.config.get(ConfigKeys.server_url).then(server_url => {
 		return Deps.Container.ajaxCall({
 			type: 'POST',
 			url: resolve(server_url.toString(),feature),
