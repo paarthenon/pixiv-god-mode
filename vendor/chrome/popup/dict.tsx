@@ -13,19 +13,6 @@ interface DictViewerProps {
 export class DictViewer extends React.Component<DictViewerProps,{currentSearch:string}> {
 	state = { currentSearch: '' };
 
-	public handleUpdate(key:string, newValue:string) {
-		console.log('updated', key, newValue)
-		this.props.onUpdate(key, newValue);
-	}
-
-	public handleDelete(key:string) {
-		console.log('deleted', key);
-		this.props.onDelete(key);
-	}
-	public handleAdd(key:string, newValue: string) {
-		console.log('adding', key, newValue);
-		this.props.onAdd(key, newValue);
-	}
 	public get filteredData() {
 		return Object.keys(this.props.dict)
 			.map(key => ({ key, value: this.props.dict[key] }))
@@ -34,15 +21,15 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 	public render() {
 		return (
 			<div>
-				<DictAdd onAdd={this.handleAdd.bind(this)} />
+				<DictAdd onAdd={this.props.onAdd} />
 				<Search onChange={(value) => this.setState({currentSearch:value})} />
 				{this.filteredData.map(entry => 
 					<DictEntry 
 						key={entry.key}
 						japanese={entry.key} 
 						translation={entry.value}
-						onUpdate={this.handleUpdate.bind(this)}
-						onDelete={this.handleDelete.bind(this)}
+						onUpdate={this.props.onUpdate}
+						onDelete={this.props.onDelete}
 					/>
 				)}
 			</div>
