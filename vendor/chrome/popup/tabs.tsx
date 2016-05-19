@@ -3,7 +3,7 @@ import * as Bootstrap from 'react-bootstrap'
 
 export class Tabs extends React.Component<{tabs: {[name:string]:JSX.Element}, initialTab: string},{active:string}> {
 	protected style = {
-		width: '700px',
+		width: '780px',
 		height: '500px',
 		background: '#eeee',
 		zIndex: 100

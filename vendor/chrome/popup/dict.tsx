@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import * as Bootstrap from 'react-bootstrap'
 
 type paDict = { [id:string]:string };
 
@@ -37,6 +38,10 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 	}
 }
 
+let FormControl: React.ComponentClass<any> = (Bootstrap as any).FormControl;
+let FormGroup: React.ComponentClass<any> = (Bootstrap as any).FormGroup;
+let Form: React.ComponentClass<any> = (Bootstrap as any).Form;
+
 export class Search extends React.Component<{ onChange: (search: string) => any }, { current: string }> {
 	state = { current: '' };
 
@@ -47,7 +52,7 @@ export class Search extends React.Component<{ onChange: (search: string) => any 
 	}
 	public render() {
 		return <div>
-				<input 
+				<FormControl type="text"
 					placeholder="search" 
 					value={this.state.current} 
 					onChange={this.handleChange.bind(this)} 
@@ -58,17 +63,18 @@ export class Search extends React.Component<{ onChange: (search: string) => any 
 
 export class DictAdd extends React.Component<{onAdd:(key:string,value:string)=>any},void> {
 	public handleAdd(){
-		console.log('adder working');
 		let japaneseInput: any = ReactDOM.findDOMNode(this.refs['japanese']);
 		let translationInput: any = ReactDOM.findDOMNode(this.refs['translation']);
 		this.props.onAdd(japaneseInput.value, translationInput.value)
 	}
 	public render() {
-		return <div>
-			<input placeholder="japanese" ref="japanese"></input>
-			<input placeholder="translation" ref="translation"></input>
-			<button onClick={(e) => this.handleAdd()}>add</button>
-		</div>
+		return <Bootstrap.Panel header="Add Translation">
+			<Form inline>
+					<FormControl type="text" placeholder="japanese" ref="japanese" />
+					<FormControl type="text" placeholder="translation" ref="translation" />
+					<Bootstrap.Button onClick={this.handleAdd.bind(this)}>add</Bootstrap.Button>
+			</Form>
+		</Bootstrap.Panel>
 	}
 }
 
@@ -94,15 +100,15 @@ export class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}
 				<div>
 					<span>{this.props.japanese}</span>
 					<span>{this.props.translation}</span>
-					<button onClick={() => this.setState({editOpen: true})}>edit</button>
-					<button onClick={this.handleDelete.bind(this)}>delete</button>
+					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true })}>edit</Bootstrap.Button>
+					<Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button>
 				</div>
 			):(
 				<div>
 					<span>{this.props.japanese}</span>
 					<input defaultValue={this.props.translation} ref="translation"></input>
-					<button onClick={this.handleUpdate.bind(this)}>update</button>
-					<button onClick={() => this.setState({editOpen: false})}>cancel</button>
+					<Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this)}>update</Bootstrap.Button>
+					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({editOpen: false})}>cancel</Bootstrap.Button>
 				</div>
 			)
 		}</div>
