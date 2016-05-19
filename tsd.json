@@ -48,7 +48,10 @@
       "commit": "310c247694d7f31bd2e3198f71c55221f7c3a3c7"
     },
     "react/react.d.ts": {
-      "commit": "310c247694d7f31bd2e3198f71c55221f7c3a3c7"
+      "commit": "e0abafb1a6ff652f7ff967120e312d5c1916eaef"
+    },
+    "react-bootstrap/react-bootstrap.d.ts": {
+      "commit": "e0abafb1a6ff652f7ff967120e312d5c1916eaef"
     }
   }
 }

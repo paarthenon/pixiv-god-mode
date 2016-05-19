@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as Bootstrap from 'react-bootstrap'
 
 export class Tabs extends React.Component<{tabs: {[name:string]:JSX.Element}, initialTab: string},{active:string}> {
 	protected style = {
@@ -14,14 +15,17 @@ export class Tabs extends React.Component<{tabs: {[name:string]:JSX.Element}, in
 		this.state = { active };
 	}
 
-	public handleClick(active:string) {
+	public handleSelect(active:string) {
 		this.setState({ active });
 	}
 	public render() {
 		return (
 			<div style={this.style}>
-				{Object.keys(this.props.tabs).map(key => <span onClick={()=>this.handleClick(key)}key={key}>{key}</span>) }
-				{this.props.tabs[this.state.active]}
+				<Bootstrap.Nav bsStyle="tabs" activeKey={this.state.active} onSelect={this.handleSelect.bind(this)}>
+				{Object.keys(this.props.tabs).map(key => 
+						<Bootstrap.NavItem eventKey={key} key={key}>{key}</Bootstrap.NavItem>) }
+				</Bootstrap.Nav>
+				<div>{this.props.tabs[this.state.active]}</div>
 			</div>
 			);
 	}
