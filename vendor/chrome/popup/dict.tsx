@@ -24,6 +24,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 			<div>
 				<DictAdd onAdd={this.props.onAdd} />
 				<Search onChange={(value) => this.setState({currentSearch:value})} />
+				<Bootstrap.Table>
 				{this.filteredData.map(entry => 
 					<DictEntry 
 						key={entry.key}
@@ -33,6 +34,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 						onDelete={this.props.onDelete}
 					/>
 				)}
+				</Bootstrap.Table>
 			</div>
 		);
 	}
@@ -51,13 +53,13 @@ export class Search extends React.Component<{ onChange: (search: string) => any 
 		this.props.onChange(newValue);
 	}
 	public render() {
-		return <div>
+		return <Bootstrap.Well>
 				<FormControl type="text"
 					placeholder="search" 
 					value={this.state.current} 
 					onChange={this.handleChange.bind(this)} 
 				/>
-			</div>
+			</Bootstrap.Well>
 	}
 }
 
@@ -96,21 +98,18 @@ export class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}
 		this.props.onDelete(this.props.japanese);
 	}
 	public render() {
-		return <div> {(!this.state.editOpen) ? (
-				<div>
-					<span>{this.props.japanese}</span>
-					<span>{this.props.translation}</span>
-					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true })}>edit</Bootstrap.Button>
-					<Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button>
-				</div>
-			):(
-				<div>
-					<span>{this.props.japanese}</span>
-					<input defaultValue={this.props.translation} ref="translation"></input>
-					<Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this)}>update</Bootstrap.Button>
-					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({editOpen: false})}>cancel</Bootstrap.Button>
-				</div>
-			)
-		}</div>
+		if (!this.state.editOpen)
+			return <tr>
+				<td>{this.props.japanese}</td>
+				<td>{this.props.translation}</td>
+				<td><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true })}>edit</Bootstrap.Button></td>
+				<td><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button></td>
+			</tr>
+		else <tr>
+				<td>{this.props.japanese}</td>
+				<td><input defaultValue={this.props.translation} ref="translation"></input></td>
+				<td><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this)}>update</Bootstrap.Button></td>
+				<td><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({editOpen: false})}>cancel</Bootstrap.Button></td>
+			</tr>
 	}
 }
