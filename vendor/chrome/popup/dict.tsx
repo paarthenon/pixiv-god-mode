@@ -60,7 +60,7 @@ let FormControl: React.ComponentClass<any> = (Bootstrap as any).FormControl;
 let FormGroup: React.ComponentClass<any> = (Bootstrap as any).FormGroup;
 let Form: React.ComponentClass<any> = (Bootstrap as any).Form;
 
-export class Search extends React.Component<{ onChange: (search: string) => any }, { current: string }> {
+class Search extends React.Component<{ onChange: (search: string) => any }, { current: string }> {
 	state = { current: '' };
 
 	public handleChange(event:React.FormEvent) {
@@ -79,7 +79,7 @@ export class Search extends React.Component<{ onChange: (search: string) => any 
 	}
 }
 
-export class DictAdd extends React.Component<{onAdd:(key:string,value:string)=>any},void> {
+class DictAdd extends React.Component<{onAdd:(key:string,value:string)=>any},void> {
 	public handleAdd(){
 		let japaneseInput: any = ReactDOM.findDOMNode(this.refs['japanese']);
 		let translationInput: any = ReactDOM.findDOMNode(this.refs['translation']);
@@ -103,7 +103,7 @@ interface DictEntryProps {
 	onDelete:(key:string) => any
 }
 
-export class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
+class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 	state = { editOpen: false };
 	public handleUpdate() {
 		let translationInput :any = ReactDOM.findDOMNode(this.refs['translation']);
