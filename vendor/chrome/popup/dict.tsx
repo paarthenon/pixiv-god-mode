@@ -24,7 +24,22 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 			<div>
 				<DictAdd onAdd={this.props.onAdd} />
 				<Search onChange={(value) => this.setState({currentSearch:value})} />
-				<Bootstrap.Table>
+				<Bootstrap.Table condensed>
+				<colgroup>
+					<col style={{ width: '50%', textAlign: 'center' }}></col>
+					<col style={{ width: '50%', textAlign: 'center' }}></col>
+					<col style={{ width: '62px'}}></col>
+					<col style={{ width: '60px'}}></col>
+				</colgroup>
+				<thead>
+				<tr>
+					<th>Japanese</th>
+					<th>English</th>
+					<th></th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
 				{this.filteredData.map(entry => 
 					<DictEntry 
 						key={entry.key}
@@ -34,6 +49,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 						onDelete={this.props.onDelete}
 					/>
 				)}
+				</tbody>
 				</Bootstrap.Table>
 			</div>
 		);
@@ -102,14 +118,14 @@ export class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}
 			return <tr>
 				<td>{this.props.japanese}</td>
 				<td>{this.props.translation}</td>
-				<td><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true })}>edit</Bootstrap.Button></td>
-				<td><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button></td>
+				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button></td>
+				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button></td>
 			</tr>
-		else <tr>
+		else return <tr>
 				<td>{this.props.japanese}</td>
 				<td><input defaultValue={this.props.translation} ref="translation"></input></td>
-				<td><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this)}>update</Bootstrap.Button></td>
-				<td><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({editOpen: false})}>cancel</Bootstrap.Button></td>
+				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) }>update</Bootstrap.Button></td>
+				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) }>cancel</Bootstrap.Button></td>
 			</tr>
 	}
 }
