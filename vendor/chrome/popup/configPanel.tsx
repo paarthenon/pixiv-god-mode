@@ -13,15 +13,12 @@ export class ConfigPanel extends React.Component<any,{items: {key:string, value:
 	constructor() {
 		super();
 		this.state = { items: [] };
-
-		// Need to do this absurd reduce instead of Promise.all because the definition seems to be broken.
 		Mailman.listConfig()
-			.then(configKeys => configKeys.reduce((acc,key, x, y) =>
-				acc.then((arr:any[]) => arr.concat([Mailman.getConfig({ key })
+			.then(configKeys => Promise.all<{key:string;value:string}>(configKeys.map(key =>
+				Mailman.getConfig({ key })
 					.then(resp => resp.value.toString())
-					.then(value => ({ key, value }))]
-				)), Promise.resolve([])
-			))
+					.then(value => ({ key, value }))
+			)))
 			.then(entries => {
 				console.log(entries);
 				this.setState({ items: entries })
