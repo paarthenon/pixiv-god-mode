@@ -34,3 +34,7 @@ export function getCurrentTab() {
 	return queryTabs({ active: true, currentWindow: true })
 		.then(tabs => tabs[0]);
 }
+
+export function newTab(url:string) {
+	return new Promise<void>(resolve => resolve(chrome.tabs.create({url})));
+}

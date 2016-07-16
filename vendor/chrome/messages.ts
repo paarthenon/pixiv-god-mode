@@ -7,6 +7,7 @@ export interface Protocol {
 	setConfig: (msg: ConfigSetMessage) => Promise<void>
 	listConfig: () => Promise<string[]>
 	ajax: (req:AjaxRequest<any>) => Promise<any>
+	newTab: (msg: UrlRequest) => Promise<void>
 }
 
 export interface ContentScriptProtocol {
@@ -49,4 +50,7 @@ export interface GetActionsResponse {
 }
 export interface PerformActionRequest {
 	actionId: string
+}
+export interface UrlRequest {
+	url: string
 }

@@ -70,7 +70,7 @@ export class WorksPage extends GalleryPage {
 			if (this.jQuery(image).attr('class').indexOf('multiple') >= 0) {
 				path = path.replace('medium', 'manga');
 			}
-			DepsContainer.openInTab(`//www.pixiv.net${path}`);
+			DepsContainer.openInTab(window.location.origin + path);
 		});
 	}
 

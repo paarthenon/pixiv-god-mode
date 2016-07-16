@@ -42,5 +42,8 @@ defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 				}
 			}
 		});
+	},
+	newTab: msg => {
+		return ChromeUtils.newTab(msg.url);
 	}
 });

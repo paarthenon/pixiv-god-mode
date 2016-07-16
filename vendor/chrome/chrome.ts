@@ -72,7 +72,7 @@ import {default as Mailman, defineImplementation} from './mailman'
 let deps: IDependencyContainer = {
 	jQ: $,
 	config: new Config(),
-	openInTab: (url: string) => { },
+	openInTab: (url: string) => Mailman.Background.newTab({url}),
 	execOnPixiv: (func: Function) => broker.queueExecution(func),
 	ajaxCall: (req: AjaxRequest<any>) => 
 		Mailman.Background.ajax(req)
