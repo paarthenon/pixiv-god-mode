@@ -14,6 +14,6 @@ export class GalleryPage extends RootPage {
 	public goToLastPage():void {
 		let finalPage = Math.ceil(1.0 * this.imageCountTotal / this.imageCountInPage);
 		// This takes advantage of the property that &p=2&p=3 will direct to page 3.
-		unsafeWindow.location.href = `${unsafeWindow.location.href}&p=${finalPage}`;
+		window.location.href = `${window.location.href}&p=${finalPage}`;
 	}
 }
