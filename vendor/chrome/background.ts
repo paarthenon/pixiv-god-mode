@@ -3,10 +3,11 @@ import * as ChromeUtils from './utils'
 import * as log4js from 'log4js';
 
 import {AjaxRequest} from '../../src/core/IAjax'
+import {defineImplementation} from './mailman'
 
 let logger = log4js.getLogger('Background');
 
-let protocolImplementation : Msg.Protocol = {
+defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 	getConfig: msg => {
 		return ChromeUtils.getFromConfig(msg.key)
 			.then(contents => {
@@ -42,18 +43,4 @@ let protocolImplementation : Msg.Protocol = {
 			}
 		});
 	}
-}
-
-function dispatch(implementation: Msg.Protocol, message: Msg.RequestWrapper<any>) : Promise<any> {
-	return Promise.resolve((<any>implementation)[message.name](message.body));
-}
-
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-	let message: Msg.RequestWrapper<any> = msg;
-
-	dispatch(protocolImplementation, msg)
-		.then(content => sendResponse({ success: true, data: content }))
-		.catch(reason => sendResponse({ success: false, errors: reason}));
-		
-	return true;
 });

@@ -1,5 +1,6 @@
 import {potentialData as IConfigValue} from '../../src/core/IConfig'
 import {AjaxRequest} from '../../src/core/IAjax'
+import {Action} from '../../src/actionModel'
 
 export interface Protocol {
 	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
@@ -8,7 +9,13 @@ export interface Protocol {
 	ajax: (req:AjaxRequest<any>) => Promise<any>
 }
 
+export interface ContentScriptProtocol {
+	getActions: () => Promise<GetActionsResponse>
+	performAction: (msg: PerformActionRequest) => Promise<void>
+}
+
 export interface RequestWrapper<T> {
+	target: string
 	name: string
 	body: T
 }
@@ -36,3 +43,10 @@ export interface FailedResponse extends ResponseMessage {
 }
 export function isSuccessfulResponse(msg: ResponseMessage): msg is SuccessfulResponse<any> { return msg.success }
 export function isFailedResponse(msg: ResponseMessage): msg is FailedResponse { return !msg.success }
+
+export interface GetActionsResponse {
+	actions: Action[]
+}
+export interface PerformActionRequest {
+	actionId: string
+}

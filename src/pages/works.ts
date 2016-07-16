@@ -9,6 +9,9 @@ import {Model} from '../../common/proto'
 
 import {Container as DepsContainer} from '../deps'
 
+import * as log4js from 'log4js';
+let logger = log4js.getLogger();
+
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);
@@ -48,16 +51,17 @@ export class WorksPage extends GalleryPage {
 
 		services.bulkImageExists(request)
 			.then(matchedImages => matchedImages
+				.map(image => { logger.debug(JSON.stringify(image)); return image; })
 				.map(match => match.image.id.toString())
 				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
 	}
 
-	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements. 
-	// Make this action only visible if we are not already on the last page. 
+	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements.
+	// Make this action only visible if we are not already on the last page.
 	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'last' })
 	public goToLastPage() {
 		super.goToLastPage();
-	} 
+	}
 
 	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-tab' })
 	public openTabs():void {

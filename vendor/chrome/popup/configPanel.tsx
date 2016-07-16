@@ -13,16 +13,21 @@ export class ConfigPanel extends React.Component<any,{items: {key:string, value:
 	constructor() {
 		super();
 		this.state = { items: [] };
-		Mailman.listConfig()
-			.then(configKeys => Promise.all<{key:string;value:string}>(configKeys.map(key =>
-				Mailman.getConfig({ key })
-					.then(resp => resp.value.toString())
-					.then(value => ({ key, value }))
-			)))
-			.then(entries => {
-				console.log(entries);
-				this.setState({ items: entries })
-			});
+		// Mailman.listConfig()
+		// 	.then(configKeys => Promise.all<{key:string;value:string}>(configKeys.map(key =>
+		// 		Mailman.getConfig({ key })
+		// 			.then(resp => resp.value.toString())
+		// 			.then(value => ({ key, value }))
+		// 	)))
+		// 	.then(entries => {
+		// 		console.log(entries);
+		// 		this.setState({ items: entries })
+		// 	});
+		Mailman.ContentScript.getActions()
+			.then(actionMsg => {
+				this.setState( { items: actionMsg.actions.map(action => ({key:action.id, value: action.icon}))});
+			})
+			.catch(error => console.log(error));
 
 	}
 	public render() {

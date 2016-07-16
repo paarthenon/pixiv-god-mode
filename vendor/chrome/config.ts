@@ -23,15 +23,15 @@ function handleError<T>(value: T) {
 }
 export default class ContentConfig implements IConfig {
 	public keys(): Promise<string[]> {
-		return Mailman.listConfig();
+		return Mailman.Background.listConfig();
 	}
 
 	public get(key: string): Promise<potentialData> {
-		return Mailman.getConfig({ key })
+		return Mailman.Background.getConfig({ key })
 			.then(msg => msg.value);
 	}
 
 	public set(key: string, value: potentialData) {
-		return Mailman.setConfig({ key, value });
+		return Mailman.Background.setConfig({ key, value });
 	}
 }

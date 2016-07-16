@@ -1,5 +1,8 @@
 import {IDependencyContainer, load as depsLoad} from '../../src/deps'
 import {AjaxRequest} from '../../src/core/IAjax'
+import {Action} from '../../src/actionModel'
+import * as Msg from './messages'
+
 
 import * as log4js from 'log4js'
 
@@ -64,7 +67,7 @@ class ExecBroker {
 
 let broker = new ExecBroker();
 
-import Mailman from './mailman'
+import {default as Mailman, defineImplementation} from './mailman'
 
 let deps: IDependencyContainer = {
 	jQ: $,
@@ -72,7 +75,21 @@ let deps: IDependencyContainer = {
 	openInTab: (url: string) => { },
 	execOnPixiv: (func: Function) => broker.queueExecution(func),
 	ajaxCall: (req: AjaxRequest<any>) => 
-		Mailman.ajax(req)
+		Mailman.Background.ajax(req)
 }
 
 let page = Bootstrap(deps);
+
+defineImplementation<Msg.ContentScriptProtocol>("CONTENT_SCRIPT", {
+	getActions: () => Promise.resolve({actions: page.actionCache}),
+	performAction: msg => {
+		let item = page.actionCache.find(action => action.id == msg.actionId);
+		if (item) {
+			item.execute();
+			return Promise.resolve();
+		} else {
+			return Promise.reject("Action not found");
+		}
+	}
+});
+

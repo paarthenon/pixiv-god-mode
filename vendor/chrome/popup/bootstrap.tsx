@@ -22,7 +22,7 @@ function updateDict(key: string, value: string) {
 let official_dict :any = {};
 
 import Mailman from '../mailman'
-Mailman.getConfig({ key: configKeys.official_dict })
+Mailman.Background.getConfig({ key: configKeys.official_dict })
 	.then(dict => { official_dict = dict.value; render(); });
 
 function render() {
