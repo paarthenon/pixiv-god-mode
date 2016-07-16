@@ -20,7 +20,6 @@ interface PixivExecDetails {
 }
 
 export function pixivExec(){
-	console.log('pixivExec');
 	document.addEventListener('pixivExec', function(event) {
 		let deets:PixivExecDetails = JSON.parse((<any>event).detail);
 		let func = eval(`(${deets.func})`);

@@ -1,16 +1,4 @@
-import {IDependencyContainer, load as depsLoad} from '../../src/deps'
-import {AjaxRequest} from '../../src/core/IAjax'
-import {Action} from '../../src/actionModel'
-import * as Msg from './messages'
-
-
 import * as log4js from 'log4js'
-
-import Config from './config'
-
-import Bootstrap from '../../src/main'
-
-import * as hook from './pageHook'
 
 log4js.configure({
 	appenders: [
@@ -25,6 +13,21 @@ log4js.configure({
 
 
 log4js.setGlobalLogLevel(log4js.levels.ALL);
+
+import {IDependencyContainer, load as depsLoad} from '../../src/deps'
+import {AjaxRequest} from '../../src/core/IAjax'
+import {Action} from '../../src/actionModel'
+import * as Msg from './messages'
+
+
+
+import Config from './config'
+
+import Bootstrap from '../../src/main'
+
+import * as hook from './pageHook'
+
+
 
 let logger = log4js.getLogger('Chrome specific init');
 

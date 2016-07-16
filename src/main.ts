@@ -1,7 +1,8 @@
+import * as log4js from 'log4js'
+
 import {dispatch} from './dispatch'
 import {BasePage} from './pages/base'
 
-import * as log4js from 'log4js'
 import * as Dependencies from './deps'
 
 import {DictionaryService} from './utils/dict'

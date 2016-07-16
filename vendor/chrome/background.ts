@@ -30,13 +30,11 @@ defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 	},
 	ajax: req => {
 		return new Promise((resolve, reject) => {
-			console.log('request made with ', req);
 			let xhr = new XMLHttpRequest();
 			xhr.open(req.type, req.url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.send(JSON.stringify(req.data));
 			xhr.onreadystatechange = () => {
-				console.log('xhr state changed', xhr);
 				if (xhr.readyState == XMLHttpRequest.DONE) {
 					resolve(xhr.response);
 				}

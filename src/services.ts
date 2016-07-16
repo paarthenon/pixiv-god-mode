@@ -21,7 +21,6 @@ function callService<Req, Res>(feature: string, request: Req) :Promise<Res> {
 			data: request
 		})
 		.then((response:any) => {
-			logger.fatal('response received', response);
 			let parsedResponse: Messages.Response = JSON.parse(response);
 			if(Messages.isPositiveResponse(parsedResponse)) {
 				return parsedResponse.data;

@@ -6,7 +6,6 @@ function send<T, V>(target: Target, name:string, msg: T): Promise<V> {
 	return new Promise((resolve, reject) => {
 
 		function responseHandler (response: Msg.ResponseMessage) {
-			console.log('retrieved message',response);
 			if (response == undefined) {
 				reject('No valid response received')
 			} else {
@@ -20,7 +19,6 @@ function send<T, V>(target: Target, name:string, msg: T): Promise<V> {
 		}
 
 		if (target === "CONTENT_SCRIPT") {
-			console.log("sending a content script message");
 			chrome.tabs.query({active: true, currentWindow: true}, tabs => {
 				chrome.tabs.sendMessage(tabs[0].id, { target, name, body: msg }, responseHandler);
 			});
