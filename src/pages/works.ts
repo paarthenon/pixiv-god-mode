@@ -45,10 +45,29 @@ export class WorksPage extends GalleryPage {
 	}
 
 	@ExecuteOnLoad
-	public injectButton() {
+	public injectFirstButton() {
+		let props =  {text: '<<', tooltip: 'First', rel: 'prev', clickAction: this.goToFirstPage.bind(this)};
+
 		let elem = this.jQuery('<span></span>')[0];
-		ReactDOM.render(React.createElement(PageButton, {clickAction: this.goToLastPage.bind(this)}), elem);
-		this.jQuery('span.prev').prepend(elem);
+		ReactDOM.render(React.createElement(PageButton, props), elem);
+		this.jQuery('.pager-container').first().prepend(elem);
+
+		let elem2 = this.jQuery('<span></span>')[0];
+		ReactDOM.render(React.createElement(PageButton, props), elem2);
+		this.jQuery('.pager-container').last().prepend(elem2);
+	}
+
+	@ExecuteOnLoad
+	public injectLastButton() {
+		let props = {text: '>>', tooltip: 'Last', rel: 'next', clickAction: this.goToLastPage.bind(this)};
+
+		let elem = this.jQuery('<span></span>')[0];
+		ReactDOM.render(React.createElement(PageButton, props ), elem);
+		this.jQuery('.pager-container').first().append(elem);
+
+		let elem2 = this.jQuery('<span></span>')[0];
+		ReactDOM.render(React.createElement(PageButton, props ), elem2);
+		this.jQuery('.pager-container').last().append(elem2);
 	}
 
 	@ExecuteOnLoad
@@ -109,7 +128,6 @@ export class WorksPage extends GalleryPage {
 	public openFolder():void {
 		services.openFolder(this.artist);
 	}
-
 
 	public debugDownloadAllImagesForArtist():void {
 		(<any>unsafeWindow).pixiv.api.userProfile({
