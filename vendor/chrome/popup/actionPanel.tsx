@@ -1,7 +1,10 @@
 import * as React from 'react'
+import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
 import {Action} from '../../../src/actionModel'
+
+let logger = log4js.getLogger('ActionPanel');
 
 export class ActionPanel extends React.Component<any,{actions: Action[]}> {
 	protected style = {
@@ -18,7 +21,7 @@ export class ActionPanel extends React.Component<any,{actions: Action[]}> {
 			.then(actionMsg => {
 				this.setState({ actions: actionMsg.actions});
 			})
-			.catch(error => console.log(error));
+			.catch(error => logger.error(error));
 
 	}
 	public render() {
@@ -37,8 +40,7 @@ export class ActionEntry extends React.Component<{action:Action}, void> {
 	}
 	public render() {
 		return <div>
-				<span>{this.props.action.id}|</span>
-				<a href="#" onClick={this.handleExecute.bind(this)}>Execute</a>
+				<a href="#" onClick={this.handleExecute.bind(this)}>{this.props.action.label}</a>
 			</div>;
 	}
 }

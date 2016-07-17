@@ -28,8 +28,8 @@ Mailman.Background.getConfig({ key: configKeys.official_dict })
 
 function render() {
 	let tabInfo: { [id: string]: JSX.Element } = {
-		config: <ConfigPanel />,
 		actions: <ActionPanel />,
+		config: <ConfigPanel />,
 		dictionary: <DictViewer
 			dict={dictionary}
 			onAdd={updateDict}
@@ -39,8 +39,7 @@ function render() {
 		officialDict: <ReadOnlyDictViewer dict={official_dict}/>
 	}
 
-	console.log('updating with', dictionary);
-	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="config" />, document.getElementById('content'));
+	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="actions" />, document.getElementById('content'));
 }
 
 render();
