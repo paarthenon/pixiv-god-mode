@@ -15,6 +15,8 @@ import * as ReactDOM from 'react-dom'
 import {PageButton} from '../components/pageButton'
 import {UserRelationButton} from '../components/userRelationButton'
 
+import {injectPagingButtons} from '../injectors/pagingButtonInjector'
+import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
 
 let logger = log4js.getLogger();
 
@@ -45,37 +47,11 @@ export class WorksPage extends GalleryPage {
 	}
 
 	@ExecuteOnLoad
-	public injectFirstButton() {
-		let props =  {text: '<<', tooltip: 'First', rel: 'prev', clickAction: this.goToFirstPage.bind(this)};
-
-		let elem = this.jQuery('<span></span>')[0];
-		ReactDOM.render(React.createElement(PageButton, props), elem);
-		this.jQuery('.pager-container').first().prepend(elem);
-
-		let elem2 = this.jQuery('<span></span>')[0];
-		ReactDOM.render(React.createElement(PageButton, props), elem2);
-		this.jQuery('.pager-container').last().prepend(elem2);
+	public injectPageElements() {
+		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
+		injectUserRelationshipButton(this.jQuery, this.artist);
 	}
 
-	@ExecuteOnLoad
-	public injectLastButton() {
-		let props = {text: '>>', tooltip: 'Last', rel: 'next', clickAction: this.goToLastPage.bind(this)};
-
-		let elem = this.jQuery('<span></span>')[0];
-		ReactDOM.render(React.createElement(PageButton, props ), elem);
-		this.jQuery('.pager-container').first().append(elem);
-
-		let elem2 = this.jQuery('<span></span>')[0];
-		ReactDOM.render(React.createElement(PageButton, props ), elem2);
-		this.jQuery('.pager-container').last().append(elem2);
-	}
-
-	@ExecuteOnLoad
-	public injectUserRelationshipButton() {
-		let elem = this.jQuery('<li></li>')[0];
-		ReactDOM.render(React.createElement(UserRelationButton, {text: 'Open Folder', clickAction: this.openFolder.bind(this)}), elem);
-		this.jQuery('ul.user-relation').append(elem);
-	}
 
 	@ExecuteOnLoad
 	public experimentalFade() {
