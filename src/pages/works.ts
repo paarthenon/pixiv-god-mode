@@ -9,7 +9,13 @@ import {Model} from '../../common/proto'
 
 import {Container as DepsContainer} from '../deps'
 
-import * as log4js from 'log4js';
+import * as log4js from 'log4js'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import {PageButton} from '../components/pageButton'
+import {UserRelationButton} from '../components/userRelationButton'
+
+
 let logger = log4js.getLogger();
 
 export class WorksPage extends GalleryPage {
@@ -36,6 +42,20 @@ export class WorksPage extends GalleryPage {
 
 	protected executeOnEachImage<T>(func:(image:JQuery) => T) {
 		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
+	}
+
+	@ExecuteOnLoad
+	public injectButton() {
+		let elem = this.jQuery('<span></span>')[0];
+		ReactDOM.render(React.createElement(PageButton, {clickAction: this.goToLastPage.bind(this)}), elem);
+		this.jQuery('span.prev').prepend(elem);
+	}
+
+	@ExecuteOnLoad
+	public injectUserRelationshipButton() {
+		let elem = this.jQuery('<li></li>')[0];
+		ReactDOM.render(React.createElement(UserRelationButton, {text: 'Open Folder', clickAction: this.openFolder.bind(this)}), elem);
+		this.jQuery('ul.user-relation').append(elem);
 	}
 
 	@ExecuteOnLoad
