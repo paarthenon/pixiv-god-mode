@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
@@ -40,7 +41,7 @@ export class ActionEntry extends React.Component<{action:Action}, void> {
 	}
 	public render() {
 		return <div>
-				<a href="#" onClick={this.handleExecute.bind(this)}>{this.props.action.label}</a>
+				<Bootstrap.Button onClick={this.handleExecute.bind(this)} bsStyle="primary" bsSize="large">{this.props.action.label}</Bootstrap.Button>
 			</div>;
 	}
 }
