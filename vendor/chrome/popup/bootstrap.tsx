@@ -3,12 +3,10 @@ import * as ReactDOM from 'react-dom'
 import * as log4js from 'log4js'
 
 import {MainPanel} from './mainPanel'
-import {ConfigPanel} from './configPanel'
 import {Tabs} from './tabs'
 import {DictViewer} from './dict'
 import {ReadOnlyDictViewer} from './readOnlyDict'
 import {ActionPanel} from './actionPanel'
-// import {SettingsPanel} from './settingsPanel'
 
 import configKeys from '../../../src/configKeys'
 
@@ -58,14 +56,13 @@ Mailman.Background.getConfig({ key: configKeys.official_dict })
 
 function render() {
 	let tabInfo: { [id: string]: JSX.Element } = {
-		actions: <ActionPanel />,
-		config: <ConfigPanel />,
-		dictionary: <DictContainer dictKey={configKeys.user_dict} />,
-		officialDict: <ReadOnlyDictViewer dict={official_dict}/>
+		Actions: <ActionPanel />,
+		Dictionary: <DictContainer dictKey={configKeys.user_dict} />,
+		"Global Dictionary": <ReadOnlyDictViewer dict={official_dict}/>
 		// settings: <SettingsPanel />
 	}
 
-	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="actions" />, document.getElementById('content'));
+	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Actions" />, document.getElementById('content'));
 }
 
 render();
