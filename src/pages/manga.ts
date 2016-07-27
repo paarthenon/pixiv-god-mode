@@ -3,8 +3,6 @@ import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
 import * as services from '../services'
 
-import {settingKeys, getSetting} from '../userSettings'
-
 export class MangaPage extends RootPage {
 	public get artistName(): string {
 		return this.jQuery('section.thumbnail-container a.user').text();

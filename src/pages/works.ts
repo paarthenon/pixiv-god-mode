@@ -3,7 +3,6 @@ import * as services from '../services'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
-import {settingKeys, getSetting} from '../userSettings'
 
 import {Model} from '../../common/proto'
 

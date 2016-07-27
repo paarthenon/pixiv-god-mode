@@ -1,6 +1,6 @@
-import * as Deps from './deps'
-let Config = Deps.Container.config;
-import ConfigKeys from './configKeys'
+import Mailman from './mailman'
+
+import ConfigKeys from '../../src/configKeys'
 
 export let settingKeys = {
 	pages: {
@@ -37,8 +37,19 @@ defaultTuples.forEach(tuple => {
 	defaultSettings[key] = value;
 });
 
-let userSettings:any = Config.get(ConfigKeys.user_settings);
+export function getUserSettings() {
+	return Mailman.Background.getConfig({key: ConfigKeys.user_settings})
+		.then(resp => resp.value)
+		.catch(error => ({}));
+}
 export function getSetting(key: string) {
-	return Config.get(ConfigKeys.user_settings).then((userSettings: { [id: string]: any }) => 
+	return getUserSettings().then((userSettings: { [id: string]: any }) => 
 		(userSettings && key in userSettings) ? userSettings[key] : defaultSettings[key])
+}
+
+export function setSetting(key:string, value: boolean) {
+	return getUserSettings().then((userSettings:{ [id: string]: any }) => {
+			userSettings[key] = value;
+			Mailman.Background.setConfig({key: ConfigKeys.user_settings, value: userSettings});
+		});
 }

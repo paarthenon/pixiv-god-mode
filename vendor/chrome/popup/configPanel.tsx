@@ -3,13 +3,6 @@ import * as React from 'react'
 import Mailman from '../mailman'
 
 export class ConfigPanel extends React.Component<any,{items: {key:string, value:string}[]}> {
-	protected style = {
-		width: '700px',
-		height: '500px',
-		background: '#eeee',
-		zIndex: 100
-	};
-
 	constructor() {
 		super();
 		this.state = { items: [] };
@@ -25,7 +18,7 @@ export class ConfigPanel extends React.Component<any,{items: {key:string, value:
 	}
 	public render() {
 		return (
-			<div style={this.style}>
+			<div>
 				<p> Config keys: {this.state.items.length}</p>
 				{this.state.items.map(item => <ConfigEntry key={item.key} configKey={item.key} configValue={item.value} />)}
 			</div>
