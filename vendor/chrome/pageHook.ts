@@ -27,13 +27,15 @@ export function pixivExec(){
 		let func = eval(`(${deets.func})`);
 		let result = func((<any>window).pixiv, deets.props);
 
-		let evt = new CustomEvent('pixivExecResponse', {
-			detail: {
-				id: deets.id,
-				response: result
-			}
+		Promise.resolve(result).then(result => {
+			let evt = new CustomEvent('pixivExecResponse', {
+				detail: {
+					id: deets.id,
+					response: result
+				}
+			});
+			document.dispatchEvent(evt);
 		});
-		document.dispatchEvent(evt);
 	});
 }
 

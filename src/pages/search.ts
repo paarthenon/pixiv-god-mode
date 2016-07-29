@@ -44,7 +44,6 @@ export class SearchPage extends GalleryPage {
 					// If I set the title directly pixiv will eventually try to set the title
 					// again, reverting my changes. This sets the field that pixiv's own functions
 					// use. They'll do my work for me.
-					// TODO: Allow for paramater passing. 
 					Deps.execOnPixiv((pixiv, props) => pixiv.title.original = props.title, {title: newTitle});
 				});
 		}

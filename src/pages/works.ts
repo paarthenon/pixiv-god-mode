@@ -93,25 +93,29 @@ export class WorksPage extends GalleryPage {
 		services.openFolder(this.artist);
 	}
 
+	@RegisteredAction({ id: 'pa_download_all_images_debug', label: 'Download All (DEBUG)', icon: 'new-tab' })
 	public debugDownloadAllImagesForArtist():void {
-		//TODO: Find a way to make this execute with the string serialization of the function.
-		DepsContainer.execOnPixiv(pixiv => {
-			pixiv.api.userProfile({
-				user_ids: this.artistId,
-				illust_num: 1000000
-			}, {}).then((result: any) => {
-				let combined_urls = result.body[0].illusts.map((illust: any) => {
-					let url = illust.url[Object.keys(illust.url)[0]];
-					let pages = illust.illust_page_count;
+		DepsContainer.execOnPixiv(
+			(pixiv, props) => {
+				return pixiv.api.userProfile({
+					user_ids: props.artistId,
+					illust_num: 1000000
+				}, {})
+			},{
+				artistId: this.artistId
+			}
+		).then((result: any) => {
+			let combined_urls = result.body[0].illusts.map((illust: any) => {
+				let url = illust.url[Object.keys(illust.url)[0]];
+				let pages = illust.illust_page_count;
 
-					let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
-					let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
+				let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
+				let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
 
-					return urls;
-				}).reduce((previous: string[], current: string[]) => previous.concat(current));
+				return urls;
+			}).reduce((previous: string[], current: string[]) => previous.concat(current));
 
-				services.downloadMulti(this.artist, combined_urls);
-			});
+			services.downloadMulti(this.artist, combined_urls);
 		});
 	}
 
