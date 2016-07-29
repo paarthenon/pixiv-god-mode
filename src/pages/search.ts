@@ -40,12 +40,14 @@ export class SearchPage extends GalleryPage {
 		if(titleMatch && titleMatch[1]){
 			DictionaryService.getTranslation(titleMatch[1])
 				.then(translatedText => {
-					let newTitle = document.title.replace(/「(.*)」/, `「${translatedText}」`);
-					// If I set the title directly pixiv will eventually try to set the title
-					// again, reverting my changes. This sets the field that pixiv's own functions
-					// use. They'll do my work for me.
-					Deps.execOnPixiv((pixiv, props) => pixiv.title.original = props.title, {title: newTitle});
-					document.title = newTitle;
+					if(translatedText) {
+						let newTitle = document.title.replace(/「(.*)」/, `「${translatedText}」`);
+						// If I set the title directly pixiv will eventually try to set the title
+						// again, reverting my changes. This sets the field that pixiv's own functions
+						// use. They'll do my work for me.
+						Deps.execOnPixiv((pixiv, props) => pixiv.title.original = props.title, {title: newTitle});
+						document.title = newTitle;
+					}
 				});
 		}
 	}
