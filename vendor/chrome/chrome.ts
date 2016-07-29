@@ -44,7 +44,7 @@ defineImplementation<Msg.ContentScriptProtocol>("CONTENT_SCRIPT", {
 	performAction: msg => {
 		let item = page.actionCache.find(action => action.id == msg.actionId);
 		if (item) {
-			item.execute();
+			item.execute.call(page);
 			return Promise.resolve();
 		} else {
 			return Promise.reject("Action not found");

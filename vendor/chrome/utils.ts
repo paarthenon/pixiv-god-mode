@@ -36,5 +36,5 @@ export function getCurrentTab() {
 }
 
 export function newTab(url:string) {
-	return new Promise<void>(resolve => resolve(chrome.tabs.create({url})));
+	return new Promise<void>(resolve => chrome.tabs.create({url}, tab => resolve()));
 }
