@@ -16,14 +16,16 @@ export function pixivExpose(){
 
 interface PixivExecDetails {
 	id: number
-	func: Function
+	func: (pixiv:any, props:any) => any
+	props: any
 }
 
 export function pixivExec(){
 	document.addEventListener('pixivExec', function(event) {
 		let deets:PixivExecDetails = JSON.parse((<any>event).detail);
+		console.log('deets', deets);
 		let func = eval(`(${deets.func})`);
-		let result = func((<any>window).pixiv);
+		let result = func((<any>window).pixiv, deets.props);
 
 		let evt = new CustomEvent('pixivExecResponse', {
 			detail: {

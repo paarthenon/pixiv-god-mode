@@ -38,15 +38,15 @@ export class SearchPage extends GalleryPage {
 	public changeTitle(): void {
 		let titleMatch = document.title.match(/「(.*)」/);
 		if(titleMatch && titleMatch[1]){
-			let translatedText = DictionaryService.getTranslation(titleMatch[1]);
-			if (translatedText) {
-				let newTitle = document.title.replace(/「(.*)」/, `「${translatedText}」`);
-				// If I set the title directly pixiv will eventually try to set the title
-				// again, reverting my changes. This sets the field that pixiv's own functions
-				// use. They'll do my work for me.
-				// TODO: Allow for paramater passing. 
-				Deps.execOnPixiv(pixiv => pixiv.title.original = newTitle);
-			}
+			DictionaryService.getTranslation(titleMatch[1])
+				.then(translatedText => {
+					let newTitle = document.title.replace(/「(.*)」/, `「${translatedText}」`);
+					// If I set the title directly pixiv will eventually try to set the title
+					// again, reverting my changes. This sets the field that pixiv's own functions
+					// use. They'll do my work for me.
+					// TODO: Allow for paramater passing. 
+					Deps.execOnPixiv((pixiv, props) => pixiv.title.original = props.title, {title: newTitle});
+				});
 		}
 	}
 

@@ -30,7 +30,7 @@ let deps: IDependencyContainer = {
 	jQ: $,
 	config: new Config(),
 	openInTab: (url: string) => Mailman.Background.newTab({url}),
-	execOnPixiv: (func: Function) => broker.queueExecution(func),
+	execOnPixiv: (func:(pixiv:any, props:any) => any, props?:any) => broker.queueExecution(func, props),
 	ajaxCall: (req: AjaxRequest<any>) => Mailman.Background.ajax(req)
 }
 

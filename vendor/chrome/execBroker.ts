@@ -13,20 +13,21 @@ export class ExecBroker {
 		})
 	}
 
-	private createEvent(id:number, func:Function) {
+	private createEvent(id:number, func:(pixiv:any, props:any) => any, props:any) {
 		return new CustomEvent('pixivExec', {
 			detail: JSON.stringify({
 				id,
-				func: func.toString()
+				func: func.toString(),
+				props: props
 			})
 		});
 	}
 
-	public queueExecution(func:Function) {
+	public queueExecution(func:(pixiv:any, props:any) => any, props:any) {
 		return new Promise(resolve => {
 			let id = this.currentIndex++;
 			this.resolvers[id] = resolve;
-			document.dispatchEvent(this.createEvent(id, func));
+			document.dispatchEvent(this.createEvent(id, func, props));
 		});
 	}
 }
