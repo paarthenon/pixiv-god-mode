@@ -4,18 +4,20 @@ import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
 import {Action} from '../../../src/actionModel'
-import {settingKeys, getUserSettings, getSetting, setSetting} from '../userSettings'
+import {getUserSettings, getSetting, setSetting} from '../userSettings'
+import SettingKeys from '../../../src/settingKeys'
+
 
 let logger = log4js.getLogger('ActionPanel');
 
 let keys = [
-	settingKeys.pages.illust.autoOpen,
-	settingKeys.pages.illust.boxImage,
-	settingKeys.pages.manga.boxImages,
-	settingKeys.pages.manga.loadFullSize,
-	settingKeys.pages.works.autoDarken,
-	settingKeys.pages.works.directToManga,
-	settingKeys.pages.works.mangaLinkToFull
+	SettingKeys.pages.illust.autoOpen,
+	SettingKeys.pages.illust.boxImage,
+	SettingKeys.pages.manga.boxImages,
+	SettingKeys.pages.manga.loadFullSize,
+	SettingKeys.pages.works.autoDarken,
+	SettingKeys.pages.works.directToManga,
+	SettingKeys.pages.works.mangaLinkToFull
 ];
 
 export class SettingsPanel extends React.Component<void,{userSettings: {[id:string]:boolean}}> {

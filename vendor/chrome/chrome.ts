@@ -24,6 +24,8 @@ import Config from './config'
 import {default as Mailman, defineImplementation} from './mailman'
 import {ExecBroker} from './execBroker'
 
+import {getSetting} from './userSettings'
+
 let broker = new ExecBroker();
 
 let deps: IDependencyContainer = {
@@ -31,7 +33,8 @@ let deps: IDependencyContainer = {
 	config: new Config(),
 	openInTab: (url: string) => Mailman.Background.newTab({url}),
 	execOnPixiv: (func:(pixiv:any, props:any) => any, props?:any) => broker.queueExecution(func, props),
-	ajaxCall: (req: AjaxRequest<any>) => Mailman.Background.ajax(req)
+	ajaxCall: (req: AjaxRequest<any>) => Mailman.Background.ajax(req),
+	getSetting
 }
 
 let page = Bootstrap(deps);
