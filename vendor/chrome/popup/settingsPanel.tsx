@@ -10,21 +10,21 @@ import SettingKeys from '../../../src/settingKeys'
 
 let logger = log4js.getLogger('ActionPanel');
 
-let keys = [
-	SettingKeys.pages.illust.autoOpen,
-	SettingKeys.pages.illust.boxImage,
-	SettingKeys.pages.manga.boxImages,
-	SettingKeys.pages.manga.loadFullSize,
-	SettingKeys.pages.works.autoDarken,
-	SettingKeys.pages.works.directToManga,
-	SettingKeys.pages.works.mangaLinkToFull
-];
+let mapping : { [id:string]: string } = {
+	[SettingKeys.pages.illust.autoOpen]: 'Automatically zoom into image',
+	[SettingKeys.pages.illust.boxImage]: 'Limit image size to the window (illustration)',
+	[SettingKeys.pages.manga.boxImages]: 'Limit image size to the window (manga)',
+	[SettingKeys.pages.manga.loadFullSize]: 'Load full size versions of manga images',
+	[SettingKeys.pages.works.autoDarken]: 'Fade out downloaded images',
+	[SettingKeys.pages.works.directToManga]: 'Link directly to manga',
+	[SettingKeys.pages.works.mangaLinkToFull]: 'No idea'
+};
 
 export class SettingsPanel extends React.Component<void,{userSettings: {[id:string]:boolean}}> {
 	public render() {
 		return (
 			<div>
-				{keys.map(key => <SettingContainer key={key} settingKey={key} label={key}/>)}
+				{Object.keys(mapping).map(key => <SettingContainer key={key} settingKey={key} label={mapping[key]}/>)}
 			</div>
 		);
 	}
