@@ -12,8 +12,8 @@ import {ArtistTagListPage} from './pages/artistTagList'
 let patterns = {
 	illust: /^http:\/\/www.pixiv.net\/member_illust.php\?mode=medium&illust_id=[0-9]+/,
 	manga: /^http:\/\/www.pixiv.net\/member_illust.php\?mode=manga&illust_id=[0-9]+/,
-	works: /^http:\/\/www.pixiv.net\/member_illust.php\?id=[0-9]+/,
-	bookmarks: /^http:\/\/www.pixiv.net\/bookmark.php\?id=[0-9]+/,
+	works: /^http:\/\/www.pixiv.net\/member_illust.php\?.*id=[0-9]+/,
+	bookmarks: /^http:\/\/www.pixiv.net\/bookmark.php\?.*id=[0-9]+/,
 	bookmarkDetail: /^http:\/\/www.pixiv.net\/bookmark_detail.php\?illust_id=[0-9]+/,
 	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php\?id=[0-9]+/,
 	bookmarkAddIllust: /^http:\/\/www.pixiv.net\/bookmark_add.php\?type=illust&illust_id=[0-9]+/,
