@@ -45,6 +45,7 @@ export class SearchPage extends GalleryPage {
 					// again, reverting my changes. This sets the field that pixiv's own functions
 					// use. They'll do my work for me.
 					Deps.execOnPixiv((pixiv, props) => pixiv.title.original = props.title, {title: newTitle});
+					document.title = newTitle;
 				});
 		}
 	}
