@@ -8,6 +8,7 @@ import {DictViewer} from './dict'
 import {ReadOnlyDictViewer} from './readOnlyDict'
 import {ActionPanel} from './actionPanel'
 import {SettingsPanel} from './settingsPanel'
+import {ConfigPanel} from './configPanel'
 
 import configKeys from '../../../src/configKeys'
 
@@ -60,7 +61,8 @@ function render() {
 		Actions: <ActionPanel />,
 		Dictionary: <DictContainer dictKey={configKeys.user_dict} />,
 		"Global Dictionary": <ReadOnlyDictViewer dict={official_dict}/>,
-		Settings: <SettingsPanel />
+		Settings: <SettingsPanel />,
+		Config: <ConfigPanel />
 	}
 
 	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Actions" />, document.getElementById('content'));

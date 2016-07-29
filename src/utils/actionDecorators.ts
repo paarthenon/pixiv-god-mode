@@ -3,6 +3,8 @@ import {BasePage} from '../pages/base'
 
 import {CacheRegistry, pushToArrayCache} from './terribleCache'
 
+import {Container as Deps} from '../deps'
+
 import * as log4js from 'log4js'
 let logger = log4js.getLogger('Decorators');
 
@@ -19,7 +21,7 @@ export function RegisteredAction(desc:ActionDescriptor) {
 	}
 }
 
-export function ExecuteIf(predicate:() => boolean) {
+export function ExecuteIf(predicate:() => boolean | Promise<boolean>) {
 	return (target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
 		let name = (<any>target)['constructor']['name'];
 		
@@ -35,3 +37,4 @@ export function ExecuteIf(predicate:() => boolean) {
 }
 
 export var ExecuteOnLoad = ExecuteIf(() => true);
+export var ExecuteIfSetting = (key:string) => ExecuteIf(() => Deps.getSetting(key));

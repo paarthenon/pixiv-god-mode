@@ -9,7 +9,7 @@ export class ConfigPanel extends React.Component<any,{items: {key:string, value:
 		Mailman.Background.listConfig()
 			.then(configKeys => Promise.all<{key:string;value:string}>(configKeys.map(key =>
 				Mailman.Background.getConfig({ key })
-					.then(resp => resp.value.toString())
+					.then(resp => JSON.stringify(resp.value))
 					.then(value => ({ key, value }))
 			)))
 			.then(entries => {
@@ -30,7 +30,7 @@ export class ConfigEntry extends React.Component<{configKey:string, configValue:
 	public render() {
 		return <div>
 				<span>{this.props.configKey}|</span>
-				<span>{this.props.configValue.toString()}</span>
+				<span>{this.props.configValue}</span>
 			</div>;
 	}
 }

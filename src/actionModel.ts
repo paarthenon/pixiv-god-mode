@@ -11,7 +11,7 @@ interface HasExecutable {
 }
 
 interface IsConditional {
-	if?: () => boolean
+	if?: () => boolean | Promise<boolean>
 }
 
 export type Action = ActionDescriptor & HasExecutable;

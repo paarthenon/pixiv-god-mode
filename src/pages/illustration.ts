@@ -1,6 +1,7 @@
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteIfSetting} from '../utils/actionDecorators'
+import SettingKeys from '../settingKeys'
 import * as services from '../services'
 import {Container as Deps} from '../deps'
 import {Model} from '../../common/proto'
@@ -30,7 +31,7 @@ export class IllustrationPage extends RootPage {
 		.concat(super.getTagElements());
 	}
 
-	@ExecuteOnLoad
+	@ExecuteIfSetting(SettingKeys.pages.illust.autoOpen)
 	public openImage(): void {
 		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
 	}
