@@ -4,6 +4,7 @@ import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 import {DictionaryService} from '../utils/dict'
+import {Container as Deps} from '../deps'
 
 import * as jQUtils from '../utils/jq'
 
@@ -43,7 +44,8 @@ export class SearchPage extends GalleryPage {
 				// If I set the title directly pixiv will eventually try to set the title
 				// again, reverting my changes. This sets the field that pixiv's own functions
 				// use. They'll do my work for me.
-				(<any>unsafeWindow).pixiv.title.original = newTitle;
+				// TODO: Allow for paramater passing. 
+				Deps.execOnPixiv(pixiv => pixiv.title.original = newTitle);
 			}
 		}
 	}

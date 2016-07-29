@@ -3,11 +3,9 @@ import {RegisteredAction} from '../utils/actionDecorators'
 import * as services from '../services'
 import * as pathUtils from '../utils/path'
 import * as jQUtils from '../utils/jq'
+import {Container as Deps} from '../deps'
 
 export class BookmarkIllustrationPage extends RootPage {
-	public get artistId():number {
-		return parseInt((<any>unsafeWindow).pixiv.context.userId)
-	}
 
 	public getTagElements() {
 		return [
@@ -35,7 +33,9 @@ export class BookmarkIllustrationPage extends RootPage {
 	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks', icon: 'spinner2'})
 	public loadAllBookmarks() {
 		for (let i = 0; i < 15; i++) { 
-			(<any>unsafeWindow).pixiv.illustRecommend.load();
+			Deps.execOnPixiv(pixiv => {
+				pixiv.illustRecommend.load();
+			});
 		}
 	}
 }

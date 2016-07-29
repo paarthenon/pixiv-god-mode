@@ -88,39 +88,31 @@ export class WorksPage extends GalleryPage {
 		});
 	}
 
-	public debugOpenAllArtistImagesInTabs(): void {
-		(<any>unsafeWindow).pixiv.api.userProfile({
-			user_ids: this.artistId,
-			illust_num: 1000000
-        }, {}).then((result: any) => {
-			let combined_urls = result.body[0].illusts.map((illust: any) =>
-				`http://www.pixiv.net/member_illust.php?mode=${(parseInt(illust.illust_page_count) > 1) ? 'manga' : 'medium'}&illust_id=${illust.illust_id}`);
-			combined_urls.forEach((url:string) => DepsContainer.openInTab(url));
-        });
-	}
-
 	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open'})
 	public openFolder():void {
 		services.openFolder(this.artist);
 	}
 
 	public debugDownloadAllImagesForArtist():void {
-		(<any>unsafeWindow).pixiv.api.userProfile({
-			user_ids: this.artistId,
-			illust_num: 1000000
-        }, {}).then((result: any) => {
-			let combined_urls = result.body[0].illusts.map((illust: any) => {
-				let url = illust.url[Object.keys(illust.url)[0]];
-				let pages = illust.illust_page_count;
+		//TODO: Find a way to make this execute with the string serialization of the function.
+		DepsContainer.execOnPixiv(pixiv => {
+			pixiv.api.userProfile({
+				user_ids: this.artistId,
+				illust_num: 1000000
+			}, {}).then((result: any) => {
+				let combined_urls = result.body[0].illusts.map((illust: any) => {
+					let url = illust.url[Object.keys(illust.url)[0]];
+					let pages = illust.illust_page_count;
 
-				let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
-				let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
+					let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
+					let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
 
-				return urls;
-			}).reduce((previous: string[], current: string[]) => previous.concat(current));
+					return urls;
+				}).reduce((previous: string[], current: string[]) => previous.concat(current));
 
-			services.downloadMulti(this.artist, combined_urls);
-        });
+				services.downloadMulti(this.artist, combined_urls);
+			});
+		});
 	}
 
 	// TODO: Replace with newly worked if on 'settingKeys.pages.works.mangaLinkToFull'

@@ -2,23 +2,26 @@ import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
 import * as services from '../services'
+import {Container as Deps} from '../deps'
 
 export class MangaPage extends RootPage {
 	public get artistName(): string {
 		return this.jQuery('section.thumbnail-container a.user').text();
 	}
 	public get artistId(): number {
-		return parseInt((<any>unsafeWindow).pixiv.context.userId);
+		// TODO: Extract to its own function. This currently re-uses the id pattern for URLs which may diverge.
+		return pathUtils.getArtistId(this.jQuery('footer ul.breadcrumbs li a.user').attr('href'));
 	}
 
 	public get illustId(): number {
-		return (<any>unsafeWindow).pixiv.context.illustId;
+		return pathUtils.getImageId(this.path);
 	}
 
 	// TODO: Replace with newly worked if on 'settingKeys.pages.manga.loadFullSize'
 	@ExecuteOnLoad
-	public autoEmbiggenFixImages(): void{
-		(<any>(<any>unsafeWindow).pixiv.api.illust.detail([this.illustId], {})).then((response: any) => { 
+	public autoEmbiggenFixImages(): void {
+		//TODO: I can't yet use variables in execOnPixiv, need to fix that. 
+		Deps.execOnPixiv(pixiv => pixiv.api.illust.detail([this.illustId], {})).then((response: any) => { 
 			let extension = response.body[this.illustId].illust_ext;
 			let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
 			//this.correctFileType(response.body[this.illustId].illust_ext) 
@@ -41,8 +44,8 @@ export class MangaPage extends RootPage {
 				jQImage.on('load', () => {
 					// Treat the window as the bounding box for the image. This produces some rendering
 					// artifacts, but makes extra-large images viewable.
-					let widthRatio = 1.0 * jQImage.width() / unsafeWindow.innerWidth;
-					let heightRatio = 1.0 * jQImage.height() / unsafeWindow.innerHeight;
+					let widthRatio = 1.0 * jQImage.width() / window.innerWidth;
+					let heightRatio = 1.0 * jQImage.height() / window.innerHeight;
 
 					let higherRatio = Math.max(widthRatio, heightRatio);
 
@@ -58,7 +61,7 @@ export class MangaPage extends RootPage {
 
 	@RegisteredAction({ id: 'pa_go_to_previous_image', label: 'Previous', icon:'arrow-left2' })
 	public goToPreviousPage():void {
-		(<any>unsafeWindow).pixiv.mangaViewer.listView.prev();
+		Deps.execOnPixiv(pixiv => pixiv.mangaViewer.listView.prev());
 	}
 
 	@RegisteredAction({ id: 'pa_reverse_embiggen_manga_images', label: 'Reverse Embiggen' })

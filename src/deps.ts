@@ -5,7 +5,7 @@ export interface IDependencyContainer {
 	jQ: JQueryStatic
 	config: IConfig
 	openInTab: (url: string) => void
-	execOnPixiv: (func:Function) => Promise<any>
+	execOnPixiv: (func:(pixiv:any)=>any) => Promise<any>
 	ajaxCall: <T, V> (req: AjaxRequest<T>) => Promise<V>
 }
 
@@ -19,9 +19,4 @@ export var Container: IDependencyContainer = {
 
 export function load(deps:IDependencyContainer) {
 	Container = deps;
-}
-
-declare var cloneInto: Function;
-export function inject(f: Function){
-	return cloneInto(f, unsafeWindow, { cloneFunctions: true });
 }

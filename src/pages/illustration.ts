@@ -2,7 +2,7 @@ import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import * as services from '../services'
-
+import {Container as Deps} from '../deps'
 import {Model} from '../../common/proto'
 
 export class IllustrationPage extends RootPage {
@@ -41,14 +41,12 @@ export class IllustrationPage extends RootPage {
 		icon: 'file-zip',
 	})
 	public downloadZip():void {
-		var url = "";
-		try {
-			url = (<any>unsafeWindow).pixiv.context.ugokuIllustFullscreenData.src;
-		} catch (e) { }
-		if(url.length > 0){
-			services.downloadZip(this.artist, url);
-		}
-		// unsafeWindow.prompt('Copy the url below', url);
+		Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData.src)
+			.then((src:string) => {
+				if(src.length > 0){
+					services.downloadZip(this.artist, src);
+				}
+			});
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
