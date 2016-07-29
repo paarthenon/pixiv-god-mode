@@ -5,7 +5,7 @@ export interface IDependencyContainer {
 	jQ: JQueryStatic
 	config: IConfig
 	openInTab: (url: string) => void
-	execOnPixiv: (func:(pixiv:any, props:any)=>any, props?:any) => Promise<any>
+	execOnPixiv: <T> (func:(pixiv:any, props:T)=>any, props?:T) => Promise<any>
 	ajaxCall: <T, V> (req: AjaxRequest<T>) => Promise<V>
 	getSetting: (settingKey: string) => Promise<boolean>
 }

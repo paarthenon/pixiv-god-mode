@@ -1,9 +1,9 @@
 import * as pathUtils from '../utils/path'
 import * as services from '../services'
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
-
+import SettingKeys from '../settingKeys'
 import {Model} from '../../common/proto'
 
 import {Container as DepsContainer} from '../deps'
@@ -52,7 +52,7 @@ export class WorksPage extends GalleryPage {
 	}
 
 
-	@ExecuteOnLoad
+	@ExecuteIfSetting(SettingKeys.pages.works.autoDarken)
 	public experimentalFade() {
 		let imageMap = this.allImages.reduce((acc: { [id:string] : JQuery }, cur:JQuery) => {
 			let imageId = pathUtils.getImageId(cur.find('a.work').attr('href'));
@@ -119,8 +119,7 @@ export class WorksPage extends GalleryPage {
 		});
 	}
 
-	// TODO: Replace with newly worked if on 'settingKeys.pages.works.mangaLinkToFull'
-	@ExecuteOnLoad
+	@ExecuteIfSetting(SettingKeys.pages.works.mangaLinkToFull)
 	public replaceMangaThumbnailLinksToFull(){
 		this.jQuery('li.image-item a.work.multiple').toArray().forEach(manga => {
 			let path = this.jQuery(manga).attr('href')

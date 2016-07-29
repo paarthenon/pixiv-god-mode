@@ -1,8 +1,9 @@
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIf} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import * as services from '../services'
 import {Container as Deps} from '../deps'
+import SettingKeys from '../settingKeys'
 
 export class MangaPage extends RootPage {
 	public get artistName(): string {
@@ -17,11 +18,14 @@ export class MangaPage extends RootPage {
 		return pathUtils.getImageId(this.path);
 	}
 
-	// TODO: Replace with newly worked if on 'settingKeys.pages.manga.loadFullSize'
-	@ExecuteOnLoad
+	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)
 	public autoEmbiggenFixImages(): void {
-		//TODO: I can't yet use variables in execOnPixiv, need to fix that. 
-		Deps.execOnPixiv(pixiv => pixiv.api.illust.detail([this.illustId], {})).then((response: any) => { 
+		Deps.execOnPixiv(
+			(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
+			{
+				illustId: this.illustId
+			}
+		).then((response: any) => { 
 			let extension = response.body[this.illustId].illust_ext;
 			let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
 			//this.correctFileType(response.body[this.illustId].illust_ext) 
