@@ -2,29 +2,36 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import {PageButton} from '../components/pageButton'
+import {GenerateElement} from './utils'
 
 function injectFirstButton($:JQueryStatic, func:Function) {
-	let props =  {text: '<<', tooltip: 'First', rel: 'prev', clickAction: func};
+	let componentProps =  {text: '<<', tooltip: 'First', rel: 'prev', clickAction: func};
+	let cssProps = {position: 'absolute', left: '-100%'};
 
-	let elem = $('<span></span>')[0];
-	ReactDOM.render(React.createElement(PageButton, props), elem);
-	$('.pager-container').first().prepend(elem);
+	$('span.prev').css('position','relative');
 
-	let elem2 = $('<span></span>')[0];
-	ReactDOM.render(React.createElement(PageButton, props), elem2);
-	$('.pager-container').last().prepend(elem2);
+	let component1 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	$(component1).css(cssProps);
+	$('span.prev').first().append(component1);
+
+	let component2 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	$(component2).css(cssProps);
+	$('span.prev').last().append(component2);
 }
 
 function injectLastButton($:JQueryStatic, func:Function) {
-	let props = {text: '>>', tooltip: 'Last', rel: 'next', clickAction: func};
+	let componentProps = {text: '>>', tooltip: 'Last', rel: 'next', clickAction: func};
+	let cssProps = {position: 'absolute', left: '100%'};
 
-	let elem = $('<span></span>')[0];
-	ReactDOM.render(React.createElement(PageButton, props ), elem);
-	$('.pager-container').first().append(elem);
+	$('span.next').css('position','relative');
 
-	let elem2 = $('<span></span>')[0];
-	ReactDOM.render(React.createElement(PageButton, props ), elem2);
-	$('.pager-container').last().append(elem2);
+	let component1 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	$(component1).css(cssProps);
+	$('span.next').first().append(component1);
+
+	let component2 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	$(component2).css(cssProps);
+	$('span.next').last().append(component2);
 }
 
 export function injectPagingButtons($:JQueryStatic, firstPageFunc:Function, lastPageFunc:Function) {
