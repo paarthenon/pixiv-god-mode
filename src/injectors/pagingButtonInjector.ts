@@ -28,6 +28,10 @@ function injectLastButton($:JQueryStatic, func:Function) {
 }
 
 export function injectPagingButtons($:JQueryStatic, firstPageFunc:Function, lastPageFunc:Function) {
-	injectFirstButton($,firstPageFunc);
-	injectLastButton($, lastPageFunc);
+	if($('span.prev').children().length > 0) {
+		injectFirstButton($,firstPageFunc);
+	}
+	if($('span.next').children().length > 0) {
+		injectLastButton($, lastPageFunc);
+	}
 }
