@@ -8,6 +8,7 @@ import {ArtistBookmarksPage} from './pages/artistBookmarks'
 import {SearchPage} from './pages/search'
 import {BookmarkAddPage} from './pages/bookmarkAdd'
 import {ArtistTagListPage} from './pages/artistTagList'
+import {ArtistProfilePage} from './pages/artistProfile'
 
 let patterns = {
 	illust: /^http:\/\/www.pixiv.net\/member_illust.php\?mode=medium&illust_id=[0-9]+/,
@@ -18,7 +19,8 @@ let patterns = {
 	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php\?id=[0-9]+/,
 	bookmarkAddIllust: /^http:\/\/www.pixiv.net\/bookmark_add.php\?type=illust&illust_id=[0-9]+/,
 	search: /^http:\/\/www.pixiv.net\/search.php/,
-	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php\?id=[0-9]+/
+	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php\?id=[0-9]+/,
+	artistProfile: /^http:\/\/www.pixiv.net\/member.php\?id=[0-9]+/,
 }
 
 export function dispatch(path:string, jquery:JQueryStatic):RootPage {
@@ -45,6 +47,9 @@ export function dispatch(path:string, jquery:JQueryStatic):RootPage {
 	}
 	if (path.match(patterns.artistTagList)) {
 		return new ArtistTagListPage(path, jquery);
+	}
+	if (path.match(patterns.artistProfile)) {
+		return new ArtistProfilePage(path, jquery);
 	}
 	return new RootPage(path, jquery);
 }
