@@ -38,3 +38,7 @@ export function getCurrentTab() {
 export function newTab(url:string) {
 	return new Promise<void>(resolve => chrome.tabs.create({url}, tab => resolve()));
 }
+
+export function isPageBookmarked(url:string) {
+	return new Promise<boolean>(resolve => chrome.bookmarks.search({url}, results => resolve(results.length > 0)));
+}

@@ -8,6 +8,7 @@ export interface Protocol {
 	listConfig: () => Promise<string[]>
 	ajax: (req:AjaxRequest<any>) => Promise<any>
 	newTab: (msg: UrlRequest) => Promise<void>
+	isPageBookmarked: (msg: UrlRequest) => Promise<boolean>
 }
 
 export interface ContentScriptProtocol {

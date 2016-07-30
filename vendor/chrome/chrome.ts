@@ -34,7 +34,8 @@ let deps: IDependencyContainer = {
 	openInTab: (url: string) => Mailman.Background.newTab({url}),
 	execOnPixiv: (func:(pixiv:any, props:any) => any, props?:any) => broker.queueExecution(func, props),
 	ajaxCall: (req: AjaxRequest<any>) => Mailman.Background.ajax(req),
-	getSetting
+	getSetting,
+	isPageBookmarked: url => Mailman.Background.isPageBookmarked({url})
 }
 
 let page = Bootstrap(deps);

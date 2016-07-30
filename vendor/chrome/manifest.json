@@ -24,6 +24,7 @@
   },
   "permissions": [
     "storage",
+    "bookmarks",
     "http://*/",
     "https://*/"
   ]

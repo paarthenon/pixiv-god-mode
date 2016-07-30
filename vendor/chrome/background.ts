@@ -43,5 +43,8 @@ defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 	},
 	newTab: msg => {
 		return ChromeUtils.newTab(msg.url);
+	},
+	isPageBookmarked: msg => {
+		return ChromeUtils.isPageBookmarked(msg.url);
 	}
 });
