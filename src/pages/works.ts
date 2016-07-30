@@ -16,6 +16,7 @@ import {UserRelationButton} from '../components/userRelationButton'
 
 import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
+import {injectNavbarRightButton} from '../injectors/navbarRightButtonInjector'
 
 let logger = log4js.getLogger();
 
@@ -49,6 +50,7 @@ export class WorksPage extends GalleryPage {
 	public injectPageElements() {
 		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
 		injectUserRelationshipButton(this.jQuery, this.artist);
+		injectNavbarRightButton(this.jQuery, 'Open In Tabs', this.openTabs.bind(this));
 	}
 
 
