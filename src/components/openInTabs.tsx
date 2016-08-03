@@ -16,7 +16,7 @@ export class WorksNavbarRightButton extends React.Component<{text:string,clickAc
 		return (
 			<ul style={this.ulStyle}>
 				<li>
-					<a onClick={this.props.clickAction.bind(this)} style={this.aStyle}>
+					<a onClick={this.props.clickAction} style={this.aStyle}>
 						{this.props.text}
 					</a>
 				</li>
