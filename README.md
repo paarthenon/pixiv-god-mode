@@ -53,7 +53,7 @@ Last and first page buttons will be injected where possible.
 
 ## Bookmark Illustration page
 
- * Action to load all recommended images
+ * Injected a View All button
  * (with server) downloaded images are faded out
   
 # Development

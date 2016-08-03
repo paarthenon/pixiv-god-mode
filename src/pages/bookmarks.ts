@@ -43,7 +43,6 @@ export class BookmarkIllustrationPage extends RootPage {
 		});
 	}
 
-	@ExecuteOnLoad
 	@RegisteredAction({ id: 'pa_fade_bookmark_suggestions', label: 'Fade Downloaded Bookmarks', icon: 'paint-format' })
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
