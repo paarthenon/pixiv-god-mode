@@ -65,7 +65,7 @@ function render() {
 		Config: <ConfigPanel />
 	}
 
-	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Actions" />, document.getElementById('content'));
+	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Dictionary" />, document.getElementById('content'));
 }
 
 render();
