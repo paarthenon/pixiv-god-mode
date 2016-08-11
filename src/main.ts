@@ -22,13 +22,13 @@ function firstTimeSetup(deps: Dependencies.IDependencyContainer){
 	});
 
 	/* Initialize Dictionary */
-	deps.config.get(ConfigKeys.official_dict_hash)
-		.catch(() => {
-			logger.warn('Global dictionary info not found, assuming first time load and redownloading');
-			DictionaryService.updateDictionary()
-				.then(() => logger.info('successfully downloaded new dictionary'))
-				.catch(() => logger.error('failed to download new dictionary'))
-		});
+	// deps.config.get(ConfigKeys.official_dict_hash)
+	// 	.catch(() => {
+	// 		logger.warn('Global dictionary info not found, assuming first time load and redownloading');
+	// 		DictionaryService.updateDictionary()
+	// 			.then(() => logger.info('successfully downloaded new dictionary'))
+	// 			.catch(() => logger.error('failed to download new dictionary'))
+	// 	});
 
 	deps.config.get(ConfigKeys.user_dict)
 		.catch(() => deps.config.set(ConfigKeys.user_dict, {}));

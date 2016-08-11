@@ -1,7 +1,7 @@
-import * as Deps from '../deps'
+import Mailman from './mailman'
 
 export function getMasterCommit(githubPath:string) : Promise<string> {
-	return Deps.Container.ajaxCall({
+	return Mailman.Background.ajax({
 		type: 'GET',
 		url: `http://api.github.com/repos/${githubPath}/git/refs/heads/master`
 	}).then((response: any) => JSON.parse(response))
@@ -9,8 +9,8 @@ export function getMasterCommit(githubPath:string) : Promise<string> {
 }
 
 export function getDictionaryObject(githubPath:string, commitSHA:string) : Promise<Object> {
-	return Deps.Container.ajaxCall({
+	return Mailman.Background.ajax({
 		type: 'GET',
-		url: `https://cdn.rawgit.com/${githubPath}/${commitSHA}/en-US.json`
+		url: `https://cdn.rawgit.com/${githubPath}/${commitSHA}/dictionary.json`
 	}).then((response: any) => JSON.parse(response));
 }

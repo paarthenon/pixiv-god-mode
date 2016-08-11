@@ -84,6 +84,8 @@ class DictAdd extends React.Component<{onAdd:(key:string,value:string)=>any},voi
 		let japaneseInput: any = ReactDOM.findDOMNode(this.refs['japanese']);
 		let translationInput: any = ReactDOM.findDOMNode(this.refs['translation']);
 		this.props.onAdd(japaneseInput.value, translationInput.value)
+
+		// Clear the form now that the entry has been saved.
 		japaneseInput.value = '';
 		translationInput.value = '';
 	}

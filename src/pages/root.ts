@@ -3,6 +3,8 @@ import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 
 import {DictionaryService} from '../utils/dict'
 
+import {injectTagAugmentation} from '../injectors/tagAugment'
+
 export class RootPage extends BasePage {
 	constructor(
 		protected path: string,

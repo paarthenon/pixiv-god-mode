@@ -6,6 +6,8 @@ import Mailman from '../mailman'
 import {Action} from '../../../src/actionModel'
 import {getUserSettings, getSetting, setSetting} from '../userSettings'
 import SettingKeys from '../../../src/settingKeys'
+import ConfigKeys from '../../../src/configKeys'
+import * as ghUtils from '../ghUtils'
 
 
 let logger = log4js.getLogger('ActionPanel');
@@ -25,8 +27,77 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 		return (
 			<div>
 				{Object.keys(mapping).map(key => <SettingContainer key={key} settingKey={key} label={mapping[key]}/>)}
+				<GlobalDictUpdaterContainer/>
 			</div>
 		);
+	}
+}
+
+
+module DictionaryUtils {
+	let ghPath = 'pixiv-assistant/dictionary'
+	export function updateAvailable() : Promise<boolean> {
+		logger.debug('DictionaryService.updateAvailable | entered');
+		return ghUtils.getMasterCommit(ghPath).then(commitHash => {
+			return Mailman.Background.getConfig({key:ConfigKeys.official_dict_hash}).then(currentHash => {
+				let isNewer: boolean = !currentHash || currentHash.value !== commitHash;
+				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
+				return isNewer;
+			});
+		});
+	}
+
+	export function updateDictionary() : Promise<void> {
+		logger.debug('DictionaryService.updateDictionary | entered');
+		return ghUtils.getMasterCommit(ghPath).then(commitHash => {
+			return ghUtils.getDictionaryObject(ghPath, commitHash).then(obj => {
+				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
+				Mailman.Background.setConfig({key:ConfigKeys.official_dict, value:obj});
+				Mailman.Background.setConfig({key:ConfigKeys.official_dict_hash, value: commitHash});
+			});
+		});
+	}
+}
+
+interface GlobalDictUpdaterProps {
+	updateAvailable :boolean
+	updateAction :Function
+}
+class GlobalDictUpdaterContainer extends React.Component<void, {resolved:boolean, updateAvailable?: boolean}> {
+	state = {resolved:false, updateAvailable: false};
+	constructor() {
+		super();
+		DictionaryUtils.updateAvailable().then(isAvailable => {
+			this.setState({
+				resolved: true,
+				updateAvailable: isAvailable
+			});
+		});
+	}
+	public updateDictionary(){
+		DictionaryUtils.updateDictionary();
+	}
+	public render() {
+		if (this.state.resolved) {
+			return <GlobalDictUpdater updateAvailable={this.state.updateAvailable} updateAction={this.updateDictionary.bind(this)}/>
+		} else {
+			return <div> Waiting on dictionary details </div>
+		}
+	}
+}
+
+
+class GlobalDictUpdater extends React.Component<GlobalDictUpdaterProps, void> {
+	public render(){
+		if (this.props.updateAvailable) {
+			return (
+				<div>
+					Update available. <a onClick={this.props.updateAction}> Click to update </a>
+				</div>
+				);
+		} else {
+			return <div>No update available</div>
+		}
 	}
 }
 
