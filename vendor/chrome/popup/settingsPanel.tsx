@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
@@ -28,6 +29,7 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 			<div>
 				{Object.keys(mapping).map(key => <SettingContainer key={key} settingKey={key} label={mapping[key]}/>)}
 				<GlobalDictUpdaterContainer/>
+				<TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
 			</div>
 		);
 	}
@@ -143,5 +145,40 @@ class BooleanSetting extends React.Component<{label:string, onToggle:(value:bool
 						{this.props.label}
 				</Bootstrap.Checkbox>
 			</div>;
+	}
+}
+
+class TextSettingContainer extends React.Component<{label:string, settingKey:string}, {currentValue:string}> {
+	constructor(props:{label:string, settingKey:string}) {
+		super(props);
+		this.state = { currentValue: undefined };
+		Mailman.Background.getConfig({key: props.settingKey})
+			.then(currentValue => this.setState({currentValue: currentValue.value as string}));
+	}
+	public handleUpdate(value:string){
+		Mailman.Background.setConfig({key: this.props.settingKey, value});
+	}
+	public render() {
+		if(this.state.currentValue !== undefined) {
+			return <TextSetting label={this.props.label} text={this.state.currentValue} onUpdate={this.handleUpdate.bind(this)}/>
+		} else {
+			return <div>Loading</div>
+		}
+	}
+}
+class TextSetting extends React.Component<{label:string, text:string, onUpdate:(val:string)=>any},{editOpen:boolean}> {
+	state = { editOpen: false };
+	public handleUpdate() {
+		let translationInput :any = ReactDOM.findDOMNode(this.refs['translation']);
+		this.props.onUpdate(translationInput.value);
+	}
+	public render() {
+		return (
+			<tr>
+				<label> {this.props.label} </label>
+				<input defaultValue={this.props.text} ref="translation"></input>
+				<Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this)}>update</Bootstrap.Button>
+			</tr>
+		);
 	}
 }
