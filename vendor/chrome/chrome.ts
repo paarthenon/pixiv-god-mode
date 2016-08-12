@@ -16,7 +16,7 @@ log4js.setGlobalLogLevel(log4js.levels.ALL);
 
 import {IDependencyContainer, load as depsLoad} from '../../src/deps'
 import {AjaxRequest} from '../../src/core/IAjax'
-import {Action} from '../../src/actionModel'
+import {Action} from '../../src/core/IAction'
 import Bootstrap from '../../src/main'
 
 import * as Msg from './messages'

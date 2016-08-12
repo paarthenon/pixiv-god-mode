@@ -1,4 +1,4 @@
-import {ActionDescriptor, Action, OnLoadFunc} from '../actionModel'
+import {ActionDescriptor, Action, OnLoadFunc} from '../core/IAction'
 import {BasePage} from '../pages/base'
 
 import {CacheRegistry, pushToArrayCache} from './terribleCache'

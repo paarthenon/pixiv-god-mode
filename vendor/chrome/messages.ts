@@ -1,6 +1,6 @@
 import {potentialData as IConfigValue} from '../../src/core/IConfig'
 import {AjaxRequest} from '../../src/core/IAjax'
-import {Action} from '../../src/actionModel'
+import {Action} from '../../src/core/IAction'
 
 export interface Protocol {
 	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
