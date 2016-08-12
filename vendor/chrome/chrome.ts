@@ -11,20 +11,19 @@ log4js.configure({
 	]
 });
 
-
 log4js.setGlobalLogLevel(log4js.levels.ALL);
 
 import {IDependencyContainer, load as depsLoad} from '../../src/deps'
 import {AjaxRequest} from '../../src/core/IAjax'
 import {Action} from '../../src/core/IAction'
-import Bootstrap from '../../src/main'
 
 import * as Msg from './messages'
 import Config from './config'
 import {default as Mailman, defineImplementation} from './mailman'
 import {ExecBroker} from './execBroker'
-
 import {getSetting} from './userSettings'
+
+import * as Dependencies from '../../src/deps'
 
 let broker = new ExecBroker();
 
@@ -38,7 +37,10 @@ let deps: IDependencyContainer = {
 	isPageBookmarked: url => Mailman.Background.isPageBookmarked({url})
 }
 
-let page = Bootstrap(deps);
+Dependencies.load(deps);
+
+import {dispatch} from '../../src/dispatch'
+let page = dispatch(document.location.href, $);
 
 defineImplementation<Msg.ContentScriptProtocol>("CONTENT_SCRIPT", {
 	getActions: () => Promise.resolve({actions: page.actionCache}),

@@ -3,7 +3,8 @@ import * as ChromeUtils from './utils'
 import * as log4js from 'log4js';
 
 import {AjaxRequest} from '../../src/core/IAjax'
-import {defineImplementation} from './mailman'
+import ConfigKeys from '../../src/configKeys'
+import {default as Mailman, defineImplementation} from './mailman'
 
 let logger = log4js.getLogger('Background');
 
@@ -48,3 +49,10 @@ defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 		return ChromeUtils.isPageBookmarked(msg.url);
 	}
 });
+
+function firstTimeSetup(){
+	Mailman.Background.getConfig({key: ConfigKeys.user_dict})
+		.catch(() => Mailman.Background.setConfig({key: ConfigKeys.user_dict, value: {}}));
+}
+
+firstTimeSetup();
