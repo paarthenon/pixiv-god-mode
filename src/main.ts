@@ -5,7 +5,6 @@ import {BasePage} from './pages/base'
 
 import * as Dependencies from './deps'
 
-import {DictionaryService} from './utils/dict'
 
 import ConfigKeys from './configKeys'
 
@@ -31,6 +30,5 @@ export default function Bootstrap(depsContent: Dependencies.IDependencyContainer
 
 	firstTimeSetup(depsContent);
 
-	DictionaryService.initialize(depsContent.config);
 	return dispatch(document.location.href, depsContent.jQ);
 }

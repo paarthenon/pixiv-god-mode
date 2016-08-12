@@ -1,7 +1,7 @@
 import {BasePage} from './base'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 
-import {DictionaryService} from '../utils/dict'
+import {DictionaryService} from '../services'
 
 import {injectTagAugmentation} from '../injectors/tagAugment'
 

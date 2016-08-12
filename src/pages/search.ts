@@ -3,7 +3,7 @@ import {PixivAssistantServer} from '../services'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
-import {DictionaryService} from '../utils/dict'
+import {DictionaryService} from '../services'
 import {Container as Deps} from '../deps'
 
 import * as jQUtils from '../utils/jq'
