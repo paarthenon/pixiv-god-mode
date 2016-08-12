@@ -8,7 +8,7 @@ import IConfig from './IConfig'
 
 import ConfigKeys from '../configKeys'
 
-let HTTP  = {
+let HTTP = {
 	GET: 'GET',
 	POST: 'POST', 
 };
