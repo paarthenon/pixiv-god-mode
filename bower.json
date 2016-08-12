@@ -1,0 +1,25 @@
+{
+  "name": "pixiv-assistant",
+  "description": "A chrome extension providing a suite of tools and convenience functions for pixiv.",
+  "main": "",
+  "authors": [
+    "Paarth"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "pixiv"
+  ],
+  "homepage": "https://github.com/paarthk/pixiv-assistant",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/chrome/resources/js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0"
+  }
+}

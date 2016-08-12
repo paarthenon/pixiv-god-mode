@@ -76,6 +76,9 @@ gulp.task('chrome', ['chrome-pack'], function(){
 			.on('end', resolve)),
 		new Promise(resolve => gulp.src('vendor/chrome/**/*')
 			.pipe(gulp.dest('dist/chrome'))
+			.on('end', resolve)),
+		new Promise(resolve => gulp.src('bower_components/jquery/dist/jquery.js')
+			.pipe(gulp.dest('dist/chrome/resources'))
 			.on('end', resolve))
 	]);
 });
