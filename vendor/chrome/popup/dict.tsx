@@ -18,6 +18,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 		return Object.keys(this.props.dict)
 			.map(key => ({ key, value: this.props.dict[key] }))
 			.filter(entry => entry.key.includes(this.state.currentSearch) || entry.value.includes(this.state.currentSearch))
+			.sort((a,b) => a.value.localeCompare(b.value))
 	}
 	public render() {
 		return (
