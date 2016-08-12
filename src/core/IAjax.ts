@@ -3,3 +3,5 @@ export interface AjaxRequest<T> {
 	url: string
 	data?: T
 }
+
+export type AjaxFunction<T,V> = (req:AjaxRequest<T>) =>  Promise<V>

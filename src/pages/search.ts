@@ -1,5 +1,5 @@
 import * as pathUtils from '../utils/path'
-import * as services from '../services'
+import {PixivAssistantServer} from '../services'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
@@ -19,7 +19,7 @@ export class SearchPage extends GalleryPage {
 		this.executeOnEachImage(image => {
 			let artist = jQUtils.artistFromJQImage(image);
 			let imageObj = jQUtils.imageFromJQImage(image);
-			services.imageExistsInDatabase(artist, imageObj, exists => {
+			PixivAssistantServer.imageExistsInDatabase(artist, imageObj, exists => {
 				if (exists) {
 					image.addClass('pa-hidden-thumbnail');
 				}

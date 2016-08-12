@@ -5,19 +5,9 @@ import IDictionary from '../core/IDictionary'
 import * as log4js from 'log4js'
 
 import SingleConfigDict from '../core/singleConfigDictionary'
+import DictBroker from '../core/dictBroker'
 
 let logger = log4js.getLogger('Dictionary');
-
-class DictBroker {
-	constructor(protected dictionaries: IDictionary[]) { }
-	get(key: string): Promise<string> {
-		return this.dictionaries.reduce(
-			(acc, current) => 
-				acc.then(null, reject => 
-						current.get(key).then(value => value || Promise.reject<string>('Not found'))),
-			Promise.reject<string>(undefined));
-	}
-}
 
 export module DictionaryService {
 	let cachedConfig :IConfig = undefined;

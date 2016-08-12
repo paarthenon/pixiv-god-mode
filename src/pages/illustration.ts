@@ -2,7 +2,7 @@ import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteIfSetting} from '../utils/actionDecorators'
 import SettingKeys from '../settingKeys'
-import * as services from '../services'
+import {PixivAssistantServer} from '../services'
 import {Container as Deps} from '../deps'
 import {Model} from '../../common/proto'
 
@@ -45,19 +45,19 @@ export class IllustrationPage extends RootPage {
 		Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData.src)
 			.then((src:string) => {
 				if(src.length > 0){
-					services.downloadZip(this.artist, src);
+					PixivAssistantServer.downloadZip(this.artist, src);
 				}
 			});
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
 	public openFolder(): void {
-		services.openFolder(this.artist);
+		PixivAssistantServer.openFolder(this.artist);
 	}
 
 	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-disk' })
 	public download():void {
-		services.download(this.artist, this.fullImageUrl);
+		PixivAssistantServer.download(this.artist, this.fullImageUrl);
 	}
 
 }

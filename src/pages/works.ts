@@ -1,5 +1,5 @@
 import * as pathUtils from '../utils/path'
-import * as services from '../services'
+import {PixivAssistantServer} from '../services'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
@@ -65,7 +65,7 @@ export class WorksPage extends GalleryPage {
 		let request = Object.keys(imageMap)
 						.map(id => ({ artist: this.artist, image: { id: parseInt(id) } }));
 
-		services.bulkImageExists(request)
+		PixivAssistantServer.bulkImageExists(request)
 			.then(matchedImages => matchedImages
 				.map(image => { logger.debug(JSON.stringify(image)); return image; })
 				.map(match => match.image.id.toString())
@@ -92,7 +92,7 @@ export class WorksPage extends GalleryPage {
 
 	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open'})
 	public openFolder():void {
-		services.openFolder(this.artist);
+		PixivAssistantServer.openFolder(this.artist);
 	}
 
 	@RegisteredAction({ id: 'pa_download_all_images_debug', label: 'Download All (DEBUG)', icon: 'new-tab' })
@@ -117,7 +117,7 @@ export class WorksPage extends GalleryPage {
 				return urls;
 			}).reduce((previous: string[], current: string[]) => previous.concat(current));
 
-			services.downloadMulti(this.artist, combined_urls);
+			PixivAssistantServer.downloadMulti(this.artist, combined_urls);
 		});
 	}
 

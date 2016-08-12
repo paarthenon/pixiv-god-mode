@@ -1,6 +1,3 @@
-import * as pathUtils from '../utils/path'
-import * as services from '../services'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {RootPage} from './root'
 
 export class BookmarkAddPage extends RootPage {
