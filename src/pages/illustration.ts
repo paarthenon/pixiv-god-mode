@@ -7,6 +7,8 @@ import {Container as Deps} from '../deps'
 import {Model} from '../../common/proto'
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
 
+import * as geomUtils from '../utils/geometry'
+
 export class IllustrationPage extends RootPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.jQuery('a.user-link').attr('href'));
@@ -40,6 +42,25 @@ export class IllustrationPage extends RootPage {
 	@ExecuteIfSetting(SettingKeys.pages.illust.autoOpen)
 	public openImage(): void {
 		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
+	}
+
+	@ExecuteIfSetting(SettingKeys.pages.illust.boxImage)
+	public resizeOpenedImage() : void {
+		let image = this.jQuery('img.original-image');
+
+		let originalBounds = {
+			width: parseInt(image.attr('width')),
+			height: parseInt(image.attr('height'))
+		}
+
+		let windowBounds = {
+			width: window.innerWidth,
+			height: window.innerHeight
+		}
+		let newBounds = geomUtils.resizeBounds(originalBounds, windowBounds);
+
+		image.width(newBounds.width);
+		image.height(newBounds.height);
 	}
 
 	@RegisteredAction({ 

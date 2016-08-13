@@ -46,6 +46,7 @@ export class MangaPage extends RootPage {
 				jQImage.removeAttr('style');
 
 				jQImage.on('load', () => {
+					// TODO: Use geometry utils.
 					// Treat the window as the bounding box for the image. This produces some rendering
 					// artifacts, but makes extra-large images viewable.
 					let widthRatio = 1.0 * jQImage.width() / window.innerWidth;
