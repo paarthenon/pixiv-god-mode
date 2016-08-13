@@ -2,6 +2,8 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 
+import * as ChromeUtils from '../utils'
+
 type paDict = { [id:string]:string };
 
 interface DictViewerProps {
@@ -118,11 +120,19 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 	public handleDelete() {
 		this.props.onDelete(this.props.japanese);
 	}
+	public handleSearch() {
+		ChromeUtils.newTab("http://www.pixiv.net/search.php?s_mode=s_tag_full&word="+this.props.japanese)
+	}
 	public render() {
 		if (!this.state.editOpen)
 			return <tr>
 				<td>{this.props.japanese}</td>
-				<td>{this.props.translation}</td>
+				<td>
+					{this.props.translation}
+					<span onClick={this.handleSearch.bind(this)}
+						style={{cursor:'pointer','padding-left':'5px'}}
+						className="glyphicon glyphicon-search" aria-hidden="true"></span>
+				</td>
 				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button></td>
 				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button></td>
 			</tr>
