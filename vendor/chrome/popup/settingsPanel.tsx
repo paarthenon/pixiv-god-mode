@@ -80,7 +80,7 @@ module DictionaryUtils {
 				let isNewer: boolean = !currentHash || currentHash.value !== commitHash;
 				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
 				return isNewer;
-			});
+			}).catch(() => true);
 		});
 	}
 
@@ -188,7 +188,8 @@ class TextSettingContainer extends React.Component<{label:string, settingKey:str
 		super(props);
 		this.state = { currentValue: undefined };
 		Mailman.Background.getConfig({key: props.settingKey})
-			.then(currentValue => this.setState({currentValue: currentValue.value as string}));
+			.then(currentValue => this.setState({currentValue: currentValue.value as string}))
+			.catch(() => this.setState({currentValue: ''}))
 	}
 	public handleUpdate(value:string){
 		Mailman.Background.setConfig({key: this.props.settingKey, value});
