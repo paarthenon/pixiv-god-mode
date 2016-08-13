@@ -13,23 +13,58 @@ import * as ghUtils from '../ghUtils'
 
 let logger = log4js.getLogger('ActionPanel');
 
-let mapping : { [id:string]: string } = {
-	[SettingKeys.pages.illust.autoOpen]: 'Automatically zoom into image',
-	[SettingKeys.pages.illust.boxImage]: 'Limit image size to the window (illustration)',
-	[SettingKeys.pages.manga.boxImages]: 'Limit image size to the window (manga)',
-	[SettingKeys.pages.manga.loadFullSize]: 'Load full size versions of manga images',
-	[SettingKeys.pages.works.autoDarken]: 'Fade out downloaded images',
-	[SettingKeys.pages.works.directToManga]: 'Link directly to manga',
-	[SettingKeys.pages.works.mangaLinkToFull]: 'No idea'
-};
-
 export class SettingsPanel extends React.Component<void,{userSettings: {[id:string]:boolean}}> {
 	public render() {
 		return (
 			<div>
-				{Object.keys(mapping).map(key => <SettingContainer key={key} settingKey={key} label={mapping[key]}/>)}
-				<GlobalDictUpdaterContainer/>
-				<TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
+			<Bootstrap.Grid>
+				<Bootstrap.Row>
+					<Bootstrap.Col xs={6} md={6}>
+					<Bootstrap.Panel header="Global Dictionary Status">
+						<GlobalDictUpdaterContainer/>
+					</Bootstrap.Panel>
+					</Bootstrap.Col>
+					<Bootstrap.Col xs={6} md={6}>
+					<Bootstrap.Panel header="Server Url">
+						<TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
+					</Bootstrap.Panel>
+					</Bootstrap.Col>
+				</Bootstrap.Row>
+				<Bootstrap.Row>
+					<Bootstrap.Col xs={6} md={6}>
+					<Bootstrap.Panel header="Illustration Page">
+						<SettingContainer 
+							settingKey={SettingKeys.pages.illust.autoOpen} 
+							label={'Automatically zoom into image'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.illust.boxImage} 
+							label={'Limit image size to the window (illustration)'}/>
+					</Bootstrap.Panel>
+					</Bootstrap.Col>
+					<Bootstrap.Col xs={6} md={6}>
+					<Bootstrap.Panel header="Manga Page">
+						<SettingContainer 
+							settingKey={SettingKeys.pages.manga.loadFullSize} 
+							label={'Load full size versions of manga images'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.manga.boxImages} 
+							label={'Limit image size to the window (manga)'}/>
+					</Bootstrap.Panel>
+					</Bootstrap.Col>
+				</Bootstrap.Row>
+				<Bootstrap.Row>
+					<Bootstrap.Col xs={6} md={6}>
+					<Bootstrap.Panel header="Works Page">
+						<SettingContainer 
+							settingKey={SettingKeys.pages.works.autoDarken} 
+							label={'Fade out downloaded images'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.works.directToManga} 
+							label={'Link directly to manga'}/>
+					</Bootstrap.Panel>
+					</Bootstrap.Col>
+				</Bootstrap.Row>
+			</Bootstrap.Grid>
 			</div>
 		);
 	}
@@ -94,7 +129,7 @@ class GlobalDictUpdater extends React.Component<GlobalDictUpdaterProps, void> {
 		if (this.props.updateAvailable) {
 			return (
 				<div>
-					Update available. <a onClick={this.props.updateAction}> Click to update </a>
+					Update available. <Bootstrap.Button onClick={this.props.updateAction}>Update Dictionary</Bootstrap.Button>
 				</div>
 				);
 		} else {
