@@ -18,7 +18,7 @@ export class PAServer {
 
 	constructor(protected config:IConfig, protected ajax:AjaxFunction<any,any>) {}
 
-	protected callEndpoint<Req, Res>(feature: string, request: Req) :Promise<Res> {
+	protected callEndpoint<Req, Res>(feature: string, request?: Req) :Promise<Res> {
 		return this.config.get(ConfigKeys.server_url).then(server_url => {
 			return this.ajax({
 				type: 'POST',
@@ -26,6 +26,7 @@ export class PAServer {
 				data: request
 			})
 			.then((response:any) => {
+				this.logger.debug(response);
 				let parsedResponse: Messages.Response = JSON.parse(response);
 				if(Messages.isPositiveResponse(parsedResponse)) {
 					return parsedResponse.data;
@@ -70,8 +71,25 @@ export class PAServer {
 		return this.callEndpoint(Features.ImagesExist, { items: entries });
 	}
 
-	public supportsFeature(feature:string) {
+	public ping() : Promise<void> {
+		return this.callEndpoint('ping').then(x => Promise.resolve());
+	}
+
+	public supportsFeature(feature:string) : Promise<boolean> {
 		return this.callEndpoint(`supports/${feature}`, {});
+	}
+
+	public supportedFeatures() : Promise<string[]> {
+		return Promise.all<string>(Object.keys(Features).map(key => 
+				this.supportsFeature((<any>Features)[key])
+					.then(supported => {
+						if (supported) {
+							return (<any>Features)[key];
+						} else {
+							return undefined;
+						}
+					})
+			)).then(arr => arr.filter(x => x != undefined));
 	}
 
 }
