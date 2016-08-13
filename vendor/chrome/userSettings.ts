@@ -30,9 +30,7 @@ export function getUserSettings() {
 }
 export function getSetting(key: string) {
 	return getUserSettings().then((userSettings: { [id: string]: any }) => {
-		console.log('usettings', userSettings, key);
 		if (userSettings && key in userSettings) {
-			console.log('found, returning',userSettings[key]);
 			return userSettings[key];
 		} else {
 			return defaultSettings[key];
