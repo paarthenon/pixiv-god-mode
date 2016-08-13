@@ -158,8 +158,6 @@ export class ArtistImageRepo extends BaseRepo {
 		return undefined;
 	}
 
-
-
 	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
 	public downloadZip(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
 		let zipName = path.basename(request.url);

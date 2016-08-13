@@ -69,15 +69,15 @@ let app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/ping', (req, res) => {
+app.all('/ping', (req, res) => {
 	appLogger.debug('Message Received | Ping');
-	res.json(true);
+	res.json({success: true, data:true});
 });
 
-app.get('/supports/:action', (req, res) => {
+app.all('/supports/:action', (req, res) => {
 	let action: string = req.params.action;
 	appLogger.debug('Message Received | Supports action [', action, ']');
-	res.json(pas.supports(action));
+	res.json({success: true, data: pas.supports(action)});
 });
 
 app.post('/:action', (req, res) => {
@@ -87,7 +87,7 @@ app.post('/:action', (req, res) => {
 	q(message)
 		.then(msg => pas.dispatch(action, msg))
 		.then<Proto.Messages.Response>(
-			successfulResponse => ({ success: true, data: successfulResponse }), 
+			successfulResponse => ({ success: true, data: successfulResponse }),
 			failedResponse => ({ success: false, errors: failedResponse }))
 		.then(result => res.json(result));
 });
