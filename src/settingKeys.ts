@@ -15,6 +15,10 @@ let settingKeys = {
 		bookmarkIllustration: {
 			fadeDownloaded: 'BOOKMARK_ILLUSTRATION_FADE_DOWNLOADED',
 			fadeBookmarked: 'BOOKMARK_ILLUSTRATION_FADE_BOOKMARKED'
+		},
+		artistBookmarks: {
+			fadeDownloaded: 'ARTIST_BOOKMARKS_FADE_DOWNLOADED',
+			fadeBookmarked: 'ARTIST_BOOKMARKS_FADE_BOOKMARKED'
 		}
 	}
 };

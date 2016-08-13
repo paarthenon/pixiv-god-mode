@@ -4,6 +4,8 @@ import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 import * as jQUtils from '../utils/jq'
 import {Model} from '../../common/proto'
+import {Container as Deps} from '../deps'
+import SettingKeys from '../settingKeys'
 
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
 
@@ -38,13 +40,29 @@ export class ArtistBookmarksPage extends GalleryPage {
 	@ExecuteOnLoad
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
-			let artist = jQUtils.artistFromJQImage(image);
-			let imageObj = jQUtils.imageFromJQImage(image);
-			PixivAssistantServer.imageExistsInDatabase(artist, imageObj, exists => {
-				if (exists) {
-					image.addClass('pa-hidden-thumbnail');
+			Deps.getSetting(SettingKeys.pages.artistBookmarks.fadeDownloaded).then(fade => {
+				if(fade) {
+					let artist = jQUtils.artistFromJQImage(image);
+					let imageObj = jQUtils.imageFromJQImage(image);
+					PixivAssistantServer.imageExistsInDatabase(artist, imageObj, exists => {
+						if (exists) {
+							image.addClass('pa-hidden-thumbnail');
+						}
+					})
+				}
+			});
+
+			Deps.getSetting(SettingKeys.pages.artistBookmarks.fadeBookmarked).then(fade => {
+				if (fade) {
+					let url = jQUtils.artistUrlFromJQImage(image);
+					Deps.isPageBookmarked(url).then(bookmarked => {
+						if (bookmarked) {
+							image.addClass('pa-hidden-thumbnail');
+						}
+					})
 				}
 			})
+			
 		});
 	}
 }
