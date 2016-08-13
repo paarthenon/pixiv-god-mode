@@ -5,7 +5,8 @@ let settingKeys = {
 			boxImage: 'ILLUST_PAGE_BOX_IMAGE_IN_WINDOW'
 		},
 		manga: {
-			loadFullSize: 'MANGA_PAGE_LOAD_FULL_SIZE_IMAGES'
+			loadFullSize: 'MANGA_PAGE_LOAD_FULL_SIZE_IMAGES',
+			fitImage: 'MANGA_PAGE_FIT_IMAGE'
 		},
 		works: {
 			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',

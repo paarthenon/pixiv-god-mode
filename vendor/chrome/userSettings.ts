@@ -10,6 +10,7 @@ let defaultTuples: [string, boolean][] = [
 	[SettingKeys.pages.illust.autoOpen, true],
 	[SettingKeys.pages.illust.boxImage, true],
 	[SettingKeys.pages.manga.loadFullSize, true],
+	[SettingKeys.pages.manga.fitImage, true],
 	[SettingKeys.pages.works.autoDarken, true],
 	[SettingKeys.pages.works.directToManga, true],
 	[SettingKeys.pages.works.mangaLinkToFull, true],

@@ -46,6 +46,9 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.manga.loadFullSize} 
 							label={'Load full size versions of manga images'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.manga.fitImage} 
+							label={'Fit image to window'}/>
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
 				</Bootstrap.Row>

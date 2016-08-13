@@ -18,6 +18,10 @@ export class MangaPage extends RootPage {
 		return pathUtils.getImageId(this.path);
 	}
 
+	@ExecuteOnLoad
+	public fitImagesInPage() : void {
+	}
+
 	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)
 	public autoEmbiggenFixImages(): void {
 		Deps.execOnPixiv(
@@ -44,6 +48,13 @@ export class MangaPage extends RootPage {
 				jQImage.attr('data-src', newSrc);
 				jQImage.attr('src', newSrc);
 				jQImage.removeAttr('style');
+			});
+		
+		}).then(()=> {
+			Deps.getSetting(SettingKeys.pages.manga.fitImage).then(fixSize => {
+				if (fixSize) {
+					Deps.execOnPixiv(pixiv => pixiv.mangaViewer.listView.updateSize());
+				}
 			});
 		});
 	}
