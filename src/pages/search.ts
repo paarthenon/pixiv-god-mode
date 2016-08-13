@@ -5,6 +5,7 @@ import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 import {DictionaryService} from '../services'
 import {Container as Deps} from '../deps'
+import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 
 import * as jQUtils from '../utils/jq'
 
@@ -25,6 +26,11 @@ export class SearchPage extends GalleryPage {
 				}
 			})
 		});
+	}
+
+	@ExecuteOnLoad
+	public injectPageElements() {
+		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
 	}
 
 	protected getTagElements() {

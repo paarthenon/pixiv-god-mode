@@ -1,10 +1,11 @@
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteIfSetting} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import SettingKeys from '../settingKeys'
 import {PixivAssistantServer} from '../services'
 import {Container as Deps} from '../deps'
 import {Model} from '../../common/proto'
+import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
 
 export class IllustrationPage extends RootPage {
 	public get artistId():number {
@@ -29,6 +30,11 @@ export class IllustrationPage extends RootPage {
 			'div.user-tags li a',
 		].map(selector => this.jQuery(selector))
 		.concat(super.getTagElements());
+	}
+
+	@ExecuteOnLoad
+	public injectPageElements() {
+		injectUserRelationshipButton(this.jQuery, this.artist);
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.illust.autoOpen)
