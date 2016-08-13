@@ -44,22 +44,6 @@ export class MangaPage extends RootPage {
 				jQImage.attr('data-src', newSrc);
 				jQImage.attr('src', newSrc);
 				jQImage.removeAttr('style');
-
-				jQImage.on('load', () => {
-					// TODO: Use geometry utils.
-					// Treat the window as the bounding box for the image. This produces some rendering
-					// artifacts, but makes extra-large images viewable.
-					let widthRatio = 1.0 * jQImage.width() / window.innerWidth;
-					let heightRatio = 1.0 * jQImage.height() / window.innerHeight;
-
-					let higherRatio = Math.max(widthRatio, heightRatio);
-
-					if (higherRatio > 1) {
-						// Apparently you only need to set one, and jQuery keeps the aspect ratio aligned. 
-						// News to me.
-						jQImage.height(jQImage.height() / higherRatio);
-					}
-				});
 			});
 		});
 	}
