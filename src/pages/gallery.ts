@@ -22,7 +22,7 @@ export class GalleryPage extends RootPage {
 	public goToLastPage():void {
 		logger.trace('Going to last page');
 
-		let finalPage = Math.ceil(1.0 * this.imageCountTotal / this.imageCountInPage);
+		let finalPage = Math.ceil(1.0 * this.imageCountTotal / 20.0);
 		this.goToPage(finalPage);
 	}
 
