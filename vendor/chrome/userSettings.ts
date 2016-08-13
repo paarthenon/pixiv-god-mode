@@ -13,7 +13,9 @@ let defaultTuples: [string, boolean][] = [
 	[SettingKeys.pages.manga.boxImages, true],
 	[SettingKeys.pages.works.autoDarken, true],
 	[SettingKeys.pages.works.directToManga, true],
-	[SettingKeys.pages.works.mangaLinkToFull, true]
+	[SettingKeys.pages.works.mangaLinkToFull, true],
+	[SettingKeys.pages.bookmarkIllustration.fadeDownloaded, true],
+	[SettingKeys.pages.bookmarkIllustration.fadeBookmarked, true]
 ];
 
 defaultTuples.forEach(tuple => {
@@ -27,8 +29,15 @@ export function getUserSettings() {
 		.catch(error => ({}));
 }
 export function getSetting(key: string) {
-	return getUserSettings().then((userSettings: { [id: string]: any }) => 
-		(userSettings && key in userSettings) ? userSettings[key] : defaultSettings[key])
+	return getUserSettings().then((userSettings: { [id: string]: any }) => {
+		console.log('usettings', userSettings, key);
+		if (userSettings && key in userSettings) {
+			console.log('found, returning',userSettings[key]);
+			return userSettings[key];
+		} else {
+			return defaultSettings[key];
+		}
+	});
 }
 
 export function setSetting(key:string, value: boolean) {

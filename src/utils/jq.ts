@@ -12,3 +12,7 @@ export function imageFromJQImage(image:JQuery):Model.Image {
 		id: pathUtils.getImageId(image.find('a.work').attr('href'))
 	}
 }
+
+export function artistUrlFromJQImage(image:JQuery):string {
+	return (<any>image.find('a.user')[0]).href;
+}

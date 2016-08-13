@@ -6,6 +6,8 @@ import * as jQUtils from '../utils/jq'
 import {Container as Deps} from '../deps'
 import {injectViewAllButton} from '../injectors/bookmarkDetailViewAll'
 
+import SettingKeys from '../settingKeys'
+
 export class BookmarkIllustrationPage extends RootPage {
 
 	public getTagElements() {
@@ -48,11 +50,28 @@ export class BookmarkIllustrationPage extends RootPage {
 		this.executeOnEachImage(image => {
 			let artist = jQUtils.artistFromJQImage(image);
 			let imageObj = jQUtils.imageFromJQImage(image);
-			PixivAssistantServer.imageExistsInDatabase(artist, imageObj, exists => {
-				if (exists) {
-					image.addClass('pa-hidden-thumbnail');
+
+			Deps.getSetting(SettingKeys.pages.bookmarkIllustration.fadeDownloaded).then(settingValue => {
+				if(settingValue) {
+					PixivAssistantServer.imageExistsInDatabase(artist, imageObj, exists => {
+						if (exists) {
+							image.addClass('pa-hidden-thumbnail');
+						}
+					});
 				}
-			})
+			});
+
+			Deps.getSetting(SettingKeys.pages.bookmarkIllustration.fadeBookmarked).then(settingValue => {
+				if(settingValue) {
+					let url = jQUtils.artistUrlFromJQImage(image);
+					Deps.isPageBookmarked(url).then(bookmarked => {
+						if (bookmarked) {
+							image.addClass('pa-hidden-thumbnail');
+						}
+					})
+				}
+			});
+			
 			image.attr('data-pa-processed', 'true');
 		});
 	}

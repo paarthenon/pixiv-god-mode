@@ -12,6 +12,10 @@ let settingKeys = {
 			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',
 			directToManga: 'WORKS_PAGE_OPEN_MANGA_DIRECTLY',
 			mangaLinkToFull: 'WORKS_PAGE_REPLACE_MANGA_LINKS_TO_FULL_SIZE'
+		},
+		bookmarkIllustration: {
+			fadeDownloaded: 'BOOKMARK_ILLUSTRATION_FADE_DOWNLOADED',
+			fadeBookmarked: 'BOOKMARK_ILLUSTRATION_FADE_BOOKMARKED'
 		}
 	}
 };
