@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as log4js from 'log4js'
 
+import Config from '../config'
 import {MainPanel} from './mainPanel'
 import {Tabs} from './tabs'
 import {DictViewer} from './dict'
@@ -12,40 +13,39 @@ import {ConfigPanel} from './configPanel'
 import {ServerStatusPanel} from './serverStatusPanel'
 
 import configKeys from '../../../src/configKeys'
+import {CachedDictionaryService, naiveDictionary, cachedDictionary} from '../../../src/core/cachedDictService'
 
 let logger = log4js.getLogger('Bootstrap');
 
 let official_dict :any = {};
 
-class DictContainer extends React.Component<{dictKey:string},{dict: { [id:string]:string }}> {
+let cachedDict = new CachedDictionaryService(new Config(), {
+	global: configKeys.official_dict,
+	local: configKeys.user_dict,
+	cache: configKeys.cached_dict
+});
+
+class DictContainer extends React.Component<{dictKey:string},cachedDictionary> {
 	constructor(props:{dictKey:string}) {
 		super(props);
-		this.state = { dict: {} };
+		this.state = { cache: [] };
 		this.updateDict();
 	}
 	updateDict() :void {
-		Mailman.Background.getConfig({ key: this.props.dictKey})
-			.then(response => {
-				this.setState({dict: response.value as { [id:string]:string }});
-			})
+		cachedDict.cache
+			.then(cachedDict => this.setState(cachedDict))
 			.catch(error => logger.error(error));
 	}
 
 	handleUpdate(key:string, value:string) :void {
-		console.log('test');
-		this.state.dict[key] = value;
-		Mailman.Background.setConfig({key: this.props.dictKey, value: this.state.dict})
-			.then(() => this.updateDict());
+		cachedDict.update(key, value).then(() => this.updateDict());
 	}
 	handleDelete(key:string) {
-		console.log('test1');
-		delete this.state.dict[key];
-		Mailman.Background.setConfig({key: this.props.dictKey, value: this.state.dict})
-			.then(() => this.updateDict());
+		cachedDict.delete(key).then(() => this.updateDict());
 	}
 	public render() {
 		return <DictViewer
-			dict={this.state.dict}
+			cachedDict={this.state}
 			onAdd={this.handleUpdate.bind(this)}
 			onUpdate={this.handleUpdate.bind(this)}
 			onDelete={this.handleDelete.bind(this)}

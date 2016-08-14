@@ -14,6 +14,6 @@ export var PixivAssistantServer = new PAServer(Deps.Container.config, Deps.Conta
 export var GoogleTranslateAPI = new TranslateAPI(Deps.Container.ajaxCall);
 
 export var DictionaryService = new  DictService(Deps.Container.config, [
-		ConfigKeys.official_dict,
 		ConfigKeys.user_dict,
+		ConfigKeys.official_dict,
 	]);

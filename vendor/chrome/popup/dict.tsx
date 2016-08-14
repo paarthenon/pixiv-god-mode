@@ -7,7 +7,7 @@ import * as ChromeUtils from '../utils'
 type paDict = { [id:string]:string };
 
 interface DictViewerProps {
-	dict: paDict
+	cachedDict: { cache: {key:string, value:string, local:boolean}[] }
 	onUpdate: (key:string, value:string) => any
 	onDelete: (key:string) => any
 	onAdd: (key:string, value:string) => any
@@ -17,10 +17,11 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 	state = { currentSearch: '' };
 
 	public get filteredData() {
-		return Object.keys(this.props.dict)
-			.map(key => ({ key, value: this.props.dict[key] }))
+		return this.props.cachedDict.cache
 			.filter(entry => entry.key.includes(this.state.currentSearch) || entry.value.includes(this.state.currentSearch))
-			.sort((a,b) => a.value.localeCompare(b.value))
+	}
+	public handleImport(japanese:string, translation:string) {
+		this.props.onAdd(japanese, translation);
 	}
 	public render() {
 		return (
@@ -43,14 +44,25 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 				</tr>
 				</thead>
 				<tbody>
-				{this.filteredData.map(entry => 
-					<DictEntry 
-						key={entry.key}
-						japanese={entry.key} 
-						translation={entry.value}
-						onUpdate={this.props.onUpdate}
-						onDelete={this.props.onDelete}
-					/>
+				{this.filteredData.map(entry => {
+					if (entry.local) {
+						return <DictEntry 
+							key={entry.key}
+							japanese={entry.key} 
+							translation={entry.value}
+							onUpdate={this.props.onUpdate}
+							onDelete={this.props.onDelete}
+						/>
+					} else {
+						return <ReadOnlyDictEntry
+							key={entry.key}
+							japanese={entry.key}
+							translation={entry.value}
+							onImport={this.handleImport.bind(this)}
+						/>
+					}
+				}
+					
 				)}
 				</tbody>
 				</Bootstrap.Table>
@@ -103,11 +115,16 @@ class DictAdd extends React.Component<{onAdd:(key:string,value:string)=>any},voi
 	}
 }
 
-interface DictEntryProps {
+interface DictEntryPair {
 	japanese:string
 	translation:string
+}
+interface DictEntryProps extends DictEntryPair {
 	onUpdate:(key:string, value:string) => any
 	onDelete:(key:string) => any
+}
+interface ReadOnlyDictEntryProps extends DictEntryPair {
+	onImport:(key:string, value:string) => any
 }
 
 class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
@@ -142,5 +159,27 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) }>update</Bootstrap.Button></td>
 				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) }>cancel</Bootstrap.Button></td>
 			</tr>
+	}
+}
+
+class ReadOnlyDictEntry extends React.Component<ReadOnlyDictEntryProps, void> {
+	public handleImport() {
+		this.props.onImport(this.props.japanese, this.props.translation);
+	}
+	public handleSearch() {
+		ChromeUtils.newTab("http://www.pixiv.net/search.php?s_mode=s_tag_full&word="+this.props.japanese)
+	}
+	public render() {
+		return <tr>
+			<td>{this.props.japanese}</td>
+			<td>
+				{this.props.translation}
+				<span onClick={this.handleSearch.bind(this)}
+					style={{cursor:'pointer','padding-left':'5px'}}
+					className="glyphicon glyphicon-search" aria-hidden="true"></span>
+			</td>
+			<td></td>
+			<td><Bootstrap.Button bsSize="xsmall" onClick={this.handleImport.bind(this)}>Import</Bootstrap.Button></td>
+		</tr>
 	}
 }
