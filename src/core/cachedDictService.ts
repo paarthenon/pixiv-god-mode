@@ -24,9 +24,7 @@ export class CachedDictionaryService {
 		protected keys:AppKeys
 	) {
 		// If the cache doesn't exist, generate it.
-		this.cache
-			.then(() => console.log('successfully loaded cache'))
-			.catch(() => { console.log('failed to load cache'); this.recalculateCache() })
+		this.cache.catch(() => { console.log('failed to load cache'); this.recalculateCache() })
 	}
 
 	protected generateCachedDictionary(global:naiveDictionary, local:naiveDictionary) :cachedDictionary {
