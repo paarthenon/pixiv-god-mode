@@ -79,6 +79,9 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 					<Bootstrap.Col xs={6} md={6}>
 					<Bootstrap.Panel header="Artist's Bookmarks Page">
 						<SettingContainer 
+							settingKey={SettingKeys.pages.artistBookmarks.directToManga} 
+							label={'Link directly to manga'}/>
+						<SettingContainer 
 							settingKey={SettingKeys.pages.artistBookmarks.fadeDownloaded} 
 							label={'Fade out downloaded images'}/>
 						<SettingContainer 

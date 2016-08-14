@@ -31,4 +31,13 @@ export class GalleryPage extends RootPage {
 
 		this.goToPage(1);
 	}
+
+	public replaceMangaThumbnailLinksToFull(){
+		this.jQuery('li.image-item a.work.multiple').toArray().forEach(manga => {
+			let path = this.jQuery(manga).attr('href')
+			let mangaPath = path.replace('medium', 'manga');
+			this.jQuery(manga).attr('data-backup-href', path);
+			this.jQuery(manga).attr('href', mangaPath);
+		})
+	}
 }

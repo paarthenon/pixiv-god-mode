@@ -1,6 +1,6 @@
 import * as pathUtils from '../utils/path'
 import {PixivAssistantServer} from '../services'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 import * as jQUtils from '../utils/jq'
 import {Model} from '../../common/proto'
@@ -64,5 +64,10 @@ export class ArtistBookmarksPage extends GalleryPage {
 			})
 			
 		});
+	}
+
+	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.directToManga)
+	public replaceMangaThumbnailLinksToFull(){
+		super.replaceMangaThumbnailLinksToFull();
 	}
 }

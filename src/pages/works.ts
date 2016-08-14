@@ -121,15 +121,9 @@ export class WorksPage extends GalleryPage {
 		});
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.works.mangaLinkToFull)
+	@ExecuteIfSetting(SettingKeys.pages.works.directToManga)
 	public replaceMangaThumbnailLinksToFull(){
-		this.jQuery('li.image-item a.work.multiple').toArray().forEach(manga => {
-			let path = this.jQuery(manga).attr('href')
-			let mangaPath = path.replace('medium', 'manga');
-			this.jQuery(manga).attr('data-backup-href', path);
-			this.jQuery(manga).attr('href', mangaPath);
-		})
+		super.replaceMangaThumbnailLinksToFull();
 	}
-
 
 }
