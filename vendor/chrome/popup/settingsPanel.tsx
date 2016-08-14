@@ -94,6 +94,12 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.search.directToManga} 
 							label={'Link directly to manga'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.search.fadeDownloaded} 
+							label={'Fade out downloaded images'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.search.fadeBookmarked} 
+							label={'Fade out images from bookmarked artists'}/>
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
 				</Bootstrap.Row>
@@ -174,7 +180,8 @@ class SettingContainer extends React.Component<SettingContainerProps, {currentVa
 		super(props);
 		this.state = { currentValue: undefined };
 		getSetting(props.settingKey)
-			.then(currentValue => this.setState({currentValue}));
+			.then(currentValue => this.setState({currentValue}))
+			.catch(() => this.setState({currentValue: false}))
 	}
 	public handleUpdate(value:boolean){
 		setSetting(this.props.settingKey, value);

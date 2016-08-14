@@ -23,6 +23,8 @@ let settingKeys = {
 		},
 		search: {
 			directToManga: 'SEARCH_PAGE_OPEN_MANGA_DIRECTLY',
+			fadeDownloaded: 'SEARCH_PAGE_FADE_DOWNLOADED',
+			fadeBookmarked: 'SEARCH_PAGE_FADE_BOOKMARKED',
 		}
 	}
 };

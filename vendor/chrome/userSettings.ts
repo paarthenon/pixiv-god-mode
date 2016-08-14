@@ -19,6 +19,8 @@ let defaultTuples: [string, boolean][] = [
 	[SettingKeys.pages.artistBookmarks.fadeDownloaded, true],
 	[SettingKeys.pages.artistBookmarks.fadeBookmarked, true],
 	[SettingKeys.pages.search.directToManga, true],
+	[SettingKeys.pages.search.fadeBookmarked, true],
+	[SettingKeys.pages.search.fadeDownloaded, true],
 ];
 
 defaultTuples.forEach(tuple => {
@@ -36,7 +38,7 @@ export function getSetting(key: string) {
 		if (userSettings && key in userSettings) {
 			return userSettings[key];
 		} else {
-			return defaultSettings[key];
+			return defaultSettings[key] || false;
 		}
 	});
 }
