@@ -18,7 +18,10 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 
 	public get filteredData() {
 		return this.props.cachedDict.cache
-			.filter(entry => entry.key.includes(this.state.currentSearch) || entry.value.includes(this.state.currentSearch))
+			.filter(entry => {
+				return entry.key.toLocaleLowerCase().includes(this.state.currentSearch) 
+					|| entry.value.toLocaleLowerCase().includes(this.state.currentSearch)
+			})
 	}
 	public handleImport(japanese:string, translation:string) {
 		this.props.onAdd(japanese, translation);
@@ -27,7 +30,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 		return (
 			<div>
 				<DictAdd onAdd={this.props.onAdd} />
-				<Search onChange={(value) => this.setState({currentSearch:value})} />
+				<Search onChange={(value) => this.setState({currentSearch:value.toLocaleLowerCase()})} />
 				<Bootstrap.Table condensed>
 				<colgroup>
 					<col style={{ width: '50%', textAlign: 'center' }}></col>
