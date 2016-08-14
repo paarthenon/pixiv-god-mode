@@ -5,7 +5,7 @@ import * as log4js from 'log4js'
 import Mailman from '../mailman'
 
 import ConfigKeys from '../../../src/configKeys'
-import {CachedDictionaryService} from '../../../src/core/cachedDictService'
+import {CachedDictionaryService} from '../../../src/core/dictionaryManagementService'
 import Config from '../config'
 
 import {DictionaryAdd} from './components/DictionaryAdd'

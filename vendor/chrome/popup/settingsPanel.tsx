@@ -4,12 +4,13 @@ import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
+import Config from '../config'
 import {Action} from '../../../src/core/IAction'
 import {getUserSettings, getSetting, setSetting} from '../userSettings'
 import SettingKeys from '../../../src/settingKeys'
 import ConfigKeys from '../../../src/configKeys'
-import * as ghUtils from '../ghUtils'
-
+import {DictionaryManagementService} from '../../../src/core/dictionaryManagementService'
+import {GithubDictionaryUtil} from '../../../src/core/githubDictionaryUtil'
 
 let logger = log4js.getLogger('ActionPanel');
 
@@ -93,40 +94,26 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 }
 
 
-module DictionaryUtils {
-	let ghPath = 'pixiv-assistant/dictionary'
-	export function updateAvailable() : Promise<boolean> {
-		logger.debug('DictionaryService.updateAvailable | entered');
-		return ghUtils.getMasterCommit(ghPath).then(commitHash => {
-			return Mailman.Background.getConfig({key:ConfigKeys.official_dict_hash}).then(currentHash => {
-				let isNewer: boolean = !currentHash || currentHash.value !== commitHash;
-				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
-				return isNewer;
-			}).catch(() => true);
-		});
-	}
-
-	export function updateDictionary() : Promise<void> {
-		logger.debug('DictionaryService.updateDictionary | entered');
-		return ghUtils.getMasterCommit(ghPath).then(commitHash => {
-			return ghUtils.getDictionaryObject(ghPath, commitHash).then(obj => {
-				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}]`);
-				Mailman.Background.setConfig({key:ConfigKeys.official_dict, value:obj});
-				Mailman.Background.setConfig({key:ConfigKeys.official_dict_hash, value: commitHash});
-			});
-		});
-	}
-}
 
 interface GlobalDictUpdaterProps {
 	updateAvailable :boolean
 	updateAction :Function
 }
+
+let dictService = new DictionaryManagementService(new Config(), 
+	new GithubDictionaryUtil('pixiv-assistant/dictionary', Mailman.Background.ajax), 
+	{
+		global: ConfigKeys.official_dict,
+		local: ConfigKeys.user_dict,
+		cache: ConfigKeys.cached_dict
+	});
+
 class GlobalDictUpdaterContainer extends React.Component<void, {resolved:boolean, updateAvailable?: boolean}> {
 	state = {resolved:false, updateAvailable: false};
+
 	constructor() {
 		super();
-		DictionaryUtils.updateAvailable().then(isAvailable => {
+		dictService.globalUpdateAvailable.then(isAvailable => {
 			this.setState({
 				resolved: true,
 				updateAvailable: isAvailable
@@ -134,7 +121,7 @@ class GlobalDictUpdaterContainer extends React.Component<void, {resolved:boolean
 		});
 	}
 	public updateDictionary(){
-		DictionaryUtils.updateDictionary();
+		dictService.updateGlobalDictionary();
 	}
 	public render() {
 		if (this.state.resolved) {

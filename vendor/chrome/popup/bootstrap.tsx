@@ -14,7 +14,7 @@ import {ServerStatusPanel} from './serverStatusPanel'
 import {HomePanel} from './homePanel'
 
 import configKeys from '../../../src/configKeys'
-import {CachedDictionaryService, naiveDictionary, cachedDictionary} from '../../../src/core/cachedDictService'
+import {CachedDictionaryService, naiveDictionary, cachedDictionary} from '../../../src/core/dictionaryManagementService'
 
 let logger = log4js.getLogger('Bootstrap');
 

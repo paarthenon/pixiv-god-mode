@@ -13,7 +13,6 @@ export class DictionaryAdd extends React.Component<{onAdd:(key:string,value:stri
 
 		chromeUtils.getCurrentTab().then(tab => {
 			let potentialTag = pathUtils.getPotentialTag(tab.url);
-			console.log('found potentialTag', potentialTag);
 			if (potentialTag !== '' && this.japaneseInput.value === '') {
 				this.japaneseInput.value = potentialTag;
 			}

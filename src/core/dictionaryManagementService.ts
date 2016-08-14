@@ -6,6 +6,10 @@ import IDictionary from './IDictionary'
 import SingleConfigDict from './singleConfigDictionary'
 import DictBroker from './dictBroker'
 
+import {GithubDictionaryUtil} from './githubDictionaryUtil'
+
+import ConfigKeys from '../configKeys'
+
 let logger = log4js.getLogger('Dictionary');
 
 interface AppKeys {
@@ -22,10 +26,7 @@ export class CachedDictionaryService {
 	constructor(
 		protected config:IConfig,
 		protected keys:AppKeys
-	) {
-		// If the cache doesn't exist, generate it.
-		this.cache.catch(() => { console.log('failed to load cache'); this.recalculateCache() })
-	}
+	) {	}
 
 	protected generateCachedDictionary(global:naiveDictionary, local:naiveDictionary) :cachedDictionary {
 		let cache = Object.keys(global).concat(Object.keys(local))
@@ -49,12 +50,21 @@ export class CachedDictionaryService {
 
 	public get cache() :Promise<cachedDictionary> {
 		return this.config.get(this.keys.cache)
+			.catch(() => this.recalculateCache());
 	}
 	public get local() :Promise<naiveDictionary> {
-		return this.config.get(this.keys.local);
+		return this.config.get(this.keys.local)
+			.catch(() => {
+				this.config.set(this.keys.local, {} );
+				return {};
+			});
 	}
 	public get global() :Promise<naiveDictionary> {
-		return this.config.get(this.keys.global);
+		return this.config.get(this.keys.global)
+			.catch(() => {
+				this.config.set(this.keys.global, {} );
+				return {};
+			});
 	}
 
 	public update(key:string, value:string) {
@@ -70,12 +80,35 @@ export class CachedDictionaryService {
 			return this.config.set(this.keys.local, localDict);
 		}).then(() => this.recalculateCache());
 	}
+}
 
-	// public getTranslation(tag:string):Promise<string> {
-	// 	return this.broker.get(tag)
-	// 		.then(translation => {
-	// 			logger.debug(`DictionaryService.getTranslation | for [${tag}] found [${translation}]`);
-	// 			return translation;
-	// 		}).catch(() => undefined);
-	// }
+export class DictionaryManagementService extends CachedDictionaryService {
+	constructor(
+		protected config:IConfig,
+		protected ghUtils:GithubDictionaryUtil,
+		protected keys:AppKeys
+	) {	super(config, keys); }
+
+	public get globalUpdateAvailable() : Promise<boolean> {
+		logger.debug('DictionaryService.updateAvailable | entered');
+		return this.ghUtils.masterCommit.then(commitHash => {
+			return this.config.get(ConfigKeys.official_dict_hash).then(currentHash => {
+				let isNewer: boolean = !currentHash || currentHash !== commitHash;
+				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
+				return isNewer;
+			}).catch(() => true);
+		});
+	}
+
+	public updateGlobalDictionary() : Promise<void> {
+		logger.debug('DictionaryService.updateDictionary | entered');
+		return this.ghUtils.masterCommit.then(commitHash => 
+			this.ghUtils.newestDictionary.then(obj => 
+				Promise.all([
+					this.config.set(ConfigKeys.official_dict, obj),
+					this.config.set(ConfigKeys.official_dict_hash, commitHash)
+				]).then(() => this.recalculateCache())
+			)
+		);
+	}
 }
