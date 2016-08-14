@@ -108,41 +108,49 @@ let dictService = new DictionaryManagementService(new Config(),
 		cache: ConfigKeys.cached_dict
 	});
 
-class GlobalDictUpdaterContainer extends React.Component<void, {resolved:boolean, updateAvailable?: boolean}> {
-	state = {resolved:false, updateAvailable: false};
+enum GlobalDictUpdateState {
+	LOADING,
+	AVAILABLE,
+	UPTODATE,
+	DOWNLOADING
+}
+
+class GlobalDictUpdaterContainer extends React.Component<void, {mode: GlobalDictUpdateState}> {
+	state = {mode: GlobalDictUpdateState.LOADING};
 
 	constructor() {
 		super();
+		this.updateState();
+	}
+	protected updateState(){
 		dictService.globalUpdateAvailable.then(isAvailable => {
-			this.setState({
-				resolved: true,
-				updateAvailable: isAvailable
-			});
+			if (isAvailable) {
+				this.setState({mode: GlobalDictUpdateState.AVAILABLE});
+			} else {
+				this.setState({mode: GlobalDictUpdateState.UPTODATE});
+			}
 		});
 	}
 	public updateDictionary(){
-		dictService.updateGlobalDictionary();
+		this.setState({mode: GlobalDictUpdateState.DOWNLOADING});
+		dictService.updateGlobalDictionary().then(() => this.updateState());
 	}
 	public render() {
-		if (this.state.resolved) {
-			return <GlobalDictUpdater updateAvailable={this.state.updateAvailable} updateAction={this.updateDictionary.bind(this)}/>
-		} else {
-			return <div> Waiting on dictionary details </div>
-		}
+		return <GlobalDictUpdater mode={this.state.mode} updateAction={this.updateDictionary.bind(this)} />
 	}
 }
 
-
-class GlobalDictUpdater extends React.Component<GlobalDictUpdaterProps, void> {
+class GlobalDictUpdater extends React.Component<{mode: GlobalDictUpdateState, updateAction:Function}, void> {
 	public render(){
-		if (this.props.updateAvailable) {
-			return (
-				<div>
-					Update available. <Bootstrap.Button onClick={this.props.updateAction}>Update Dictionary</Bootstrap.Button>
-				</div>
-				);
-		} else {
-			return <div>No update available</div>
+		switch (this.props.mode) {
+			case GlobalDictUpdateState.LOADING:
+				return <div>Waiting on dictionary details</div>
+			case GlobalDictUpdateState.UPTODATE:
+				return <div>Dictionary is up to date</div>
+			case GlobalDictUpdateState.AVAILABLE:
+				return <div>Update available. <Bootstrap.Button onClick={this.props.updateAction}>Update Dictionary</Bootstrap.Button></div>
+			case GlobalDictUpdateState.DOWNLOADING:
+				return <div>Downloading an update.</div>
 		}
 	}
 }
@@ -173,7 +181,6 @@ class BooleanSetting extends React.Component<{label:string, onToggle:(value:bool
 	private inputElement : HTMLInputElement;
 	
 	handleExecute() {
-		console.log('Value:', this.inputElement.checked);
 		this.props.onToggle(this.inputElement.checked);
 	}
 

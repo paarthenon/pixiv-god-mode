@@ -15,7 +15,7 @@ defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 				if (msg.key in contents) {
 					return contents[msg.key];
 				} else {
-					return Promise.reject('Key not found in data store');
+					return Promise.reject(`Key [${msg.key}] not found in data store`);
 				}
 			})
 			.then(contents => ChromeUtils.handleError(contents))
