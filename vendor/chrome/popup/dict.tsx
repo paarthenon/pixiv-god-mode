@@ -4,6 +4,8 @@ import * as Bootstrap from 'react-bootstrap'
 
 import * as ChromeUtils from '../utils'
 
+import {DictionaryAdd} from './components/DictionaryAdd'
+
 type paDict = { [id:string]:string };
 
 interface DictViewerProps {
@@ -29,7 +31,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 	public render() {
 		return (
 			<div>
-				<DictAdd onAdd={this.props.onAdd} />
+				<DictionaryAdd onAdd={this.props.onAdd} />
 				<Search onChange={(value) => this.setState({currentSearch:value.toLocaleLowerCase()})} />
 				<Bootstrap.Table condensed>
 				<colgroup>
@@ -94,27 +96,6 @@ class Search extends React.Component<{ onChange: (search: string) => any }, { cu
 					onChange={this.handleChange.bind(this)} 
 				/>
 			</Bootstrap.Well>
-	}
-}
-
-class DictAdd extends React.Component<{onAdd:(key:string,value:string)=>any},void> {
-	public handleAdd(){
-		let japaneseInput: any = ReactDOM.findDOMNode(this.refs['japanese']);
-		let translationInput: any = ReactDOM.findDOMNode(this.refs['translation']);
-		this.props.onAdd(japaneseInput.value, translationInput.value)
-
-		// Clear the form now that the entry has been saved.
-		japaneseInput.value = '';
-		translationInput.value = '';
-	}
-	public render() {
-		return <Bootstrap.Panel header="Add Translation">
-			<Form inline>
-					<FormControl type="text" placeholder="japanese" ref="japanese" />
-					<FormControl type="text" placeholder="translation" ref="translation" />
-					<Bootstrap.Button onClick={this.handleAdd.bind(this)}>add</Bootstrap.Button>
-			</Form>
-		</Bootstrap.Panel>
 	}
 }
 

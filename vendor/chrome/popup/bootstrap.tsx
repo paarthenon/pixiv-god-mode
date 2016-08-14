@@ -11,6 +11,7 @@ import {ActionPanel} from './actionPanel'
 import {SettingsPanel} from './settingsPanel'
 import {ConfigPanel} from './configPanel'
 import {ServerStatusPanel} from './serverStatusPanel'
+import {HomePanel} from './homePanel'
 
 import configKeys from '../../../src/configKeys'
 import {CachedDictionaryService, naiveDictionary, cachedDictionary} from '../../../src/core/cachedDictService'
@@ -25,9 +26,9 @@ let cachedDict = new CachedDictionaryService(new Config(), {
 	cache: configKeys.cached_dict
 });
 
-class DictContainer extends React.Component<{dictKey:string},cachedDictionary> {
-	constructor(props:{dictKey:string}) {
-		super(props);
+class DictContainer extends React.Component<void,cachedDictionary> {
+	constructor() {
+		super();
 		this.state = { cache: [] };
 		this.updateDict();
 	}
@@ -59,15 +60,15 @@ Mailman.Background.getConfig({ key: configKeys.official_dict })
 
 function render() {
 	let tabInfo: { [id: string]: JSX.Element } = {
+		Home: <HomePanel />,
 		Actions: <ActionPanel />,
-		Dictionary: <DictContainer dictKey={configKeys.user_dict} />,
-		"Global Dictionary": <ReadOnlyDictViewer dict={official_dict}/>,
+		Dictionary: <DictContainer />,
 		Settings: <SettingsPanel />,
 		Config: <ConfigPanel />,
 		ServerStatus: <ServerStatusPanel />
 	}
 
-	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Dictionary" />, document.getElementById('content'));
+	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Home" />, document.getElementById('content'));
 }
 
 render();
