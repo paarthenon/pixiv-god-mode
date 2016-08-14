@@ -89,6 +89,13 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 							label={'Fade out images from bookmarked artists'}/>
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
+					<Bootstrap.Col xs={6} md={6}>
+					<Bootstrap.Panel header="Search Page">
+						<SettingContainer 
+							settingKey={SettingKeys.pages.search.directToManga} 
+							label={'Link directly to manga'}/>
+					</Bootstrap.Panel>
+					</Bootstrap.Col>
 				</Bootstrap.Row>
 			</Bootstrap.Grid>
 			</div>

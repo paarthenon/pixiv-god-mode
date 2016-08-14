@@ -1,11 +1,12 @@
 import * as pathUtils from '../utils/path'
 import {PixivAssistantServer} from '../services'
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 import {DictionaryService} from '../services'
 import {Container as Deps} from '../deps'
 import {injectPagingButtons} from '../injectors/pagingButtonInjector'
+import SettingKeys from '../settingKeys'
 
 import * as jQUtils from '../utils/jq'
 
@@ -68,5 +69,10 @@ export class SearchPage extends GalleryPage {
 	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'last' })
 	public goToLastPage() {
 		super.goToLastPage();
-	} 
+	}
+
+	@ExecuteIfSetting(SettingKeys.pages.search.directToManga)
+	public replaceMangaThumbnailLinksToFull(){
+		super.replaceMangaThumbnailLinksToFull();
+	}
 }

@@ -20,6 +20,9 @@ let settingKeys = {
 			fadeDownloaded: 'ARTIST_BOOKMARKS_FADE_DOWNLOADED',
 			fadeBookmarked: 'ARTIST_BOOKMARKS_FADE_BOOKMARKED',
 			directToManga: 'ARTIST_BOOKMARKS_OPEN_MANGA_DIRECTLY',
+		},
+		search: {
+			directToManga: 'SEARCH_PAGE_OPEN_MANGA_DIRECTLY',
 		}
 	}
 };

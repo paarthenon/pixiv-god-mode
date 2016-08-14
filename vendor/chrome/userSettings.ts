@@ -17,7 +17,8 @@ let defaultTuples: [string, boolean][] = [
 	[SettingKeys.pages.bookmarkIllustration.fadeBookmarked, true],
 	[SettingKeys.pages.artistBookmarks.directToManga, true],
 	[SettingKeys.pages.artistBookmarks.fadeDownloaded, true],
-	[SettingKeys.pages.artistBookmarks.fadeBookmarked, true]
+	[SettingKeys.pages.artistBookmarks.fadeBookmarked, true],
+	[SettingKeys.pages.search.directToManga, true],
 ];
 
 defaultTuples.forEach(tuple => {
