@@ -34,8 +34,8 @@ export class IllustrationPage extends RootPage {
 		.concat(super.getTagElements());
 	}
 
-	@ExecuteOnLoad
-	public injectPageElements() {
+	@ExecuteIfSetting(SettingKeys.pages.illust.inject.openFolder)
+	public injectOpenFolder() {
 		injectUserRelationshipButton(this.jQuery, this.artist);
 	}
 

@@ -7,6 +7,7 @@ import SettingKeys from '../../src/settingKeys'
 let defaultSettings: { [id:string]:any } = {};
 
 let defaultTuples: [string, boolean][] = [
+	[SettingKeys.pages.illust.inject.openFolder, true],
 	[SettingKeys.pages.illust.autoOpen, true],
 	[SettingKeys.pages.illust.boxImage, true],
 	[SettingKeys.pages.manga.loadFullSize, true],

@@ -1,6 +1,9 @@
 let settingKeys = {
 	pages: {
 		illust: {
+			inject: {
+				openFolder: 'ILLUST_PAGE_INJECT_OPEN_FOLDER_BUTTON'
+			},
 			autoOpen: 'ILLUST_PAGE_AUTO_OPEN',
 			boxImage: 'ILLUST_PAGE_BOX_IMAGE_IN_WINDOW',
 		},

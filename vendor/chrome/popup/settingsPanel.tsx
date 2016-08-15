@@ -35,6 +35,9 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 					<Bootstrap.Col xs={6} md={6}>
 					<Bootstrap.Panel header="Illustration Page">
 						<SettingContainer 
+							settingKey={SettingKeys.pages.illust.inject.openFolder} 
+							label={'Inject open folder button'}/>
+						<SettingContainer 
 							settingKey={SettingKeys.pages.illust.autoOpen} 
 							label={'Automatically zoom into image'}/>
 						<SettingContainer 
