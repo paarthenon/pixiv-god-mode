@@ -57,6 +57,16 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 					<Bootstrap.Col xs={6} md={6}>
 					<Bootstrap.Panel header="Works Page">
 						<SettingContainer 
+							settingKey={SettingKeys.pages.works.inject.openFolder} 
+							label={'Inject open folder button'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.works.inject.openInTabs} 
+							label={'Inject open in tabs button'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.works.inject.pagingButtons} 
+							label={'Inject paging buttons'}/>
+
+						<SettingContainer 
 							settingKey={SettingKeys.pages.works.autoDarken} 
 							label={'Fade out downloaded images'}/>
 						<SettingContainer 

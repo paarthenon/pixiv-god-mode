@@ -9,6 +9,11 @@ let settingKeys = {
 			fitImage: 'MANGA_PAGE_FIT_IMAGE',
 		},
 		works: {
+			inject: {
+				openFolder: 'WORKS_PAGE_INJECT_OPEN_FOLDER_BUTTON',
+				pagingButtons: 'WORKS_PAGE_INJECT_PAGING_BUTTONS',
+				openInTabs: 'WORKS_PAGE_INJECT_OPEN_IN_TABS'
+			},
 			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',
 			directToManga: 'WORKS_PAGE_OPEN_MANGA_DIRECTLY',
 		},

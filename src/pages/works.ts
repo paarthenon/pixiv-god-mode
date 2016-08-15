@@ -46,13 +46,18 @@ export class WorksPage extends GalleryPage {
 		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
 	}
 
-	@ExecuteOnLoad
-	public injectPageElements() {
-		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
+	@ExecuteIfSetting(SettingKeys.pages.works.inject.openFolder)
+	public injectOpenFolder(){
 		injectUserRelationshipButton(this.jQuery, this.artist);
-		injectNavbarRightButton(this.jQuery, 'Open In Tabs', this.openTabs.bind(this));
 	}
-
+	@ExecuteIfSetting(SettingKeys.pages.works.inject.openInTabs)
+	public injectOpenTabs(){
+		injectNavbarRightButton(this.jQuery, 'Open In Tabs', this.openTabs.bind(this));
+	}	
+	@ExecuteIfSetting(SettingKeys.pages.works.inject.pagingButtons)
+	public injectPagingButtons(){
+		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
+	}
 
 	@ExecuteIfSetting(SettingKeys.pages.works.autoDarken)
 	public experimentalFade() {
