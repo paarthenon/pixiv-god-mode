@@ -25,6 +25,10 @@ let settingKeys = {
 			fadeBookmarked: 'BOOKMARK_ILLUSTRATION_FADE_BOOKMARKED',
 		},
 		artistBookmarks: {
+			inject: {
+				openFolder: 'ARTIST_BOOKMARKS_INJECT_OPEN_FOLDER_BUTTON',
+				pagingButtons: 'ARTIST_BOOKMARKS_INJECT_PAGING_BUTTONS'
+			},
 			fadeDownloaded: 'ARTIST_BOOKMARKS_FADE_DOWNLOADED',
 			fadeBookmarked: 'ARTIST_BOOKMARKS_FADE_BOOKMARKED',
 			directToManga: 'ARTIST_BOOKMARKS_OPEN_MANGA_DIRECTLY',

@@ -19,6 +19,8 @@ let defaultTuples: [string, boolean][] = [
 	[SettingKeys.pages.works.directToManga, true],
 	[SettingKeys.pages.bookmarkIllustration.fadeDownloaded, true],
 	[SettingKeys.pages.bookmarkIllustration.fadeBookmarked, true],
+	[SettingKeys.pages.artistBookmarks.inject.pagingButtons, true],
+	[SettingKeys.pages.artistBookmarks.inject.openFolder, true],
 	[SettingKeys.pages.artistBookmarks.directToManga, true],
 	[SettingKeys.pages.artistBookmarks.fadeDownloaded, true],
 	[SettingKeys.pages.artistBookmarks.fadeBookmarked, true],

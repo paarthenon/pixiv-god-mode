@@ -8,6 +8,7 @@ import {Container as Deps} from '../deps'
 import SettingKeys from '../settingKeys'
 
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
+import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 
 export class ArtistBookmarksPage extends GalleryPage {
 	public get artistId():number {
@@ -32,11 +33,15 @@ export class ArtistBookmarksPage extends GalleryPage {
 		.concat(super.getTagElements());
 	}
 
-	@ExecuteOnLoad
-	inject() {
+	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.inject.openFolder)
+	injectOpenFolder() {
 		injectUserRelationshipButton(this.jQuery, this.artist);
 	}
-
+	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.inject.pagingButtons)
+	public injectPagingButtons(){
+		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
+	}
+	
 	@ExecuteOnLoad
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
