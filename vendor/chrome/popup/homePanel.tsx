@@ -23,8 +23,10 @@ export class HomePanel extends React.Component<any,any> {
 		return (
 			<div>
 				<DictionaryAdd onAdd={(key,value) => dict.update(key, value)} />
-				<p>?actions</p>
-				<p>Server status</p>
+				<p>Go to the settings page and update the global dictionary. This will happen automatically soon.</p>
+				<p>Home screen unfinished</p>
+				<p>TBD</p>
+				<p>Server status: See tab for now.</p>
 			</div>
 			);
 	}
