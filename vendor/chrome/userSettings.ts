@@ -6,33 +6,32 @@ import SettingKeys from '../../src/settingKeys'
 
 let defaultSettings: { [id:string]:any } = {};
 
-let defaultTuples: [string, boolean][] = [
-	[SettingKeys.pages.illust.inject.openFolder, true],
-	[SettingKeys.pages.illust.autoOpen, true],
-	[SettingKeys.pages.illust.boxImage, true],
-	[SettingKeys.pages.manga.loadFullSize, true],
-	[SettingKeys.pages.manga.fitImage, true],
-	[SettingKeys.pages.works.inject.openInTabs, true],
-	[SettingKeys.pages.works.inject.openFolder, true],
-	[SettingKeys.pages.works.inject.pagingButtons, true],
-	[SettingKeys.pages.works.autoDarken, true],
-	[SettingKeys.pages.works.directToManga, true],
-	[SettingKeys.pages.bookmarkIllustration.inject.viewAll, true],
-	[SettingKeys.pages.bookmarkIllustration.fadeDownloaded, true],
-	[SettingKeys.pages.bookmarkIllustration.fadeBookmarked, true],
-	[SettingKeys.pages.artistBookmarks.inject.pagingButtons, true],
-	[SettingKeys.pages.artistBookmarks.inject.openFolder, true],
-	[SettingKeys.pages.artistBookmarks.directToManga, true],
-	[SettingKeys.pages.artistBookmarks.fadeDownloaded, true],
-	[SettingKeys.pages.artistBookmarks.fadeBookmarked, true],
-	[SettingKeys.pages.search.directToManga, true],
-	[SettingKeys.pages.search.fadeBookmarked, true],
-	[SettingKeys.pages.search.fadeDownloaded, true],
+let trueSettings = [
+	SettingKeys.pages.illust.inject.openFolder,
+	SettingKeys.pages.illust.autoOpen,
+	SettingKeys.pages.illust.boxImage,
+	SettingKeys.pages.manga.loadFullSize,
+	SettingKeys.pages.manga.fitImage,
+	SettingKeys.pages.works.inject.openInTabs,
+	SettingKeys.pages.works.inject.openFolder,
+	SettingKeys.pages.works.inject.pagingButtons,
+	SettingKeys.pages.works.autoDarken,
+	SettingKeys.pages.works.directToManga,
+	SettingKeys.pages.bookmarkIllustration.inject.viewAll,
+	SettingKeys.pages.bookmarkIllustration.fadeDownloaded,
+	SettingKeys.pages.bookmarkIllustration.fadeBookmarked,
+	SettingKeys.pages.artistBookmarks.inject.pagingButtons,
+	SettingKeys.pages.artistBookmarks.inject.openFolder,
+	SettingKeys.pages.artistBookmarks.directToManga,
+	SettingKeys.pages.artistBookmarks.fadeDownloaded,
+	SettingKeys.pages.artistBookmarks.fadeBookmarked,
+	SettingKeys.pages.search.directToManga,
+	SettingKeys.pages.search.fadeBookmarked,
+	SettingKeys.pages.search.fadeDownloaded,
 ];
 
-defaultTuples.forEach(tuple => {
-	let [key, value] = tuple;
-	defaultSettings[key] = value;
+trueSettings.forEach(setting => {
+	defaultSettings[setting] = true;
 });
 
 export function getUserSettings() {
