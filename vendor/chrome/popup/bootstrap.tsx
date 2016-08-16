@@ -7,7 +7,6 @@ import {MainPanel} from './mainPanel'
 import {Tabs} from './tabs'
 import {DictViewer} from './dict'
 import {ReadOnlyDictViewer} from './readOnlyDict'
-import {ActionPanel} from './actionPanel'
 import {SettingsPanel} from './settingsPanel'
 import {ConfigPanel} from './configPanel'
 import {ServerStatusPanel} from './serverStatusPanel'
@@ -61,7 +60,6 @@ Mailman.Background.getConfig({ key: configKeys.official_dict })
 function render() {
 	let tabInfo: { [id: string]: JSX.Element } = {
 		Home: <HomePanel />,
-		Actions: <ActionPanel />,
 		Dictionary: <DictContainer />,
 		Settings: <SettingsPanel />,
 		Config: <ConfigPanel />,
