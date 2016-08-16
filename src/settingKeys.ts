@@ -8,6 +8,9 @@ let settingKeys = {
 			boxImage: 'ILLUST_PAGE_BOX_IMAGE_IN_WINDOW',
 		},
 		manga: {
+			inject: {
+				previousButton: 'MANGA_PAGE_PREVIOUS_PAGE_BUTTON',
+			},
 			loadFullSize: 'MANGA_PAGE_LOAD_FULL_SIZE_IMAGES',
 			fitImage: 'MANGA_PAGE_FIT_IMAGE',
 		},

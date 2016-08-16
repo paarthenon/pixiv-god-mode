@@ -10,6 +10,7 @@ let trueSettings = [
 	SettingKeys.pages.illust.inject.openFolder,
 	SettingKeys.pages.illust.autoOpen,
 	SettingKeys.pages.illust.boxImage,
+	SettingKeys.pages.manga.inject.previousButton,
 	SettingKeys.pages.manga.loadFullSize,
 	SettingKeys.pages.manga.fitImage,
 	SettingKeys.pages.works.inject.openInTabs,

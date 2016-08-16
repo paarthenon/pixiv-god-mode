@@ -4,6 +4,7 @@ import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/action
 import {PixivAssistantServer} from '../services'
 import {Container as Deps} from '../deps'
 import SettingKeys from '../settingKeys'
+import {injectMangaPreviousButton} from '../injectors/mangaPreviousButton'
 
 export class MangaPage extends RootPage {
 	public get artistName(): string {
@@ -20,6 +21,11 @@ export class MangaPage extends RootPage {
 
 	@ExecuteOnLoad
 	public fitImagesInPage() : void {
+	}
+
+	@ExecuteIfSetting(SettingKeys.pages.manga.inject.previousButton)
+	public injectMangaPreviousButton(){
+		injectMangaPreviousButton(this.jQuery, this.goToPreviousPage.bind(this));
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)
@@ -58,18 +64,8 @@ export class MangaPage extends RootPage {
 		});
 	}
 
-	@RegisteredAction({ id: 'pa_go_to_previous_image', label: 'Previous', icon:'arrow-left2' })
 	public goToPreviousPage():void {
 		Deps.execOnPixiv(pixiv => pixiv.mangaViewer.listView.prev());
-	}
-
-	@RegisteredAction({ id: 'pa_reverse_embiggen_manga_images', label: 'Reverse Embiggen' })
-	public reverseEmbiggen(): void {
-		this.jQuery('img.image').toArray().forEach(image => {
-			let jQImage = this.jQuery(image);
-			jQImage.attr('src', jQImage.attr('data-src-backup'));
-			jQImage.attr('data-src', jQImage.attr('data-src-backup'));
-		});
 	}
 
 	@RegisteredAction({ id: 'pa_download_manga_images', label: 'Download All', icon: 'download2' })

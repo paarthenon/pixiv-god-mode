@@ -48,6 +48,9 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 					<Bootstrap.Col xs={6} md={6}>
 					<Bootstrap.Panel header="Manga Page">
 						<SettingContainer 
+							settingKey={SettingKeys.pages.manga.inject.previousButton} 
+							label={'Inject previous page button'}/>
+						<SettingContainer 
 							settingKey={SettingKeys.pages.manga.loadFullSize} 
 							label={'Load full size versions of manga images'}/>
 						<SettingContainer 
