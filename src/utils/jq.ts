@@ -16,3 +16,6 @@ export function imageFromJQImage(image:JQuery):Model.Image {
 export function artistUrlFromJQImage(image:JQuery):string {
 	return (<any>image.find('a.user')[0]).href;
 }
+export function hackedNewTab(jQ:JQueryStatic, url:string) {
+	jQ(`<a target="_blank" href="${url}"></a>`)[0].click();
+}

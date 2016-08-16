@@ -1,12 +1,11 @@
 import * as pathUtils from '../utils/path'
+import * as jQUtils from '../utils/jq'
 import {PixivAssistantServer} from '../services'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import {GalleryPage} from './gallery'
 import SettingKeys from '../settingKeys'
 import {Model} from '../../common/proto'
-
-import {Container as DepsContainer} from '../deps'
 
 import * as log4js from 'log4js'
 import * as React from 'react'
@@ -17,6 +16,7 @@ import {UserRelationButton} from '../components/userRelationButton'
 import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
 import {injectNavbarRightButton} from '../injectors/navbarRightButtonInjector'
+import {Container as Deps} from '../deps'
 
 let logger = log4js.getLogger();
 
@@ -86,12 +86,43 @@ export class WorksPage extends GalleryPage {
 
 	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-tab' })
 	public openTabs():void {
-		this.jQuery('li.image-item a.work').toArray().forEach(image => {
-			let path = this.jQuery(image).attr('href');
-			if (this.jQuery(image).attr('class').indexOf('multiple') >= 0) {
-				path = path.replace('medium', 'manga');
+		Deps.getSetting(SettingKeys.pages.works.openTabsImagesOnly).then(imagesOnly => {
+			if(imagesOnly) {
+				/*
+				For each image
+					- if a manga page, return the manga url directly
+					- if an illustration page, return the original image url
+						- use the API to get illustration details to find file path
+						- use string manipulation to get the original-size image path from the thumbnail
+						- use string manipulation to attach the proper extension (thumbnails are always jpg)
+				Once each url is loaded, open them all in new tabs.
+					- Use a hacked navigate instead of chrome's tabs.create because pixiv needs referer information
+					  to access direct images or it gives 403 Forbidden.
+				*/
+				Promise.all<string>(this.jQuery('li.image-item a.work').toArray().map(imgEntry => {
+					if (imgEntry.classList.contains('multiple')) {
+						return Promise.resolve(imgEntry.href);
+					} else {
+						let url = this.jQuery(imgEntry).find('img').attr('src');
+						let illustId = pathUtils.getImageIdFromSourceUrl(url);
+						return Deps.execOnPixiv(
+							(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
+							{
+								illustId
+							}
+						).then((response:any) => {
+							let extension = response.body[illustId].illust_ext;
+							let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
+							let newSrc = pathUtils.experimentalMaxSizeImageUrl(url).replace(/\.(\w+)$/, extensionWithDot);
+
+							return newSrc;
+						});
+					}
+					
+				})).then(newUrls => newUrls.forEach(url => jQUtils.hackedNewTab(this.jQuery, url)));
+			} else {
+				this.jQuery('li.image-item a.work').toArray().forEach(image => Deps.openInTab(image.href));
 			}
-			DepsContainer.openInTab(window.location.origin + path);
 		});
 	}
 
@@ -102,7 +133,7 @@ export class WorksPage extends GalleryPage {
 
 	@RegisteredAction({ id: 'pa_download_all_images_debug', label: 'Download All (DEBUG)', icon: 'new-tab' })
 	public debugDownloadAllImagesForArtist():void {
-		DepsContainer.execOnPixiv(
+		Deps.execOnPixiv(
 			(pixiv, props) => {
 				return pixiv.api.userProfile({
 					user_ids: props.artistId,

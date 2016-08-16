@@ -47,3 +47,7 @@ export function getPotentialTag(url:string):string {
 		}
 	}
 }
+
+export function getImageIdFromSourceUrl(url:string):number {
+	return parseInt(extract(url, /\/([0-9]+)(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/));
+}

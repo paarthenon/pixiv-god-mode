@@ -19,6 +19,7 @@ let settingKeys = {
 			},
 			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',
 			directToManga: 'WORKS_PAGE_OPEN_MANGA_DIRECTLY',
+			openTabsImagesOnly: 'WORKS_PAGE_OPEN_DIRECT_IMAGES_IN_TABS',
 		},
 		bookmarkIllustration: {
 			fadeDownloaded: 'BOOKMARK_ILLUSTRATION_FADE_DOWNLOADED',

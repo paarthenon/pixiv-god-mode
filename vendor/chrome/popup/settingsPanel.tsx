@@ -75,6 +75,9 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.works.directToManga} 
 							label={'Link directly to manga'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.works.openTabsImagesOnly} 
+							label={'Open in tabs uses the direct image files instead of the pages'}/>
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
 					<Bootstrap.Col xs={6} md={6}>

@@ -32,7 +32,6 @@ export class MangaPage extends RootPage {
 		).then((response: any) => { 
 			let extension = response.body[this.illustId].illust_ext;
 			let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
-			//this.correctFileType(response.body[this.illustId].illust_ext) 
 
 			this.jQuery('img.image').toArray().forEach(image => {
 				let jQImage = this.jQuery(image);
