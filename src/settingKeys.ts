@@ -22,6 +22,9 @@ let settingKeys = {
 			openTabsImagesOnly: 'WORKS_PAGE_OPEN_DIRECT_IMAGES_IN_TABS',
 		},
 		bookmarkIllustration: {
+			inject: {
+				viewAll: 'BOOKMARK_ILLUSTRATION_INJECT_VIEW_ALL',
+			},
 			fadeDownloaded: 'BOOKMARK_ILLUSTRATION_FADE_DOWNLOADED',
 			fadeBookmarked: 'BOOKMARK_ILLUSTRATION_FADE_BOOKMARKED',
 		},

@@ -83,6 +83,9 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 					<Bootstrap.Col xs={6} md={6}>
 					<Bootstrap.Panel header="Bookmark Illustration Page">
 						<SettingContainer 
+							settingKey={SettingKeys.pages.bookmarkIllustration.inject.viewAll} 
+							label={'Inject view all button'}/>
+						<SettingContainer 
 							settingKey={SettingKeys.pages.bookmarkIllustration.fadeDownloaded} 
 							label={'Fade out downloaded images'}/>
 						<SettingContainer 

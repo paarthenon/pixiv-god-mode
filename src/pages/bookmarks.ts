@@ -1,10 +1,10 @@
 import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import {PixivAssistantServer} from '../services'
 import * as pathUtils from '../utils/path'
 import * as jQUtils from '../utils/jq'
 import {Container as Deps} from '../deps'
-import {injectViewAllButton} from '../injectors/bookmarkDetailViewAll'
+import {injectViewAllButton, ViewAllButtonElementId} from '../injectors/bookmarkDetailViewAll'
 
 import SettingKeys from '../settingKeys'
 
@@ -20,14 +20,22 @@ export class BookmarkIllustrationPage extends RootPage {
 		this.jQuery('section#illust-recommend li.image-item:not([data-pa-processed="true"])').toArray().forEach(image => func(this.jQuery(image)));
 	}
 
-	@ExecuteOnLoad
+	@ExecuteIfSetting(SettingKeys.pages.bookmarkIllustration.inject.viewAll)
 	public injectItems(){
 		injectViewAllButton(this.jQuery, "View All", this.loadAllBookmarks);
 	}
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		document.addEventListener('pixivBookmarkIllustrationRecommenationLoaded', (event) => this.experimentalFade());
+		document.addEventListener('pixivBookmarkIllustrationRecommenationLoaded', (event) => {
+			this.experimentalFade();
+			Deps.execOnPixiv(pixiv => pixiv.illustRecommend.completed).then(completed => {
+				console.log('completed status',completed);
+				if (completed) {
+					$(`#${ViewAllButtonElementId}`).hide();
+				}
+			})
+		});
 
 		Deps.execOnPixiv(pixiv => {
 			function issueNotification(){
