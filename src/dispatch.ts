@@ -11,6 +11,7 @@ import {ArtistTagListPage} from './pages/artistTagList'
 import {ArtistProfilePage} from './pages/artistProfile'
 import {FollowArtistPage} from './pages/followArtist'
 import {TagOverviewPage} from './pages/tagOverview'
+import {TagDetailPage} from './pages/tagDetail'
 import {RawImagePage} from './pages/rawImage'
 
 let patterns = {
@@ -26,6 +27,7 @@ let patterns = {
 	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php\?id=[0-9]+/,
 	artistProfile: /^http:\/\/www.pixiv.net\/member.php\?id=[0-9]+/,
 	tagOverview: /^http:\/\/www.pixiv.net\/tags.php$/,
+	tagDetail: /http:\/\/www.pixiv.net\/tags.php\?tag=.+/,
 	rawImage: /http:\/\/i[0-9].pixiv.net/,
 }
 
@@ -63,8 +65,12 @@ export function dispatch(path:string, jquery:JQueryStatic):RootPage {
 	if (path.match(patterns.tagOverview)) {
 		return new TagOverviewPage(path, jquery);
 	}
+	if (path.match(patterns.tagDetail)) {
+		return new TagDetailPage(path, jquery);
+	}
 	if (path.match(patterns.rawImage)) {
 		return new RawImagePage(path, jquery);
 	}
+
 	return new RootPage(path, jquery);
 }
