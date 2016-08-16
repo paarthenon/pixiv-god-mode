@@ -23,16 +23,16 @@ interface PixivExecDetails {
 export function pixivExec(){
 	document.addEventListener('pixivExec', function(event) {
 		let deets:PixivExecDetails = JSON.parse((<any>event).detail);
-		console.log('deets', deets);
 		let func = eval(`(${deets.func})`);
 		let result = func((<any>window).pixiv, deets.props);
 
 		Promise.resolve(result).then(result => {
+			let detailObject = {
+				id: deets.id,
+				response: result,
+			};
 			let evt = new CustomEvent('pixivExecResponse', {
-				detail: {
-					id: deets.id,
-					response: result
-				}
+				detail: detailObject
 			});
 			document.dispatchEvent(evt);
 		});

@@ -65,7 +65,9 @@ export class MangaPage extends RootPage {
 	}
 
 	public goToPreviousPage():void {
-		Deps.execOnPixiv(pixiv => pixiv.mangaViewer.listView.prev());
+		Deps.execOnPixiv(pixiv => {
+			pixiv.mangaViewer.listView.prev();
+		});
 	}
 
 	@RegisteredAction({ id: 'pa_download_manga_images', label: 'Download All', icon: 'download2' })
