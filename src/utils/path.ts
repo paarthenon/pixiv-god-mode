@@ -51,3 +51,7 @@ export function getPotentialTag(url:string):string {
 export function getImageIdFromSourceUrl(url:string):number {
 	return parseInt(extract(url, /\/([0-9]+)(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/));
 }
+
+export function generateImageLink(id:number):string {
+	return `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${id}`;
+}

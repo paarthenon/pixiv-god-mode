@@ -11,6 +11,7 @@ import {ArtistTagListPage} from './pages/artistTagList'
 import {ArtistProfilePage} from './pages/artistProfile'
 import {FollowArtistPage} from './pages/followArtist'
 import {TagOverviewPage} from './pages/tagOverview'
+import {RawImagePage} from './pages/rawImage'
 
 let patterns = {
 	illust: /^http:\/\/www.pixiv.net\/member_illust.php\?mode=medium&illust_id=[0-9]+/,
@@ -25,6 +26,7 @@ let patterns = {
 	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php\?id=[0-9]+/,
 	artistProfile: /^http:\/\/www.pixiv.net\/member.php\?id=[0-9]+/,
 	tagOverview: /^http:\/\/www.pixiv.net\/tags.php$/,
+	rawImage: /http:\/\/i[0-9].pixiv.net/,
 }
 
 export function dispatch(path:string, jquery:JQueryStatic):RootPage {
@@ -60,6 +62,9 @@ export function dispatch(path:string, jquery:JQueryStatic):RootPage {
 	}
 	if (path.match(patterns.tagOverview)) {
 		return new TagOverviewPage(path, jquery);
+	}
+	if (path.match(patterns.rawImage)) {
+		return new RawImagePage(path, jquery);
 	}
 	return new RootPage(path, jquery);
 }

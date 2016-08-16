@@ -11,7 +11,7 @@
   },
   "content_scripts": [{
   	"matches": [
-  		"http://www.pixiv.net/*"
+  		"http://*.pixiv.net/*"
   	],
   	"js": [
   		"resources/jquery-2.2.3.min.js",

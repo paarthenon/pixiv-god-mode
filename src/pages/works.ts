@@ -90,7 +90,7 @@ export class WorksPage extends GalleryPage {
 			if(imagesOnly) {
 				/*
 				For each image
-					- if a manga page, return the manga url directly
+					- if a manga or ugoira page, return the viewing url directly
 					- if an illustration page, return the original image url
 						- use the API to get illustration details to find file path
 						- use string manipulation to get the original-size image path from the thumbnail
@@ -100,7 +100,7 @@ export class WorksPage extends GalleryPage {
 					  to access direct images or it gives 403 Forbidden.
 				*/
 				Promise.all<string>(this.jQuery('li.image-item a.work').toArray().map(imgEntry => {
-					if (imgEntry.classList.contains('multiple')) {
+					if (imgEntry.classList.contains('multiple') || imgEntry.classList.contains('ugoku-illust')) {
 						return Promise.resolve(imgEntry.href);
 					} else {
 						let url = this.jQuery(imgEntry).find('img').attr('src');
