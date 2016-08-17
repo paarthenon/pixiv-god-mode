@@ -6,11 +6,13 @@ import Mailman from '../mailman'
 
 import ConfigKeys from '../../../src/configKeys'
 import {CachedDictionaryService} from '../../../src/core/dictionaryManagementService'
+import {PAServer} from '../../../src/core/paServer'
 import {Action} from '../../../src/core/IAction'
 import Config from '../config'
 
 import {DictionaryAdd} from './components/DictionaryAdd'
 
+import {ConditionalRender} from './components/conditionalRender'
 let logger = log4js.getLogger('HomePanel');
 
 let dict = new CachedDictionaryService(new Config(), {
@@ -24,6 +26,7 @@ export class HomePanel extends React.Component<any,any> {
 		return (
 			<div>
 				<DictionaryAdd onAdd={(key,value) => dict.update(key, value)} />
+				<AlertsDisplay />
 				<ActionContainer />
 
 				<p>Go to the settings page and update the global dictionary. This will happen automatically soon.</p>
@@ -68,5 +71,38 @@ export class ActionEntry extends React.Component<{action:Action}, void> {
 		return <div>
 				<a href="#" onClick={this.handleExecute.bind(this)}>{this.props.action.label}</a>
 			</div>;
+	}
+}
+
+let paserver = new PAServer(new Config(), Mailman.Background.ajax);
+
+export class AlertsDisplay extends React.Component<void, any> {
+	public render() {
+		return <div>
+			<ConditionalRender predicate={() => {
+				return Mailman.Background.getConfig({key:ConfigKeys.server_url})
+					.then(url => url.value == '' || !url.value)
+					.catch(() => true);
+			}}>
+				<ServerAlert />
+			</ConditionalRender>
+			<ConditionalRender predicate={() =>
+				paserver.ping().then(() => false).catch(() => true)
+			}>
+				<ServerConnectionAlert />
+			</ConditionalRender>
+		</div>;
+	}
+}
+
+export class ServerAlert extends React.Component<void, void> {
+	public render() {
+		return <Bootstrap.Alert bsStyle="warning">There is no server url registered.</Bootstrap.Alert>
+	}
+}
+
+export class ServerConnectionAlert extends React.Component<void, void> {
+	public render() {
+		return <Bootstrap.Alert bsStyle="warning">Unable to connect to server.</Bootstrap.Alert>
 	}
 }
