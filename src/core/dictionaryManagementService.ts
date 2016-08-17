@@ -20,7 +20,7 @@ interface AppKeys {
 
 export type naiveDictionary = { [id:string]:string };
 
-export type cachedDictionary = { cache: {key:string, value:string, local:boolean}[] };
+export type cachedDictionary = { cache: {key:string, value:string, local:boolean, hasGlobalDef?:boolean}[] };
 
 export class CachedDictionaryService {
 	constructor(
@@ -32,7 +32,8 @@ export class CachedDictionaryService {
 		let cache = Object.keys(global).concat(Object.keys(local))
 			.map(key => {
 				if (key in local) {
-					return {key, value: local[key], local:true};
+					let hasGlobalDef = key in global;
+					return {key, value: local[key], local:true, hasGlobalDef};
 				} else {
 					return {key, value: global[key], local:false};
 				}

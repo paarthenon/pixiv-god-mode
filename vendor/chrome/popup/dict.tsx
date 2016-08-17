@@ -4,12 +4,13 @@ import * as Bootstrap from 'react-bootstrap'
 
 import * as ChromeUtils from '../utils'
 
+import {cachedDictionary} from '../../../src/core/dictionaryManagementService'
 import {DictionaryAdd} from './components/DictionaryAdd'
 
 type paDict = { [id:string]:string };
 
 interface DictViewerProps {
-	cachedDict: { cache: {key:string, value:string, local:boolean}[] }
+	cachedDict: cachedDictionary
 	onUpdate: (key:string, value:string) => any
 	onDelete: (key:string) => any
 	onAdd: (key:string, value:string) => any
@@ -55,6 +56,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 							key={entry.key}
 							japanese={entry.key} 
 							translation={entry.value}
+							hasGlobalDef={entry.hasGlobalDef}
 							onUpdate={this.props.onUpdate}
 							onDelete={this.props.onDelete}
 						/>
@@ -104,6 +106,7 @@ interface DictEntryPair {
 	translation:string
 }
 interface DictEntryProps extends DictEntryPair {
+	hasGlobalDef?: boolean
 	onUpdate:(key:string, value:string) => any
 	onDelete:(key:string) => any
 }
@@ -124,6 +127,9 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 	public handleSearch() {
 		ChromeUtils.newTab("http://www.pixiv.net/search.php?s_mode=s_tag_full&word="+this.props.japanese)
 	}
+	public get deleteText() {
+		return (this.props.hasGlobalDef) ? 'revert' : 'delete'
+	}
 	public render() {
 		if (!this.state.editOpen)
 			return <tr>
@@ -135,7 +141,7 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 						className="glyphicon glyphicon-search" aria-hidden="true"></span>
 				</td>
 				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button></td>
-				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button></td>
+				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>{this.deleteText}</Bootstrap.Button></td>
 			</tr>
 		else return <tr>
 				<td>{this.props.japanese}</td>
