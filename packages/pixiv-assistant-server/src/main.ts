@@ -92,7 +92,7 @@ app.post('/:action', (req, res) => {
 		.then(result => res.json(result));
 });
 
-app.listen('9002', () => {
+app.listen('50415', () => {
 	let mainLogger = log4js.getLogger('Main');
-	mainLogger.info('listening on port 9002');
+	mainLogger.info('listening on port 50415');
 })
