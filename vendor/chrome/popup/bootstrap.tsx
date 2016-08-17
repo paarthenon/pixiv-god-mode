@@ -11,6 +11,7 @@ import {SettingsPanel} from './settingsPanel'
 import {ConfigPanel} from './configPanel'
 import {ServerStatusPanel} from './serverStatusPanel'
 import {HomePanel} from './homePanel'
+import {DictionaryJSON} from './exportDict'
 
 import configKeys from '../../../src/configKeys'
 import {CachedDictionaryService, naiveDictionary, cachedDictionary} from '../../../src/core/dictionaryManagementService'
@@ -63,7 +64,8 @@ function render() {
 		Dictionary: <DictContainer />,
 		Settings: <SettingsPanel />,
 		Config: <ConfigPanel />,
-		ServerStatus: <ServerStatusPanel />
+		ServerStatus: <ServerStatusPanel />,
+		'Exported Dict': <DictionaryJSON />,
 	}
 
 	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Home" />, document.getElementById('content'));

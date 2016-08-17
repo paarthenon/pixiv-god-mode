@@ -37,7 +37,7 @@ export class CachedDictionaryService {
 					return {key, value: global[key], local:false};
 				}
 			})
-			.sort((a,b) => a.value.localeCompare(b.value));
+			.sort((a,b) => a.value.localeCompare(b.value) || a.key.localeCompare(b.key));
 
 		return {cache};
 	}
