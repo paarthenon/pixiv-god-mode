@@ -79,17 +79,24 @@ let paserver = new PAServer(new Config(), Mailman.Background.ajax);
 export class AlertsDisplay extends React.Component<void, any> {
 	public render() {
 		return <div>
-			<ConditionalRender predicate={() => {
-				return Mailman.Background.getConfig({key:ConfigKeys.server_url})
-					.then(url => url.value == '' || !url.value)
-					.catch(() => true);
-			}}>
+			<ConditionalRender predicate={() => 
+				Mailman.Background.getConfig({key:ConfigKeys.server_url})
+					.then(url => !url.value)
+					.catch(() => true)
+			}>
 				<ServerAlert />
 			</ConditionalRender>
 			<ConditionalRender predicate={() =>
 				paserver.ping().then(() => false).catch(() => true)
 			}>
 				<ServerConnectionAlert />
+			</ConditionalRender>
+			<ConditionalRender predicate={() =>
+				Mailman.Background.getConfig({key:ConfigKeys.official_dict})
+					.then(dict => !dict.value)
+					.catch(() => true)
+			}>
+				<GlobalDictionaryEmptyAlert />
 			</ConditionalRender>
 		</div>;
 	}
@@ -104,5 +111,11 @@ export class ServerAlert extends React.Component<void, void> {
 export class ServerConnectionAlert extends React.Component<void, void> {
 	public render() {
 		return <Bootstrap.Alert bsStyle="warning">Unable to connect to server.</Bootstrap.Alert>
+	}
+}
+
+export class GlobalDictionaryEmptyAlert extends React.Component<void, void> {
+	public render() {
+		return <Bootstrap.Alert bsStyle="warning">Your global dictionary is empty. Please go to the settings and update it.</Bootstrap.Alert>
 	}
 }
