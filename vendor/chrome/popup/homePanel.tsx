@@ -26,13 +26,8 @@ export class HomePanel extends React.Component<any,any> {
 		return (
 			<div>
 				<DictionaryAdd onAdd={(key,value) => dict.update(key, value)} />
-				<AlertsDisplay />
 				<ActionContainer />
-
-				<p>Go to the settings page and update the global dictionary. This will happen automatically soon.</p>
-				<p>Home screen unfinished</p>
-				<p>TBD</p>
-				<p>Server status: See tab for now.</p>
+				<AlertsDisplay />
 			</div>
 			);
 	}
@@ -92,6 +87,11 @@ export class AlertsDisplay extends React.Component<void, any> {
 				<ServerConnectionAlert />
 			</ConditionalRender>
 			<ConditionalRender predicate={() =>
+				paserver.ping().then(() => true).catch(() => false)
+			}>
+				<ServerConnectionSuccessAlert />
+			</ConditionalRender>
+			<ConditionalRender predicate={() =>
 				Mailman.Background.getConfig({key:ConfigKeys.official_dict})
 					.then(dict => !dict.value || Object.keys(dict.value).length === 0)
 					.catch(() => true)
@@ -111,6 +111,12 @@ export class ServerAlert extends React.Component<void, void> {
 export class ServerConnectionAlert extends React.Component<void, void> {
 	public render() {
 		return <Bootstrap.Alert bsStyle="warning">Unable to connect to server.</Bootstrap.Alert>
+	}
+}
+
+export class ServerConnectionSuccessAlert extends React.Component<void, void> {
+	public render() {
+		return <Bootstrap.Alert bsStyle="success">Connected to Server</Bootstrap.Alert>
 	}
 }
 
