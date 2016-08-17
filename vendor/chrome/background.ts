@@ -7,7 +7,7 @@ import ConfigKeys from '../../src/configKeys'
 import Config from './config'
 import {DictionaryManagementService} from '../../src/core/dictionaryManagementService'
 import {GithubDictionaryUtil} from '../../src/core/githubDictionaryUtil'
-import {default as Mailman, defineImplementation} from './mailman'
+import {defineImplementation} from './mailman'
 
 let logger = log4js.getLogger('Background');
 
@@ -53,9 +53,12 @@ let localImpl = defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 	}
 });
 
-// Note: Must use localImpl, chrome message passing does not send message if target and sender are the same.
+// Note: Must use localImpl, chrome message passing does not send the message if the target 
+// is the same as the origin. Attempting to use Mailman.Background is meaningless here.
 function firstTimeSetup(){
-	let dictionaryService = new DictionaryManagementService(new Config(localImpl), 
+	let config = new Config(localImpl);
+
+	let dictionaryService = new DictionaryManagementService(config,
 		new GithubDictionaryUtil('pixiv-assistant/dictionary', localImpl.ajax), {
 			global: ConfigKeys.official_dict,
 			local: ConfigKeys.user_dict,
@@ -66,7 +69,10 @@ function firstTimeSetup(){
 		if (Object.keys(globalDict).length === 0) {
 			dictionaryService.updateGlobalDictionary();
 		}
-	})
+	});
+
+	// TODO: Create a more mature settings object and a default settings object
+	config.get(ConfigKeys.server_url).catch(() => config.set(ConfigKeys.server_url, 'http://localhost:50415/'));
 }
 
 firstTimeSetup();
