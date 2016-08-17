@@ -79,12 +79,12 @@ export class WorksPage extends GalleryPage {
 
 	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements.
 	// Make this action only visible if we are not already on the last page.
-	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'last' })
+	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'fast-forward' })
 	public goToLastPage() {
 		super.goToLastPage();
 	}
 
-	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-tab' })
+	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-window' })
 	public openTabs():void {
 		Deps.getSetting(SettingKeys.pages.works.openTabsImagesOnly).then(imagesOnly => {
 			if(imagesOnly) {
@@ -131,7 +131,7 @@ export class WorksPage extends GalleryPage {
 		PixivAssistantServer.openFolder(this.artist);
 	}
 
-	@RegisteredAction({ id: 'pa_download_all_images_debug', label: 'Download All (DEBUG)', icon: 'new-tab' })
+	// @RegisteredAction({ id: 'pa_download_all_images_debug', label: 'Download All (DEBUG)', icon: 'new-tab' })
 	public debugDownloadAllImagesForArtist():void {
 		Deps.execOnPixiv(
 			(pixiv, props) => {

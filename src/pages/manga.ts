@@ -70,7 +70,7 @@ export class MangaPage extends RootPage {
 		});
 	}
 
-	@RegisteredAction({ id: 'pa_download_manga_images', label: 'Download All', icon: 'download2' })
+	@RegisteredAction({ id: 'pa_download_manga_images', label: 'Download All', icon: 'download-alt' })
 	public downloadMulti(): void {
 		let fullImages = this.jQuery('img.image').toArray().map(img => this.jQuery(img).attr('data-src'));
 		PixivAssistantServer.downloadMulti({ id: this.artistId, name: this.artistName }, fullImages);

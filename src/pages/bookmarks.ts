@@ -53,7 +53,6 @@ export class BookmarkIllustrationPage extends RootPage {
 		});
 	}
 
-	@RegisteredAction({ id: 'pa_fade_bookmark_suggestions', label: 'Fade Downloaded Bookmarks', icon: 'paint-format' })
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
 			let artist = jQUtils.artistFromJQImage(image);
@@ -84,7 +83,7 @@ export class BookmarkIllustrationPage extends RootPage {
 		});
 	}
 
-	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks', icon: 'spinner2'})
+	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks', icon: 'th'})
 	public loadAllBookmarks() {
 		for (let i = 0; i < 15; i++) { 
 			Deps.execOnPixiv(pixiv => {

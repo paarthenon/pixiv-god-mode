@@ -66,7 +66,7 @@ export class IllustrationPage extends RootPage {
 	@RegisteredAction({ 
 		id: 'pa_download_zip_button', 
 		label: 'Download Animation as Zip',
-		icon: 'file-zip',
+		icon: 'compressed',
 	})
 	public downloadZip():void {
 		Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData.src)
@@ -82,7 +82,7 @@ export class IllustrationPage extends RootPage {
 		PixivAssistantServer.openFolder(this.artist);
 	}
 
-	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-disk' })
+	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-save' })
 	public download():void {
 		PixivAssistantServer.download(this.artist, this.fullImageUrl);
 	}

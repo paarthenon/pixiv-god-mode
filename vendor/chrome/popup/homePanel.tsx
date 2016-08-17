@@ -69,6 +69,7 @@ export class ActionEntry extends React.Component<{action:Action}, void> {
 	}
 	public render() {
 		return <div>
+				<span className={"glyphicon glyphicon-"+this.props.action.icon} aria-hidden="true"></span>
 				<a href="#" onClick={this.handleExecute.bind(this)}>{this.props.action.label}</a>
 			</div>;
 	}
