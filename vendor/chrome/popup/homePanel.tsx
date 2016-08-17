@@ -55,10 +55,9 @@ export class ActionDisplay extends React.Component<{actions:Action[]}, void> {
 	public render() {
 		return (
 			<div>
-				<p> Page Actions</p>
-				<ul>
-					{this.props.actions.map(action => <li><ActionEntry key={action.id} action={action} /></li>)}
-				</ul>
+				<Bootstrap.ListGroup>
+					{this.props.actions.map(action => <ActionEntry key={action.id} action={action} />)}
+				</Bootstrap.ListGroup>
 			</div>
 		);
 	}
@@ -68,10 +67,10 @@ export class ActionEntry extends React.Component<{action:Action}, void> {
 		Mailman.ContentScript.performAction({actionId: this.props.action.id});
 	}
 	public render() {
-		return <div>
+		return <Bootstrap.ListGroupItem onClick={this.handleExecute.bind(this)}>
 				<span className={"glyphicon glyphicon-"+this.props.action.icon} aria-hidden="true"></span>
-				<a href="#" onClick={this.handleExecute.bind(this)}>{this.props.action.label}</a>
-			</div>;
+				{this.props.action.label}
+			</Bootstrap.ListGroupItem>;
 	}
 }
 
@@ -94,7 +93,7 @@ export class AlertsDisplay extends React.Component<void, any> {
 			</ConditionalRender>
 			<ConditionalRender predicate={() =>
 				Mailman.Background.getConfig({key:ConfigKeys.official_dict})
-					.then(dict => !dict.value)
+					.then(dict => !dict.value || Object.keys(dict.value).length === 0)
 					.catch(() => true)
 			}>
 				<GlobalDictionaryEmptyAlert />

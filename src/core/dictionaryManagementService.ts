@@ -55,17 +55,11 @@ export class CachedDictionaryService {
 	}
 	public get local() :Promise<naiveDictionary> {
 		return this.config.get(this.keys.local)
-			.catch(() => {
-				this.config.set(this.keys.local, {} );
-				return {};
-			});
+			.catch(() => this.config.set(this.keys.local, {}).then(() => ({})));
 	}
 	public get global() :Promise<naiveDictionary> {
 		return this.config.get(this.keys.global)
-			.catch(() => {
-				this.config.set(this.keys.global, {} );
-				return {};
-			});
+			.catch(() =>this.config.set(this.keys.global, {}).then(() => ({})));
 	}
 
 	public update(key:string, value:string) {

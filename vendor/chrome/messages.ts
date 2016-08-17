@@ -2,10 +2,13 @@ import {potentialData as IConfigValue} from '../../src/core/IConfig'
 import {AjaxRequest} from '../../src/core/IAjax'
 import {Action} from '../../src/core/IAction'
 
-export interface Protocol {
+export interface ConfigProtocol {
 	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
 	setConfig: (msg: ConfigSetMessage) => Promise<void>
 	listConfig: () => Promise<string[]>
+}
+
+export interface Protocol extends ConfigProtocol {
 	ajax: (req:AjaxRequest<any>) => Promise<any>
 	newTab: (msg: UrlRequest) => Promise<void>
 	isPageBookmarked: (msg: UrlRequest) => Promise<boolean>

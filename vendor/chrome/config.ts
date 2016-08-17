@@ -22,16 +22,24 @@ function handleError<T>(value: T) {
 	});
 }
 export default class ContentConfig implements IConfig {
+	protected configEngine :Msg.ConfigProtocol
+	constructor(engine?:Msg.ConfigProtocol) {
+		if (engine) {
+			this.configEngine = engine;
+		} else {
+			this.configEngine = Mailman.Background;
+		}
+	}
 	public keys(): Promise<string[]> {
-		return Mailman.Background.listConfig();
+		return this.configEngine.listConfig();
 	}
 
 	public get(key: string): Promise<potentialData> {
-		return Mailman.Background.getConfig({ key })
+		return this.configEngine.getConfig({ key })
 			.then(msg => msg.value);
 	}
 
 	public set(key: string, value: potentialData) {
-		return Mailman.Background.setConfig({ key, value });
+		return this.configEngine.setConfig({ key, value });
 	}
 }
