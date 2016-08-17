@@ -24,12 +24,12 @@ export class DictionaryJSON extends React.Component<void,cachedDictionary> {
 
 class DictJSON extends React.Component<cachedDictionary,void> {
 	protected get formattedCache() {
-		let contents = this.props.cache.map(entry => `"${entry.key}":"${entry.value}"`).join(',');
-		return `{${contents}}`
+		let contents = this.props.cache.map(entry => `\t"${entry.key}":"${entry.value}"`).join(',\n');
+		return `{\n${contents}\n}`
 	}
 	public render() {
-		return <div>
+		return <pre>
 				{this.formattedCache}
-			</div>
+			</pre>
 	}
 }
