@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import {CachedDictionaryService, cachedDictionary} from '../../../src/core/dictionaryManagementService'
+import {CachedDictionaryService, cachedDictionary, naiveDictionary} from '../../../src/core/dictionaryManagementService'
 import Config from '../config'
 import ConfigKeys from '../../../src/configKeys'
 
@@ -11,14 +11,40 @@ let dict = new CachedDictionaryService(new Config(), {
 	cache: ConfigKeys.cached_dict
 });
 
-export class DictionaryJSON extends React.Component<void,cachedDictionary> {
-	state :cachedDictionary = {cache: []};
+interface DictStates {
+	global: naiveDictionary
+	local: naiveDictionary
+	cache: cachedDictionary
+}
+
+export class DictionaryJSON extends React.Component<void,DictStates> {
+	state :DictStates = {global: {}, local: {}, cache: {cache: []}};
 	constructor(){
 		super();
-		dict.cache.then(cache => this.setState(cache));
+
+		dict.cache.then(cache =>
+			dict.global.then(global =>
+				dict.local.then(local => this.setState({cache, global, local}))));
 	}
 	public render() {
-		return <DictJSON cache={this.state.cache} />
+		return <div>
+			<DictStats
+				globalCount={Object.keys(this.state.global).length}
+				localCount={Object.keys(this.state.local).length}
+				cacheCount={this.state.cache.cache.length}
+			/>
+			<DictJSON cache={this.state.cache.cache} />
+		</div>
+	}
+}
+
+class DictStats extends React.Component<{globalCount: number, localCount: number, cacheCount: number}, void> {
+	public render() {
+		return <div>
+			<p>Global dictionary: {this.props.globalCount}</p>
+			<p>User dictionary: {this.props.localCount}</p>
+			<p>Combined dictionary: {this.props.cacheCount}</p>
+		</div>
 	}
 }
 
