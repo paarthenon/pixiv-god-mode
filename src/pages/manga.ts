@@ -5,6 +5,7 @@ import {PixivAssistantServer} from '../services'
 import {Container as Deps} from '../deps'
 import SettingKeys from '../settingKeys'
 import {injectMangaPreviousButton} from '../injectors/mangaPreviousButton'
+import {Model} from '../../common/proto'
 
 export class MangaPage extends RootPage {
 	public get artistName(): string {
@@ -13,6 +14,9 @@ export class MangaPage extends RootPage {
 	public get artistId(): number {
 		// TODO: Extract to its own function. This currently re-uses the id pattern for URLs which may diverge.
 		return pathUtils.getArtistId(this.jQuery('footer ul.breadcrumbs li a.user').attr('href'));
+	}
+	public get artist(): Model.Artist {
+		return {id: this.artistId, name: this.artistName};
 	}
 
 	public get illustId(): number {
@@ -70,9 +74,15 @@ export class MangaPage extends RootPage {
 		});
 	}
 
+
 	@RegisteredAction({ id: 'pa_download_manga_images', label: 'Download All', icon: 'download-alt' })
 	public downloadMulti(): void {
 		let fullImages = this.jQuery('img.image').toArray().map(img => this.jQuery(img).attr('data-src'));
 		PixivAssistantServer.downloadMulti({ id: this.artistId, name: this.artistName }, fullImages);
+	}
+
+	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open'})
+	public openFolder():void {
+		PixivAssistantServer.openFolder(this.artist);
 	}
 }
