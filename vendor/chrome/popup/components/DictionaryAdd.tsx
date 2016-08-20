@@ -10,11 +10,15 @@ import * as chromeUtils from '../../utils'
 export class DictionaryAdd extends React.Component<{onAdd:(key:string,value:string)=>any},void> {
 	componentDidMount() {
 		chromeUtils.getCurrentTab().then(tab => {
-			let potentialTag = pathUtils.getPotentialTag(tab.url);
-			if (potentialTag !== '' && this.japaneseInput.value === '') {
-				this.japaneseInput.value = potentialTag;
+			if (tab.url) {
+				let potentialTag = pathUtils.getPotentialTag(tab.url);
+				if (potentialTag !== '' && this.japaneseInput.value === '') {
+					this.japaneseInput.value = potentialTag;
 
-				this.translationInput.focus();
+					this.translationInput.focus();
+				} else {
+					this.japaneseInput.focus();
+				}
 			} else {
 				this.japaneseInput.focus();
 			}
