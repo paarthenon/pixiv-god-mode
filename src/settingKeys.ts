@@ -30,6 +30,7 @@ let settingKeys = {
 			},
 			fadeDownloaded: 'BOOKMARK_ILLUSTRATION_FADE_DOWNLOADED',
 			fadeBookmarked: 'BOOKMARK_ILLUSTRATION_FADE_BOOKMARKED',
+			skipToDetail: 'BOOKMARK_ILLUSTRATION_SKIP_TO_DETAIL_PAGE',
 		},
 		artistBookmarks: {
 			inject: {

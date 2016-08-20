@@ -83,6 +83,11 @@ export class BookmarkIllustrationPage extends RootPage {
 		});
 	}
 
+	@ExecuteIfSetting(SettingKeys.pages.bookmarkIllustration.skipToDetail)
+	public moveOnToDetail(){
+		if (/bookmark_add/.test(window.location.href)) window.location.reload();
+	}
+
 	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks', icon: 'th'})
 	public loadAllBookmarks() {
 		for (let i = 0; i < 15; i++) { 

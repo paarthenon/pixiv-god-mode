@@ -94,6 +94,9 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.bookmarkIllustration.fadeBookmarked} 
 							label={'Fade out images from bookmarked artists'}/>
+						<SettingContainer 
+							settingKey={SettingKeys.pages.bookmarkIllustration.skipToDetail} 
+							label={'Skip to bookmark detail page'}/>
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
 				</Bootstrap.Row>
