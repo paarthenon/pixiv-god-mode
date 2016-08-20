@@ -25,7 +25,10 @@ export class DictionaryAdd extends React.Component<{onAdd:(key:string,value:stri
 	public get translationInput() {
 		return ReactDOM.findDOMNode(this.refs['translation']) as HTMLInputElement;
 	}
-	public handleAdd(){
+	public handleAdd(event:Event){
+		// Necessary to prevent page refresh from onSubmit
+		event.preventDefault();
+
 		this.props.onAdd(this.japaneseInput.value, this.translationInput.value)
 
 		// Clear the form now that the entry has been saved.
@@ -34,10 +37,10 @@ export class DictionaryAdd extends React.Component<{onAdd:(key:string,value:stri
 	}
 	public render() {
 		return <Bootstrap.Panel header="Add Translation">
-			<Bootstrap.Form inline>
+			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)}>
 					<Bootstrap.FormControl type="text" placeholder="japanese" ref="japanese" />
 					<Bootstrap.FormControl type="text" placeholder="translation" ref="translation" />
-					<Bootstrap.Button onClick={this.handleAdd.bind(this)}>add</Bootstrap.Button>
+					<Bootstrap.Button type="submit" onClick={this.handleAdd.bind(this)}>add</Bootstrap.Button>
 			</Bootstrap.Form>
 		</Bootstrap.Panel>
 	}
