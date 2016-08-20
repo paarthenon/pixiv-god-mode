@@ -37,16 +37,16 @@ export function explodeImagePathPages(url:string, pages:number):string[]{
 export function getPotentialTag(url:string):string {
 	let tagOfWorks = extract(url, /tag=([^&]+)/);
 	let tagOfSearch = extract(url, /word=([^&]+)/);
+	let tagOfWiki = extract(url, /dic.pixiv.net\/a\/([^&\?]+)$/);
 	
 	if (tagOfWorks){
 		return decodeURI(tagOfWorks);
-	} else {
-		if (/s_mode=s_tag_full/.test(url) && tagOfSearch) {
-			return decodeURI(tagOfSearch);
-		} else {
-			return '';
-		}
+	} else if (/s_mode=s_tag_full/.test(url) && tagOfSearch) {
+		return decodeURI(tagOfSearch);
+	} else if (tagOfWiki) {
+		return decodeURI(tagOfWiki);
 	}
+	return '';
 }
 
 export function getImageIdFromSourceUrl(url:string):number {
