@@ -1,4 +1,5 @@
 function extract(str: string, re: RegExp):string {
+	if (str == undefined) return undefined;
 	let out = str.match(re);
 	return (out && out.length > 1)? out[1]:null
 }
