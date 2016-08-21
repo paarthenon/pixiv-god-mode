@@ -13,6 +13,7 @@ import {FollowArtistPage} from './pages/followArtist'
 import {TagOverviewPage} from './pages/tagOverview'
 import {TagDetailPage} from './pages/tagDetail'
 import {RawImagePage} from './pages/rawImage'
+import {SuggestedUsersPage} from './pages/suggestedUsers'
 import {HomePage} from './pages/home'
 
 let patterns = {
@@ -30,6 +31,7 @@ let patterns = {
 	tagOverview: /^http:\/\/www.pixiv.net\/tags.php$/,
 	tagDetail: /http:\/\/www.pixiv.net\/tags.php\?tag=.+/,
 	rawImage: /http:\/\/i[0-9].pixiv.net/,
+	suggestedUsers: /http:\/\/www.pixiv.net\/search_user.php$/,
 	home: /http:\/\/www.pixiv.net\/$/,
 }
 
@@ -72,6 +74,9 @@ export function dispatch(path:string, jquery:JQueryStatic):RootPage {
 	}
 	if (path.match(patterns.rawImage)) {
 		return new RawImagePage(path, jquery);
+	}
+	if (path.match(patterns.suggestedUsers)) {
+		return new SuggestedUsersPage(path, jquery);
 	}
 	if (path.match(patterns.home)) {
 		return new HomePage(path, jquery);
