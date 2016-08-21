@@ -19,6 +19,12 @@ interface DictStates {
 
 export class DictionaryJSON extends React.Component<void,DictStates> {
 	state :DictStates = {global: {}, local: {}, cache: {cache: []}};
+
+	style = {
+		display: 'flex',
+		'flex-direction': 'column',
+	};
+
 	constructor(){
 		super();
 
@@ -27,7 +33,7 @@ export class DictionaryJSON extends React.Component<void,DictStates> {
 				dict.local.then(local => this.setState({cache, global, local}))));
 	}
 	public render() {
-		return <div>
+		return <div style={this.style}>
 			<DictStats
 				globalCount={Object.keys(this.state.global).length}
 				localCount={Object.keys(this.state.local).length}
@@ -54,8 +60,6 @@ class DictJSON extends React.Component<cachedDictionary,void> {
 		return `{\n${contents}\n}`
 	}
 	public render() {
-		return <pre>
-				{this.formattedCache}
-			</pre>
+		return <textarea rows="20" value={this.formattedCache}></textarea>
 	}
 }
