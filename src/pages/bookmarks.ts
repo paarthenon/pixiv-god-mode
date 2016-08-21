@@ -60,7 +60,7 @@ export class BookmarkIllustrationPage extends RootPage {
 
 			Deps.getSetting(SettingKeys.pages.bookmarkIllustration.fadeDownloaded).then(settingValue => {
 				if(settingValue) {
-					PixivAssistantServer.imageExistsInDatabase(artist, imageObj, exists => {
+					PixivAssistantServer.imageExistsInDatabase(artist, imageObj).then(exists => {
 						if (exists) {
 							image.addClass('pa-hidden-thumbnail');
 						}

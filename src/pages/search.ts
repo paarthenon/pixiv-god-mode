@@ -23,7 +23,7 @@ export class SearchPage extends GalleryPage {
 				if(fade) {
 					let artist = jQUtils.artistFromJQImage(image);
 					let imageObj = jQUtils.imageFromJQImage(image);
-					PixivAssistantServer.imageExistsInDatabase(artist, imageObj, exists => {
+					PixivAssistantServer.imageExistsInDatabase(artist, imageObj).then(exists => {
 						if (exists) {
 							image.addClass('pa-hidden-thumbnail');
 						}

@@ -6,6 +6,7 @@ import {PixivAssistantServer} from '../services'
 import {Container as Deps} from '../deps'
 import {Model} from '../../common/proto'
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
+import {injectDownloadIllustrationButton} from '../injectors/downloadIllustration'
 
 import * as geomUtils from '../utils/geometry'
 
@@ -25,6 +26,9 @@ export class IllustrationPage extends RootPage {
 	public get fullImageUrl():string {
 		return this.jQuery('._illust_modal img').attr('data-src');
 	}
+	public get imageId():number {
+		return pathUtils.getImageId(this.path);
+	}
 
 	protected getTagElements():JQuery[] {
 		return [
@@ -34,6 +38,13 @@ export class IllustrationPage extends RootPage {
 		.concat(super.getTagElements());
 	}
 
+	@ExecuteOnLoad
+	public injectDownloadButton() {
+		injectDownloadIllustrationButton(this.jQuery,
+			() => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
+			() => this.download());
+		
+	}
 	@ExecuteIfSetting(SettingKeys.pages.illust.inject.openFolder)
 	public injectOpenFolder() {
 		injectUserRelationshipButton(this.jQuery, this.artist);
@@ -83,8 +94,8 @@ export class IllustrationPage extends RootPage {
 	}
 
 	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-save' })
-	public download():void {
-		PixivAssistantServer.download(this.artist, this.fullImageUrl);
+	public download() {
+		return PixivAssistantServer.download(this.artist, this.fullImageUrl);
 	}
 
 }

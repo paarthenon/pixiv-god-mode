@@ -39,19 +39,20 @@ export class PAServer {
 
 	public openFolder(artist: Model.Artist) {
 		this.logger.debug(`openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
-		return this.callEndpoint(Features.OpenToArtist, artist);
+		return this.callEndpoint(Features.OpenToArtist, artist)
 	}
 
 	public download(artist:Model.Artist, imageUrl:string) {
 		this.logger.debug(`download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
 		let msg: Messages.ArtistUrlRequest = { artist: artist, url: imageUrl };
-		return this.callEndpoint(Features.DownloadImage, msg);
+		return this.callEndpoint(Features.DownloadImage, msg)
+			.then(() => Promise.resolve());
 	}
 
 	public downloadZip(artist: Model.Artist, zipUrl: string) {
 		this.logger.debug(`download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
 		let msg: Messages.ArtistUrlRequest = { artist: artist, url: zipUrl };
-		return this.callEndpoint(Features.DownloadAnimation, msg);
+		return this.callEndpoint(Features.DownloadAnimation, msg)	
 	}
 
 	public downloadMulti(artist: Model.Artist, imageUrls: string[]) {
@@ -60,11 +61,10 @@ export class PAServer {
 		return this.callEndpoint(Features.DownloadManga, msg);
 	}
 
-	public imageExistsInDatabase(artist: Model.Artist, image: Model.Image, callback: (param: boolean) => any) {
+	public imageExistsInDatabase(artist: Model.Artist, image: Model.Image) : Promise<boolean> {
 		this.logger.debug(`imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
 		let msg: Messages.ArtistImageRequest = { artist, image };
 		return this.callEndpoint<Messages.ArtistImageRequest, boolean>(Features.ImageExists, msg)
-			.then(callback);
 	}
 
 	public bulkImageExists(entries: Messages.ArtistImageRequest[]) : Promise<Messages.ArtistImageRequest[]> {
