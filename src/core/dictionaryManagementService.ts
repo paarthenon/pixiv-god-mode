@@ -69,12 +69,27 @@ export class CachedDictionaryService {
 		}).then(() => this.recalculateCache());
 	}
 
-	public delete(key:string) {
+	protected deleteMultiple(keys: string[]) {
 		return this.local.then(localDict => {
-			delete localDict[key];
+			keys.forEach(key => delete localDict[key]);
 			return this.config.set(this.keys.local, localDict);
 		}).then(() => this.recalculateCache());
 	}
+	public delete(key:string) {
+		return this.deleteMultiple([key]);
+	}
+
+	public getLocalDuplicates() :Promise<Array<string>> {
+		return this.local.then(localDict =>
+			this.global.then(globalDict => {
+				return Object.keys(localDict).filter(key => 
+					key in globalDict && localDict[key] === globalDict[key]);
+			}));
+	}
+	public deleteLocalDuplicates() :Promise<void> {
+		return this.getLocalDuplicates().then(dupes => this.deleteMultiple(dupes));
+	}
+
 }
 
 export class DictionaryManagementService extends CachedDictionaryService {

@@ -21,8 +21,8 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 			<Bootstrap.Grid>
 				<Bootstrap.Row>
 					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Global Dictionary Status">
-						<GlobalDictUpdaterContainer/>
+					<Bootstrap.Panel header="Dictionary Status">
+						<DictUpdaterContainer/>
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
 					<Bootstrap.Col xs={6} md={6}>
@@ -162,28 +162,40 @@ enum GlobalDictUpdateState {
 	DOWNLOADING
 }
 
-class GlobalDictUpdaterContainer extends React.Component<void, {mode: GlobalDictUpdateState}> {
-	state = {mode: GlobalDictUpdateState.LOADING};
+class DictUpdaterContainer extends React.Component<void, {mode: GlobalDictUpdateState, dupeLocalKeys:string[]}> {
+	state = {mode: GlobalDictUpdateState.LOADING, dupeLocalKeys: undefined as string[]};
 
 	constructor() {
 		super();
-		this.updateState();
+		this.updateStatus();
 	}
-	protected updateState(){
+	protected updateMode(mode: GlobalDictUpdateState) {
+		this.setState({mode, dupeLocalKeys: this.state.dupeLocalKeys});
+	}
+	protected updateStatus(){
 		dictService.globalUpdateAvailable.then(isAvailable => {
 			if (isAvailable) {
-				this.setState({mode: GlobalDictUpdateState.AVAILABLE});
+				this.updateMode(GlobalDictUpdateState.AVAILABLE);
 			} else {
-				this.setState({mode: GlobalDictUpdateState.UPTODATE});
+				this.updateMode(GlobalDictUpdateState.UPTODATE);
 			}
+		});
+		dictService.getLocalDuplicates().then(dupeLocalKeys => {
+			this.setState({mode: this.state.mode, dupeLocalKeys});
 		});
 	}
 	public updateDictionary(){
-		this.setState({mode: GlobalDictUpdateState.DOWNLOADING});
-		dictService.updateGlobalDictionary().then(() => this.updateState());
+		this.updateMode(GlobalDictUpdateState.DOWNLOADING);
+		dictService.updateGlobalDictionary().then(() => this.updateStatus());
+	}
+	public removeDuplicates(){
+		dictService.deleteLocalDuplicates().then(() => this.updateStatus());
 	}
 	public render() {
-		return <GlobalDictUpdater mode={this.state.mode} updateAction={this.updateDictionary.bind(this)} />
+		return <div>
+			<GlobalDictUpdater mode={this.state.mode} updateAction={this.updateDictionary.bind(this)} />
+			<DupeKeyReporter dupes={this.state.dupeLocalKeys} removeAction={this.removeDuplicates.bind(this)} />
+		</div>
 	}
 }
 
@@ -199,6 +211,16 @@ class GlobalDictUpdater extends React.Component<{mode: GlobalDictUpdateState, up
 			case GlobalDictUpdateState.DOWNLOADING:
 				return <div>Downloading an update.</div>
 		}
+	}
+}
+
+class DupeKeyReporter extends React.Component<{dupes: string[], removeAction:Function}, void> {
+	public render() {
+		return (this.props.dupes === undefined) ? null :
+			<div> 
+				Found <strong>{this.props.dupes.length}</strong> duplicate entries. 
+				<Bootstrap.Button onClick={this.props.removeAction}>Revert Duplicates</Bootstrap.Button>
+			</div>
 	}
 }
 
