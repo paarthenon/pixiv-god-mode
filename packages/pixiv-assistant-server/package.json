@@ -2,6 +2,7 @@
   "name": "pixiv-assistant-server",
   "version": "0.0.1",
   "description": "",
+  "main": "build/src/startup.js",
   "scripts": {
     "start": "node build/src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"

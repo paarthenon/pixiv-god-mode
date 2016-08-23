@@ -6,7 +6,7 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+      "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
     },
     "mime/mime.d.ts": {
       "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
@@ -46,6 +46,9 @@
     },
     "express-serve-static-core/express-serve-static-core.d.ts": {
       "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
+    },
+    "github-electron/github-electron.d.ts": {
+      "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
     }
   }
 }

@@ -18,81 +18,85 @@ log4js.configure({
 });
 let logger = log4js.getLogger('Startup');
 
-let cliArgs = yargs
-				.usage('Usage: $0 --repo artist|flat --path <path_string>')
-				.count('verbose')
-			    .alias('v', 'verbose')
-				.argv;
-
-if (cliArgs.verbose && cliArgs.verbose > 0) {
-	log4js.setGlobalLogLevel(log4js.levels.ALL);
-	logger.warn('Setting to verbose mode');
-} else {
-	log4js.setGlobalLogLevel(log4js.levels.INFO);
+export enum RepositoryType {
+	ArtistBreakdown,
+	LooseImages,
 }
 
-let defaultPath = 'pixivRepository';
-if (!cliArgs.path) {
-	logger.warn('No path specified, using default');
+export interface IServerConfig {
+	path? :string
+	repoType? :RepositoryType
+	port? :number
+	verboseLogging? :boolean
 }
-let path = cliArgs.path || defaultPath;
-logger.info(`Setting repo to path [${path}]`);
 
-function decideRepo() : PixivRepo {
-	switch (cliArgs.repo) {
-		case "artist":
-			logger.info('Using [root/artist/images*] repo format');
-			return new aiRepo.ArtistImageRepo(path);
-		case "flat":
-			logger.info('Using [root/images*] repo format');
-			return new fiRepo.ImageRepo(path);
-		default:
-			logger.warn('No repository format specified, using default');
-			logger.info('Using [root/artist/images*] repo format');
-			return new aiRepo.ArtistImageRepo(path);
+let defaults :IServerConfig = {
+	path: 'pixivRepository',
+	repoType: RepositoryType.ArtistBreakdown,
+	port: 50415,
+	verboseLogging: false
+}
+
+export function initServer(config:IServerConfig) {
+
+	if (config.verboseLogging) {
+		log4js.setGlobalLogLevel(log4js.levels.ALL);
+		logger.warn('Setting to verbose mode');
+	} else {
+		log4js.setGlobalLogLevel(log4js.levels.INFO);
 	}
+
+	let path = config.path || defaults.path;
+	logger.info(`Setting repo to path [${path}]`);
+
+	function decideRepo() : PixivRepo {
+		switch (config.repoType) {
+			case RepositoryType.ArtistBreakdown:
+				logger.info('Using [root/artist/images*] repo format');
+				return new aiRepo.ArtistImageRepo(path);
+			case RepositoryType.LooseImages:
+				logger.info('Using [root/images*] repo format');
+				return new fiRepo.ImageRepo(path);
+			default:
+				logger.warn('No repository format specified, using default');
+				logger.info('Using [root/artist/images*] repo format');
+				return new aiRepo.ArtistImageRepo(path);
+		}
+	}
+	// pixiv assistant repo
+	let pas = decideRepo();
+
+	let appLogger = log4js.getLogger('App');
+	let app = express();
+
+	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
+
+	app.all('/ping', (req, res) => {
+		appLogger.debug('Message Received | Ping');
+		res.json({success: true, data:true});
+	});
+
+	app.all('/supports/:action', (req, res) => {
+		let action: string = req.params.action;
+		appLogger.debug('Message Received | Supports action [', action, ']');
+		res.json({success: true, data: pas.supports(action)});
+	});
+
+	app.post('/:action', (req, res) => {
+		let action: string = req.params.action;
+		let message: any = req.body;
+		appLogger.debug('Message Received | Perform action [', action, ']');
+		q(message)
+			.then(msg => pas.dispatch(action, msg))
+			.then<Proto.Messages.Response>(
+				successfulResponse => ({ success: true, data: successfulResponse }),
+				failedResponse => ({ success: false, errors: failedResponse }))
+			.then(result => res.json(result));
+	});
+
+	return app.listen('50415', () => {
+		let mainLogger = log4js.getLogger('Main');
+		mainLogger.info('listening on port 50415');
+	});
 }
-let pas = decideRepo();
-
-logger.warn('You MUST use <ctrl>+c to exit the server safely. Database may not save otherwise');
-
-process.on('SIGINT', function() {
-	let mainLogger = log4js.getLogger('Main');
-	mainLogger.warn('Closing server');
-	pas.teardown();
-    process.exit();
-});
-
-let appLogger = log4js.getLogger('App');
-let app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.all('/ping', (req, res) => {
-	appLogger.debug('Message Received | Ping');
-	res.json({success: true, data:true});
-});
-
-app.all('/supports/:action', (req, res) => {
-	let action: string = req.params.action;
-	appLogger.debug('Message Received | Supports action [', action, ']');
-	res.json({success: true, data: pas.supports(action)});
-});
-
-app.post('/:action', (req, res) => {
-	let action: string = req.params.action;
-	let message: any = req.body;
-	appLogger.debug('Message Received | Perform action [', action, ']');
-	q(message)
-		.then(msg => pas.dispatch(action, msg))
-		.then<Proto.Messages.Response>(
-			successfulResponse => ({ success: true, data: successfulResponse }),
-			failedResponse => ({ success: false, errors: failedResponse }))
-		.then(result => res.json(result));
-});
-
-app.listen('50415', () => {
-	let mainLogger = log4js.getLogger('Main');
-	mainLogger.info('listening on port 50415');
-})

@@ -13,6 +13,7 @@
     ],
     "files": [
         "typings/tsd.d.ts",
-        "src/main.ts"
+        "src/main.ts",
+        "src/startup.ts"
     ]
 }
