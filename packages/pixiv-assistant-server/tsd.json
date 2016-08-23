@@ -49,6 +49,12 @@
     },
     "github-electron/github-electron.d.ts": {
       "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
+    },
+    "react/react-dom.d.ts": {
+      "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
+    },
+    "react/react.d.ts": {
+      "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
     }
   }
 }
