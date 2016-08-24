@@ -8,8 +8,8 @@ export function defineService <T>(target:Msg.BackendTarget, implementation:T) {
 	ipcMain.on(target, ((event, msg) => {
 		let message: Msg.RequestWrapper<any> = msg;
 		dispatch(implementation, msg)
-			.then(content => event.sender.send(target, { success: true, data: content }))
-			.catch(reason => event.sender.send(target, { success: false, errors: reason}));
+			.then(content => event.sender.send(message.id, { success: true, data: content }))
+			.catch(reason => event.sender.send(message.id, { success: false, errors: reason}));
 
 		return true;
 	}));

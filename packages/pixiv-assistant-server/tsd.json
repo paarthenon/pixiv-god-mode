@@ -6,7 +6,7 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
+      "commit": "324169800cb792855a96272f5d58f646e7b1d56d"
     },
     "mime/mime.d.ts": {
       "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
@@ -54,7 +54,19 @@
       "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
     },
     "react/react.d.ts": {
-      "commit": "c75674c0a04b3cde7e1eee862bb20420ee404309"
+      "commit": "324169800cb792855a96272f5d58f646e7b1d56d"
+    },
+    "react-bootstrap/react-bootstrap.d.ts": {
+      "commit": "324169800cb792855a96272f5d58f646e7b1d56d"
+    },
+    "node-uuid/node-uuid.d.ts": {
+      "commit": "324169800cb792855a96272f5d58f646e7b1d56d"
+    },
+    "node-uuid/node-uuid-base.d.ts": {
+      "commit": "324169800cb792855a96272f5d58f646e7b1d56d"
+    },
+    "node-uuid/node-uuid-cjs.d.ts": {
+      "commit": "324169800cb792855a96272f5d58f646e7b1d56d"
     }
   }
 }

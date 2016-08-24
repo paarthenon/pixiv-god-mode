@@ -1,6 +1,7 @@
 export type BackendTarget = "ServerConfiguration"
 
 export interface RequestWrapper<T> {
+	id: string
 	name: string
 	body: T
 }

@@ -2,6 +2,8 @@ import * as Msg from './ipcMessages'
 import {IServerConfigProtocol} from './proto'
 import {ipcRenderer} from 'electron'
 
+import * as uuid from 'node-uuid'
+
 function send<T, V>(target: Msg.BackendTarget, name:string, msg: T): Promise<V> {
 	return new Promise((resolve, reject) => {
 		function responseHandler (response: Msg.ResponseMessage) {
@@ -16,8 +18,12 @@ function send<T, V>(target: Msg.BackendTarget, name:string, msg: T): Promise<V> 
 				}
 			}
 		}
+
+		let messageId = uuid.v4();
+
+		ipcRenderer.once(messageId, (event, returnValue) => resolve(returnValue));
 		
-		ipcRenderer.send(target, {name, body: msg});
+		ipcRenderer.send(target, {id: messageId, name, body: msg});
 	})
 } 
 

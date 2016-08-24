@@ -2,23 +2,28 @@ import {app, BrowserWindow} from 'electron'
 
 import {defineService} from './defineService'
 import {IServerConfigProtocol} from './proto'
+import * as http from 'http'
 
 import * as server from './server'
 
-let serverInstance :Express.Application = undefined;
+let serverInstance :http.Server = undefined;
 
+//TODO: Make these actually asynchronous by listening for the open and close events and resolving then.
 defineService<IServerConfigProtocol>("ServerConfiguration", {
 	initialize: config => 
 		{
 			serverInstance = server.initServer(config);
 			return Promise.resolve();
 		},
-	close: () => Promise.resolve()
+	close: () => {
+		serverInstance.close();
+		return Promise.resolve()
+	}
 
 });
 
 function generateWindow () {
-	let win = new BrowserWindow({width: 800, height: 600});
+	let win = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/../res/pa-icon-32.png'});
 	win.loadURL(`file://${__dirname}/www/index.html`);
 	return win;
 }
