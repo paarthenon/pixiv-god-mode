@@ -15,4 +15,5 @@ export interface IServerConfig {
 export interface IServerConfigProtocol {
 	initialize :(config:IServerConfig) => Promise<void>
 	close :() => Promise<void>
+	openFolderDialog :() => Promise<string>
 }

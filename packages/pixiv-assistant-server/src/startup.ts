@@ -1,4 +1,4 @@
-import {app, BrowserWindow} from 'electron'
+import {app, dialog, BrowserWindow} from 'electron'
 
 import {defineService} from './defineService'
 import {IServerConfigProtocol} from './proto'
@@ -18,6 +18,11 @@ defineService<IServerConfigProtocol>("ServerConfiguration", {
 	close: () => {
 		serverInstance.close();
 		return Promise.resolve()
+	},
+	openFolderDialog: () => {
+		return new Promise((resolve, reject) => {
+			dialog.showOpenDialog({properties: ['openDirectory']}, (fileNames) => resolve(fileNames[0]));
+		});
 	}
 
 });

@@ -4,6 +4,7 @@ import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
+import * as proto from '../proto'
 
 let logger = log4js.getLogger('Bootstrap');
 
@@ -14,15 +15,6 @@ export interface IServerConfig {
 	verboseLogging? :boolean
 }
 
-/*
-<FormGroup controlId="formControlsSelect">
-      <ControlLabel>Select</ControlLabel>
-      <FormControl componentClass="select" placeholder="select">
-        <option value="select">select</option>
-        <option value="other">...</option>
-      </FormControl>
-    </FormGroup>
-*/
 
 class ServerStatus extends React.Component<void, any> {
 	state = {started: false};
@@ -52,10 +44,14 @@ class ServerConfigurationForm extends React.Component<{clickAction:Function}, vo
 	public handleSubmit(){
 		this.props.clickAction(this.repoPathInput.value);
 	}
+	public handleBrowse(){
+		Mailman.ServerConfig.openFolderDialog().then(str => this.repoPathInput.value = str);
+	}
 	public render() {
 		return (
 			<Bootstrap.Form>
 				<Bootstrap.FormControl type="text" placeholder="pixivRepository" ref="repoPath" />
+				<Bootstrap.Button onClick={this.handleBrowse.bind(this)}>Browse</Bootstrap.Button>
 				<Bootstrap.ControlLabel>Repository Type</Bootstrap.ControlLabel>
 				<Bootstrap.FormControl componentClass="select" placeholder="Repository Type">
 					<option value="artist">artist</option>

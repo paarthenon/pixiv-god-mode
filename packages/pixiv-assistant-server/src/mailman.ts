@@ -21,7 +21,7 @@ function send<T, V>(target: Msg.BackendTarget, name:string, msg: T): Promise<V> 
 
 		let messageId = uuid.v4();
 
-		ipcRenderer.once(messageId, (event, returnValue) => resolve(returnValue));
+		ipcRenderer.once(messageId, (event, returnValue) => responseHandler(returnValue));
 		
 		ipcRenderer.send(target, {id: messageId, name, body: msg});
 	})
