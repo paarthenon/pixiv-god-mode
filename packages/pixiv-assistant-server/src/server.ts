@@ -11,24 +11,14 @@ import * as q from 'q'
 import * as yargs from 'yargs'
 import * as log4js from 'log4js'
 
+import {IServerConfig, RepositoryType} from './proto'
+
 log4js.configure({
 	appenders: [
 		{ type: 'console' }
 	]
 });
 let logger = log4js.getLogger('Startup');
-
-export enum RepositoryType {
-	ArtistBreakdown,
-	LooseImages,
-}
-
-export interface IServerConfig {
-	path? :string
-	repoType? :RepositoryType
-	port? :number
-	verboseLogging? :boolean
-}
 
 let defaults :IServerConfig = {
 	path: 'pixivRepository',

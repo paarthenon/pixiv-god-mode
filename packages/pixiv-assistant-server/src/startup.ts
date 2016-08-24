@@ -1,11 +1,27 @@
 import {app, BrowserWindow} from 'electron'
 
+import {defineService} from './defineService'
+import {IServerConfigProtocol} from './proto'
+
+import * as server from './server'
+
+let serverInstance :Express.Application = undefined;
+
+defineService<IServerConfigProtocol>("ServerConfiguration", {
+	initialize: config => 
+		{
+			serverInstance = server.initServer(config);
+			return Promise.resolve();
+		},
+	close: () => Promise.resolve()
+
+});
+
 function generateWindow () {
 	let win = new BrowserWindow({width: 800, height: 600});
 	win.loadURL(`file://${__dirname}/www/index.html`);
 	return win;
 }
-
 let win:Electron.BrowserWindow
 
 app.on('ready', () => win = generateWindow());
