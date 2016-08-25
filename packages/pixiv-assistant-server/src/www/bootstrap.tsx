@@ -62,20 +62,24 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 			<h2>Pixiv Assistant Server Config</h2>
 			<Bootstrap.Well>
 			<Bootstrap.Form>
-				<Bootstrap.InputGroup>
+				<Bootstrap.FormGroup><Bootstrap.InputGroup>
+					<Bootstrap.InputGroup.Addon>Repository Path</Bootstrap.InputGroup.Addon>
 					<Bootstrap.FormControl type="text" placeholder="pixivRepository" ref="repoPath" />
 					<Bootstrap.InputGroup.Button>
 						<Bootstrap.Button onClick={this.handleBrowse.bind(this)}>Browse</Bootstrap.Button>
 					</Bootstrap.InputGroup.Button>
-				</Bootstrap.InputGroup>
-				<Bootstrap.FormGroup inline>
-					<Bootstrap.ControlLabel>Repository Type</Bootstrap.ControlLabel>
+				</Bootstrap.InputGroup></Bootstrap.FormGroup>
+				<Bootstrap.FormGroup><Bootstrap.InputGroup inline>
+					<Bootstrap.InputGroup.Addon>Repository Type</Bootstrap.InputGroup.Addon>
 					<Bootstrap.FormControl componentClass="select" placeholder="Repository Type" ref="repoType">
 						<option value={proto.RepositoryType.ArtistBreakdown}>Repo / Artist / Images</option>
 						<option value={proto.RepositoryType.LooseImages}>Repo / Loose Images</option>
 					</Bootstrap.FormControl>
-				</Bootstrap.FormGroup>
-				<Bootstrap.FormControl type="text" placeholder="50415" ref="port" />
+				</Bootstrap.InputGroup></Bootstrap.FormGroup>
+				<Bootstrap.FormGroup><Bootstrap.InputGroup inline>
+					<Bootstrap.InputGroup.Addon>Port Number</Bootstrap.InputGroup.Addon>
+					<Bootstrap.FormControl type="text" placeholder="50415" ref="port" />
+				</Bootstrap.InputGroup></Bootstrap.FormGroup>
 				<Bootstrap.Button onClick={this.handleSubmit.bind(this)}>Start Server</Bootstrap.Button>
 			</Bootstrap.Form>
 			</Bootstrap.Well>
@@ -104,7 +108,7 @@ class LogViewer extends React.Component<void, {log:any[]}> {
 		LogCollector.register((log) => this.setState({log}));
 	}
 	public render() {
-		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${x.time} [${x.level}] - ${x.category} - ${x.data}`).join('\n')}</pre></Bootstrap.Grid>;
+		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${(new Date(x.time)).toLocaleString()} [${x.level}] - ${x.category} - ${x.data}`).join('\n')}</pre></Bootstrap.Grid>;
 	}
 }
 
