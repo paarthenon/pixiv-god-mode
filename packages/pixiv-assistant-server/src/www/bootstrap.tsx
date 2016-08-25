@@ -87,7 +87,15 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 
 class CloseServerForm extends React.Component<{clickAction:Function}, void> {
 	public render() {
-		return <Bootstrap.Button onClick={this.props.clickAction}>Close Server</Bootstrap.Button>
+		return <Bootstrap.Grid>
+			<Bootstrap.Row>
+			<h2>Server Status</h2>
+			<Bootstrap.Well>
+				<p> Server <strong>Active</strong> </p>
+				<Bootstrap.Button onClick={this.props.clickAction}>Close Server</Bootstrap.Button>
+			</Bootstrap.Well>
+			</Bootstrap.Row>
+			</Bootstrap.Grid>
 	}
 }
 class LogViewer extends React.Component<void, {log:any[]}> {
