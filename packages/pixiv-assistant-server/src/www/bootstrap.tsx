@@ -49,17 +49,30 @@ class ServerConfigurationForm extends React.Component<{clickAction:Function}, vo
 	}
 	public render() {
 		return (
+			<Bootstrap.Grid>
+			<Bootstrap.Row>
+			<h2>Pixiv Assistant Server Config</h2>
+			<Bootstrap.Well>
 			<Bootstrap.Form>
-				<Bootstrap.FormControl type="text" placeholder="pixivRepository" ref="repoPath" />
-				<Bootstrap.Button onClick={this.handleBrowse.bind(this)}>Browse</Bootstrap.Button>
-				<Bootstrap.ControlLabel>Repository Type</Bootstrap.ControlLabel>
-				<Bootstrap.FormControl componentClass="select" placeholder="Repository Type">
-					<option value="artist">artist</option>
-					<option value="image">image</option>
-				</Bootstrap.FormControl>
+				<Bootstrap.InputGroup>
+					<Bootstrap.FormControl type="text" placeholder="pixivRepository" ref="repoPath" />
+					<Bootstrap.InputGroup.Button>
+						<Bootstrap.Button onClick={this.handleBrowse.bind(this)}>Browse</Bootstrap.Button>
+					</Bootstrap.InputGroup.Button>
+				</Bootstrap.InputGroup>
+				<Bootstrap.FormGroup inline>
+					<Bootstrap.ControlLabel>Repository Type</Bootstrap.ControlLabel>
+					<Bootstrap.FormControl componentClass="select" placeholder="Repository Type">
+						<option value="artist">artist</option>
+						<option value="image">image</option>
+					</Bootstrap.FormControl>
+				</Bootstrap.FormGroup>
 				<Bootstrap.FormControl type="text" placeholder="50415" ref="port" />
 				<Bootstrap.Button onClick={this.handleSubmit.bind(this)}>Start Server</Bootstrap.Button>
 			</Bootstrap.Form>
+			</Bootstrap.Well>
+			</Bootstrap.Row>
+			</Bootstrap.Grid>
 		)
 	}
 }
