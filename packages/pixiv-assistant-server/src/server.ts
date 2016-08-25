@@ -14,7 +14,6 @@ import * as log4js from 'log4js'
 import {IServerConfig, RepositoryType} from './proto'
 import * as electronAppender from './utils/electronAppender'
 
-console.log('loaded appender', electronAppender);
 (<any>log4js).loadAppender(
     'electron', electronAppender
 );
@@ -94,8 +93,14 @@ export function initServer(config:IServerConfig) {
 			.then(result => res.json(result));
 	});
 
-	return app.listen('50415', () => {
+	let listeningPort = config.port || defaults.port;
+
+	let appServer = app.listen(listeningPort, () => {
 		let mainLogger = log4js.getLogger('Main');
-		mainLogger.info('listening on port 50415');
+		mainLogger.info('listening on port',listeningPort);
 	});
+
+	appServer.on('close', () => pas.teardown());
+
+	return appServer;
 }

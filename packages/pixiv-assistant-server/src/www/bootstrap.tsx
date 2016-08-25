@@ -8,18 +8,10 @@ import * as proto from '../proto'
 
 let logger = log4js.getLogger('Bootstrap');
 
-export interface IServerConfig {
-	path? :string
-	// repoType? :repotype
-	port? :number
-	verboseLogging? :boolean
-}
-
-
 class ServerStatus extends React.Component<void, any> {
 	state = {started: false};
-	public handleStart(path:string){
-		Mailman.ServerConfig.initialize({path}).then(() => {
+	public handleStart(props:proto.IServerConfig){
+		Mailman.ServerConfig.initialize(props).then(() => {
 			this.setState({started: true});
 		})
 	}
@@ -37,12 +29,22 @@ class ServerStatus extends React.Component<void, any> {
 	}
 }
 
-class ServerConfigurationForm extends React.Component<{clickAction:Function}, void> {
+class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.IServerConfig) => any}, void> {
 	public get repoPathInput() {
 		return ReactDOM.findDOMNode(this.refs['repoPath']) as HTMLInputElement;
 	}
+	public get repoTypeInput() {
+		return ReactDOM.findDOMNode(this.refs['repoType']) as HTMLInputElement;
+	}
+	public get portInput() {
+		return ReactDOM.findDOMNode(this.refs['port']) as HTMLInputElement;
+	}
 	public handleSubmit(){
-		this.props.clickAction(this.repoPathInput.value);
+		this.props.clickAction({
+			path: this.repoPathInput.value,
+			repoType: parseInt(this.repoTypeInput.value) as proto.RepositoryType,
+			port: parseInt(this.portInput.value),
+		});
 	}
 	public handleBrowse(){
 		Mailman.ServerConfig.openFolderDialog().then(str => this.repoPathInput.value = str);
@@ -62,9 +64,9 @@ class ServerConfigurationForm extends React.Component<{clickAction:Function}, vo
 				</Bootstrap.InputGroup>
 				<Bootstrap.FormGroup inline>
 					<Bootstrap.ControlLabel>Repository Type</Bootstrap.ControlLabel>
-					<Bootstrap.FormControl componentClass="select" placeholder="Repository Type">
-						<option value="artist">artist</option>
-						<option value="image">image</option>
+					<Bootstrap.FormControl componentClass="select" placeholder="Repository Type" ref="repoType">
+						<option value={proto.RepositoryType.ArtistBreakdown}>Repo / Artist / Images</option>
+						<option value={proto.RepositoryType.LooseImages}>Repo / Loose Images</option>
 					</Bootstrap.FormControl>
 				</Bootstrap.FormGroup>
 				<Bootstrap.FormControl type="text" placeholder="50415" ref="port" />
