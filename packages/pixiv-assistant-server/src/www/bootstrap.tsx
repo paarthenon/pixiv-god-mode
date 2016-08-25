@@ -5,8 +5,11 @@ import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
 import * as proto from '../proto'
+import * as LogCollector from './logCollector'
 
 let logger = log4js.getLogger('Bootstrap');
+
+LogCollector.initialize();
 
 class ServerStatus extends React.Component<void, any> {
 	state = {started: false};
@@ -21,11 +24,14 @@ class ServerStatus extends React.Component<void, any> {
 		})
 	}
 	public render() {
-		if (!this.state.started) {
-			return <ServerConfigurationForm clickAction={this.handleStart.bind(this)} />
-		} else {
-			return <CloseServerForm clickAction={this.handleClose.bind(this)}/>;
-		}
+		return <div>
+			{(!this.state.started) ?
+				<ServerConfigurationForm clickAction={this.handleStart.bind(this)} />
+			:
+				<CloseServerForm clickAction={this.handleClose.bind(this)}/>
+			}
+			<LogViewer />
+		</div>
 	}
 }
 
@@ -82,6 +88,15 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 class CloseServerForm extends React.Component<{clickAction:Function}, void> {
 	public render() {
 		return <Bootstrap.Button onClick={this.props.clickAction}>Close Server</Bootstrap.Button>
+	}
+}
+class LogViewer extends React.Component<void, {log:any[]}> {
+	state = {log:[] as any[]};
+	componentDidMount(){
+		LogCollector.register((log) => this.setState({log}));
+	}
+	public render() {
+		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${x.time} [${x.level}] - ${x.category} - ${x.data}`).join('\n')}</pre></Bootstrap.Grid>;
 	}
 }
 

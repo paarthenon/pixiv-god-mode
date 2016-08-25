@@ -1,9 +1,16 @@
-interface PALogEvent {
+let sendFunc :Function = undefined;
+
+export interface PALogEvent {
 	time :Date
 	category :string
 	data :any[]
 	level: string
 }
+
+export function initialize(func:Function) {
+	sendFunc = func;
+}
+
 function sanitizeLogEvent(loggingEvent:any) :PALogEvent {
 	return {
 		time: loggingEvent.startTime,
@@ -14,7 +21,9 @@ function sanitizeLogEvent(loggingEvent:any) :PALogEvent {
 }
 export function appender() {
 	return function(loggingEvent:any) {
-		console.log(sanitizeLogEvent(loggingEvent));
+		if (sendFunc != undefined) {
+			sendFunc('logMessage', sanitizeLogEvent(loggingEvent));
+		}
 	}
 }
 

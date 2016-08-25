@@ -1,9 +1,23 @@
 import {app, dialog, BrowserWindow} from 'electron'
 import * as http from 'http'
+import * as log4js from 'log4js'
 
 import {defineService} from './defineService'
 import {IServerConfigProtocol} from './proto'
 import * as server from './server'
+
+import * as electronAppender from './utils/electronAppender'
+
+(<any>log4js).loadAppender(
+    'electron', electronAppender
+);
+
+log4js.configure({
+	appenders: [
+		{ type: 'console' }
+	]
+});
+log4js.addAppender(log4js.appenders['electron']({}));
 
 let serverInstance :http.Server = undefined;
 
@@ -33,6 +47,8 @@ function generateWindow () {
 		title: 'Pixiv Assistant Server'
 	});
 	win.loadURL(`file://${__dirname}/www/index.html`);
+
+	electronAppender.initialize(win.webContents.send.bind(win.webContents));
 	return win;
 }
 let win:Electron.BrowserWindow

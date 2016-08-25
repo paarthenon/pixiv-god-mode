@@ -12,19 +12,6 @@ import * as yargs from 'yargs'
 import * as log4js from 'log4js'
 
 import {IServerConfig, RepositoryType} from './proto'
-import * as electronAppender from './utils/electronAppender'
-
-(<any>log4js).loadAppender(
-    'electron', electronAppender
-);
-
-log4js.configure({
-	appenders: [
-		{ type: 'console' }
-	]
-});
-log4js.addAppender(log4js.appenders['electron']());
-
 
 let logger = log4js.getLogger('Startup');
 
