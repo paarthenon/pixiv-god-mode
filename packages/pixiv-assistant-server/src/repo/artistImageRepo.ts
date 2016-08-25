@@ -71,11 +71,16 @@ class ArtistImageDatabase {
 	}
 
 	public getPathForArtist(artist:Model.Artist):string {
-		return path.join(this.path, this.artistToFolderName(artist));
+		let localArtist = this.getArtistById(artist.id);
+		if (localArtist) {
+			return path.join(this.path, this.artistToFolderName(localArtist));
+		} else {
+			return path.join(this.path, this.artistToFolderName(artist));
+		}
 	}
 	
 	public getPathForImage(artist:Model.Artist, image:Model.Image):string {
-		return path.join(this.path, this.artistToFolderName(artist), this.imageToFileName(image));
+		return path.join(this.getPathForArtist(artist), this.imageToFileName(image));
 	}
 }
 

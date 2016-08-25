@@ -1,9 +1,8 @@
 import {app, dialog, BrowserWindow} from 'electron'
+import * as http from 'http'
 
 import {defineService} from './defineService'
 import {IServerConfigProtocol} from './proto'
-import * as http from 'http'
-
 import * as server from './server'
 
 let serverInstance :http.Server = undefined;
@@ -28,7 +27,11 @@ defineService<IServerConfigProtocol>("ServerConfiguration", {
 });
 
 function generateWindow () {
-	let win = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/../res/pa-icon-32.png'});
+	let win = new BrowserWindow({
+		width: 800, height: 600, 
+		icon: __dirname + '/../res/pa-icon-32.png',
+		title: 'Pixiv Assistant Server'
+	});
 	win.loadURL(`file://${__dirname}/www/index.html`);
 	return win;
 }
