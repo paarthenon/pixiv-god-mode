@@ -76,3 +76,10 @@ function firstTimeSetup(){
 }
 
 firstTimeSetup();
+
+function setDebugMode(mode:boolean){
+	let config = new Config(localImpl);
+	config.set(ConfigKeys.debug_mode, mode).then(() => console.log('Debug mode set to',mode));
+}
+
+(window as any).setDebugMode = setDebugMode;

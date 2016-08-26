@@ -17,6 +17,7 @@ import configKeys from '../../../src/configKeys'
 import {CachedDictionaryService, naiveDictionary, cachedDictionary} from '../../../src/core/dictionaryManagementService'
 
 let logger = log4js.getLogger('Bootstrap');
+let config = new Config();
 
 let official_dict :any = {};
 
@@ -59,16 +60,29 @@ Mailman.Background.getConfig({ key: configKeys.official_dict })
 	.then(dict => { official_dict = dict.value; render(); });
 
 function render() {
-	let tabInfo: { [id: string]: JSX.Element } = {
-		Home: <HomePanel />,
-		Dictionary: <DictContainer />,
-		Settings: <SettingsPanel />,
-		Config: <ConfigPanel />,
-		ServerStatus: <ServerStatusPanel />,
-		'Exported Dict': <DictionaryJSON />,
-	}
+	let tabInfo: { [id: string]: JSX.Element } = undefined;
 
-	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Home" />, document.getElementById('content'));
+	config.get(configKeys.debug_mode).catch(() => false).then(debugMode => {
+		if (debugMode) {
+			tabInfo = {
+				Home: <HomePanel />,
+				Dictionary: <DictContainer />,
+				Settings: <SettingsPanel />,
+				Config: <ConfigPanel />,
+				ServerStatus: <ServerStatusPanel />,
+				'Exported Dict': <DictionaryJSON />,
+			};
+		} else {
+			tabInfo = {
+				Home: <HomePanel />,
+				Dictionary: <DictContainer />,
+				Settings: <SettingsPanel />,
+				'Exported Dict': <DictionaryJSON />,
+			};
+		}
+	}).then(() => {
+		ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Home" />, document.getElementById('content'));
+	})
 }
 
 render();
