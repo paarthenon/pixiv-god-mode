@@ -17,8 +17,12 @@ export abstract class BaseRepo implements PixivRepo {
 	}
 	public dispatch(action:string, msg:any):any {
 		let actionFunc = this.getCache().registry[action];
-		logger.debug('Dispatching on ', action, ' method found', action != undefined);
-		return actionFunc(msg);
+		logger.debug('Dispatching on ', action, ' method found', actionFunc !== undefined);
+		if (actionFunc !== undefined) {
+			return actionFunc(msg);
+		} else {
+			return Promise.reject('Action not valid for this server');
+		}
 	}
 
 	public teardown():void { }
