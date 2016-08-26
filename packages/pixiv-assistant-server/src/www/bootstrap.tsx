@@ -108,7 +108,7 @@ class LogViewer extends React.Component<void, {log:any[]}> {
 		LogCollector.register((log) => this.setState({log}));
 	}
 	public render() {
-		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${(new Date(x.time)).toLocaleString()} [${x.level}] - ${x.category} - ${x.data}`).join('\n')}</pre></Bootstrap.Grid>;
+		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${(new Date(x.time)).toLocaleString()} [${x.level}] - ${x.category} - ${x.data.join(' ')}`).join('\n')}</pre></Bootstrap.Grid>;
 	}
 }
 
