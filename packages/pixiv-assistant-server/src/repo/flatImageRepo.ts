@@ -4,7 +4,7 @@ import {BaseRepo} from './baseRepo'
 import * as chokidar from 'chokidar'
 import * as pathUtils from '../utils/path'
 import * as fs from 'fs'
-
+import * as mkdirp from 'mkdirp'
 import * as pathLib from 'path'
 
 import * as downloadUtils from '../utils/download'
@@ -60,6 +60,54 @@ export class ImageRepo extends BaseRepo {
 
 		return cache;
 	}
+
+	protected findFilesAddedSince(repoPath:string, date: Date):Promise<IdSet> {
+		logger.info("Finding files added since last execution on", date);
+		return new Promise((resolve, reject) => {
+			let cache :IdSet = {};
+
+			let finder = new fileFinder({
+				rootFolder: repoPath,
+				fileModifiedDate: date
+			});
+
+			finder.on("match", (path: string, stats: fs.Stats) => {
+				logger.trace('File found:', path);
+				let image = pathUtils.fileNameToImage(pathLib.basename(path));
+				if (image) {
+					cache[image.id.toString()] = true;
+				}
+			});
+
+			finder.on("patherror", function(err:any, strPath:string) {
+				logger.error('Error accessing path:',strPath);
+				logger.error('Error Details:',err);
+			})
+
+			finder.on("error", function(err:any) {
+				let errorStr = 'Error while finding updated files';
+				logger.error(errorStr, err);
+				reject(`${errorStr} [${err}]`);
+			})
+
+			finder.on("complete", function() {
+				logger.info("Found all files added while server offline");
+				resolve(cache);
+			});
+
+			finder.startSearch();
+		});
+	}
+
+	protected initializeFileWatcher(path:string) {
+		chokidar.watch(path, { persistent: true })
+			.on('add', (filePath: string) => {
+				let baseName: string = pathLib.basename(filePath);
+				let imageId: string = pathUtils.fileNameToImage(baseName).id.toString();
+				this.imageCache[imageId] = true;
+			});
+	}
+	
 	public constructor(path:string) {
 		super(path);
 		let date: Date = undefined;
@@ -75,30 +123,11 @@ export class ImageRepo extends BaseRepo {
 			this.imageCache = this.filesInPath(path);
 		}
 
-		logger.info("Finding files added since last execution");
-		let finder = new fileFinder({
-			rootFolder: path,
-			fileModifiedDate: date
+		this.findFilesAddedSince(path, date).then(() => {
+			logger.info("Watching for new files");
+			this.initializeFileWatcher(path);
+			logger.info("Repository initialized. Application ready");
 		});
-
-		finder.on("match", (path: string, stats: fs.Stats) => {
-			let image = pathUtils.fileNameToImage(pathLib.basename(path));
-			if (image) {
-				this.imageCache[image.id.toString()] = true;
-			}
-		});
-		finder.on("complete", function() {
-			logger.info("Found all files added while server offline");
-		});
-
-		logger.info("Watching for new files");
-		chokidar.watch(path, { persistent: true })
-			.on('add', (filePath: string) => {
-				let baseName: string = pathLib.basename(filePath);
-				let imageId: string = pathUtils.fileNameToImage(baseName).id.toString();
-				this.imageCache[imageId] = true;
-			});
-		logger.info("Repository initialized. Application ready");
 	}
 
 	public teardown() {
@@ -113,7 +142,13 @@ export class ImageRepo extends BaseRepo {
 
 	@ImageRepo.actions.register(Features.OpenToRepo)
 	public openRepo(){
-		opn(this.repoPath);
+		mkdirp(this.repoPath, err => {
+			if (err) {
+				return Promise.reject('Error creating folder');
+			} else {
+				opn(this.repoPath);
+			}
+		});
 	}
 
 	@ImageRepo.actions.register(Features.ImageExists)
@@ -128,7 +163,7 @@ export class ImageRepo extends BaseRepo {
 	
 	@ImageRepo.actions.register(Features.DownloadImage)
 	public downloadImage(msg:Messages.UrlRequest) {
-		return downloadUtils.downloadFromPixiv({ url: msg.url, path: pathLib.basename(msg.url) });
+		return downloadUtils.downloadFromPixiv({ url: msg.url, path: pathLib.join(this.repoPath, pathLib.basename(msg.url)) });
 	}
 	@ImageRepo.actions.register(Features.DownloadManga)
 	public downloadManga(msg: Messages.BulkRequest<Messages.UrlRequest>) {
