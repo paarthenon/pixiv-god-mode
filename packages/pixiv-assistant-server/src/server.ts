@@ -23,8 +23,8 @@ let defaults :IServerConfig = {
 }
 
 export function initServer(config:IServerConfig) {
-
-	if (config.verboseLogging) {
+	let verboseLogging = (config.verboseLogging !== undefined)? config.verboseLogging : defaults.verboseLogging;
+	if (verboseLogging) {
 		log4js.setGlobalLogLevel(log4js.levels.ALL);
 		logger.warn('Setting to verbose mode');
 	} else {
