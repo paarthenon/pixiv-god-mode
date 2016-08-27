@@ -30,8 +30,10 @@ export class PAServer {
 				let parsedResponse: Messages.Response = JSON.parse(response);
 				if(Messages.isPositiveResponse(parsedResponse)) {
 					return parsedResponse.data;
-				} else {
-					return Promise.reject('Negative response');
+				}
+				if(Messages.isNegativeResponse(parsedResponse)) {
+					this.logger.error('Server returned failed response', parsedResponse.errors);
+					return Promise.reject('Negative response: ' + JSON.stringify(parsedResponse.errors));
 				}
 			})
 		})
@@ -59,12 +61,14 @@ export class PAServer {
 		this.logger.debug(`download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
 		let msg: Messages.ArtistUrlRequest = { artist: artist, url: zipUrl };
 		return this.callEndpoint(Features.DownloadAnimation, msg)	
+			.then(() => Promise.resolve());
 	}
 
 	public downloadMulti(artist: Model.Artist, imageUrls: string[]) {
 		this.logger.debug(`downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
 		let msg : Messages.BulkArtistUrlRequest = { items: imageUrls.map(url => ({ artist, url })) };
-		return this.callEndpoint(Features.DownloadManga, msg);
+		return this.callEndpoint(Features.DownloadManga, msg)
+			.then(() => Promise.resolve());
 	}
 
 	public imageExistsInDatabase(artist: Model.Artist, image: Model.Image) : Promise<boolean> {

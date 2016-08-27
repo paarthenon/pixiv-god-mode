@@ -10,6 +10,12 @@ import {injectDownloadIllustrationButton} from '../injectors/downloadIllustratio
 
 import * as geomUtils from '../utils/geometry'
 
+enum IllustrationType {
+	Picture,
+	Manga,
+	Animation,
+}
+
 export class IllustrationPage extends RootPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.jQuery('a.user-link').attr('href'));
@@ -30,6 +36,16 @@ export class IllustrationPage extends RootPage {
 		return pathUtils.getImageId(this.path);
 	}
 
+	public get illustrationType():IllustrationType {
+		if (this.jQuery('.works_display a.multiple').length) {
+			return IllustrationType.Manga;
+		}
+		if (this.jQuery('div.works_display > div._ugoku-illust-player-container').length) {
+			return IllustrationType.Animation;
+		}
+		return IllustrationType.Picture;
+	}
+
 	protected getTagElements():JQuery[] {
 		return [
 			'.tags-container li.tag a.text',
@@ -42,7 +58,7 @@ export class IllustrationPage extends RootPage {
 	public injectDownloadButton() {
 		injectDownloadIllustrationButton(this.jQuery,
 			() => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
-			() => this.download());
+			() => this.downloadIllustration());
 		
 	}
 	@ExecuteIfSetting(SettingKeys.pages.illust.inject.openFolder)
@@ -79,13 +95,17 @@ export class IllustrationPage extends RootPage {
 		label: 'Download Animation as Zip',
 		icon: 'compressed',
 	})
-	public downloadZip():void {
-		Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData.src)
+	public downloadZip() {
+		return new Promise<void>((resolve, reject) => {
+			Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData.src)
 			.then((src:string) => {
 				if(src.length > 0){
-					PixivAssistantServer.downloadZip(this.artist, src);
+					resolve(PixivAssistantServer.downloadZip(this.artist, src))
+				} else {
+					reject('Unable to find animation frames');
 				}
 			});
+		});
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
@@ -93,9 +113,35 @@ export class IllustrationPage extends RootPage {
 		PixivAssistantServer.openFolder(this.artist);
 	}
 
+	public downloadIllustration():Promise<void> {
+		switch (this.illustrationType) {
+			case IllustrationType.Picture:
+				return this.downloadSinglePicture();
+			case IllustrationType.Manga:
+				return this.downloadManga();
+			case IllustrationType.Animation:
+				return this.downloadZip();
+		}
+	}
+
 	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-save' })
-	public download() {
+	public downloadSinglePicture() {
 		return PixivAssistantServer.download(this.artist, this.fullImageUrl);
+	}
+
+	@RegisteredAction({ id: 'pa_button_download_manga', label: 'Download Manga', icon: 'floppy-save' })
+	public downloadManga() {
+		let url = this.jQuery('div.works_display div._layout-thumbnail img').attr('src');
+
+		let metaPageString = this.jQuery('ul.meta li:contains("Multiple images")').text();
+		let pages = pathUtils.numPagesFromMeta(metaPageString);
+
+		let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
+		let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
+
+		console.log('Images',urls);
+
+		return PixivAssistantServer.downloadMulti(this.artist, urls);
 	}
 
 }

@@ -56,3 +56,7 @@ export function getImageIdFromSourceUrl(url:string):number {
 export function generateImageLink(id:number):string {
 	return `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${id}`;
 }
+
+export function numPagesFromMeta(str:string):number {
+	return parseInt(extract(str, /Multiple images: ([0-9]+)P/));
+}
