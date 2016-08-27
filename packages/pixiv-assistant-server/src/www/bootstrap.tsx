@@ -36,6 +36,8 @@ class ServerStatus extends React.Component<void, any> {
 }
 
 class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.IServerConfig) => any}, void> {
+	private verboseInput :HTMLInputElement = undefined;
+
 	public get repoPathInput() {
 		return ReactDOM.findDOMNode(this.refs['repoPath']) as HTMLInputElement;
 	}
@@ -50,6 +52,7 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 			path: this.repoPathInput.value,
 			repoType: parseInt(this.repoTypeInput.value) as proto.RepositoryType,
 			port: parseInt(this.portInput.value),
+			verboseLogging: this.verboseInput.checked,
 		});
 	}
 	public handleBrowse(){
@@ -80,6 +83,10 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 					<Bootstrap.InputGroup.Addon>Port Number</Bootstrap.InputGroup.Addon>
 					<Bootstrap.FormControl type="text" placeholder="50415" ref="port" />
 				</Bootstrap.InputGroup></Bootstrap.FormGroup>
+				<Bootstrap.Checkbox inputRef={ref => this.verboseInput = ref}>
+					Verbose Logging
+				</Bootstrap.Checkbox>
+
 				<Bootstrap.Button onClick={this.handleSubmit.bind(this)}>Start Server</Bootstrap.Button>
 			</Bootstrap.Form>
 			</Bootstrap.Well>
