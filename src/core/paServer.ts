@@ -40,6 +40,12 @@ export class PAServer {
 	public openFolder(artist: Model.Artist) {
 		this.logger.debug(`openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
 		return this.callEndpoint(Features.OpenToArtist, artist)
+			.catch(() => this.openRepo());
+	}
+
+	public openRepo() {
+		this.logger.debug('openRepo called');
+		return this.callEndpoint(Features.OpenToRepo);
 	}
 
 	public download(artist:Model.Artist, imageUrl:string) {
