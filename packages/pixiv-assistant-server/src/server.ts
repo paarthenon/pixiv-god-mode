@@ -75,8 +75,8 @@ export function initServer(config:IServerConfig) {
 		q(message)
 			.then(msg => pas.dispatch(action, msg))
 			.then<Proto.Messages.Response>(
-				successfulResponse => ({ success: true, data: successfulResponse }),
-				failedResponse => ({ success: false, errors: failedResponse }))
+				returnValue => ({ success: true, data: returnValue }),
+				failureReason => ({ success: false, errors: failureReason }))
 			.then(result => res.json(result));
 	});
 
