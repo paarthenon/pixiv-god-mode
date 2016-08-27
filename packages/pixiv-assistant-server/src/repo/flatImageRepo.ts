@@ -103,11 +103,15 @@ export class ImageRepo extends BaseRepo {
 		chokidar.watch(path, { persistent: true })
 			.on('add', (filePath: string) => {
 				let baseName: string = pathLib.basename(filePath);
-				let imageId: string = pathUtils.fileNameToImage(baseName).id.toString();
-				this.imageCache[imageId] = true;
+				let image = pathUtils.fileNameToImage(baseName);
+				if (image) {
+					this.imageCache[image.id.toString()] = true;
+				} else {
+					logger.warn(`Discovered a new file [${filePath}] but it does not register as a valid pixiv image. Please contact the developer if this is an error`);
+				}
 			});
 	}
-	
+
 	public constructor(path:string) {
 		super(path);
 		let date: Date = undefined;
