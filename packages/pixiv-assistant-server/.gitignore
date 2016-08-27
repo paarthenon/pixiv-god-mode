@@ -36,6 +36,7 @@ bin
 build
 tmp
 typings
+dist
 
 db.json
-dist
+pixivRepository

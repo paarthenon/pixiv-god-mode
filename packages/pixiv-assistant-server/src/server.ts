@@ -7,7 +7,6 @@ import {PixivRepo} from './repo/model'
 
 import * as Proto from '../common/proto'
 
-import * as q from 'q'
 import * as yargs from 'yargs'
 import * as log4js from 'log4js'
 
@@ -72,8 +71,8 @@ export function initServer(config:IServerConfig) {
 		let action: string = req.params.action;
 		let message: any = req.body;
 		appLogger.debug('Message Received | Perform action [', action, ']');
-		q(message)
-			.then(msg => pas.dispatch(action, msg))
+		
+		pas.dispatch(action, message)
 			.then<Proto.Messages.Response>(
 				returnValue => ({ success: true, data: returnValue }),
 				failureReason => ({ success: false, errors: failureReason }))

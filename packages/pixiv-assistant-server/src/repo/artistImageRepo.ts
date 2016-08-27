@@ -1,25 +1,18 @@
-import {BaseRepo} from './baseRepo'
-import {ActionCache} from '../utils/ActionCache'
-
 import {Model, Messages, Features} from '../../common/proto'
 
 import * as log4js from 'log4js'
-
-import * as mkdirp from 'mkdirp'
 import * as underscore from 'underscore'
-
 import * as http from 'http'
 import * as urllib from 'url'
 import * as fs from 'fs'
 import * as path from 'path'
-
 import * as XRegExp from "xregexp"
 
+import {BaseRepo} from './baseRepo'
+import {ActionCache} from '../utils/ActionCache'
 import * as pathUtils from '../utils/path'
-
-import * as Q from 'q'
-
 import * as downloadUtils from '../utils/download'
+import {makederp} from '../utils/makederp'
 
 const opn = require('opn');
 
@@ -118,13 +111,9 @@ export class ArtistImageRepo extends BaseRepo {
 		} else {
 			let artistFolder = this.db.getPathForArtist(artist);
 			logger.info(`opening folder ${artistFolder}`);
-			mkdirp(artistFolder, (err) => {
-				if (err) {
-					logger.error(`Error creating folder [${artistFolder}], err: [${err}]`);
-				} else {
-					opn(artistFolder);
-				}
-			});
+			makederp(artistFolder)
+				.then(opn)
+				.catch(err => logger.error(`Error creating folder [${artistFolder}], err: [${err}]`));
 		}
 	}
 
@@ -164,7 +153,7 @@ export class ArtistImageRepo extends BaseRepo {
 	}
 
 	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
-	public downloadZip(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
+	public downloadZip(request: Messages.ArtistUrlRequest):Promise<boolean> {
 		let zipName = path.basename(request.url);
 		let zipPath = path.join(this.db.getPathForArtist(request.artist), 'zip', zipName);
 
@@ -173,7 +162,7 @@ export class ArtistImageRepo extends BaseRepo {
 	}
 
 	@ArtistImageRepo.actions.register(Features.DownloadImage)
-	public download(request: Messages.ArtistUrlRequest):Q.IPromise<boolean> {
+	public download(request: Messages.ArtistUrlRequest):Promise<boolean> {
 		let imageName = path.basename(request.url);
 
 		logger.info(`Downloading image [${imageName}]`);
@@ -188,7 +177,7 @@ export class ArtistImageRepo extends BaseRepo {
 	@ArtistImageRepo.actions.register(Features.DownloadManga)
 	public downloadMulti(request: Messages.BulkRequest<Messages.ArtistUrlRequest>) {
 		logger.info('Beginning bulk download of', request.items.length, 'items');
-		return Q.all(request.items.map(msg => this.download(msg)))
+		return Promise.all(request.items.map(msg => this.download(msg)))
 			.then(x => {
 				logger.info('Completed download of', request.items.length, 'files');
 				return x;

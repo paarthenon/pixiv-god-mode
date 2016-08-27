@@ -4,10 +4,10 @@ import {BaseRepo} from './baseRepo'
 import * as chokidar from 'chokidar'
 import * as pathUtils from '../utils/path'
 import * as fs from 'fs'
-import * as mkdirp from 'mkdirp'
 import * as pathLib from 'path'
 
 import * as downloadUtils from '../utils/download'
+import {makederp} from '../utils/makederp'
 
 import {Features, Model, Messages} from '../../common/proto'
 
@@ -146,13 +146,7 @@ export class ImageRepo extends BaseRepo {
 
 	@ImageRepo.actions.register(Features.OpenToRepo)
 	public openRepo(){
-		mkdirp(this.repoPath, err => {
-			if (err) {
-				return Promise.reject('Error creating folder');
-			} else {
-				opn(this.repoPath);
-			}
-		});
+		return makederp(this.repoPath).then(opn);
 	}
 
 	@ImageRepo.actions.register(Features.ImageExists)
