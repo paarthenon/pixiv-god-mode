@@ -29,8 +29,9 @@ export class CachedDictionaryService {
 	) {	}
 
 	protected generateCachedDictionary(global:naiveDictionary, local:naiveDictionary) :cachedDictionary {
-		let cache = Object.keys(global).concat(Object.keys(local))
-			.map(key => {
+		let keySet = new Set(Object.keys(global).concat(Object.keys(local)));
+		
+		let cache = [...keySet].map(key => {
 				if (key in local) {
 					let hasGlobalDef = key in global;
 					return {key, value: local[key], local:true, hasGlobalDef};

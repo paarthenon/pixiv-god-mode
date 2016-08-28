@@ -57,7 +57,7 @@ class DictStats extends React.Component<{globalCount: number, localCount: number
 class DictJSON extends React.Component<cachedDictionary,void> {
 	protected get formattedCache() {
 		let contents = this.props.cache.map(entry => `\t"${entry.key}":"${entry.value}"`).join(',\n');
-		return `{\n${contents}\n}`
+		return `{\n${contents}\n}\n`
 	}
 	public render() {
 		return <textarea rows="20" value={this.formattedCache}></textarea>
