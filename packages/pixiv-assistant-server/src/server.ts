@@ -71,8 +71,8 @@ export function initServer(config:IServerConfig) {
 		let action: string = req.params.action;
 		let message: any = req.body;
 		appLogger.debug('Message Received | Perform action [', action, ']');
-		
-		pas.dispatch(action, message)
+
+		Promise.resolve(pas.dispatch(action, message))
 			.then<Proto.Messages.Response>(
 				returnValue => ({ success: true, data: returnValue }),
 				failureReason => ({ success: false, errors: failureReason }))
