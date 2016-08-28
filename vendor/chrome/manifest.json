@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Pixiv Assistant",
   "description": "Adds functionality for tag translation and other features for power users",
-  "version": "0.1.6",
+  "version": "0.1.7",
 
   "browser_action": {
   	"default_icon": "resources/pa-icon-38.png",
