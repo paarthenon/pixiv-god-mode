@@ -50,3 +50,4 @@ export class DictionaryAdd extends React.Component<{onAdd:(key:string,value:stri
 		</Bootstrap.Panel>
 	}
 }
+

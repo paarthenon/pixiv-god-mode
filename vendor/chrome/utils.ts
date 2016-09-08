@@ -42,3 +42,7 @@ export function newTab(url:string) {
 export function isPageBookmarked(url:string) {
 	return new Promise<boolean>(resolve => chrome.bookmarks.search({url}, results => resolve(results.length > 0)));
 }
+export function download(data:string) {
+	chrome.downloads.download({url:data, filename: 'test.webm', saveAs: true});
+	return Promise.resolve(true);
+}

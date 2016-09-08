@@ -50,7 +50,8 @@ let localImpl = defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 	},
 	isPageBookmarked: msg => {
 		return ChromeUtils.isPageBookmarked(msg.url);
-	}
+	},
+	download: msg => ChromeUtils.download(msg.url)
 });
 
 // Note: Must use localImpl, chrome message passing does not send the message if the target 

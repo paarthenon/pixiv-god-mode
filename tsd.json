@@ -52,6 +52,9 @@
     },
     "react-bootstrap/react-bootstrap.d.ts": {
       "commit": "e0abafb1a6ff652f7ff967120e312d5c1916eaef"
+    },
+    "jszip/jszip.d.ts": {
+      "commit": "ff50a0955f163e8413886ff508793caedb6e756d"
     }
   }
 }

@@ -34,7 +34,8 @@ let deps: IDependencyContainer = {
 	execOnPixiv: (func:(pixiv:any, props:any) => any, props?:any) => broker.queueExecution(func, props),
 	ajaxCall: (req: AjaxRequest<any>) => Mailman.Background.ajax(req),
 	getSetting,
-	isPageBookmarked: url => Mailman.Background.isPageBookmarked({url})
+	isPageBookmarked: url => Mailman.Background.isPageBookmarked({url}),
+	download: url => Mailman.Background.download({url}),
 }
 
 Dependencies.load(deps);

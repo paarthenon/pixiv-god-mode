@@ -38,6 +38,13 @@ export class SingleConfigDictionary implements IDictionary {
 			});
 		});
 	}
+
+	private _getItemFilteredBy(itemName: string, Fn: (x:any) => boolean) {
+    return (<any>this).getItemByName(itemName)
+        .map((items: any[]) => {
+            return items.filter( Fn );
+        });
+}
 }
 
 export default SingleConfigDictionary;

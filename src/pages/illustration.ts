@@ -1,3 +1,5 @@
+import * as jszip from 'jszip'
+
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
@@ -10,10 +12,27 @@ import {injectDownloadIllustrationButton} from '../injectors/downloadIllustratio
 
 import * as geomUtils from '../utils/geometry'
 
+var whammy = require('whammy');
+
 enum IllustrationType {
 	Picture,
 	Manga,
 	Animation,
+}
+
+interface UgokuFrameInformation {
+	file :string
+	delay :number
+}
+interface UgokuInformation {
+	src :string
+	mime_type :string
+	frames :UgokuFrameInformation[]
+}
+
+interface Dimensions {
+	width: number
+	height: number
 }
 
 export class IllustrationPage extends RootPage {
@@ -34,6 +53,16 @@ export class IllustrationPage extends RootPage {
 	}
 	public get imageId():number {
 		return pathUtils.getImageId(this.path);
+	}
+	public get ugokuInfo():Promise<UgokuInformation> {
+		return Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData);
+	}
+	public get ugokuCanvas():HTMLCanvasElement {
+		return this.jQuery('._ugoku-illust-player-container canvas')[0] as HTMLCanvasElement;
+	}
+	public get imageDimensions():Promise<Dimensions> {
+		return Deps.execOnPixiv<number[]>(pixiv => pixiv.context.illustSize)
+			.then(dims => ({width:dims[0], height:dims[1]}));
 	}
 
 	public get illustrationType():IllustrationType {
@@ -142,6 +171,69 @@ export class IllustrationPage extends RootPage {
 		console.log('Images',urls);
 
 		return PixivAssistantServer.downloadMulti(this.artist, urls);
+	}
+
+	
+
+	@RegisteredAction({ id: 'pa_make_webm', label: 'WEBM', icon: 'folder-open' })
+	public makeWebM(): void {
+		function getZipAjax(src:string) {
+			let req = new XMLHttpRequest();
+			req.open('GET', src);
+			req.responseType = 'blob';
+			req.send();
+			return new Promise((resolve, reject) => {
+				req.addEventListener('load', () => resolve(req.response));
+				req.addEventListener('error', err => reject(err));
+			})
+		}
+
+		function execSequentially<T>(arr:T[], func:(x:T)=>any) {
+			return arr.reduce((acc, cur) => acc.then(() => func(cur)), Promise.resolve());
+		}
+
+		let video = new whammy.Video();
+
+		this.ugokuInfo
+			.then(info => getZipAjax(info.src))
+			.then(data => jszip().loadAsync(data))
+			.then(zip => {
+				let fileData: {[id:string]:Promise<string>} = {}
+				zip.forEach((path, file) => {
+					fileData[path] = file.async('base64');
+				});
+
+				return this.ugokuInfo.then(info => 
+					execSequentially(info.frames, frame => 
+						fileData[frame.file]
+							.then(rawData => {
+								return new Promise<void>((resolve, reject) => {
+									let data = 'data:image/jpeg;base64,'+rawData;
+
+									this.imageDimensions.then(dims => {
+										let invisiCanvas = document.createElement('canvas') as HTMLCanvasElement;
+										invisiCanvas.width = dims.width;
+										invisiCanvas.height = dims.height;
+										let context = invisiCanvas.getContext('2d');
+
+										let img = new Image();
+										img.addEventListener('load', () => {
+											context.drawImage(img, 0, 0, invisiCanvas.width, invisiCanvas.height);
+											video.add(invisiCanvas, frame.delay);
+											resolve();
+										});
+										img.src = data;
+									})
+
+								});
+							})
+					)
+				)
+			}).then(() => {
+				let compiledString = video.compile();
+				let videoString = URL.createObjectURL(compiledString);
+				Deps.download(videoString);
+			})
 	}
 
 }

@@ -12,6 +12,7 @@ export interface Protocol extends ConfigProtocol {
 	ajax: (req:AjaxRequest<any>) => Promise<any>
 	newTab: (msg: UrlRequest) => Promise<void>
 	isPageBookmarked: (msg: UrlRequest) => Promise<boolean>
+	download: (msg: UrlRequest) => Promise<boolean>
 }
 
 export interface ContentScriptProtocol {

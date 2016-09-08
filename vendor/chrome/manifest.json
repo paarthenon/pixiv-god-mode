@@ -25,6 +25,7 @@
   "permissions": [
     "storage",
     "bookmarks",
+    "downloads",
     "http://*/",
     "https://*/"
   ],

@@ -9,6 +9,7 @@ export interface IDependencyContainer {
 	ajaxCall: <T, V> (req: AjaxRequest<T>) => Promise<V>
 	getSetting: (settingKey: string) => Promise<boolean>
 	isPageBookmarked: (url:string) => Promise<boolean>
+	download: (url:string) => Promise<boolean>
 }
 
 export var Container: IDependencyContainer = {
@@ -18,7 +19,8 @@ export var Container: IDependencyContainer = {
 	execOnPixiv: undefined,
 	ajaxCall: undefined,
 	getSetting: undefined,
-	isPageBookmarked: undefined
+	isPageBookmarked: undefined,
+	download: undefined,
 }
 
 export function load(deps:IDependencyContainer) {
