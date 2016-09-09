@@ -192,41 +192,42 @@ export class IllustrationPage extends RootPage {
 			return arr.reduce((acc, cur) => acc.then(() => func(cur)), Promise.resolve());
 		}
 
-		let video = new whammy.Video();
+		function toCanvasInstance(dataUrl:string, dims:Dimensions) {
+			return new Promise((resolve, reject) => {
+				let invisiCanvas = document.createElement('canvas') as HTMLCanvasElement;
+				invisiCanvas.width = dims.width;
+				invisiCanvas.height = dims.height;
+				let context = invisiCanvas.getContext('2d');
+
+				let img = new Image();
+				img.addEventListener('load', () => {
+					context.drawImage(img, 0, 0, invisiCanvas.width, invisiCanvas.height);
+					resolve(invisiCanvas);
+				});
+				img.src = dataUrl;
+			});
+		}
+
+		let video = new whammy.Video(undefined, 1);
 
 		this.ugokuInfo
 			.then(info => getZipAjax(info.src))
 			.then(data => jszip().loadAsync(data))
 			.then(zip => {
-				let fileData: {[id:string]:Promise<string>} = {}
+				let fileData: {[id:string]:Promise<string>} = {}	
 				zip.forEach((path, file) => {
 					fileData[path] = file.async('base64');
 				});
 
 				return this.ugokuInfo.then(info => 
 					execSequentially(info.frames, frame => 
-						fileData[frame.file]
-							.then(rawData => {
-								return new Promise<void>((resolve, reject) => {
-									let data = 'data:image/jpeg;base64,'+rawData;
-
-									this.imageDimensions.then(dims => {
-										let invisiCanvas = document.createElement('canvas') as HTMLCanvasElement;
-										invisiCanvas.width = dims.width;
-										invisiCanvas.height = dims.height;
-										let context = invisiCanvas.getContext('2d');
-
-										let img = new Image();
-										img.addEventListener('load', () => {
-											context.drawImage(img, 0, 0, invisiCanvas.width, invisiCanvas.height);
-											video.add(invisiCanvas, frame.delay);
-											resolve();
-										});
-										img.src = data;
-									})
-
-								});
+						fileData[frame.file].then(rawData => 
+							this.imageDimensions.then(dims => {
+								let dataUrl = `data:${info.mime_type};base64,${rawData}`;
+								return toCanvasInstance(dataUrl, dims)
+									.then(canvas => video.add(canvas, frame.delay))
 							})
+						)
 					)
 				)
 			}).then(() => {
