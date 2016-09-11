@@ -53,8 +53,7 @@ export function initServer(config:IServerConfig) {
 	let appLogger = log4js.getLogger('App');
 	let app = express();
 
-	app.use(bodyParser.urlencoded({ extended: false }));
-	app.use(bodyParser.json());
+	app.use(bodyParser.json({limit: '1gb'}));
 
 	app.all('/ping', (req, res) => {
 		appLogger.debug('Message Received | Ping');

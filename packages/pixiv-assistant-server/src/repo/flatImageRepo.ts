@@ -79,15 +79,15 @@ export class ImageRepo extends BaseRepo {
 				}
 			});
 
-			finder.on("patherror", function(err:any, strPath:string) {
+			finder.on("patherror", function(err:Error, strPath:string) {
 				logger.error('Error accessing path:',strPath);
-				logger.error('Error Details:',err);
+				logger.error('Error Details:',err.message);
 			})
 
-			finder.on("error", function(err:any) {
+			finder.on("error", function(err:Error) {
 				let errorStr = 'Error while finding updated files';
-				logger.error(errorStr, err);
-				reject(`${errorStr} [${err}]`);
+				logger.error(errorStr, err.message);
+				reject(`${errorStr} [${err.message}]`);
 			})
 
 			finder.on("complete", function() {
@@ -112,8 +112,16 @@ export class ImageRepo extends BaseRepo {
 			});
 	}
 
+	protected loadDB() {
+
+	}
+
 	public constructor(path:string) {
 		super(path);
+
+		makederp(path).then(() => {
+			let savedObj:ImageDb
+		})
 		let date: Date = undefined;
 
 		try {
@@ -124,14 +132,17 @@ export class ImageRepo extends BaseRepo {
 			logger.info("Completed loading saved image cache");
 		} catch (e) {
 			logger.warn("No saved cache found");
-			this.imageCache = this.filesInPath(path);
+
+			makederp(path).then(() => {
+				this.imageCache = this.filesInPath(path);
+			});
 		}
 
-		this.findFilesAddedSince(path, date).then(() => {
+		makederp(path).then(() => this.findFilesAddedSince(path, date).then(() => {
 			logger.info("Watching for new files");
 			this.initializeFileWatcher(path);
 			logger.info("Repository initialized. Application ready");
-		});
+		}));
 	}
 
 	public teardown() {
