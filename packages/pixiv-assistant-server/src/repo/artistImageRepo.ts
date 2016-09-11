@@ -152,7 +152,6 @@ export class ArtistImageRepo extends BaseRepo {
 		return undefined;
 	}
 
-	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
 	public downloadZip(request: Messages.ArtistUrlRequest):Promise<boolean> {
 		let zipName = path.basename(request.url);
 		let zipPath = path.join(this.db.getPathForArtist(request.artist), 'zip', zipName);
@@ -185,8 +184,8 @@ export class ArtistImageRepo extends BaseRepo {
 	}
 
 
-	@ArtistImageRepo.actions.register('testBlob')
-	public testDownBlob(request: any) {
+	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
+	public testDownBlob(msg:Messages.ArtistImageRequest & {content:string}) {
 		//TODO: Move to util.
 		function dataUrlDetails(dataUrl:string) {
 			const rx = /^data:([^/]+)\/([^;]+);base64,(.+)$/;
@@ -215,9 +214,11 @@ export class ArtistImageRepo extends BaseRepo {
 			})
 		}
 
-		let details = dataUrlDetails(request.data);
+		let details = dataUrlDetails(msg.content);
 		if (details) {
-			writeBase64('testFile.'+details.mime.subtype, details.content)
+			let location = path.join(this.db.getPathForArtist(msg.artist),`${msg.image.id}.${details.mime.subtype}`);
+
+			makederp(path.dirname(location)).then(() => writeBase64(location, details.content))
 				.catch(err => console.log(err));
 		}
 	}
