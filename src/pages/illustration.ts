@@ -120,21 +120,27 @@ export class IllustrationPage extends RootPage {
 	}
 
 	@RegisteredAction({ 
-		id: 'pa_download_zip_button', 
-		label: 'Download Animation as Zip',
+		id: 'pa_download_animation_button', 
+		label: 'Download Animation',
 		icon: 'compressed',
 	})
-	public downloadZip() {
-		return new Promise<void>((resolve, reject) => {
-			Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData.src)
-			.then((src:string) => {
-				if(src.length > 0){
-					resolve(PixivAssistantServer.downloadZip(this.artist, src))
-				} else {
-					reject('Unable to find animation frames');
-				}
+	public downloadAnimation() {
+		function getBase64(blob:Blob) :Promise<string> {
+			return new Promise((resolve, reject) => {
+				var reader = new FileReader();
+				reader.readAsDataURL(blob);
+				reader.onloadend = () => resolve(reader.result);
 			});
-		});
+		}
+
+		return this.makeWebM().then(video => 
+			getBase64(video).then(b64 => 
+				PixivAssistantServer.downloadAnimation({
+					artist: this.artist,
+					image: { id: this.imageId },
+				}, b64)
+			)
+		);
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
@@ -149,7 +155,7 @@ export class IllustrationPage extends RootPage {
 			case IllustrationType.Manga:
 				return this.downloadManga();
 			case IllustrationType.Animation:
-				return this.downloadZip();
+				return this.downloadAnimation();
 		}
 	}
 
@@ -173,10 +179,15 @@ export class IllustrationPage extends RootPage {
 		return PixivAssistantServer.downloadMulti(this.artist, urls);
 	}
 
-	
-
 	@RegisteredAction({ id: 'pa_make_webm', label: 'WEBM', icon: 'folder-open' })
-	public makeWebM(): void {
+	public localWebM(): void {
+		this.makeWebM().then(video => {
+			let videoString = URL.createObjectURL(video);
+			Deps.download(videoString);
+		})
+	}
+
+	protected makeWebM(): Promise<Blob> {
 		function getZipAjax(src:string) {
 			let req = new XMLHttpRequest();
 			req.open('GET', src);
@@ -208,17 +219,9 @@ export class IllustrationPage extends RootPage {
 			});
 		}
 
-		function getBase64(blob:Blob) {
-			return new Promise((resolve, reject) => {
-				var reader = new FileReader();
-				reader.readAsDataURL(blob);
-				reader.onloadend = () => resolve(reader.result);
-			});
-		}
-
 		let video = new whammy.Video(undefined, 1);
 
-		this.ugokuInfo
+		return this.ugokuInfo
 			.then(info => getZipAjax(info.src))
 			.then(data => jszip().loadAsync(data))
 			.then(zip => {
@@ -238,12 +241,7 @@ export class IllustrationPage extends RootPage {
 						)
 					)
 				)
-			}).then(() => {
-				let compiledString = video.compile();
-				let videoString = URL.createObjectURL(compiledString);
-				Deps.download(videoString);
-				return getBase64(compiledString).then(b64 => PixivAssistantServer.callEndpoint('testBlob', {data: b64}));
-			})
+			}).then(() => video.compile());
 	}
 
 }

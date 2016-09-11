@@ -57,9 +57,9 @@ export class PAServer {
 			.then(() => Promise.resolve());
 	}
 
-	public downloadZip(artist: Model.Artist, zipUrl: string) {
-		this.logger.debug(`download called with artist { id: ${artist.id}, name: ${artist.name} } and zipUrl [${zipUrl}]`);
-		let msg: Messages.ArtistUrlRequest = { artist: artist, url: zipUrl };
+	public downloadAnimation(request: Messages.ArtistImageRequest, content:string) {
+		this.logger.debug(`download called with artist { id: ${request.artist.id}, name: ${request.artist.name} } and image [${request.image.id}]`);
+		let msg = Object.assign(request, { content }); 
 		return this.callEndpoint(Features.DownloadAnimation, msg)	
 			.then(() => Promise.resolve());
 	}
