@@ -18,7 +18,7 @@ export class PAServer {
 
 	constructor(protected config:IConfig, protected ajax:AjaxFunction<any,any>) {}
 
-	protected callEndpoint<Req, Res>(feature: string, request?: Req) :Promise<Res> {
+	public callEndpoint<Req, Res>(feature: string, request?: Req) :Promise<Res> {
 		return this.config.get(ConfigKeys.server_url).then(server_url => {
 			return this.ajax({
 				type: 'POST',

@@ -208,6 +208,14 @@ export class IllustrationPage extends RootPage {
 			});
 		}
 
+		function getBase64(blob:Blob) {
+			return new Promise((resolve, reject) => {
+				var reader = new FileReader();
+				reader.readAsDataURL(blob);
+				reader.onloadend = () => resolve(reader.result);
+			});
+		}
+
 		let video = new whammy.Video(undefined, 1);
 
 		this.ugokuInfo
@@ -234,6 +242,7 @@ export class IllustrationPage extends RootPage {
 				let compiledString = video.compile();
 				let videoString = URL.createObjectURL(compiledString);
 				Deps.download(videoString);
+				return getBase64(compiledString).then(b64 => PixivAssistantServer.callEndpoint('testBlob', {data: b64}));
 			})
 	}
 
