@@ -13,6 +13,7 @@ import {ActionCache} from '../utils/ActionCache'
 import * as pathUtils from '../utils/path'
 import * as downloadUtils from '../utils/download'
 import {makederp} from '../utils/makederp'
+import {promisePool} from '../utils/promise'
 
 const opn = require('opn');
 
@@ -181,21 +182,16 @@ export class ArtistImageRepo extends BaseRepo {
 	public downloadMulti(request: Messages.BulkRequest<Messages.ArtistUrlRequest>) {
 		logger.info('Beginning bulk download of', request.items.length, 'items');
 		let tasks = request.items.map(msg => (() => this.download(msg)));
-		PromisePool(tasks, 8)
+		promisePool(tasks, 8)
 			.then(x => {
 				logger.info('Completed download of',x.length,'files');
 				return x;
 			})
-		// return Promise.all(request.items.map(msg => this.download(msg)))
-		// 	.then(x => {
-		// 		logger.info('Completed download of', request.items.length, 'files');
-		// 		return x;
-		// 	});
 	}
 
 
 	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
-	public testDownBlob(msg:Messages.ArtistImageRequest & {content:string}) {
+	public downloadAnimation(msg:Messages.ArtistImageRequest & {content:string}) {
 		//TODO: Move to util.
 		function dataUrlDetails(dataUrl:string) {
 			const rx = /^data:([^/]+)\/([^;]+);base64,(.+)$/;
@@ -232,26 +228,4 @@ export class ArtistImageRepo extends BaseRepo {
 				.catch(err => console.log(err));
 		}
 	}
-}
-
-//TODO: Move to util
-function PromisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T[]> {
-	let boxedLimit = Math.min(limit, arr.length);
-	let next = boxedLimit;
-	let crashCount = 0;
-
-	let result = Array(arr.length);
-	return new Promise((resolve, reject) => {
-		function passBaton<T>(id:number) :Promise<T>{
-			if (id >= arr.length) {
-				if (++crashCount === boxedLimit) resolve(result);
-			} else {
-				return arr[id]()
-					.then(x => result[id] = x)
-					.then(() => passBaton(next++))
-			}
-		}
-
-		[...Array(boxedLimit).keys()].forEach(passBaton);
-	})
 }

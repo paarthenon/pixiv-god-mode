@@ -8,6 +8,7 @@ import * as pathLib from 'path'
 
 import * as downloadUtils from '../utils/download'
 import {makederp} from '../utils/makederp'
+import * as promiseUtils from '../utils/promise'
 
 import {Features, Model, Messages} from '../../common/proto'
 
@@ -112,10 +113,6 @@ export class ImageRepo extends BaseRepo {
 			});
 	}
 
-	protected loadDB() {
-
-	}
-
 	public constructor(path:string) {
 		super(path);
 
@@ -176,12 +173,13 @@ export class ImageRepo extends BaseRepo {
 	}
 	@ImageRepo.actions.register(Features.DownloadManga)
 	public downloadManga(msg: Messages.BulkRequest<Messages.UrlRequest>) {
-		logger.info('Beginning bulk download of', msg.items.length, 'items');
-
-		function execSequentially<T>(items:T[], action:(x:T)=>any){
-			items.reduce((acc,cur) => acc.then(() => action(cur)), Promise.resolve());
-		}
-		return execSequentially(msg.items, this.downloadImage.bind(this));
+		logger.info('msg bulk download of', msg.items.length, 'items');
+		let tasks = msg.items.map(msg => (() => this.downloadImage(msg)));
+		return promiseUtils.promisePool(tasks, 8)
+			.then(x => {
+				logger.info('Completed download of',x.length,'files');
+				return x;
+			})
 	}
 	@ImageRepo.actions.register(Features.DownloadAnimation)
 	public downloadAnimation(msg: Messages.UrlRequest) {
