@@ -170,17 +170,27 @@ export class ArtistImageRepo extends BaseRepo {
 		let imagePath = this.db.getPathForImage(request.artist, image);
 
 		logger.debug(`writing image from [${request.url}] to [${imagePath}]`);
-		return downloadUtils.downloadFromPixiv({ url: request.url, path: imagePath });
+		return downloadUtils.downloadFromPixiv({ url: request.url, path: imagePath })
+			.then(x => {
+				logger.debug('completed download of ['+imageName+'])');
+				return x;
+			});
 	}
 
 	@ArtistImageRepo.actions.register(Features.DownloadManga)
 	public downloadMulti(request: Messages.BulkRequest<Messages.ArtistUrlRequest>) {
 		logger.info('Beginning bulk download of', request.items.length, 'items');
-		return Promise.all(request.items.map(msg => this.download(msg)))
+		let tasks = request.items.map(msg => (() => this.download(msg)));
+		PromisePool(tasks, 8)
 			.then(x => {
-				logger.info('Completed download of', request.items.length, 'files');
+				logger.info('Completed download of',x.length,'files');
 				return x;
-			});
+			})
+		// return Promise.all(request.items.map(msg => this.download(msg)))
+		// 	.then(x => {
+		// 		logger.info('Completed download of', request.items.length, 'files');
+		// 		return x;
+		// 	});
 	}
 
 
@@ -222,4 +232,26 @@ export class ArtistImageRepo extends BaseRepo {
 				.catch(err => console.log(err));
 		}
 	}
+}
+
+//TODO: Move to util
+function PromisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T[]> {
+	let boxedLimit = Math.min(limit, arr.length);
+	let next = boxedLimit;
+	let crashCount = 0;
+
+	let result = Array(arr.length);
+	return new Promise((resolve, reject) => {
+		function passBaton<T>(id:number) :Promise<T>{
+			if (id >= arr.length) {
+				if (++crashCount === boxedLimit) resolve(result);
+			} else {
+				return arr[id]()
+					.then(x => result[id] = x)
+					.then(() => passBaton(next++))
+			}
+		}
+
+		[...Array(boxedLimit).keys()].forEach(passBaton);
+	})
 }
