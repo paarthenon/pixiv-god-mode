@@ -1,5 +1,6 @@
-import {Model} from '../../common/proto'
 import * as log4js from 'log4js'
+
+import {Model} from '../../common/proto'
 
 let logger = log4js.getLogger('Utils | Path');
 export function avoidTrailingDot(path:string): string {

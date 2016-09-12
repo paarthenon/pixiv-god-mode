@@ -1,8 +1,8 @@
+import {ipcRenderer} from 'electron'
+import * as uuid from 'node-uuid'
+
 import * as Msg from './ipcMessages'
 import {IServerConfigProtocol} from './proto'
-import {ipcRenderer} from 'electron'
-
-import * as uuid from 'node-uuid'
 
 function send<T, V>(target: Msg.BackendTarget, name:string, msg: T): Promise<V> {
 	return new Promise((resolve, reject) => {

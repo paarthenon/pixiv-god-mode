@@ -1,18 +1,16 @@
-import {ActionCache} from '../utils/actionCache'
-import {RootRepo} from './rootRepo'
+import {Features, Model, Messages} from '../../common/proto'
 
 import * as chokidar from 'chokidar'
-import * as pathUtils from '../utils/path'
 import * as fs from 'fs'
+import * as log4js from 'log4js'
 import * as pathLib from 'path'
 
+import {ActionCache} from '../utils/actionCache'
+import {RootRepo} from './rootRepo'
+import * as pathUtils from '../utils/path'
 import * as downloadUtils from '../utils/download'
 import {makederp} from '../utils/makederp'
 import * as promiseUtils from '../utils/promise'
-
-import {Features, Model, Messages} from '../../common/proto'
-
-import * as log4js from 'log4js'
 
 const opn = require('opn');
 const rrs = require('recursive-readdir-sync');
@@ -20,7 +18,7 @@ const fileFinder = require('node-find-files');
 
 type IdSet = { [id: string]: boolean };
 
-let logger = log4js.getLogger('Repo');
+let logger = log4js.getLogger('ImageRepo');
 
 interface ImageDb {
 	date :Date

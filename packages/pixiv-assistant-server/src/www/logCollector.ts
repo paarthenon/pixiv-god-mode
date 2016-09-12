@@ -1,5 +1,6 @@
-import {PALogEvent} from '../utils/electronAppender'
 import {ipcRenderer} from 'electron'
+
+import {PALogEvent} from '../utils/electronAppender'
 
 let runningLog : PALogEvent[] = [];
 

@@ -1,7 +1,7 @@
+import * as log4js from 'log4js'
+
 import {PixivRepo} from './model'
 import {ActionCache} from '../utils/actionCache'
-
-import * as log4js from 'log4js'
 
 let logger = log4js.getLogger('Repo');
 

@@ -1,16 +1,15 @@
 import * as express from "express"
 import * as bodyParser from "body-parser"
 
+import * as Proto from '../common/proto'
+import {IServerConfig, RepositoryType} from './proto'
+
+import * as log4js from 'log4js'
+import * as yargs from 'yargs'
+
 import * as aiRepo from './repo/artistImageRepo'
 import * as fiRepo from './repo/flatImageRepo'
 import {PixivRepo} from './repo/model'
-
-import * as Proto from '../common/proto'
-
-import * as yargs from 'yargs'
-import * as log4js from 'log4js'
-
-import {IServerConfig, RepositoryType} from './proto'
 
 let logger = log4js.getLogger('Startup');
 

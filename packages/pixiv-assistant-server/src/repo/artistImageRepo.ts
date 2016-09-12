@@ -1,11 +1,11 @@
 import {Model, Messages, Features} from '../../common/proto'
 
 import * as log4js from 'log4js'
-import * as underscore from 'underscore'
-import * as http from 'http'
-import * as urllib from 'url'
 import * as fs from 'fs'
+import * as http from 'http'
 import * as path from 'path'
+import * as underscore from 'underscore'
+import * as urllib from 'url'
 import * as XRegExp from "xregexp"
 
 import {RootRepo} from './rootRepo'

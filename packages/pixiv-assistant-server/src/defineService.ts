@@ -1,5 +1,6 @@
-import * as Msg from './ipcMessages'
 import {ipcMain} from 'electron'
+
+import * as Msg from './ipcMessages'
 
 export function defineService <T>(target:Msg.BackendTarget, implementation:T) {
 	function dispatch(implementation: T, message: Msg.RequestWrapper<any>) : Promise<any> {

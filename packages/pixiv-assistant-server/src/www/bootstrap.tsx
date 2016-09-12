@@ -1,7 +1,7 @@
+import * as log4js from 'log4js'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
-import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
 import * as proto from '../proto'

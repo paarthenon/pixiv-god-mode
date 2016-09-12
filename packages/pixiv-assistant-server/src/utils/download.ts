@@ -1,8 +1,9 @@
 import {Features, Model, Messages} from '../../common/proto'
-import * as http from 'http'
-import * as urllib from 'url'
-import * as path from 'path'
+
 import * as fs from 'fs'
+import * as http from 'http'
+import * as path from 'path'
+import * as urllib from 'url'
 
 import {makederp} from './makederp'
 

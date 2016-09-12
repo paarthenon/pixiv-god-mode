@@ -1,11 +1,11 @@
+import {IServerConfigProtocol} from './proto'
+
 import {app, dialog, BrowserWindow} from 'electron'
 import * as http from 'http'
 import * as log4js from 'log4js'
 
 import {defineService} from './defineService'
-import {IServerConfigProtocol} from './proto'
 import * as server from './server'
-
 import * as electronAppender from './utils/electronAppender'
 
 (<any>log4js).loadAppender(
