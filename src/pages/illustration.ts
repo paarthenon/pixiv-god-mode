@@ -78,8 +78,7 @@ export class IllustrationPage extends RootPage {
 		return [
 			'.tags-container li.tag a.text',
 			'div.user-tags li a',
-		].map(selector => this.jQuery(selector))
-		.concat(super.getTagElements());
+		].map(this.jQuery).concat(super.getTagElements());
 	}
 
 	@ExecuteOnLoad
