@@ -5,6 +5,7 @@ import * as log4js from 'log4js'
 
 let logger = log4js.getLogger('Repo');
 
+// Registers dispatching and decorator details (the mechanics of a repo)
 export abstract class BaseRepo implements PixivRepo {
 	protected abstract getCache(): ActionCache;
 

@@ -8,7 +8,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as XRegExp from "xregexp"
 
-import {BaseRepo} from './baseRepo'
+import {RootRepo} from './rootRepo'
 import {ActionCache} from '../utils/ActionCache'
 import * as pathUtils from '../utils/path'
 import * as downloadUtils from '../utils/download'
@@ -78,7 +78,7 @@ class ArtistImageDatabase {
 	}
 }
 
-export class ArtistImageRepo extends BaseRepo {
+export class ArtistImageRepo extends RootRepo {
 	private static actions = new ActionCache();
 
 	protected db:ArtistImageDatabase;
@@ -192,39 +192,12 @@ export class ArtistImageRepo extends BaseRepo {
 
 	@ArtistImageRepo.actions.register(Features.DownloadAnimation)
 	public downloadAnimation(msg:Messages.ArtistImageRequest & {content:string}) {
-		//TODO: Move to util.
-		function dataUrlDetails(dataUrl:string) {
-			const rx = /^data:([^/]+)\/([^;]+);base64,(.+)$/;
-			let match = rx.exec(dataUrl);
-			if (match != null) {
-				return {
-					mime: {
-						type: match[1],
-						subtype: match[2],
-					},
-					content: match[3],
-				}
-			}
-			return undefined;
-		}
-
-		function writeBase64(filename:string, content:string) :Promise<void> {
-			return new Promise<void>((resolve, reject) => {
-				fs.writeFile(filename, new Buffer(content, 'base64'), err => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve();
-					}
-				})
-			})
-		}
-
-		let details = dataUrlDetails(msg.content);
+		let details = downloadUtils.getDataUrlDetails(msg.content);
 		if (details) {
 			let location = path.join(this.db.getPathForArtist(msg.artist),`${msg.image.id}.${details.mime.subtype}`);
 
-			makederp(path.dirname(location)).then(() => writeBase64(location, details.content))
+			makederp(path.dirname(location))
+				.then(() => downloadUtils.writeBase64(location, details.content))
 				.catch(err => console.log(err));
 		}
 	}

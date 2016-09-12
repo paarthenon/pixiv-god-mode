@@ -1,5 +1,5 @@
 import {ActionCache} from '../utils/actionCache'
-import {BaseRepo} from './baseRepo'
+import {RootRepo} from './rootRepo'
 
 import * as chokidar from 'chokidar'
 import * as pathUtils from '../utils/path'
@@ -27,7 +27,7 @@ interface ImageDb {
 	ids :IdSet
 }
 
-export class ImageRepo extends BaseRepo {
+export class ImageRepo extends RootRepo {
 	private static actions = new ActionCache();
 
 	protected imageCache :IdSet= {};
@@ -181,8 +181,16 @@ export class ImageRepo extends BaseRepo {
 				return x;
 			})
 	}
+
 	@ImageRepo.actions.register(Features.DownloadAnimation)
-	public downloadAnimation(msg: Messages.UrlRequest) {
-		return this.downloadImage(msg);
+	public downloadAnimation(msg:Messages.ArtistImageRequest & {content:string}) {
+		let details = downloadUtils.getDataUrlDetails(msg.content);
+		if (details) {
+			let location = pathLib.join(this.repoPath, `${msg.image.id}.${details.mime.subtype}`);
+
+			return makederp(pathLib.dirname(location))
+				.then(() => downloadUtils.writeBase64(location, details.content))
+				.catch(err => console.log(err));
+		}
 	}
 }

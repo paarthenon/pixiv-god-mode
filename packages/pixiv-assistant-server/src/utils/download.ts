@@ -34,3 +34,30 @@ export function downloadFromPixiv(msg:DownloadMessage):Promise<boolean> {
 			});
 		})
 }
+
+export function getDataUrlDetails(dataUrl:string) {
+	const rx = /^data:([^/]+)\/([^;]+);base64,(.+)$/;
+	let match = rx.exec(dataUrl);
+	if (match != null) {
+		return {
+			mime: {
+				type: match[1],
+				subtype: match[2],
+			},
+			content: match[3],
+		}
+	}
+	return undefined;
+}
+
+export function writeBase64(filename:string, content:string) :Promise<void> {
+	return new Promise<void>((resolve, reject) => {
+		fs.writeFile(filename, new Buffer(content, 'base64'), err => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve();
+			}
+		})
+	})
+}
