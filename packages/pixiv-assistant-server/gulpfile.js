@@ -17,16 +17,4 @@ gulp.task('build', function(callback){
 	});
 });
 
-gulp.task('deploy', ['build'], function(callback){
-	nexe.compile({
-		input: 'build/src/main.js',
-		output: 'bin/srv.exe',
-		nodeVersion: '5.5.0',
-		nodeTempDir: 'tmp',
-		framework: 'node'
-	}, function(err) {
-		callback(err);
-	});
-});
-
 gulp.task('default', ['build']);

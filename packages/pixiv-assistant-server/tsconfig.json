@@ -15,7 +15,6 @@
     ],
     "files": [
         "typings/tsd.d.ts",
-        "src/server.ts",
         "src/startup.ts",
         "src/www/bootstrap.tsx"
     ]
