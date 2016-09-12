@@ -8,7 +8,7 @@ import {Container as Deps} from '../deps'
 import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 import SettingKeys from '../settingKeys'
 
-import * as jQUtils from '../utils/jq'
+import * as jQUtils from '../utils/document'
 
 export class SearchPage extends GalleryPage {
 

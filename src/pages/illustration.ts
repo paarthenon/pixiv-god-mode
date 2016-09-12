@@ -12,6 +12,10 @@ import {injectDownloadIllustrationButton} from '../injectors/downloadIllustratio
 
 import * as geomUtils from '../utils/geometry'
 
+import {getBlob} from '../utils/ajax'
+import {execSequentially} from '../utils/promise'
+import {toCanvasInstance} from '../utils/document'
+
 var whammy = require('whammy');
 
 enum IllustrationType {
@@ -28,11 +32,6 @@ interface UgokuInformation {
 	src :string
 	mime_type :string
 	frames :UgokuFrameInformation[]
-}
-
-interface Dimensions {
-	width: number
-	height: number
 }
 
 export class IllustrationPage extends RootPage {
@@ -60,7 +59,7 @@ export class IllustrationPage extends RootPage {
 	public get ugokuCanvas():HTMLCanvasElement {
 		return this.jQuery('._ugoku-illust-player-container canvas')[0] as HTMLCanvasElement;
 	}
-	public get imageDimensions():Promise<Dimensions> {
+	public get imageDimensions():Promise<geomUtils.Rectangle> {
 		return Deps.execOnPixiv<number[]>(pixiv => pixiv.context.illustSize)
 			.then(dims => ({width:dims[0], height:dims[1]}));
 	}
@@ -188,41 +187,10 @@ export class IllustrationPage extends RootPage {
 	}
 
 	protected makeWebM(): Promise<Blob> {
-		function getZipAjax(src:string) {
-			let req = new XMLHttpRequest();
-			req.open('GET', src);
-			req.responseType = 'blob';
-			req.send();
-			return new Promise((resolve, reject) => {
-				req.addEventListener('load', () => resolve(req.response));
-				req.addEventListener('error', err => reject(err));
-			})
-		}
-
-		function execSequentially<T>(arr:T[], func:(x:T)=>any) {
-			return arr.reduce((acc, cur) => acc.then(() => func(cur)), Promise.resolve());
-		}
-
-		function toCanvasInstance(dataUrl:string, dims:Dimensions) {
-			return new Promise((resolve, reject) => {
-				let invisiCanvas = document.createElement('canvas') as HTMLCanvasElement;
-				invisiCanvas.width = dims.width;
-				invisiCanvas.height = dims.height;
-				let context = invisiCanvas.getContext('2d');
-
-				let img = new Image();
-				img.addEventListener('load', () => {
-					context.drawImage(img, 0, 0, invisiCanvas.width, invisiCanvas.height);
-					resolve(invisiCanvas);
-				});
-				img.src = dataUrl;
-			});
-		}
-
 		let video = new whammy.Video(undefined, 1);
 
 		return this.ugokuInfo
-			.then(info => getZipAjax(info.src))
+			.then(info => getBlob(info.src))
 			.then(data => jszip().loadAsync(data))
 			.then(zip => {
 				let fileData: {[id:string]:Promise<string>} = {}	

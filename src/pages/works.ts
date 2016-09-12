@@ -1,5 +1,5 @@
 import * as pathUtils from '../utils/path'
-import * as jQUtils from '../utils/jq'
+import * as jQUtils from '../utils/document'
 import {PixivAssistantServer} from '../services'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'

@@ -1,5 +1,6 @@
 import {Model} from '../../common/proto'
 import * as pathUtils from './path'
+import {Rectangle} from './geometry'
 
 export function artistFromJQImage(image:JQuery):Model.Artist {
 	return {
@@ -16,6 +17,28 @@ export function imageFromJQImage(image:JQuery):Model.Image {
 export function artistUrlFromJQImage(image:JQuery):string {
 	return (<any>image.find('a.user')[0]).href;
 }
+
 export function hackedNewTab(jQ:JQueryStatic, url:string) {
 	jQ(`<a target="_blank" href="${url}"></a>`)[0].click();
+}
+
+interface Dimensions {
+	width: number
+	height: number
+}
+
+export function toCanvasInstance(dataUrl:string, dims:Rectangle) {
+	return new Promise((resolve, reject) => {
+		let invisiCanvas = document.createElement('canvas') as HTMLCanvasElement;
+		invisiCanvas.width = dims.width;
+		invisiCanvas.height = dims.height;
+		let context = invisiCanvas.getContext('2d');
+
+		let img = new Image();
+		img.addEventListener('load', () => {
+			context.drawImage(img, 0, 0, invisiCanvas.width, invisiCanvas.height);
+			resolve(invisiCanvas);
+		});
+		img.src = dataUrl;
+	});
 }

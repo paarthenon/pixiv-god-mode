@@ -2,7 +2,7 @@ import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
 import {PixivAssistantServer} from '../services'
 import * as pathUtils from '../utils/path'
-import * as jQUtils from '../utils/jq'
+import * as jQUtils from '../utils/document'
 import {Container as Deps} from '../deps'
 import {injectViewAllButton, ViewAllButtonElementId} from '../injectors/bookmarkDetailViewAll'
 
