@@ -37,10 +37,6 @@ class ArtistImageDatabase {
 		}
 		return undefined;
 	}
-
-	protected imageToFileName(image:Model.Image):string {
-		return pathUtils.avoidTrailingDot(`${image.id}_p${image.page || 0}.${image.ext || '.jpg'}`);
-	}
 	
 	public get Artists():Model.Artist[] {
 		return fs.readdirSync(this.path).map(name => this.folderNameToArtist(name));
@@ -74,7 +70,7 @@ class ArtistImageDatabase {
 	}
 	
 	public getPathForImage(artist:Model.Artist, image:Model.Image):string {
-		return path.join(this.getPathForArtist(artist), this.imageToFileName(image));
+		return path.join(this.getPathForArtist(artist), pathUtils.imageToFileName(image));
 	}
 }
 
@@ -194,7 +190,7 @@ export class ArtistImageRepo extends RootRepo {
 	public downloadAnimation(msg:Messages.ArtistImageRequest & {content:string}) {
 		let details = downloadUtils.getDataUrlDetails(msg.content);
 		if (details) {
-			let location = path.join(this.db.getPathForArtist(msg.artist),`${msg.image.id}.${details.mime.subtype}`);
+			let location = this.db.getPathForImage(msg.artist, msg.image);
 
 			makederp(path.dirname(location))
 				.then(() => downloadUtils.writeBase64(location, details.content))
