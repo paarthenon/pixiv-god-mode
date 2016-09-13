@@ -26,8 +26,11 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
 					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Server Url">
+					<Bootstrap.Panel header="Server">
 						<TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
+						<SettingContainer 
+							settingKey={SettingKeys.general.disableServerConnectionAlert} 
+							label={'Disable server connection alert'}/>
 					</Bootstrap.Panel>
 					</Bootstrap.Col>
 				</Bootstrap.Row>

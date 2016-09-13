@@ -9,6 +9,8 @@ import {CachedDictionaryService} from '../../../src/core/dictionaryManagementSer
 import {PAServer} from '../../../src/core/paServer'
 import {Action} from '../../../src/core/IAction'
 import Config from '../config'
+import {getSetting} from '../userSettings'
+import SettingKeys from '../../../src/settingKeys'
 
 import {DictionaryAdd} from './components/DictionaryAdd'
 
@@ -85,7 +87,12 @@ export class AlertsDisplay extends React.Component<void, any> {
 				<ServerAlert />
 			</ConditionalRender>
 			<ConditionalRender default={true} predicate={() =>
-				paserver.ping().then(() => false).catch(() => true)
+				getSetting(SettingKeys.general.disableServerConnectionAlert)
+					.then(disable => {
+						if (!disable) {
+							return paserver.ping().then(() => false).catch(() => true)
+						}
+					})
 			}>
 				<ServerConnectionAlert />
 			</ConditionalRender>

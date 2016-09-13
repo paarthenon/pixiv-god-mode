@@ -46,7 +46,10 @@ let settingKeys = {
 			fadeDownloaded: 'SEARCH_PAGE_FADE_DOWNLOADED',
 			fadeBookmarked: 'SEARCH_PAGE_FADE_BOOKMARKED',
 		}
-	}
+	},
+	general: {
+		disableServerConnectionAlert: 'GENERAL_DISABLE_SERVER_CONNECTION_ALERT',
+	},
 };
 
 export default settingKeys;
