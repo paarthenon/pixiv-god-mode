@@ -9,7 +9,7 @@ export function avoidTrailingDot(path:string): string {
 
 export function fileNameToImage(fileName: string): Model.Image {
 	var match = fileName.match(/^([0-9]+)(?:_big)?(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/);
-	var aniMatch = fileName.match(/^[0-9]+)\.webm$/);
+	var aniMatch = fileName.match(/^([0-9]+)\.webm$/);
 	var AniZipMatch = fileName.match(/^([0-9]+)_ugoira1920x1080\.zip/);
 	if (match && match.length === 4) {
 		return {
