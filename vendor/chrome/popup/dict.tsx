@@ -11,6 +11,7 @@ type paDict = { [id:string]:string };
 
 interface DictViewerProps {
 	cachedDict: cachedDictionary
+	getTranslation: (key:string) => Promise<string>
 	onUpdate: (key:string, value:string) => any
 	onDelete: (key:string) => any
 	onAdd: (key:string, value:string) => any
@@ -32,7 +33,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 	public render() {
 		return (
 			<div>
-				<DictionaryAdd onAdd={this.props.onAdd} />
+				<DictionaryAdd onAdd={this.props.onAdd} getTranslation={this.props.getTranslation}/>
 				<Search onChange={(value) => this.setState({currentSearch:value.toLocaleLowerCase()})} />
 				<Bootstrap.Table condensed>
 				<colgroup>

@@ -48,6 +48,7 @@ class DictContainer extends React.Component<void,cachedDictionary> {
 	public render() {
 		return <DictViewer
 			cachedDict={this.state}
+			getTranslation={key => cachedDict.getTranslation(key)}
 			onAdd={this.handleUpdate.bind(this)}
 			onUpdate={this.handleUpdate.bind(this)}
 			onDelete={this.handleDelete.bind(this)}

@@ -62,6 +62,15 @@ export class CachedDictionaryService {
 		return this.config.get(this.keys.global)
 			.catch(() =>this.config.set(this.keys.global, {}).then(() => ({})));
 	}
+	public getTranslation(key:string) {
+		return this.local.then(localDict => {
+			if (key in localDict) {
+				return localDict[key];
+			} else {
+				return this.global.then(globalDict => (key in globalDict) ? globalDict[key] : undefined);
+			}
+		})
+	}
 
 	public update(key:string, value:string) {
 		return this.local.then(localDict => {

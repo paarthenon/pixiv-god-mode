@@ -25,7 +25,10 @@ export class HomePanel extends React.Component<any,any> {
 	public render() {
 		return (
 			<div>
-				<DictionaryAdd onAdd={(key,value) => dict.update(key, value)} />
+				<DictionaryAdd 
+					onAdd={(key,value) => dict.update(key, value)}
+					getTranslation={key => dict.getTranslation(key)}
+				/>
 				<ActionContainer />
 				<AlertsDisplay />
 			</div>

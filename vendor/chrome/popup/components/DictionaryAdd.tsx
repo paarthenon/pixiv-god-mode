@@ -7,7 +7,11 @@ import * as pathUtils from '../../../../src/utils/path'
 
 import * as chromeUtils from '../../utils'
 
-export class DictionaryAdd extends React.Component<{onAdd:(key:string,value:string)=>any},void> {
+interface DictionaryAddProps {
+	onAdd :(key:string,value:string) => any
+	getTranslation :(key:string) => Promise<string>
+}
+export class DictionaryAdd extends React.Component<DictionaryAddProps,void> {
 	componentDidMount() {
 		chromeUtils.getCurrentTab().then(tab => {
 			if (tab.url) {
@@ -16,6 +20,9 @@ export class DictionaryAdd extends React.Component<{onAdd:(key:string,value:stri
 					this.japaneseInput.value = potentialTag;
 
 					this.translationInput.focus();
+
+					this.props.getTranslation(potentialTag)
+						.then(translation => this.translationInput.value = translation)
 				} else {
 					this.japaneseInput.focus();
 				}
