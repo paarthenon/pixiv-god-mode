@@ -15,6 +15,7 @@ import {TagDetailPage} from './pages/tagDetail'
 import {RawImagePage} from './pages/rawImage'
 import {SuggestedUsersPage} from './pages/suggestedUsers'
 import {HomePage} from './pages/home'
+import {WikiArticlePage} from './pages/wikiArticle'
 
 let patterns = {
 	illust: /^http:\/\/www.pixiv.net\/member_illust.php\?mode=medium&illust_id=[0-9]+/,
@@ -33,6 +34,7 @@ let patterns = {
 	rawImage: /http:\/\/i[0-9].pixiv.net/,
 	suggestedUsers: /http:\/\/www.pixiv.net\/search_user.php$/,
 	home: /http:\/\/www.pixiv.net\/$/,
+	wiki: /http:\/\/dic.pixiv.net\/a\//,
 }
 
 export function dispatch(path:string, jquery:JQueryStatic):RootPage {
@@ -80,6 +82,9 @@ export function dispatch(path:string, jquery:JQueryStatic):RootPage {
 	}
 	if (path.match(patterns.home)) {
 		return new HomePage(path, jquery);
+	}
+	if (path.match(patterns.wiki)) {
+		return new WikiArticlePage(path, jquery);
 	}
 
 	return new RootPage(path, jquery);

@@ -21,15 +21,12 @@ export class RootPage extends BasePage {
 	}
 
 	public translateTagsOnPage():void {
-		logger.trace('translating tags',this.getTagElements());
 		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => this.jQuery(x)).forEach(tagElement => {
 			let textNode = tagElement.contents().filter(function() {
 				return this.nodeType === Node.TEXT_NODE;
 			});
-			logger.trace('found text node',textNode.text());
 			DictionaryService.getTranslation(textNode.text()).then(translatedText => {
 				if (translatedText) {
-					logger.trace('found translation', translatedText);
 					tagElement.attr('data-pa-translation-backup', textNode.text());
 					textNode.replaceWith(translatedText);
 				}
