@@ -4,6 +4,6 @@ export class BookmarkAddPage extends RootPage {
 	protected getTagElements() {
 		return [
 			'ul.tag-cloud li span'
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 }

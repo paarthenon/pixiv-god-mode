@@ -4,6 +4,6 @@ export class TagOverviewPage extends RootPage {
 	protected getTagElements() {
 		return [
 			'a.tag-name'
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 }

@@ -29,7 +29,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 		return [
 			'span.tag-badge',
 			'div.bookmark-tags li a'
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.inject.openFolder)

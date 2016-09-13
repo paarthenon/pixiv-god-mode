@@ -38,7 +38,7 @@ export class WorksPage extends GalleryPage {
 		return [
 			'span.tag-badge',
 			'div.user-tags li a'
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 
 	protected executeOnEachImage<T>(func:(image:JQuery) => T) {

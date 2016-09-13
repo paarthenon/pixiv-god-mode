@@ -13,7 +13,7 @@ export class BookmarkIllustrationPage extends RootPage {
 	public getTagElements() {
 		return [
 			'ul.tags a'
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 
 	protected executeOnEachImage<T>(func: (image: JQuery) => T) {

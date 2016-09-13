@@ -13,6 +13,10 @@ export class GalleryPage extends RootPage {
 		return pathUtils.getResultFromBadge(this.jQuery('span.count-badge').text());
 	}
 
+	protected getTagElements() {
+		return super.getTagElements();
+	}
+
 	protected goToPage(pageNum:number) {
 		logger.trace('Going to page', pageNum);
 		// This takes advantage of the property that &p=2&p=3 will direct to page 3.

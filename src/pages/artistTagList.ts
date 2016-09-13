@@ -5,6 +5,6 @@ export class ArtistTagListPage extends RootPage {
 		return [
 			'div.user-tags li a',
 			'.tag-list li a.tag-name'
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 }

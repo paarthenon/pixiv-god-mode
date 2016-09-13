@@ -54,7 +54,7 @@ export class SearchPage extends GalleryPage {
 			'nav.breadcrumb > span > a > span',
 			'a.self',
 			'dl.column-related ul.tags li.tag a.text'
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 
 	public changeTitle(): void {

@@ -35,7 +35,7 @@ let deps: IDependencyContainer = {
 	ajaxCall: (req: AjaxRequest<any>) => Mailman.Background.ajax(req),
 	getSetting,
 	isPageBookmarked: url => Mailman.Background.isPageBookmarked({url}),
-	download: url => Mailman.Background.download({url}),
+	download: (url, filename) => Mailman.Background.download({url, filename}),
 }
 
 Dependencies.load(deps);

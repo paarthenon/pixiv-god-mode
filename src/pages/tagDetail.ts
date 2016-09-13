@@ -7,6 +7,6 @@ export class TagDetailPage extends RootPage {
 			'span.self',
 			'header.tags-portal-header h1.title a',
 			'section.tags ul.items li a',
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 }

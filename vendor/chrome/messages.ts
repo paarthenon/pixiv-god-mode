@@ -12,7 +12,7 @@ export interface Protocol extends ConfigProtocol {
 	ajax: (req:AjaxRequest<any>) => Promise<any>
 	newTab: (msg: UrlRequest) => Promise<void>
 	isPageBookmarked: (msg: UrlRequest) => Promise<boolean>
-	download: (msg: UrlRequest) => Promise<boolean>
+	download: (msg: DownloadRequest) => Promise<boolean>
 }
 
 export interface ContentScriptProtocol {
@@ -58,4 +58,7 @@ export interface PerformActionRequest {
 }
 export interface UrlRequest {
 	url: string
+}
+export interface DownloadRequest extends UrlRequest {
+	filename: string
 }

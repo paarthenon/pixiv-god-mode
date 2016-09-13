@@ -9,7 +9,7 @@ export interface IDependencyContainer {
 	ajaxCall: <T, V> (req: AjaxRequest<T>) => Promise<V>
 	getSetting: (settingKey: string) => Promise<boolean>
 	isPageBookmarked: (url:string) => Promise<boolean>
-	download: (url:string) => Promise<boolean>
+	download: (url:string, filename:string) => Promise<boolean>
 }
 
 export var Container: IDependencyContainer = {

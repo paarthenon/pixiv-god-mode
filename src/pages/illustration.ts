@@ -70,7 +70,7 @@ export class IllustrationPage extends RootPage {
 		return [
 			'.tags-container li.tag a.text',
 			'div.user-tags li a',
-		].map(this.jQuery).concat(super.getTagElements());
+		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
 	}
 
 	@ExecuteOnLoad
@@ -183,7 +183,7 @@ export class IllustrationPage extends RootPage {
 	public localWebM(): void {
 		this.makeWebM().then(video => {
 			let videoString = URL.createObjectURL(video);
-			Deps.download(videoString);
+			Deps.download(videoString, `${this.imageId}.webm`);
 		}).then(() => this.isBusy = false)
 	}
 
