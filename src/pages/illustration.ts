@@ -7,11 +7,11 @@ import SettingKeys from '../settingKeys'
 import {PixivAssistantServer} from '../services'
 import {Container as Deps} from '../deps'
 import {Model} from '../../common/proto'
+import {UgokuInformation} from '../core/IUgoku'
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
 import {injectDownloadIllustrationButton} from '../injectors/downloadIllustration'
 
 import * as geomUtils from '../utils/geometry'
-
 import {getBlob} from '../utils/ajax'
 import {execSequentially} from '../utils/promise'
 import {toCanvasInstance} from '../utils/document'
@@ -24,17 +24,9 @@ enum IllustrationType {
 	Animation,
 }
 
-interface UgokuFrameInformation {
-	file :string
-	delay :number
-}
-interface UgokuInformation {
-	src :string
-	mime_type :string
-	frames :UgokuFrameInformation[]
-}
-
 export class IllustrationPage extends RootPage {
+	public isBusy:boolean = false;
+
 	public get artistId():number {
 		return pathUtils.getArtistId(this.jQuery('a.user-link').attr('href'));
 	}
@@ -88,6 +80,16 @@ export class IllustrationPage extends RootPage {
 			() => this.downloadIllustration());
 		
 	}
+	@ExecuteOnLoad
+	public injectUnloadCallback() {
+		let message = "Pixiv Assistant is currently processing. Please leave the page open";
+		window.addEventListener("beforeunload", event => {
+			if (this.isBusy) {
+				event.returnValue = message;
+				return message;
+			}
+		});
+	}
 	@ExecuteIfSetting(SettingKeys.pages.illust.inject.openFolder)
 	public injectOpenFolder() {
 		injectUserRelationshipButton(this.jQuery, this.artist);
@@ -138,7 +140,7 @@ export class IllustrationPage extends RootPage {
 					image: { id: this.imageId },
 				}, b64)
 			)
-		);
+		).then(() => {this.isBusy = false});
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
@@ -182,11 +184,13 @@ export class IllustrationPage extends RootPage {
 		this.makeWebM().then(video => {
 			let videoString = URL.createObjectURL(video);
 			Deps.download(videoString);
-		})
+		}).then(() => this.isBusy = false)
 	}
 
 	protected makeWebM(): Promise<Blob> {
 		let video = new whammy.Video(undefined, 1);
+
+		this.isBusy = true;
 
 		return this.ugokuInfo
 			.then(info => getBlob(info.src))
@@ -208,7 +212,7 @@ export class IllustrationPage extends RootPage {
 						)
 					)
 				)
-			}).then(() => video.compile());
+			}).then(() => video.compile())
 	}
 
 }
