@@ -81,7 +81,7 @@ export class AlertsDisplay extends React.Component<void, any> {
 			}>
 				<ServerAlert />
 			</ConditionalRender>
-			<ConditionalRender predicate={() =>
+			<ConditionalRender default={true} predicate={() =>
 				paserver.ping().then(() => false).catch(() => true)
 			}>
 				<ServerConnectionAlert />
