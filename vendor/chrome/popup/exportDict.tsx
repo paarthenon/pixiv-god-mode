@@ -1,11 +1,14 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import {CachedDictionaryService, cachedDictionary, naiveDictionary} from '../../../src/core/dictionaryManagementService'
+import Mailman from '../mailman'
+import {DictionaryManagementService, cachedDictionary, naiveDictionary} from '../../../src/core/dictionaryManagementService'
 import Config from '../config'
 import ConfigKeys from '../../../src/configKeys'
+import {ConditionalRender} from './components/conditionalRender'
+import {GithubDictionaryUtil} from '../../../src/core/githubDictionaryUtil'
 
-let dict = new CachedDictionaryService(new Config(), {
+let dict = new DictionaryManagementService(new Config(), new GithubDictionaryUtil('pixiv-assistant/dictionary', Mailman.Background.ajax), {
 	global: ConfigKeys.official_dict,
 	local: ConfigKeys.user_dict,
 	cache: ConfigKeys.cached_dict
@@ -33,14 +36,22 @@ export class DictionaryJSON extends React.Component<void,DictStates> {
 				dict.local.then(local => this.setState({cache, global, local}))));
 	}
 	public render() {
-		return <div style={this.style}>
-			<DictStats
-				globalCount={Object.keys(this.state.global).length}
-				localCount={Object.keys(this.state.local).length}
-				cacheCount={this.state.cache.cache.length}
-			/>
-			<DictJSON cache={this.state.cache.cache} />
+		return <div>
+		<ConditionalRender predicate={() => dict.globalUpdateAvailable.then(x => !x)}>
+			<div style={this.style}>
+				<DictStats
+					globalCount={Object.keys(this.state.global).length}
+					localCount={Object.keys(this.state.local).length}
+					cacheCount={this.state.cache.cache.length}
+				/>
+				<DictJSON cache={this.state.cache.cache} />
+			</div>
+		</ConditionalRender>
+		<ConditionalRender predicate={() => dict.globalUpdateAvailable} default={true}>
+			<p> Please sync your dictionary with the global dictionary before proceeding </p>
+		</ConditionalRender>
 		</div>
+
 	}
 }
 
