@@ -124,14 +124,8 @@ export class IllustrationPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		let observer = new MutationObserver(() => {
-			this.fadeRecommendations();
-		}).observe(this.jQuery('section#illust-recommend ul')[0], {
-			childList: true
-		})
-		document.addEventListener('pixivIllustrationRecommendationsLoaded', (event) => {
-			this.fadeRecommendations();
-		});
+		let observer = new MutationObserver(this.fadeRecommendations.bind(this))
+			.observe(this.jQuery('section#illust-recommend ul')[0], { childList: true });
 	}
 	@ExecuteOnLoad
 	public fadeRecommendations() {
@@ -149,12 +143,9 @@ export class IllustrationPage extends RootPage {
 				}
 			}
 		}
-		logger.trace('fading recommendations',this.jQuery('section#illust-recommend li').length );
 		this.jQuery('section#illust-recommend li').toArray().map(x => this.jQuery(x)).forEach(liElem => {
-			logger.debug('working on recommendation',liElem);
 			let msg = recommendationDetails(liElem);
 			PixivAssistantServer.imageExistsInDatabase(msg.artist, msg.image).then(exists => {
-				logger.debug('image',msg.image.id,'returned existence',exists);
 				if (exists) {
 					liElem.addClass('pa-hidden-thumbnail');
 				}
