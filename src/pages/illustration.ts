@@ -1,4 +1,5 @@
 import * as jszip from 'jszip'
+import * as log4js from 'log4js'
 
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
@@ -6,7 +7,7 @@ import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/action
 import SettingKeys from '../settingKeys'
 import {PixivAssistantServer} from '../services'
 import {Container as Deps} from '../deps'
-import {Model} from '../../common/proto'
+import {Model, Messages} from '../../common/proto'
 import {UgokuInformation} from '../core/IUgoku'
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
 import {injectDownloadIllustrationButton} from '../injectors/downloadIllustration'
@@ -17,6 +18,8 @@ import {execSequentially} from '../utils/promise'
 import {toCanvasInstance} from '../utils/document'
 
 var whammy = require('whammy');
+
+let logger = log4js.getLogger('Illustration Page');
 
 enum IllustrationType {
 	Picture,
@@ -117,6 +120,46 @@ export class IllustrationPage extends RootPage {
 
 		image.width(newBounds.width);
 		image.height(newBounds.height);
+	}
+
+	@ExecuteOnLoad
+	public injectTrigger() {
+		let observer = new MutationObserver(() => {
+			this.fadeRecommendations();
+		}).observe(this.jQuery('section#illust-recommend ul')[0], {
+			childList: true
+		})
+		document.addEventListener('pixivIllustrationRecommendationsLoaded', (event) => {
+			this.fadeRecommendations();
+		});
+	}
+	@ExecuteOnLoad
+	public fadeRecommendations() {
+		function recommendationDetails(li:JQuery) : Messages.ArtistImageRequest {
+			let img = li.find('a.work img._thumbnail');
+			let imageId = pathUtils.getImageIdFromSourceUrl(img.attr('src'));
+			let artistId = parseInt(img.attr('data-user-id'));
+			return {
+				artist: {
+					id: artistId,
+					name: '', //TODO: remove pending refactor of core protocol.
+				},
+				image: {
+					id: imageId,
+				}
+			}
+		}
+		logger.trace('fading recommendations',this.jQuery('section#illust-recommend li').length );
+		this.jQuery('section#illust-recommend li').toArray().map(x => this.jQuery(x)).forEach(liElem => {
+			logger.debug('working on recommendation',liElem);
+			let msg = recommendationDetails(liElem);
+			PixivAssistantServer.imageExistsInDatabase(msg.artist, msg.image).then(exists => {
+				logger.debug('image',msg.image.id,'returned existence',exists);
+				if (exists) {
+					liElem.addClass('pa-hidden-thumbnail');
+				}
+			})
+		});
 	}
 
 	@RegisteredAction({ 
