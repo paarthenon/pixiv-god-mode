@@ -22,7 +22,11 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,void> {
 					this.translationInput.focus();
 
 					this.props.getTranslation(potentialTag)
-						.then(translation => this.translationInput.value = translation)
+						.then(translation => {
+							if (translation !== undefined) {
+								this.translationInput.value = translation
+							}
+						})
 				} else {
 					this.japaneseInput.focus();
 				}
@@ -47,12 +51,16 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,void> {
 		this.japaneseInput.value = '';
 		this.translationInput.value = '';
 	}
+
 	public render() {
-		return <Bootstrap.Panel header="Add Translation">
-			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)}>
+		return <Bootstrap.Panel bsSize="small">
+			<h5>Add Translation</h5>
+			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} bsSize="small">
+				<Bootstrap.FormGroup bsSize="small">
 					<Bootstrap.FormControl type="text" placeholder="japanese" ref="japanese" />
 					<Bootstrap.FormControl type="text" placeholder="translation" ref="translation" />
-					<Bootstrap.Button type="submit" onClick={this.handleAdd.bind(this)}>add</Bootstrap.Button>
+					<Bootstrap.Button bsSize="small" type="submit" onClick={this.handleAdd.bind(this)}>add</Bootstrap.Button>
+				</Bootstrap.FormGroup>
 			</Bootstrap.Form>
 		</Bootstrap.Panel>
 	}

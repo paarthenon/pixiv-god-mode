@@ -34,6 +34,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 		return (
 			<div>
 				<DictionaryAdd onAdd={this.props.onAdd} getTranslation={this.props.getTranslation}/>
+				<Bootstrap.Panel>
 				<Search onChange={(value) => this.setState({currentSearch:value.toLocaleLowerCase()})} />
 				<Bootstrap.Table condensed>
 				<colgroup>
@@ -74,6 +75,7 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 				)}
 				</tbody>
 				</Bootstrap.Table>
+				</Bootstrap.Panel>
 			</div>
 		);
 	}
@@ -92,13 +94,11 @@ class Search extends React.Component<{ onChange: (search: string) => any }, { cu
 		this.props.onChange(newValue);
 	}
 	public render() {
-		return <Bootstrap.Well>
-				<FormControl type="text"
+		return <FormControl type="text"
 					placeholder="search" 
 					value={this.state.current} 
 					onChange={this.handleChange.bind(this)} 
 				/>
-			</Bootstrap.Well>
 	}
 }
 

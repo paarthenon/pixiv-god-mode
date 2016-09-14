@@ -25,14 +25,24 @@ let dict = new CachedDictionaryService(new Config(), {
 
 export class HomePanel extends React.Component<any,any> {
 	public render() {
+		let style = {
+			flex: 1,
+			display: 'flex',
+			'flex-direction': 'column',
+		}
+		let mainStyle = {
+			flex: 1,
+		}
 		return (
-			<div>
-				<DictionaryAdd 
-					onAdd={(key,value) => dict.update(key, value)}
-					getTranslation={key => dict.getTranslation(key)}
-				/>
-				<ActionContainer />
-				<AlertsDisplay />
+			<div style={style}>
+				<main style={mainStyle}>
+					<DictionaryAdd 
+						onAdd={(key,value) => dict.update(key, value)}
+						getTranslation={key => dict.getTranslation(key)}
+					/>
+					<ActionContainer />
+				</main>
+				<footer><AlertsDisplay /></footer>
 			</div>
 			);
 	}
@@ -54,11 +64,9 @@ export class ActionContainer extends React.Component<void,{actions: Action[]}> {
 export class ActionDisplay extends React.Component<{actions:Action[]}, void> {
 	public render() {
 		return (
-			<div>
-				<Bootstrap.ListGroup>
-					{this.props.actions.map(action => <ActionEntry key={action.id} action={action} />)}
-				</Bootstrap.ListGroup>
-			</div>
+			<Bootstrap.Form>
+				{this.props.actions.map(action => <ActionEntry key={action.id} action={action} />)}
+			</Bootstrap.Form>
 		);
 	}
 }
@@ -67,15 +75,19 @@ export class ActionEntry extends React.Component<{action:Action}, void> {
 		Mailman.ContentScript.performAction({actionId: this.props.action.id});
 	}
 	public render() {
-		return <Bootstrap.ListGroupItem onClick={this.handleExecute.bind(this)}>
+		return <Bootstrap.FormGroup><Bootstrap.Button onClick={this.handleExecute.bind(this)}>
 				<span className={"glyphicon glyphicon-"+this.props.action.icon} aria-hidden="true"></span>
-				{this.props.action.label}
-			</Bootstrap.ListGroupItem>;
+				<span style={{'padding-left':'10px'}}>{this.props.action.label}</span>
+			</Bootstrap.Button></Bootstrap.FormGroup>
 	}
 }
 
 let paserver = new PAServer(new Config(), Mailman.Background.ajax);
 
+let stackedAlertStyle = {
+	'margin-bottom': '0px',
+	'margin-top': '10px'
+}
 export class AlertsDisplay extends React.Component<void, any> {
 	public render() {
 		return <div>
@@ -114,24 +126,32 @@ export class AlertsDisplay extends React.Component<void, any> {
 
 export class ServerAlert extends React.Component<void, void> {
 	public render() {
-		return <Bootstrap.Alert bsStyle="warning">There is no server url registered.</Bootstrap.Alert>
+		return <Bootstrap.Alert bsStyle="warning" style={stackedAlertStyle}>
+			There is no server url registered.
+		</Bootstrap.Alert>
 	}
 }
 
 export class ServerConnectionAlert extends React.Component<void, void> {
 	public render() {
-		return <Bootstrap.Alert bsStyle="warning">Unable to connect to server.</Bootstrap.Alert>
+		return <Bootstrap.Alert bsStyle="warning" style={stackedAlertStyle}>
+			Unable to connect to server.
+		</Bootstrap.Alert>
 	}
 }
 
 export class ServerConnectionSuccessAlert extends React.Component<void, void> {
 	public render() {
-		return <Bootstrap.Alert bsStyle="success">Connected to Server</Bootstrap.Alert>
+		return <Bootstrap.Alert bsStyle="success" style={stackedAlertStyle}>
+			Connected to Server
+		</Bootstrap.Alert>
 	}
 }
 
 export class GlobalDictionaryEmptyAlert extends React.Component<void, void> {
 	public render() {
-		return <Bootstrap.Alert bsStyle="warning">Your global dictionary is empty. Please go to the settings and update it.</Bootstrap.Alert>
+		return <Bootstrap.Alert bsStyle="warning" style={stackedAlertStyle}>
+			Your global dictionary is empty. Please go to the settings and update it.
+		</Bootstrap.Alert>
 	}
 }
