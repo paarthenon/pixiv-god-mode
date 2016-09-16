@@ -171,7 +171,7 @@ export class IllustrationPage extends RootPage {
 			getBase64(video).then(b64 => 
 				PixivAssistantServer.downloadAnimation({
 					artist: this.artist,
-					image: { id: this.imageId },
+					image: { id: this.imageId, animation: true },
 				}, b64)
 			)
 		).then(() => {this.isBusy = false});
