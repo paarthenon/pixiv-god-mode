@@ -64,6 +64,9 @@
     },
     "node-uuid/node-uuid-cjs.d.ts": {
       "commit": "324169800cb792855a96272f5d58f646e7b1d56d"
+    },
+    "sanitize-filename/sanitize-filename.d.ts": {
+      "commit": "7c9f3114a756f052ca10caba615540d7b5eb19be"
     }
   }
 }

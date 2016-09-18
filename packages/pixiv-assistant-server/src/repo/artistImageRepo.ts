@@ -7,6 +7,7 @@ import * as path from 'path'
 import * as underscore from 'underscore'
 import * as urllib from 'url'
 import * as XRegExp from "xregexp"
+import * as sanitize from 'sanitize-filename'
 
 import {RootRepo} from './rootRepo'
 import {ActionCache} from '../utils/ActionCache'
@@ -23,7 +24,7 @@ class ArtistImageDatabase {
 	constructor(protected path:string) { }
 
 	protected artistToFolderName(artist:Model.Artist):string {
-		return pathUtils.avoidTrailingDot(`[${artist.id}] - ${artist.name}`);
+		return sanitize(pathUtils.avoidTrailingDot(`[${artist.id}] - ${artist.name}`));
 	}
 	protected folderNameToArtist(folderName:string):Model.Artist {
 		let match = XRegExp('^\\[([0-9]+)\\]\\ -\\ (.*)$').exec(folderName);

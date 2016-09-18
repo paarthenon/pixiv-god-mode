@@ -34,6 +34,7 @@
     "react-bootstrap": "^0.30.3",
     "react-dom": "^15.3.1",
     "recursive-readdir-sync": "^1.0.6",
+    "sanitize-filename": "^1.6.0",
     "underscore": "^1.8.3",
     "xregexp": "^3.0.0",
     "yargs": "^4.3.2"
