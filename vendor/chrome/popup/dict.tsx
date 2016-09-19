@@ -36,45 +36,24 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 				<DictionaryAdd onAdd={this.props.onAdd} getTranslation={this.props.getTranslation}/>
 				<Bootstrap.Panel>
 				<Search onChange={(value) => this.setState({currentSearch:value.toLocaleLowerCase()})} />
-				<Bootstrap.Table condensed>
-				<colgroup>
-					<col style={{ width: '50%', textAlign: 'center' }}></col>
-					<col style={{ width: '50%', textAlign: 'center' }}></col>
-					<col style={{ width: '62px'}}></col>
-					<col style={{ width: '60px'}}></col>
-				</colgroup>
-				<thead>
-				<tr>
-					<th>Japanese</th>
-					<th>English</th>
-					<th></th>
-					<th></th>
-				</tr>
-				</thead>
-				<tbody>
 				{this.filteredData.map(entry => {
-					if (entry.local) {
-						return <DictEntry 
-							key={entry.key}
-							japanese={entry.key} 
-							translation={entry.value}
-							hasGlobalDef={entry.hasGlobalDef}
-							onUpdate={this.props.onUpdate}
-							onDelete={this.props.onDelete}
-						/>
-					} else {
-						return <ReadOnlyDictEntry
-							key={entry.key}
-							japanese={entry.key}
-							translation={entry.value}
-							onImport={this.handleImport.bind(this)}
-						/>
-					}
-				}
-					
-				)}
-				</tbody>
-				</Bootstrap.Table>
+					return (entry.local) ?
+							<DictEntry 
+								key={entry.key}
+								japanese={entry.key} 
+								translation={entry.value}
+								hasGlobalDef={entry.hasGlobalDef}
+								onUpdate={this.props.onUpdate}
+								onDelete={this.props.onDelete}
+							/>
+						:
+							<ReadOnlyDictEntry
+								key={entry.key}
+								japanese={entry.key}
+								translation={entry.value}
+								onImport={this.handleImport.bind(this)}
+							/>
+				})}
 				</Bootstrap.Panel>
 			</div>
 		);
@@ -133,23 +112,21 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 	}
 	public render() {
 		if (!this.state.editOpen)
-			return <tr>
-				<td>{this.props.japanese}</td>
-				<td>
-					{this.props.translation}
-					<span onClick={this.handleSearch.bind(this)}
-						style={{cursor:'pointer','padding-left':'5px'}}
-						className="glyphicon glyphicon-search" aria-hidden="true"></span>
-				</td>
-				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button></td>
-				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>{this.deleteText}</Bootstrap.Button></td>
-			</tr>
-		else return <tr>
-				<td>{this.props.japanese}</td>
-				<td><input defaultValue={this.props.translation} ref="translation"></input></td>
-				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) }>update</Bootstrap.Button></td>
-				<td class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) }>cancel</Bootstrap.Button></td>
-			</tr>
+			return <div>
+				<span onClick={this.handleSearch.bind(this)}
+					style={{cursor:'pointer','padding-left':'5px'}}
+					className="glyphicon glyphicon-search" aria-hidden="true"></span>
+				<b>{this.props.translation}</b>
+				<span>{this.props.japanese}</span>
+				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button></span>
+				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>{this.deleteText}</Bootstrap.Button></span>
+			</div>
+		else return <div>
+				<b><input defaultValue={this.props.translation} ref="translation"></input></b>
+				<span>{this.props.japanese}</span>
+				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) }>update</Bootstrap.Button></span>
+				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) }>cancel</Bootstrap.Button></span>
+			</div>
 	}
 }
 
@@ -161,16 +138,14 @@ class ReadOnlyDictEntry extends React.Component<ReadOnlyDictEntryProps, void> {
 		ChromeUtils.newTab("http://www.pixiv.net/search.php?s_mode=s_tag_full&word="+this.props.japanese)
 	}
 	public render() {
-		return <tr>
-			<td>{this.props.japanese}</td>
-			<td>
-				{this.props.translation}
-				<span onClick={this.handleSearch.bind(this)}
-					style={{cursor:'pointer','padding-left':'5px'}}
-					className="glyphicon glyphicon-search" aria-hidden="true"></span>
-			</td>
-			<td></td>
-			<td><Bootstrap.Button bsSize="xsmall" onClick={this.handleImport.bind(this)}>Import</Bootstrap.Button></td>
-		</tr>
+		return <div>
+			<span onClick={this.handleSearch.bind(this)}
+				style={{cursor:'pointer','padding-left':'5px'}}
+				className="glyphicon glyphicon-search" aria-hidden="true"></span>
+			<b>{this.props.translation}</b>
+			<span>{this.props.japanese}</span>
+			<span></span>
+			<span><Bootstrap.Button bsSize="xsmall" onClick={this.handleImport.bind(this)}>Import</Bootstrap.Button></span>
+		</div>
 	}
 }
