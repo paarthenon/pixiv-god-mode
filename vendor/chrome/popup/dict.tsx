@@ -1,11 +1,12 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
-
 import * as ChromeUtils from '../utils'
 
-import {cachedDictionary} from '../../../src/core/dictionaryManagementService'
+import {cachedDictionary, cachedDictionaryEntry} from '../../../src/core/dictionaryManagementService'
 import {DictionaryAdd} from './components/DictionaryAdd'
+
+let InfiniteScroll = require('react-infinite-scroller');
 
 type paDict = { [id:string]:string };
 
@@ -17,8 +18,20 @@ interface DictViewerProps {
 	onAdd: (key:string, value:string) => any
 }
 
-export class DictViewer extends React.Component<DictViewerProps,{currentSearch:string}> {
-	state = { currentSearch: '' };
+interface DictViewerState {
+	currentSearch:string
+	loadCount:number
+	hasMore:boolean
+	visibleItems: cachedDictionaryEntry[]
+}
+
+export class DictViewer extends React.Component<DictViewerProps,DictViewerState> {
+	state = { 
+		currentSearch: '', 
+		loadCount: 5, 
+		hasMore: true, 
+		visibleItems: [] as cachedDictionaryEntry[],
+	};
 
 	public get filteredData() {
 		return this.props.cachedDict.cache
@@ -30,30 +43,66 @@ export class DictViewer extends React.Component<DictViewerProps,{currentSearch:s
 	public handleImport(japanese:string, translation:string) {
 		this.props.onAdd(japanese, translation);
 	}
+	protected setSearch(value:string) {
+		this.setState(Object.assign(this.state, {
+			currentSearch:value.toLocaleLowerCase(),
+		}));
+		this.updateVisible();
+	}
+	protected updateVisible() {
+		this.setState(Object.assign(this.state, {
+			hasMore: this.state.loadCount < this.filteredData.length,
+			visibleItems: this.filteredData.slice(0, this.state.loadCount),
+		}))
+	}
+	protected loadMore(page:number) {
+		console.log('loading more');
+		let newCount = page * 20;
+		let stateChanges = {
+			loadCount: newCount,
+			hasMore: newCount < this.filteredData.length,
+			visibleItems: this.filteredData.slice(0, newCount),
+		};
+		this.setState(Object.assign(this.state, stateChanges));
+	}
+
 	public render() {
+		console.log('rendering', this.filteredData);
 		return (
 			<div>
 				<DictionaryAdd onAdd={this.props.onAdd} getTranslation={this.props.getTranslation}/>
 				<Bootstrap.Panel>
-				<Search onChange={(value) => this.setState({currentSearch:value.toLocaleLowerCase()})} />
-				{this.filteredData.map(entry => {
-					return (entry.local) ?
-							<DictEntry 
-								key={entry.key}
-								japanese={entry.key} 
-								translation={entry.value}
-								hasGlobalDef={entry.hasGlobalDef}
-								onUpdate={this.props.onUpdate}
-								onDelete={this.props.onDelete}
-							/>
-						:
-							<ReadOnlyDictEntry
-								key={entry.key}
-								japanese={entry.key}
-								translation={entry.value}
-								onImport={this.handleImport.bind(this)}
-							/>
-				})}
+				<Search onChange={(value:any) => this.setSearch(value)} />
+				{(this.filteredData.length > 0) ? 
+					<div style={{height: '300px', overflow: 'auto'}}>
+					<InfiniteScroll
+						pageStart={0}
+						loadMore={this.loadMore.bind(this)}
+						hasMore = {this.state.hasMore}
+						loader={<div>Loading</div>}
+						useWindow={false}
+					>
+					{this.state.visibleItems.map(entry => {
+						return (entry.local) ?
+								<DictEntry 
+									key={entry.key}
+									japanese={entry.key} 
+									translation={entry.value}
+									hasGlobalDef={entry.hasGlobalDef}
+									onUpdate={this.props.onUpdate}
+									onDelete={this.props.onDelete}
+								/>
+							:
+								<ReadOnlyDictEntry
+									key={entry.key}
+									japanese={entry.key}
+									translation={entry.value}
+									onImport={this.handleImport.bind(this)}
+								/>
+					})}
+					</InfiniteScroll>
+					</div>
+				: null }
 				</Bootstrap.Panel>
 			</div>
 		);

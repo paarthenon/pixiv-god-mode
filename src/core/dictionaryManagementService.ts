@@ -20,7 +20,14 @@ interface AppKeys {
 
 export type naiveDictionary = { [id:string]:string };
 
-export type cachedDictionary = { cache: {key:string, value:string, local:boolean, hasGlobalDef?:boolean}[] };
+export interface cachedDictionaryEntry {
+	key:string
+	value:string
+	local:boolean
+	hasGlobalDef?:boolean
+}
+
+export type cachedDictionary = { cache: cachedDictionaryEntry[] };
 
 export class CachedDictionaryService {
 	constructor(
