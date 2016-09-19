@@ -14,29 +14,31 @@ import {GithubDictionaryUtil} from '../../../src/core/githubDictionaryUtil'
 
 let logger = log4js.getLogger('ActionPanel');
 
+class IndividualPanel extends React.Component<{header:string}, void> {
+	public render() {
+		return <p>
+			<h5>{this.props.header}</h5>
+			<blockquote style={{'font-size':'1.2em'}}>
+				{this.props.children}
+			</blockquote>
+		</p>;
+	}
+}
+
 export class SettingsPanel extends React.Component<void,{userSettings: {[id:string]:boolean}}> {
 	public render() {
 		return (
-			<div>
-			<Bootstrap.Grid>
-				<Bootstrap.Row>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Dictionary Status">
+			<Bootstrap.Panel style={{'overflow-y':'auto', 'margin-bottom': 0}}>
+					<IndividualPanel header="Dictionary Status">
 						<DictUpdaterContainer/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Server">
+					</IndividualPanel>
+					<IndividualPanel header="Server">
 						<TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
 						<SettingContainer 
 							settingKey={SettingKeys.general.disableServerConnectionAlert} 
 							label={'Disable server connection alert'}/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-				</Bootstrap.Row>
-				<Bootstrap.Row>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Illustration Page">
+					</IndividualPanel>
+					<IndividualPanel header="Illustration Page">
 						<SettingContainer 
 							settingKey={SettingKeys.pages.illust.inject.openFolder} 
 							label={'Inject open folder button'}/>
@@ -46,10 +48,8 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.illust.boxImage} 
 							label={'Limit image size to the window (illustration)'}/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Manga Page">
+					</IndividualPanel>
+					<IndividualPanel header="Manga Page">
 						<SettingContainer 
 							settingKey={SettingKeys.pages.manga.inject.previousButton} 
 							label={'Inject previous page button'}/>
@@ -59,12 +59,8 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.manga.fitImage} 
 							label={'Fit image to window'}/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-				</Bootstrap.Row>
-				<Bootstrap.Row>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Works Page">
+					</IndividualPanel>
+					<IndividualPanel header="Works Page">
 						<SettingContainer 
 							settingKey={SettingKeys.pages.works.inject.openFolder} 
 							label={'Inject open folder button'}/>
@@ -84,10 +80,8 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.works.openTabsImagesOnly} 
 							label={'Open in tabs uses the direct image files instead of the pages'}/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Bookmark Illustration Page">
+					</IndividualPanel>
+					<IndividualPanel header="Bookmark Illustration Page">
 						<SettingContainer 
 							settingKey={SettingKeys.pages.bookmarkIllustration.inject.viewAll} 
 							label={'Inject view all button'}/>
@@ -100,12 +94,8 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.bookmarkIllustration.skipToDetail} 
 							label={'Skip to bookmark detail page'}/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-				</Bootstrap.Row>
-				<Bootstrap.Row>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Artist's Bookmarks Page">
+					</IndividualPanel>
+					<IndividualPanel header="Artist's Bookmarks Page">
 						<SettingContainer 
 							settingKey={SettingKeys.pages.artistBookmarks.inject.openFolder} 
 							label={'Inject open folder button'}/>
@@ -121,10 +111,8 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.artistBookmarks.fadeBookmarked} 
 							label={'Fade out images from bookmarked artists'}/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-					<Bootstrap.Col xs={6} md={6}>
-					<Bootstrap.Panel header="Search Page">
+					</IndividualPanel>
+					<IndividualPanel header="Search Page">
 						<SettingContainer 
 							settingKey={SettingKeys.pages.search.directToManga} 
 							label={'Link directly to manga'}/>
@@ -134,11 +122,8 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 						<SettingContainer 
 							settingKey={SettingKeys.pages.search.fadeBookmarked} 
 							label={'Fade out images from bookmarked artists'}/>
-					</Bootstrap.Panel>
-					</Bootstrap.Col>
-				</Bootstrap.Row>
-			</Bootstrap.Grid>
-			</div>
+					</IndividualPanel>
+			</Bootstrap.Panel>
 		);
 	}
 }

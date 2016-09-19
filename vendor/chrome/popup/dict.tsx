@@ -28,7 +28,7 @@ interface DictViewerState {
 export class DictViewer extends React.Component<DictViewerProps,DictViewerState> {
 	state = { 
 		currentSearch: '', 
-		loadCount: 5, 
+		loadCount: 0, 
 		hasMore: true, 
 		visibleItems: [] as cachedDictionaryEntry[],
 	};
@@ -56,7 +56,6 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 		}))
 	}
 	protected loadMore(page:number) {
-		console.log('loading more');
 		let newCount = page * 20;
 		let stateChanges = {
 			loadCount: newCount,
@@ -67,7 +66,6 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 	}
 
 	public render() {
-		console.log('rendering', this.filteredData);
 		return (
 			<div>
 				<DictionaryAdd onAdd={this.props.onAdd} getTranslation={this.props.getTranslation}/>
