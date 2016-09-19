@@ -22,7 +22,6 @@ interface DictViewerState {
 	currentSearch:string
 	loadCount:number
 	hasMore:boolean
-	visibleItems: cachedDictionaryEntry[]
 }
 
 export class DictViewer extends React.Component<DictViewerProps,DictViewerState> {
@@ -30,7 +29,6 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 		currentSearch: '', 
 		loadCount: 0, 
 		hasMore: true, 
-		visibleItems: [] as cachedDictionaryEntry[],
 	};
 
 	public get filteredData() {
@@ -52,7 +50,6 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 	protected updateVisible() {
 		this.setState(Object.assign(this.state, {
 			hasMore: this.state.loadCount < this.filteredData.length,
-			visibleItems: this.filteredData.slice(0, this.state.loadCount),
 		}))
 	}
 	protected loadMore(page:number) {
@@ -60,7 +57,6 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 		let stateChanges = {
 			loadCount: newCount,
 			hasMore: newCount < this.filteredData.length,
-			visibleItems: this.filteredData.slice(0, newCount),
 		};
 		this.setState(Object.assign(this.state, stateChanges));
 	}
@@ -80,7 +76,7 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 						loader={<div>Loading</div>}
 						useWindow={false}
 					>
-					{this.state.visibleItems.map(entry => {
+					{this.filteredData.slice(0, this.state.loadCount).map(entry => {
 						return (entry.local) ?
 								<DictEntry 
 									key={entry.key}
