@@ -56,12 +56,13 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 
 	public render() {
 		let buttonText = (this.state.updating) ? 'update':'add';
+		let gap = {margin: '0px 5px'};
 		return <Bootstrap.Panel bsSize="small">
 			<h5>Add Translation</h5>
 			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} bsSize="small">
 				<Bootstrap.FormGroup bsSize="small">
 					<Bootstrap.FormControl type="text" placeholder="japanese" ref="japanese" />
-					<Bootstrap.FormControl type="text" placeholder="translation" ref="translation" />
+					<Bootstrap.FormControl type="text" placeholder="translation" ref="translation" style={gap}/>
 					<Bootstrap.Button bsSize="small" type="submit" onClick={this.handleAdd.bind(this)}>{buttonText}</Bootstrap.Button>
 				</Bootstrap.FormGroup>
 			</Bootstrap.Form>
