@@ -68,7 +68,7 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 				<Bootstrap.Panel>
 				<Search onChange={(value:any) => this.setSearch(value)} />
 				{(this.filteredData.length > 0) ? 
-					<div style={{height: '300px', overflow: 'auto'}}>
+					<div style={{height: '320px', overflow: 'auto'}}>
 					<InfiniteScroll
 						pageStart={0}
 						loadMore={this.loadMore.bind(this)}

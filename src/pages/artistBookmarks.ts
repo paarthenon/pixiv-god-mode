@@ -8,7 +8,6 @@ import {Container as Deps} from '../deps'
 import SettingKeys from '../settingKeys'
 
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
-import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 
 export class ArtistBookmarksPage extends GalleryPage {
 	public get artistId():number {
@@ -38,7 +37,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 	}
 	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.inject.pagingButtons)
 	public injectPagingButtons(){
-		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
+		super.injectPagingButtons();
 	}
 	
 	@ExecuteOnLoad

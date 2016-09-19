@@ -1,8 +1,10 @@
+import * as log4js from 'log4js'
+
 import * as pathUtils from '../utils/path'
 import {RootPage} from './root'
 import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
+import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 
-import * as log4js from 'log4js'
 let logger = log4js.getLogger('Gallery');
 
 export class GalleryPage extends RootPage {
@@ -13,27 +15,28 @@ export class GalleryPage extends RootPage {
 		return pathUtils.getResultFromBadge(this.jQuery('span.count-badge').text());
 	}
 
+	public get firstPageUrl(): string {
+		return this.getPageUrl(1);
+	}
+	public get lastPageUrl(): string {
+		logger.trace('Going to last page');
+
+		let finalPage = Math.ceil(1.0 * this.imageCountTotal / 20.0);
+		return this.getPageUrl(finalPage);
+	}
+
 	protected getTagElements() {
 		return super.getTagElements();
 	}
 
-	protected goToPage(pageNum:number) {
+	protected getPageUrl(pageNum:number) {
 		logger.trace('Going to page', pageNum);
 		// This takes advantage of the property that &p=2&p=3 will direct to page 3.
-		window.location.href = `${window.location.href}&p=${pageNum}`;
+		return `${window.location.href}&p=${pageNum}`;
 	}
 
-	public goToLastPage():void {
-		logger.trace('Going to last page');
-
-		let finalPage = Math.ceil(1.0 * this.imageCountTotal / 20.0);
-		this.goToPage(finalPage);
-	}
-
-	public goToFirstPage():void {
-		logger.trace('Going to first page');
-
-		this.goToPage(1);
+	protected injectPagingButtons() {
+		injectPagingButtons(this.jQuery, this.firstPageUrl, this.lastPageUrl);
 	}
 
 	public replaceMangaThumbnailLinksToFull(){

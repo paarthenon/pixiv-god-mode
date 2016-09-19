@@ -4,8 +4,8 @@ import * as ReactDOM from 'react-dom'
 import {PageButton} from '../components/pageButton'
 import {GenerateElement} from './utils'
 
-function injectFirstButton($:JQueryStatic, func:Function) {
-	let componentProps =  {text: '<<', tooltip: 'First', rel: 'prev', clickAction: func};
+function injectFirstButton($:JQueryStatic, url:string) {
+	let componentProps =  {text: '<<', tooltip: 'First', rel: 'prev', href:url};
 	let cssProps = {position: 'absolute', left: '-100%'};
 
 	$('span.prev').css('position','relative');
@@ -19,8 +19,8 @@ function injectFirstButton($:JQueryStatic, func:Function) {
 	$('span.prev').last().append(component2);
 }
 
-function injectLastButton($:JQueryStatic, func:Function) {
-	let componentProps = {text: '>>', tooltip: 'Last', rel: 'next', clickAction: func};
+function injectLastButton($:JQueryStatic, url:string) {
+	let componentProps = {text: '>>', tooltip: 'Last', rel: 'next', href:url};
 	let cssProps = {position: 'absolute', left: '100%'};
 
 	$('span.next').css('position','relative');
@@ -34,11 +34,11 @@ function injectLastButton($:JQueryStatic, func:Function) {
 	$('span.next').last().append(component2);
 }
 
-export function injectPagingButtons($:JQueryStatic, firstPageFunc:Function, lastPageFunc:Function) {
+export function injectPagingButtons($:JQueryStatic, firstPage:string, lastPage:string) {
 	if($('span.prev').children().length > 0) {
-		injectFirstButton($,firstPageFunc);
+		injectFirstButton($,firstPage);
 	}
 	if($('span.next').children().length > 0) {
-		injectLastButton($, lastPageFunc);
+		injectLastButton($, lastPage);
 	}
 }

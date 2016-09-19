@@ -45,8 +45,8 @@ export class SearchPage extends GalleryPage {
 	}
 
 	@ExecuteOnLoad
-	public injectPageElements() {
-		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
+	public injectPagingButtons(){
+		super.injectPagingButtons();
 	}
 
 	protected getTagElements() {
@@ -79,11 +79,9 @@ export class SearchPage extends GalleryPage {
 		super.translateTagsOnPage();
 	}
 
-	// TODO: This logic is wrong if we are already on the last page and there are fewer than the full set of elements. 
-	// Make this action only visible if we are not already on the last page. 
 	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'fast-forward' })
 	public goToLastPage() {
-		super.goToLastPage();
+		window.location.href = this.lastPageUrl;
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.search.directToManga)

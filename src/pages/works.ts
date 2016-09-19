@@ -55,7 +55,7 @@ export class WorksPage extends GalleryPage {
 	}	
 	@ExecuteIfSetting(SettingKeys.pages.works.inject.pagingButtons)
 	public injectPagingButtons(){
-		injectPagingButtons(this.jQuery, this.goToFirstPage.bind(this), this.goToLastPage.bind(this));
+		super.injectPagingButtons();
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.works.autoDarken)
@@ -78,7 +78,7 @@ export class WorksPage extends GalleryPage {
 
 	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'fast-forward' })
 	public goToLastPage() {
-		super.goToLastPage();
+		window.location.href = this.lastPageUrl;
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-window' })
