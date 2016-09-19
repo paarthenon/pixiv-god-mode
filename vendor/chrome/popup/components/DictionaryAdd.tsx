@@ -11,7 +11,8 @@ interface DictionaryAddProps {
 	onAdd :(key:string,value:string) => any
 	getTranslation :(key:string) => Promise<string>
 }
-export class DictionaryAdd extends React.Component<DictionaryAddProps,void> {
+export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?:boolean}> {
+	state = {updating: false};
 	componentDidMount() {
 		chromeUtils.getCurrentTab().then(tab => {
 			if (tab.url) {
@@ -25,6 +26,7 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,void> {
 						.then(translation => {
 							if (translation !== undefined) {
 								this.translationInput.value = translation
+								this.setState({updating: true});
 							}
 						})
 				} else {
@@ -53,13 +55,14 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,void> {
 	}
 
 	public render() {
+		let buttonText = (this.state.updating) ? 'update':'add';
 		return <Bootstrap.Panel bsSize="small">
 			<h5>Add Translation</h5>
 			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} bsSize="small">
 				<Bootstrap.FormGroup bsSize="small">
 					<Bootstrap.FormControl type="text" placeholder="japanese" ref="japanese" />
 					<Bootstrap.FormControl type="text" placeholder="translation" ref="translation" />
-					<Bootstrap.Button bsSize="small" type="submit" onClick={this.handleAdd.bind(this)}>add</Bootstrap.Button>
+					<Bootstrap.Button bsSize="small" type="submit" onClick={this.handleAdd.bind(this)}>{buttonText}</Bootstrap.Button>
 				</Bootstrap.FormGroup>
 			</Bootstrap.Form>
 		</Bootstrap.Panel>
