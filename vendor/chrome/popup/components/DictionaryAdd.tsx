@@ -57,8 +57,10 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 	public render() {
 		let buttonText = (this.state.updating) ? 'update':'add';
 		let gap = {margin: '0px 5px'};
+
+		let BootstrapFormLabel = (Bootstrap as any).ControlLabel;
 		return <Bootstrap.Panel bsSize="small">
-			<h5>Add Translation</h5>
+			<big>Add Translation</big>
 			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} bsSize="small">
 				<Bootstrap.FormGroup bsSize="small">
 					<Bootstrap.FormControl type="text" placeholder="japanese" ref="japanese" />
