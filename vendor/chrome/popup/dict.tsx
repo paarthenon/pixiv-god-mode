@@ -7,6 +7,7 @@ import {cachedDictionary, cachedDictionaryEntry} from '../../../src/core/diction
 import {DictionaryAdd} from './components/DictionaryAdd'
 
 let InfiniteScroll = require('react-infinite-scroller');
+var removeDiacritics = require('diacritics').remove;
 
 type paDict = { [id:string]:string };
 
@@ -34,8 +35,11 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 	public get filteredData() {
 		return this.props.cachedDict.cache
 			.filter(entry => {
-				return entry.key.toLocaleLowerCase().includes(this.state.currentSearch) 
-					|| entry.value.toLocaleLowerCase().includes(this.state.currentSearch)
+				let latinKey = removeDiacritics(entry.key.toLocaleLowerCase());
+				let latinValue = removeDiacritics(entry.value.toLocaleLowerCase());
+				let latinSearch = removeDiacritics(this.state.currentSearch);
+				return latinKey.includes(latinSearch)
+					|| latinValue.includes(latinSearch)
 			})
 	}
 	public handleImport(japanese:string, translation:string) {
@@ -75,6 +79,7 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 						hasMore = {this.state.hasMore}
 						loader={<div>Loading</div>}
 						useWindow={false}
+						className="striped"
 					>
 					{this.filteredData.slice(0, this.state.loadCount).map(entry => {
 						return (entry.local) ?
@@ -156,17 +161,17 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 	public render() {
 		if (!this.state.editOpen)
 			return <div>
-				<span onClick={this.handleSearch.bind(this)}
+				<big><span onClick={this.handleSearch.bind(this)}
 					style={{cursor:'pointer','padding-left':'5px'}}
 					className="glyphicon glyphicon-search" aria-hidden="true"></span>
-				<b>{this.props.translation}</b>
-				<span>{this.props.japanese}</span>
+				{this.props.translation}</big>
+				<small style={{color:'#999'}}>{this.props.japanese}</small>
 				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button></span>
 				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>{this.deleteText}</Bootstrap.Button></span>
 			</div>
 		else return <div>
-				<b><input defaultValue={this.props.translation} ref="translation"></input></b>
-				<span>{this.props.japanese}</span>
+				<big><input defaultValue={this.props.translation} ref="translation"></input></big>
+				<small style={{color:'#999'}}>{this.props.japanese}</small>
 				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) }>update</Bootstrap.Button></span>
 				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) }>cancel</Bootstrap.Button></span>
 			</div>
@@ -182,12 +187,11 @@ class ReadOnlyDictEntry extends React.Component<ReadOnlyDictEntryProps, void> {
 	}
 	public render() {
 		return <div>
-			<span onClick={this.handleSearch.bind(this)}
-				style={{cursor:'pointer','padding-left':'5px'}}
+			<big><span onClick={this.handleSearch.bind(this)}
+				style={{cursor:'pointer','padding-right':'5px'}}
 				className="glyphicon glyphicon-search" aria-hidden="true"></span>
-			<b>{this.props.translation}</b>
-			<span>{this.props.japanese}</span>
-			<span></span>
+			{this.props.translation}</big>
+			<small style={{color:'#999'}}>{this.props.japanese}</small>
 			<span><Bootstrap.Button bsSize="xsmall" onClick={this.handleImport.bind(this)}>Import</Bootstrap.Button></span>
 		</div>
 	}
