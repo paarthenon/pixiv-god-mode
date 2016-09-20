@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Pixiv Assistant",
-  "description": "Adds functionality for tag translation and other features for power users",
-  "version": "0.1.8",
+  "description": "Adds tag translation, a suite of enhancements, and repository management to Pixiv",
+  "version": "0.1.9",
 
   "browser_action": {
   	"default_icon": "resources/pa-icon-38.png",
@@ -26,8 +26,11 @@
     "storage",
     "bookmarks",
     "downloads",
-    "http://*/",
-    "https://*/"
+    "http://*.pixiv.net/*",
+    "http://api.github.com/*",
+    "https://cdn.rawgit.com/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
   ],
   "icons": {
     "128": "resources/pa-icon-128.png"
