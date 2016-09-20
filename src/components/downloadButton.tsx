@@ -1,7 +1,4 @@
 import * as React from 'react'
-import * as log4js from 'log4js'
-
-let logger = log4js.getLogger('Button');
 
 export enum DownloadStates {
 	LOADINGSTATUS,

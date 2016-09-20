@@ -2,10 +2,6 @@ import * as React from 'react'
 
 var Popover = require('react-popover');
 
-import * as log4js from 'log4js'
-
-let logger = log4js.getLogger('Button');
-
 class TagDropdown extends React.Component<any,any> {
 	public render() {
 		return (

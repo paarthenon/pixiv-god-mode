@@ -3,9 +3,6 @@ import * as log4js from 'log4js'
 import IConfig from './IConfig'
 import IDictionary from './IDictionary'
 
-import SingleConfigDict from './singleConfigDictionary'
-import DictBroker from './dictBroker'
-
 import {GithubDictionaryUtil} from './githubDictionaryUtil'
 
 import ConfigKeys from '../configKeys'

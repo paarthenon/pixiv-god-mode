@@ -10,13 +10,14 @@ import {Model} from '../../common/proto'
 import * as log4js from 'log4js'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {PageButton} from '../components/pageButton'
 import {UserRelationButton} from '../components/userRelationButton'
 
 import {injectPagingButtons} from '../injectors/pagingButtonInjector'
 import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
-import {injectNavbarRightButton} from '../injectors/navbarRightButtonInjector'
+import {injectOpenInTabs} from '../injectors/openInTabs'
 import {Container as Deps} from '../deps'
+
+import ConfigKeys from '../ConfigKeys'
 
 let logger = log4js.getLogger();
 
@@ -51,7 +52,7 @@ export class WorksPage extends GalleryPage {
 	}
 	@ExecuteIfSetting(SettingKeys.pages.works.inject.openInTabs)
 	public injectOpenTabs(){
-		injectNavbarRightButton(this.jQuery, 'Open In Tabs', this.openTabs.bind(this));
+		injectOpenInTabs(this.jQuery, 'Open In Tabs', this.openTabs.bind(this));
 	}	
 	@ExecuteIfSetting(SettingKeys.pages.works.inject.pagingButtons)
 	public injectPagingButtons(){
@@ -128,7 +129,12 @@ export class WorksPage extends GalleryPage {
 		PixivAssistantServer.openFolder(this.artist);
 	}
 
-	// @RegisteredAction({ id: 'pa_download_all_images_debug', label: 'Download All (DEBUG)', icon: 'new-tab' })
+	@RegisteredAction({ 
+		id: 'pa_download_all_images_debug', 
+		label: 'Download All (DEBUG)', 
+		icon: 'new-tab', 
+		if: () => Deps.config.get(ConfigKeys.debug_mode),
+	})
 	public debugDownloadAllImagesForArtist():void {
 		Deps.execOnPixiv(
 			(pixiv, props) => {

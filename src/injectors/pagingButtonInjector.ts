@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import {PageButton} from '../components/pageButton'
+import {PagingButton} from '../components/pagingButton'
 import {GenerateElement} from './utils'
 
 function injectFirstButton($:JQueryStatic, url:string) {
@@ -10,11 +10,11 @@ function injectFirstButton($:JQueryStatic, url:string) {
 
 	$('span.prev').css('position','relative');
 
-	let component1 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	let component1 = GenerateElement(React.createElement(PagingButton, componentProps), $);
 	$(component1).css(cssProps);
 	$('span.prev').first().append(component1);
 
-	let component2 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	let component2 = GenerateElement(React.createElement(PagingButton, componentProps), $);
 	$(component2).css(cssProps);
 	$('span.prev').last().append(component2);
 }
@@ -25,11 +25,11 @@ function injectLastButton($:JQueryStatic, url:string) {
 
 	$('span.next').css('position','relative');
 
-	let component1 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	let component1 = GenerateElement(React.createElement(PagingButton, componentProps), $);
 	$(component1).css(cssProps);
 	$('span.next').first().append(component1);
 
-	let component2 = GenerateElement(React.createElement(PageButton, componentProps), $);
+	let component2 = GenerateElement(React.createElement(PagingButton, componentProps), $);
 	$(component2).css(cssProps);
 	$('span.next').last().append(component2);
 }

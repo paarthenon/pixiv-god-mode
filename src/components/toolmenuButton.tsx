@@ -1,7 +1,4 @@
 import * as React from 'react'
-import * as log4js from 'log4js'
-
-let logger = log4js.getLogger('Button');
 
 export class ToolmenuButton extends React.Component<{text:string, tooltip?:string, clickAction:Function},any> {
 	public render() {
