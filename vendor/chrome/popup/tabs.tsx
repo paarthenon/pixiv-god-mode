@@ -2,6 +2,8 @@ import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
 export class Tabs extends React.Component<{tabs: {[name:string]:JSX.Element}, initialTab: string},{active:string}> {
+	state = {active: this.props.initialTab};
+
 	protected style = {
 		width: '800px',
 		height: '600px',

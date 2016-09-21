@@ -7,6 +7,7 @@ interface ConfigEntries {
 }
 export class ConfigPanel extends React.Component<any,ConfigEntries> {
 	state :ConfigEntries = { items: [] };
+
 	componentDidMount() {
 		Config.keys()
 			.then(configKeys => Promise.all<{key:string;value:string}>(configKeys.map(key =>
@@ -18,6 +19,7 @@ export class ConfigPanel extends React.Component<any,ConfigEntries> {
 				this.setState({ items: entries })
 			});
 	}
+	
 	public render() {
 		return (
 			<div>
