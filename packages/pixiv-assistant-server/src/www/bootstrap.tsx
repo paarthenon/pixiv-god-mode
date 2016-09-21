@@ -75,8 +75,8 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 				<Bootstrap.FormGroup><Bootstrap.InputGroup inline>
 					<Bootstrap.InputGroup.Addon>Repository Type</Bootstrap.InputGroup.Addon>
 					<Bootstrap.FormControl componentClass="select" placeholder="Repository Type" ref="repoType">
-						<option value={proto.RepositoryType.ArtistBreakdown}>Repo / Artist / Images</option>
-						<option value={proto.RepositoryType.LooseImages}>Repo / Loose Images</option>
+						<option value={proto.RepositoryType.ArtistBreakdown.toString()}>Repo / Artist / Images</option>
+						<option value={proto.RepositoryType.LooseImages.toString()}>Repo / Loose Images</option>
 					</Bootstrap.FormControl>
 				</Bootstrap.InputGroup></Bootstrap.FormGroup>
 				<Bootstrap.FormGroup><Bootstrap.InputGroup inline>
@@ -103,7 +103,7 @@ class CloseServerForm extends React.Component<{clickAction:Function}, void> {
 			<h2>Server Status</h2>
 			<Bootstrap.Well>
 				<p> Server <strong>Active</strong> </p>
-				<Bootstrap.Button onClick={this.props.clickAction}>Close Server</Bootstrap.Button>
+				<Bootstrap.Button onClick={() => this.props.clickAction()}>Close Server</Bootstrap.Button>
 			</Bootstrap.Well>
 			</Bootstrap.Row>
 			</Bootstrap.Grid>

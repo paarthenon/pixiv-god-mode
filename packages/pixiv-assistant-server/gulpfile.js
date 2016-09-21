@@ -17,4 +17,9 @@ gulp.task('build', function(callback){
 	});
 });
 
-gulp.task('default', ['build']);
+gulp.task('htmlFile', ['build'], function(){
+	return new Promise(resolve => gulp.src('src/www/index.html')
+		.pipe(gulp.dest('build/src/www'))
+		.on('end', resolve))
+});
+gulp.task('default', ['htmlFile']);
