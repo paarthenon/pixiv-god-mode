@@ -3,15 +3,17 @@ import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
 import Mailman from '../mailman'
-
 import {Action} from '../../../src/core/IAction'
 
 let logger = log4js.getLogger('Page Actions Pane');
 
-export class ActionContainer extends React.Component<void,{actions: Action[]}> {
-	constructor() {
-		super();
-		this.state = { actions: [] };
+interface ActionsListState {
+	actions: Action[]
+}
+export class ActionContainer extends React.Component<void,ActionsListState> {
+	state :ActionsListState = { actions: [] };
+
+	componentDidMount() {
 		Mailman.ContentScript.getActions()
 			.then(actionMsg => {
 				this.setState({ actions: actionMsg.actions});

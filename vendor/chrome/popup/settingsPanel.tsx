@@ -141,10 +141,10 @@ enum GlobalDictUpdateState {
 class DictUpdaterContainer extends React.Component<void, {mode: GlobalDictUpdateState, dupeLocalKeys:string[]}> {
 	state = {mode: GlobalDictUpdateState.LOADING, dupeLocalKeys: undefined as string[]};
 
-	constructor() {
-		super();
+	componentDidMount() {
 		this.updateStatus();
 	}
+
 	protected updateMode(mode: GlobalDictUpdateState) {
 		this.setState({mode, dupeLocalKeys: this.state.dupeLocalKeys});
 	}
@@ -205,16 +205,19 @@ interface SettingContainerProps {
 	label:string
 }
 class SettingContainer extends React.Component<SettingContainerProps, {currentValue:boolean}> {
-	constructor(props:SettingContainerProps) {
-		super(props);
+	state = { currentValue: false };
+
+	componentDidMount() {
 		this.state = { currentValue: undefined };
-		getSetting(props.settingKey)
+		getSetting(this.props.settingKey)
 			.then(currentValue => this.setState({currentValue}))
 			.catch(() => this.setState({currentValue: false}))
 	}
+
 	public handleUpdate(value:boolean){
 		setSetting(this.props.settingKey, value);
 	}
+
 	public render() {
 		if(this.state.currentValue !== undefined) {
 			return <BooleanSetting label={this.props.label} onToggle={this.handleUpdate.bind(this)} checked={this.state.currentValue}/>
@@ -236,6 +239,7 @@ class BooleanSetting extends React.Component<{label:string, onToggle:(value:bool
 			this.inputElement = ref;
 		}
 	}
+
 	public render() {
 		return <div>
 				<Bootstrap.Checkbox inputRef={this.initializeElement.bind(this)} onClick={this.handleExecute.bind(this)}>
@@ -246,10 +250,9 @@ class BooleanSetting extends React.Component<{label:string, onToggle:(value:bool
 }
 
 class TextSettingContainer extends React.Component<{label:string, settingKey:string}, {currentValue:string}> {
-	constructor(props:{label:string, settingKey:string}) {
-		super(props);
-		this.state = { currentValue: undefined };
-		Config.get(props.settingKey)
+	state = { currentValue: undefined as string };
+	componentDidMount() {
+		Config.get(this.props.settingKey)
 			.then(settingValue => this.setState({currentValue: settingValue as string}))
 			.catch(() => this.setState({currentValue: ''}))
 	}

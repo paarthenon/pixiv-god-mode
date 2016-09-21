@@ -2,9 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 
-
 import * as pathUtils from '../../../../src/utils/path'
-
 import * as chromeUtils from '../../utils'
 
 interface DictionaryAddProps {
@@ -60,7 +58,7 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 
 		let BootstrapFormLabel = (Bootstrap as any).ControlLabel;
 		return <Bootstrap.Panel bsSize="small">
-			<big>Add Translation</big>
+			<h5>Add Translation</h5>
 			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} bsSize="small">
 				<Bootstrap.FormGroup bsSize="small">
 					<Bootstrap.FormControl type="text" placeholder="japanese" ref="japanese" />

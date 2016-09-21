@@ -2,10 +2,12 @@ import * as React from 'react'
 
 import {Config} from './services'
 
-export class ConfigPanel extends React.Component<any,{items: {key:string, value:string}[]}> {
-	constructor() {
-		super();
-		this.state = { items: [] };
+interface ConfigEntries {
+	items: Array<{key:string, value:string}>
+}
+export class ConfigPanel extends React.Component<any,ConfigEntries> {
+	state :ConfigEntries = { items: [] };
+	componentDidMount() {
 		Config.keys()
 			.then(configKeys => Promise.all<{key:string;value:string}>(configKeys.map(key =>
 				Config.get(key)

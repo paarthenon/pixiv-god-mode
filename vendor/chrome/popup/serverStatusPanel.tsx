@@ -2,24 +2,24 @@ import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
-import Mailman from '../mailman'
-import Config from '../config'
-import {Action} from '../../../src/core/IAction'
-import {PAServer} from '../../../src/core/paServer'
+import {PixivAssistantServer} from './services'
 
-let logger = log4js.getLogger('ActionPanel');
+let logger = log4js.getLogger('Server Status Panel');
+
+
+interface ServerStatus {
+	connected? :boolean
+	features :string[]
+}
 
 export class ServerStatusPanel extends React.Component<any,ServerStatus> {
-	constructor() {
-		super();
-		this.state = { connected: undefined, features: []};
-
-		let server = new PAServer(new Config(), Mailman.Background.ajax);
-		server.ping()
+	state :ServerStatus = { connected: undefined, features: [] };
+	componentDidMount() {
+		PixivAssistantServer.ping()
 			.then(() => true)
 			.catch(() => false)
 			.then(pingResponse => {
-				server.supportedFeatures().then(features => {
+				PixivAssistantServer.supportedFeatures().then(features => {
 					this.setState({connected: pingResponse, features});
 				})
 			});
@@ -29,10 +29,6 @@ export class ServerStatusPanel extends React.Component<any,ServerStatus> {
 	}
 }
 
-interface ServerStatus {
-	connected? :boolean
-	features :string[]
-}
 export class ServerStatusView extends React.Component<ServerStatus, void> {
 	public handleExecute() {
 	}

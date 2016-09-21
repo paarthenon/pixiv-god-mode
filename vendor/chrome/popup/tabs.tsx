@@ -9,8 +9,7 @@ export class Tabs extends React.Component<{tabs: {[name:string]:JSX.Element}, in
 		'flex-direction': 'column',
 	};
 
-	constructor(props:any) {
-		super(props);
+	componentDidMount() {
 		let active = this.props.initialTab || Object.keys(this.props.tabs)[0] || '';
 		this.state = { active };
 	}

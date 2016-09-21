@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom'
 import * as log4js from 'log4js'
 
 import {Tabs} from './tabs'
-import {MainPanel} from './mainPanel'
 import {DictContainer} from './dict'
 import {SettingsPanel} from './settingsPanel'
 import {ConfigPanel} from './configPanel'
@@ -16,29 +15,24 @@ import {Config, DictionaryService} from './services'
 
 let logger = log4js.getLogger('Bootstrap');
 
-function render() {
-	Config.get(configKeys.debug_mode).catch(() => false).then(debugMode => {
-		if (debugMode) {
-			return {
-				Home: <HomePanel />,
-				Dictionary: <DictContainer dictService={DictionaryService} />,
-				Settings: <SettingsPanel />,
-				Config: <ConfigPanel />,
-				ServerStatus: <ServerStatusPanel />,
-				'Exported Dict': <DictionaryJSON />,
-			};
-		} else {
-			return {
-				Home: <HomePanel />,
-				Dictionary: <DictContainer dictService={DictionaryService} />,
-				Settings: <SettingsPanel />,
-				'Exported Dict': <DictionaryJSON />,
-			};
-		}
-	}).then(tabInfo => {
-		ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Home" />, document.getElementById('content'));
-	})
-}
-
-render();
-
+Config.get(configKeys.debug_mode).catch(() => false).then(debugMode => {
+	if (debugMode) {
+		return {
+			Home: <HomePanel />,
+			Dictionary: <DictContainer dictService={DictionaryService} />,
+			Settings: <SettingsPanel />,
+			Config: <ConfigPanel />,
+			ServerStatus: <ServerStatusPanel />,
+			'Exported Dict': <DictionaryJSON />,
+		};
+	} else {
+		return {
+			Home: <HomePanel />,
+			Dictionary: <DictContainer dictService={DictionaryService} />,
+			Settings: <SettingsPanel />,
+			'Exported Dict': <DictionaryJSON />,
+		};
+	}
+}).then(tabInfo => {
+	ReactDOM.render(<Tabs tabs={tabInfo} initialTab="Home" />, document.getElementById('content'));
+})

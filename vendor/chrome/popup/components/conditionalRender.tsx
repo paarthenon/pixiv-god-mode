@@ -4,8 +4,7 @@ import * as log4js from 'log4js'
 export class ConditionalRender extends React.Component<{predicate: () => boolean | Promise<boolean>, default?: boolean}, {render:boolean}> {
 	state = {render: this.props.default}
 
-	constructor(props:any){
-		super(props);
+	componentDidMount() {
 		Promise.resolve(this.props.predicate()).then(render => this.setState({render}));
 	}
 
