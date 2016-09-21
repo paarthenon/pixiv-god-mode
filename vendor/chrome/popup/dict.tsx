@@ -1,15 +1,49 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
+import * as log4js from 'log4js'
+
 import * as ChromeUtils from '../utils'
-
-import {cachedDictionary, cachedDictionaryEntry} from '../../../src/core/dictionaryManagementService'
+import {CachedDictionaryService, cachedDictionary} from '../../../src/core/dictionaryManagementService'
 import {DictionaryAdd} from './components/DictionaryAdd'
+import {ConditionalRender} from './components/conditionalRender'
 
-let InfiniteScroll = require('react-infinite-scroller');
-var removeDiacritics = require('diacritics').remove;
+let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
+let removeDiacritics = require('diacritics').remove; //TODO: create typing
 
-type paDict = { [id:string]:string };
+let logger = log4js.getLogger('Dictionary Panel');
+
+export class DictContainer extends React.Component<{dictService: CachedDictionaryService}, cachedDictionary> {
+	state :cachedDictionary = { cache: [] };
+
+	componentDidMount() {
+		this.updateDict();
+	}
+
+	updateDict() :void {
+		this.props.dictService.cache
+			.then(cachedDict => this.setState(cachedDict))
+			.catch(error => logger.error(error));
+	}
+
+	handleUpdate(key:string, value:string) :void {
+		this.props.dictService.update(key, value).then(() => this.updateDict());
+	}
+
+	handleDelete(key:string) {
+		this.props.dictService.delete(key).then(() => this.updateDict());
+	}
+
+	public render() {
+		return <DictViewer
+			cachedDict={this.state}
+			getTranslation={key => this.props.dictService.getTranslation(key)}
+			onAdd={this.handleUpdate.bind(this)}
+			onUpdate={this.handleUpdate.bind(this)}
+			onDelete={this.handleDelete.bind(this)}
+		/>
+	}
+}
 
 interface DictViewerProps {
 	cachedDict: cachedDictionary

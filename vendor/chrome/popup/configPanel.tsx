@@ -1,15 +1,15 @@
 import * as React from 'react'
 
-import Mailman from '../mailman'
+import {Config} from './services'
 
 export class ConfigPanel extends React.Component<any,{items: {key:string, value:string}[]}> {
 	constructor() {
 		super();
 		this.state = { items: [] };
-		Mailman.Background.listConfig()
+		Config.keys()
 			.then(configKeys => Promise.all<{key:string;value:string}>(configKeys.map(key =>
-				Mailman.Background.getConfig({ key })
-					.then(resp => JSON.stringify(resp.value))
+				Config.get(key)
+					.then(resp => JSON.stringify(resp))
 					.then(value => ({ key, value }))
 			)))
 			.then(entries => {
@@ -26,7 +26,7 @@ export class ConfigPanel extends React.Component<any,{items: {key:string, value:
 	}
 }
 
-export class ConfigEntry extends React.Component<{configKey:string, configValue:string}, void> {
+class ConfigEntry extends React.Component<{configKey:string, configValue:string}, void> {
 	public render() {
 		return <div>
 				<span>{this.props.configKey}|</span>

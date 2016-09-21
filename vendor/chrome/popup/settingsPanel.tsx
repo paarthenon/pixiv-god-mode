@@ -3,14 +3,10 @@ import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
-import Mailman from '../mailman'
-import Config from '../config'
-import {Action} from '../../../src/core/IAction'
 import {getUserSettings, getSetting, setSetting} from '../userSettings'
 import SettingKeys from '../../../src/settingKeys'
 import ConfigKeys from '../../../src/configKeys'
-import {DictionaryManagementService} from '../../../src/core/dictionaryManagementService'
-import {GithubDictionaryUtil} from '../../../src/core/githubDictionaryUtil'
+import {Config, DictionaryService} from './services'
 
 let logger = log4js.getLogger('ActionPanel');
 
@@ -135,14 +131,6 @@ interface GlobalDictUpdaterProps {
 	updateAction :Function
 }
 
-let dictService = new DictionaryManagementService(new Config(), 
-	new GithubDictionaryUtil('pixiv-assistant/dictionary', Mailman.Background.ajax), 
-	{
-		global: ConfigKeys.official_dict,
-		local: ConfigKeys.user_dict,
-		cache: ConfigKeys.cached_dict
-	});
-
 enum GlobalDictUpdateState {
 	LOADING,
 	AVAILABLE,
@@ -161,23 +149,23 @@ class DictUpdaterContainer extends React.Component<void, {mode: GlobalDictUpdate
 		this.setState({mode, dupeLocalKeys: this.state.dupeLocalKeys});
 	}
 	protected updateStatus(){
-		dictService.globalUpdateAvailable.then(isAvailable => {
+		DictionaryService.globalUpdateAvailable.then(isAvailable => {
 			if (isAvailable) {
 				this.updateMode(GlobalDictUpdateState.AVAILABLE);
 			} else {
 				this.updateMode(GlobalDictUpdateState.UPTODATE);
 			}
 		});
-		dictService.getLocalDuplicates().then(dupeLocalKeys => {
+		DictionaryService.getLocalDuplicates().then(dupeLocalKeys => {
 			this.setState({mode: this.state.mode, dupeLocalKeys});
 		});
 	}
 	public updateDictionary(){
 		this.updateMode(GlobalDictUpdateState.DOWNLOADING);
-		dictService.updateGlobalDictionary().then(() => this.updateStatus());
+		DictionaryService.updateGlobalDictionary().then(() => this.updateStatus());
 	}
 	public removeDuplicates(){
-		dictService.deleteLocalDuplicates().then(() => this.updateStatus());
+		DictionaryService.deleteLocalDuplicates().then(() => this.updateStatus());
 	}
 	public render() {
 		return <div>
@@ -261,12 +249,12 @@ class TextSettingContainer extends React.Component<{label:string, settingKey:str
 	constructor(props:{label:string, settingKey:string}) {
 		super(props);
 		this.state = { currentValue: undefined };
-		Mailman.Background.getConfig({key: props.settingKey})
-			.then(currentValue => this.setState({currentValue: currentValue.value as string}))
+		Config.get(props.settingKey)
+			.then(settingValue => this.setState({currentValue: settingValue as string}))
 			.catch(() => this.setState({currentValue: ''}))
 	}
 	public handleUpdate(value:string){
-		Mailman.Background.setConfig({key: this.props.settingKey, value});
+		Config.set(this.props.settingKey, value);
 	}
 	public render() {
 		if(this.state.currentValue !== undefined) {
