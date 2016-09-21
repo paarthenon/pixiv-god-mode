@@ -13,7 +13,7 @@ export class DownloadButton extends React.Component<{mode: DownloadStates, downl
 			case DownloadStates.LOADINGSTATUS:
 				return <p>Loading Download Status</p>
 			case DownloadStates.DOWNLOADAVAILABLE:
-				return <p><a href="#" onClick={this.props.downloadFunc.bind(this)}>Download</a></p>
+				return <p><a href="#" onClick={() => this.props.downloadFunc()}>Download</a></p>
 			case DownloadStates.DOWNLOADING:
 				return <p>Downloading</p>
 			case DownloadStates.DOWNLOADED:
