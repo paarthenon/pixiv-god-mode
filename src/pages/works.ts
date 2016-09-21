@@ -97,7 +97,7 @@ export class WorksPage extends GalleryPage {
 					- Use a hacked navigate instead of chrome's tabs.create because pixiv needs referer information
 					  to access direct images or it gives 403 Forbidden.
 				*/
-				Promise.all<string>(this.jQuery('li.image-item a.work').toArray().map(imgEntry => {
+				Promise.all<string>(this.jQuery('li.image-item a.work').toArray().map((imgEntry:HTMLAnchorElement) => {
 					if (imgEntry.classList.contains('multiple') || imgEntry.classList.contains('ugoku-illust')) {
 						return Promise.resolve(imgEntry.href);
 					} else {
@@ -119,7 +119,7 @@ export class WorksPage extends GalleryPage {
 					
 				})).then(newUrls => newUrls.forEach(url => jQUtils.hackedNewTab(this.jQuery, url)));
 			} else {
-				this.jQuery('li.image-item a.work').toArray().forEach(image => Deps.openInTab(image.href));
+				this.jQuery('li.image-item a.work').toArray().forEach((image:HTMLAnchorElement) => Deps.openInTab(image.href));
 			}
 		});
 	}

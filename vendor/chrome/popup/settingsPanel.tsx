@@ -195,7 +195,7 @@ class GlobalDictUpdater extends React.Component<{mode: GlobalDictUpdateState, up
 			case GlobalDictUpdateState.UPTODATE:
 				return <div>Dictionary is up to date</div>
 			case GlobalDictUpdateState.AVAILABLE:
-				return <div>Update available. <Bootstrap.Button onClick={this.props.updateAction}>Update Dictionary</Bootstrap.Button></div>
+				return <div>Update available. <Bootstrap.Button onClick={() => this.props.updateAction}>Update Dictionary</Bootstrap.Button></div>
 			case GlobalDictUpdateState.DOWNLOADING:
 				return <div>Downloading an update.</div>
 		}
@@ -207,7 +207,7 @@ class DupeKeyReporter extends React.Component<{dupes: string[], removeAction:Fun
 		return (this.props.dupes === undefined) ? null :
 			<div> 
 				Found <strong>{this.props.dupes.length}</strong> duplicate entries. 
-				<Bootstrap.Button onClick={this.props.removeAction}>Revert Duplicates</Bootstrap.Button>
+				<Bootstrap.Button onClick={() => this.props.removeAction}>Revert Duplicates</Bootstrap.Button>
 			</div>
 	}
 }

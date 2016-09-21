@@ -19,7 +19,7 @@ export class FollowArtistPage extends RootPage {
 		let recommendations = this.jQuery('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => this.jQuery(x));
 
 		recommendations.forEach(recommendation => {
-			let links = recommendation.find('a:not(._work):not(.premium-feature)').toArray().map(a => a.href);
+			let links = recommendation.find('a:not(._work):not(.premium-feature)').toArray().map((a:HTMLAnchorElement) => a.href);
 			Promise.all<boolean>(links.map(link => Deps.isPageBookmarked(link)))
 				.then(results => {
 					if(results.some(x => x)) {

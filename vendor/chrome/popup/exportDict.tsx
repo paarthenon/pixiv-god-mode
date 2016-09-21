@@ -71,6 +71,6 @@ class DictJSON extends React.Component<cachedDictionary,void> {
 		return `{\n${contents}\n}\n`
 	}
 	public render() {
-		return <textarea rows="20" value={this.formattedCache}></textarea>
+		return <textarea rows={20} value={this.formattedCache}></textarea>
 	}
 }

@@ -15,7 +15,7 @@
         "node_modules"
     ],
     "files": [
-        "typings/tsd.d.ts",
+        "typings/index.d.ts",
         "vendor/chrome/chrome.ts",
         "vendor/chrome/background.ts",
         "vendor/chrome/popup/bootstrap.tsx"
