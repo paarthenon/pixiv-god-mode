@@ -1,5 +1,14 @@
 import * as Msg from './messages'
 
+/**
+ * Mailman is a quickly hacked together message bus I built to communicate across
+ * the various parts of a chrome extension (the content script, the background page,
+ * the popup, the options page). Each page defines its respective implementation
+ * using the defineImplementation function and can be referenced through mailman.[section]
+ * However, a chrome extension page's onMessage is not triggered by messages it sends,
+ * so the background page attempting to access mailman.Background will fail.
+ */
+
 export type Target = "BACKGROUND_PAGE" | "CONTENT_SCRIPT" | "RESPONSE";
 
 function send<T, V>(target: Target, name:string, msg: T): Promise<V> {

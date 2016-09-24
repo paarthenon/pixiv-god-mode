@@ -72,6 +72,7 @@ export class ServerConnectionSuccessAlert extends React.Component<void, void> {
 	}
 }
 
+// The global dictionary is populated at first load of the extension, not having it is an error condition.
 export class GlobalDictionaryEmptyAlert extends React.Component<void, void> {
 	public render() {
 		return <Bootstrap.Alert bsStyle="warning" style={stackedAlertStyle}>

@@ -11,6 +11,8 @@ interface DictionaryAddProps {
 }
 export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?:boolean}> {
 	state = {updating: false};
+
+	// Attempt to populate the fields with content based on page and dict
 	componentDidMount() {
 		chromeUtils.getCurrentTab().then(tab => {
 			if (tab.url) {
@@ -24,6 +26,7 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 						.then(translation => {
 							if (translation !== undefined) {
 								this.translationInput.value = translation
+								// If we did find a translation we are updating, not adding.
 								this.setState({updating: true});
 							}
 						})
@@ -35,12 +38,15 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 			}
 		})
 	}
+
 	public get japaneseInput() {
 		return ReactDOM.findDOMNode(this.refs['japanese']) as HTMLInputElement;
 	}
+
 	public get translationInput() {
 		return ReactDOM.findDOMNode(this.refs['translation']) as HTMLInputElement;
 	}
+
 	public handleAdd(event:Event){
 		// Necessary to prevent page refresh from onSubmit
 		event.preventDefault();

@@ -1,7 +1,15 @@
 import * as React from 'react'
 import * as log4js from 'log4js'
 
-export class ConditionalRender extends React.Component<{predicate: () => boolean | Promise<boolean>, default?: boolean}, {render:boolean}> {
+/**
+ * Wrapper component that evaluates a predicate to judge whether or not to render.
+ */
+
+interface ConditionalRenderProps {
+	predicate: () => boolean | Promise<boolean>
+	default?: boolean
+}
+export class ConditionalRender extends React.Component<ConditionalRenderProps, {render:boolean}> {
 	state = {render: this.props.default}
 
 	componentDidMount() {
