@@ -6,18 +6,22 @@
         "removeComments": true,
         "outDir": "build/es6",
         "rootDir": ".",
+        "baseUrl": ".",
         "sourceMap": false,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "jsx": "react"
+        "jsx": "react",
+        "paths": {
+            "popup/*" : ["vendor/chrome/popup/*"],
+            "content/*" : ["src/*"]
+        }
     },
     "exclude": [
         "node_modules"
     ],
-    "files": [
+    "include": [
         "typings/index.d.ts",
-        "vendor/chrome/chrome.ts",
-        "vendor/chrome/background.ts",
-        "vendor/chrome/popup/bootstrap.tsx"
+        "vendor/chrome/**/*.ts",
+        "vendor/chrome/**/*.tsx"    
     ]
 }

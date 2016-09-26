@@ -15,6 +15,7 @@
     "react": "registry:dt/react#0.14.0+20160920055104",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160806072414",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
-    "require": "registry:dt/require#2.1.20+20160919185614"
+    "require": "registry:dt/require#2.1.20+20160919185614",
+    "systemjs": "registry:dt/systemjs#0.19.29+20160702105636"
   }
 }

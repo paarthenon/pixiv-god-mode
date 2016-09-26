@@ -7,20 +7,25 @@
   "browser_action": {
   	"default_icon": "resources/pa-icon-38.png",
   	"default_title": "Pixiv Assistant",
-  	"default_popup": "popup/popup.html"
+  	"default_popup": "vendor/chrome/popup/popup.html"
   },
   "content_scripts": [{
   	"matches": [
   		"http://*.pixiv.net/*"
   	],
   	"js": [
-  		"resources/jquery-2.2.3.min.js",
-  		"pixiv-assistant.js"
+      "jspm_packages/system.js",
+      "config.js",
+      "vendor/chrome/content/loader.js"
   	],
     "css": ["resources/inject.css"]
   }],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "jspm_packages/system.js",
+      "config.js",
+      "vendor/chrome/background/loader.js"
+    ]
   },
   "permissions": [
     "storage",
@@ -34,5 +39,12 @@
   ],
   "icons": {
     "128": "resources/pa-icon-128.png"
-  }
+  },
+  "web_accessible_resources": [
+    "common/*",
+    "jspm_packages/*",
+    "src/*",
+    "vendor/chrome/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

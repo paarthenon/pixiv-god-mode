@@ -13,22 +13,23 @@ log4js.configure({
 
 log4js.setGlobalLogLevel(log4js.levels.ALL);
 
-import {IDependencyContainer, load as depsLoad} from '../../src/deps'
-import {AjaxRequest} from '../../src/core/IAjax'
-import {Action} from '../../src/core/IAction'
+import * as jQ from 'jquery'
+import {IDependencyContainer, load as depsLoad} from '../../../src/deps'
+import {AjaxRequest} from '../../../src/core/IAjax'
+import {Action} from '../../../src/core/IAction'
 
-import * as Msg from './messages'
-import Config from './config'
-import {default as Mailman, defineImplementation} from './mailman'
-import {ExecBroker} from './execBroker'
-import {getSetting} from './userSettings'
+import * as Msg from '../messages'
+import Config from '../config'
+import {default as Mailman, defineImplementation} from '../mailman'
+import {ExecBroker} from '../execBroker'
+import {getSetting} from '../userSettings'
 
-import * as Dependencies from '../../src/deps'
+import * as Dependencies from '../../../src/deps'
 
 let broker = new ExecBroker();
 
 let deps: IDependencyContainer = {
-	jQ: $,
+	jQ,
 	config: new Config(),
 	openInTab: (url: string) => Mailman.Background.newTab({url}),
 	execOnPixiv: (func:(pixiv:any, props:any) => any, props?:any) => broker.queueExecution(func, props),
@@ -40,7 +41,7 @@ let deps: IDependencyContainer = {
 
 Dependencies.load(deps);
 
-import {dispatch} from '../../src/dispatch'
+import {dispatch} from '../../../src/dispatch'
 let page = dispatch(document.location.href, $);
 
 defineImplementation<Msg.ContentScriptProtocol>("CONTENT_SCRIPT", {

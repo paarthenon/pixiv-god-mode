@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var header = require('gulp-header');
 var browserify = require('gulp-browserify');
 var fs = require('fs');
-var rename = require('gulp-rename');
 var exec = require('child_process').exec;
 var babel = require('gulp-babel');
 
@@ -27,54 +26,21 @@ gulp.task('es5', ['build'], function() {
 		.pipe(gulp.dest('build/es5'));
 })
 
-gulp.task('greasemonkey-browserify', ['build'], function(){
-	return gulp.src('build/src/main.js')
-		.pipe(browserify())
-		.pipe(gulp.dest('build/merged'))
-});
-
-gulp.task('greasemonkey-header', ['greasemonkey-browserify'], function(){
-	return gulp.src('build/merged/main.js')
-		.pipe(header(fs.readFileSync('resources/userscript-header.txt','utf8')))
-		.pipe(gulp.dest('build/merged'))
-});
-
-gulp.task('greasemonkey-deploy', ['greasemonkey-header'], function(){
-	return gulp.src('build/merged/main.js')
-		.pipe(rename('pixiv-assistant.user.js'))
-		.pipe(gulp.dest('dist'))
-});
-
-gulp.task('chrome-pack', ['es5'], function(){
+gulp.task('chrome', ['es5'], function(){
 	return Promise.all([
-		new Promise(resolve => gulp.src('build/es5/vendor/chrome/chrome.js')
-			.pipe(browserify())
-			.pipe(gulp.dest('build/merged'))
-			.on('end', ()=>resolve())),
-		new Promise(resolve => gulp.src('build/es5/vendor/chrome/popup/bootstrap.js')
-			.pipe(browserify())
-			.pipe(gulp.dest('build/merged'))
-			.on('end', ()=>resolve())),
-		new Promise(resolve => gulp.src('build/es5/vendor/chrome/background.js')
-			.pipe(browserify())
-			.pipe(gulp.dest('build/merged'))
-			.on('end', ()=>resolve()))
-	]);
-});
-
-gulp.task('chrome', ['chrome-pack'], function(){
-	return Promise.all([
-		new Promise(resolve => gulp.src('build/merged/chrome.js')
-			.pipe(rename('pixiv-assistant.js'))
+		new Promise(resolve => gulp.src('build/es5/**/*')
 			.pipe(gulp.dest('dist/chrome'))
 			.on('end', resolve)),
-		new Promise(resolve => gulp.src('build/merged/bootstrap.js')
-			.pipe(gulp.dest('dist/chrome/popup'))
+		new Promise(resolve => gulp.src('vendor/chrome/**/*.html')
+			.pipe(gulp.dest('dist/chrome/vendor/chrome'))
 			.on('end', resolve)),
-		new Promise(resolve => gulp.src('build/merged/background.js')
+		new Promise(resolve => gulp.src('vendor/chrome/manifest.json')
 			.pipe(gulp.dest('dist/chrome'))
 			.on('end', resolve)),
-		new Promise(resolve => gulp.src('vendor/chrome/**/*')
+		new Promise(resolve => gulp.src('vendor/chrome/resources/*')
+			.pipe(gulp.dest('dist/chrome/resources'))
+			.on('end', resolve)),
+		new Promise(resolve => gulp.src('config.js')
 			.pipe(gulp.dest('dist/chrome'))
 			.on('end', resolve)),
 		new Promise(resolve => gulp.src('bower_components/jquery/dist/jquery.js')
@@ -83,12 +49,13 @@ gulp.task('chrome', ['chrome-pack'], function(){
 	]);
 });
 
-gulp.task('firefox', ['browserify'], function(){
-	gulp.src('build/merged/main.js')
-		.pipe(rename('pixiv-assistant.js'))
-		.pipe(gulp.dest('dist/firefox'))
-	gulp.src('vendor/firefox/*')
-		.pipe(gulp.dest('dist/firefox'))
-});
+gulp.task('jspm_deps', ['chrome'], function() {
+	return new Promise(resolve => gulp.src('jspm_packages/**/*')
+			.pipe(gulp.dest('dist/chrome/jspm_packages'))
+			.on('end', resolve));
+})
+
+gulp.task('full', ['jspm_deps']);
+
 
 gulp.task('default', ['chrome']);

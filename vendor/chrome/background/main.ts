@@ -1,13 +1,13 @@
-import * as Msg from './messages'
-import * as ChromeUtils from './utils'
+import * as Msg from '../messages'
+import * as ChromeUtils from '../utils'
 import * as log4js from 'log4js';
 
-import {AjaxRequest} from '../../src/core/IAjax'
-import ConfigKeys from '../../src/configKeys'
-import Config from './config'
-import {DictionaryManagementService} from '../../src/core/dictionaryManagementService'
-import {GithubDictionaryUtil} from '../../src/core/githubDictionaryUtil'
-import {defineImplementation} from './mailman'
+import {AjaxRequest} from '../../../src/core/IAjax'
+import ConfigKeys from '../../../src/configKeys'
+import Config from '../config'
+import {DictionaryManagementService} from '../../../src/core/dictionaryManagementService'
+import {GithubDictionaryUtil} from '../../../src/core/githubDictionaryUtil'
+import {defineImplementation} from '../mailman'
 
 let logger = log4js.getLogger('Background');
 

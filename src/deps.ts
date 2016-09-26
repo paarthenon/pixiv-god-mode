@@ -13,7 +13,7 @@ export interface IDependencyContainer {
 }
 
 export var Container: IDependencyContainer = {
-	jQ: $,
+	jQ: undefined,
 	config: undefined,
 	openInTab: undefined,
 	execOnPixiv: undefined,
