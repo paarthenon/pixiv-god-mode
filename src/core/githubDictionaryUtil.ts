@@ -1,4 +1,4 @@
-import {AjaxFunction} from './IAjax'
+import {AjaxFunction} from 'src/core/IAjax'
 
 export class GithubDictionaryUtil {
 	constructor(

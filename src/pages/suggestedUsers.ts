@@ -1,8 +1,8 @@
-import * as pathUtils from '../utils/path'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
-import {RootPage} from './root'
-import {Model} from '../../common/proto'
-import {Container as Deps} from '../deps'
+import * as pathUtils from 'src/utils/path'
+import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
+import {RootPage} from 'src/pages/root'
+import {Model} from 'common/proto'
+import {Container as Deps} from 'src/deps'
 
 export class SuggestedUsersPage extends RootPage {
 	public fadeBookmarks() {

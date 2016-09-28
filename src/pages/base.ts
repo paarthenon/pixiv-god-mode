@@ -1,6 +1,6 @@
-import {Action, ActionDescriptor, OnLoadFunc} from '../core/IAction'
+import {Action, ActionDescriptor, OnLoadFunc} from 'src/core/IAction'
 
-import {CacheRegistry} from '../utils/terribleCache'
+import {CacheRegistry} from 'src/utils/terribleCache'
 
 export class BasePage {
 	public get actionCache():Action[] {

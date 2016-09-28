@@ -1,4 +1,4 @@
-import {Action, OnLoadFunc} from '../core/IAction'
+import {Action, OnLoadFunc} from 'src/core/IAction'
 
 //TODO: Do away with the global cache registry and instead adopt the model from pixiv-assistant-server
 export module CacheRegistry {

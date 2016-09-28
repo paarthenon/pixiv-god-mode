@@ -1,13 +1,13 @@
-import * as pathUtils from '../utils/path'
-import {PixivAssistantServer} from '../services'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
-import {GalleryPage} from './gallery'
-import * as jQUtils from '../utils/document'
-import {Model} from '../../common/proto'
-import {Container as Deps} from '../deps'
-import SettingKeys from '../settingKeys'
+import * as pathUtils from 'src/utils/path'
+import {PixivAssistantServer} from 'src/services'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {GalleryPage} from 'src/pages/gallery'
+import * as jQUtils from 'src/utils/document'
+import {Model} from 'common/proto'
+import {Container as Deps} from 'src/deps'
+import SettingKeys from 'src/settingKeys'
 
-import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
+import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 
 export class ArtistBookmarksPage extends GalleryPage {
 	public get artistId():number {

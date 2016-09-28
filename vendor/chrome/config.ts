@@ -1,6 +1,6 @@
-import IConfig from '../../src/core/IConfig'
-import Mailman from './mailman'
-import * as Msg from './messages'
+import IConfig from 'src/core/IConfig'
+import Mailman from 'vendor/chrome/mailman'
+import * as Msg from 'vendor/chrome/messages'
 
 import * as log4js from 'log4js'
 

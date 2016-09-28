@@ -1,6 +1,6 @@
-import {Model} from '../../common/proto'
-import * as pathUtils from './path'
-import {Rectangle} from './geometry'
+import {Model} from 'src/../common/proto'
+import * as pathUtils from 'src/utils/path'
+import {Rectangle} from 'src/utils/geometry'
 
 export function artistFromJQImage(image:JQuery):Model.Artist {
 	return {

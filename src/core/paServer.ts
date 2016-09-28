@@ -1,12 +1,12 @@
 import {resolve} from 'url'
 import * as log4js from 'log4js'
 
-import {Features, Model, Messages} from '../../common/proto'
+import {Features, Model, Messages} from 'common/proto'
 
-import {AjaxFunction} from './IAjax'
-import IConfig from './IConfig'
+import {AjaxFunction} from 'src/core/IAjax'
+import IConfig from 'src/core/IConfig'
 
-import ConfigKeys from '../configKeys'
+import ConfigKeys from 'src/configKeys'
 
 let HTTP = {
 	GET: 'GET',

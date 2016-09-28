@@ -14,17 +14,17 @@ log4js.configure({
 log4js.setGlobalLogLevel(log4js.levels.ALL);
 
 import * as jQ from 'jquery'
-import {IDependencyContainer, load as depsLoad} from '../../../src/deps'
-import {AjaxRequest} from '../../../src/core/IAjax'
-import {Action} from '../../../src/core/IAction'
+import {IDependencyContainer, load as depsLoad} from 'src/deps'
+import {AjaxRequest} from 'src/core/IAjax'
+import {Action} from 'src/core/IAction'
 
-import * as Msg from '../messages'
-import Config from '../config'
-import {default as Mailman, defineImplementation} from '../mailman'
-import {ExecBroker} from '../execBroker'
-import {getSetting} from '../userSettings'
+import * as Msg from 'vendor/chrome/messages'
+import Config from 'vendor/chrome/config'
+import {default as Mailman, defineImplementation} from 'vendor/chrome/mailman'
+import {ExecBroker} from 'vendor/chrome/execBroker'
+import {getSetting} from 'vendor/chrome/userSettings'
 
-import * as Dependencies from '../../../src/deps'
+import * as Dependencies from 'src/deps'
 
 let broker = new ExecBroker();
 
@@ -41,7 +41,7 @@ let deps: IDependencyContainer = {
 
 Dependencies.load(deps);
 
-import {dispatch} from '../../../src/dispatch'
+import {dispatch} from 'src/dispatch'
 let page = dispatch(document.location.href, $);
 
 defineImplementation<Msg.ContentScriptProtocol>("CONTENT_SCRIPT", {

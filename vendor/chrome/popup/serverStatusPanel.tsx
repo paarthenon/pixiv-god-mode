@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
-import {PixivAssistantServer} from './services'
+import {PixivAssistantServer} from 'vendor/chrome/popup/services'
 
 let logger = log4js.getLogger('Server Status Panel');
 

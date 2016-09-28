@@ -1,9 +1,9 @@
 import * as log4js from 'log4js'
 
-import {BasePage} from './base'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
-import {DictionaryService} from '../services'
-import {injectTagAugmentation} from '../injectors/tagAugment'
+import {BasePage} from 'src/pages/base'
+import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
+import {DictionaryService} from 'src/services'
+import {injectTagAugmentation} from 'src/injectors/tagAugment'
 
 let logger = log4js.getLogger('Root Page');
 

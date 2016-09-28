@@ -1,4 +1,4 @@
-import * as hook from './pageHook'
+import * as hook from 'vendor/chrome/pageHook'
 
 hook.inject(hook.pixivExec);
 

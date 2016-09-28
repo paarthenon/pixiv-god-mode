@@ -1,9 +1,8 @@
 var gulp = require('gulp');
-var header = require('gulp-header');
-var browserify = require('gulp-browserify');
 var fs = require('fs');
 var exec = require('child_process').exec;
 var babel = require('gulp-babel');
+var jspm = require('jspm');
 
 gulp.task('build', function(callback){
     exec('tsc -p .', function(error, stdout, stderr) {
@@ -26,7 +25,7 @@ gulp.task('es5', ['build'], function() {
 		.pipe(gulp.dest('build/es5'));
 })
 
-gulp.task('chrome', ['es5'], function(){
+gulp.task('chrome-resources', ['es5'], function(){
 	return Promise.all([
 		new Promise(resolve => gulp.src('build/es5/**/*')
 			.pipe(gulp.dest('dist/chrome'))
@@ -54,6 +53,25 @@ gulp.task('jspm_deps', ['chrome'], function() {
 			.pipe(gulp.dest('dist/chrome/jspm_packages'))
 			.on('end', resolve));
 })
+
+gulp.task('builder', ['chrome-resources'], function() {
+	builder = new jspm.Builder();
+	builder.config({
+		paths: { '*': 'build/es5/*' }
+	});
+	return Promise.all([
+		builder.bundle('vendor/chrome/popup/bootstrap', 'build/merged/bootstrap.js', {minify: true}),
+	]);
+})
+
+gulp.task('chrome-dev', ['chrome-resources'], function() {
+
+});
+gulp.task('chrome-full', ['chrome-resources', 'builder'], function() {
+	return new Promise(resolve => gulp.src('build/merged/bootstrap.js')
+		.pipe(gulp.dest('dist/chrome/vendor/chrome/popup'))
+		.on('end', resolve))
+});
 
 gulp.task('full', ['jspm_deps']);
 

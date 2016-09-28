@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import {PagingButton} from '../components/pagingButton'
-import {GenerateElement} from './utils'
+import {PagingButton} from 'src/components/pagingButton'
+import {GenerateElement} from 'src/injectors/utils'
 
 function injectFirstButton($:JQueryStatic, url:string) {
 	let componentProps =  {text: '<<', tooltip: 'First', rel: 'prev', href:url};

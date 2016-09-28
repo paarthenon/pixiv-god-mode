@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import {Config} from './services'
+import {Config} from 'vendor/chrome/popup/services'
 
 interface ConfigEntries {
 	items: Array<{key:string, value:string}>

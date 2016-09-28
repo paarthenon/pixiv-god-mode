@@ -1,8 +1,8 @@
-import * as pathUtils from '../utils/path'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
-import {RootPage} from './root'
-import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
-import {Model} from '../../common/proto'
+import * as pathUtils from 'src/utils/path'
+import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
+import {RootPage} from 'src/pages/root'
+import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
+import {Model} from 'common/proto'
 
 export class ArtistProfilePage extends RootPage {
 	public get artistId():number {

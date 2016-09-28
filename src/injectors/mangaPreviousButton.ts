@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import * as services from '../services'
-import {Model} from '../../common/proto'
-import {ToolmenuButton} from '../components/toolmenuButton'
-import {GenerateElement} from './utils'
+import * as services from 'src/services'
+import {Model} from 'common/proto'
+import {ToolmenuButton} from 'src/components/toolmenuButton'
+import {GenerateElement} from 'src/injectors/utils'
 import * as log4js from 'log4js'
 
 let logger = log4js.getLogger("Manga Previous Button")

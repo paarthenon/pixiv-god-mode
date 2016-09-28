@@ -3,10 +3,10 @@ import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
-import {getUserSettings, getSetting, setSetting} from '../userSettings'
-import SettingKeys from '../../../src/settingKeys'
-import ConfigKeys from '../../../src/configKeys'
-import {Config, DictionaryService} from './services'
+import {getUserSettings, getSetting, setSetting} from 'vendor/chrome/userSettings'
+import SettingKeys from 'src/settingKeys'
+import ConfigKeys from 'src/configKeys'
+import {Config, DictionaryService} from 'vendor/chrome/popup/services'
 
 let logger = log4js.getLogger('ActionPanel');
 

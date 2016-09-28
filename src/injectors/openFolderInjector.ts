@@ -1,9 +1,9 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import {PixivAssistantServer} from '../services'
-import {Model} from '../../common/proto'
-import {UserRelationButton} from '../components/userRelationButton'
+import {PixivAssistantServer} from 'src/services'
+import {Model} from 'common/proto'
+import {UserRelationButton} from 'src/components/userRelationButton'
 
 import * as log4js from 'log4js'
 

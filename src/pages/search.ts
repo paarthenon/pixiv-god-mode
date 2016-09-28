@@ -1,14 +1,14 @@
-import * as pathUtils from '../utils/path'
-import {PixivAssistantServer} from '../services'
-import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
-import {GalleryPage} from './gallery'
-import {DictionaryService} from '../services'
-import {Container as Deps} from '../deps'
-import {injectPagingButtons} from '../injectors/pagingButtonInjector'
-import SettingKeys from '../settingKeys'
+import * as pathUtils from 'src/utils/path'
+import {PixivAssistantServer} from 'src/services'
+import {RootPage} from 'src/pages/root'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {GalleryPage} from 'src/pages/gallery'
+import {DictionaryService} from 'src/services'
+import {Container as Deps} from 'src/deps'
+import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
+import SettingKeys from 'src/settingKeys'
 
-import * as jQUtils from '../utils/document'
+import * as jQUtils from 'src/utils/document'
 
 export class SearchPage extends GalleryPage {
 

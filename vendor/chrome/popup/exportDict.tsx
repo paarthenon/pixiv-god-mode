@@ -1,14 +1,14 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import Mailman from '../mailman'
-import {DictionaryManagementService, cachedDictionary, naiveDictionary} from '../../../src/core/dictionaryManagementService'
-import Config from '../config'
-import ConfigKeys from '../../../src/configKeys'
-import {ConditionalRender} from './components/conditionalRender'
-import {GithubDictionaryUtil} from '../../../src/core/githubDictionaryUtil'
+import Mailman from 'vendor/chrome/mailman'
+import {DictionaryManagementService, cachedDictionary, naiveDictionary} from 'src/core/dictionaryManagementService'
+import Config from 'vendor/chrome/config'
+import ConfigKeys from 'src/configKeys'
+import {ConditionalRender} from 'vendor/chrome/popup/components/conditionalRender'
+import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
-import {DictionaryService} from './services'
+import {DictionaryService} from 'vendor/chrome/popup/services'
 
 interface DictStates {
 	global: naiveDictionary

@@ -1,11 +1,11 @@
 import * as log4js from 'log4js'
 
-import IConfig from './IConfig'
-import IDictionary from './IDictionary'
+import IConfig from 'src/core/IConfig'
+import IDictionary from 'src/core/IDictionary'
 
-import {GithubDictionaryUtil} from './githubDictionaryUtil'
+import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
-import ConfigKeys from '../configKeys'
+import ConfigKeys from 'src/configKeys'
 
 let logger = log4js.getLogger('Dictionary');
 

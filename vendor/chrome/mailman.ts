@@ -1,4 +1,4 @@
-import * as Msg from './messages'
+import * as Msg from 'vendor/chrome/messages'
 
 /**
  * Mailman is a quickly hacked together message bus I built to communicate across

@@ -1,7 +1,7 @@
-import Mailman from './mailman'
+import Mailman from 'vendor/chrome/mailman'
 
-import ConfigKeys from '../../src/configKeys'
-import SettingKeys from '../../src/settingKeys'
+import ConfigKeys from 'src/configKeys'
+import SettingKeys from 'src/settingKeys'
 
 
 let defaultSettings: { [id:string]:any } = {};

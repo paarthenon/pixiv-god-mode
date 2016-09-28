@@ -1,12 +1,12 @@
 import * as log4js from 'log4js'
 
-import * as Deps from './deps'
-import ConfigKeys from './configKeys'
+import * as Deps from 'src/deps'
+import ConfigKeys from 'src/configKeys'
 
-import {PAServer} from './core/paServer'
-import {GoogleTranslateAPI as TranslateAPI} from './core/googleTranslateAPI'
+import {PAServer} from 'src/core/paServer'
+import {GoogleTranslateAPI as TranslateAPI} from 'src/core/googleTranslateAPI'
 
-import {CachedDictionaryService} from './core/dictionaryManagementService'
+import {CachedDictionaryService} from 'src/core/dictionaryManagementService'
 
 let logger = log4js.getLogger('Services');
 

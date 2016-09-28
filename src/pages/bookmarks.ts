@@ -1,12 +1,12 @@
-import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
-import {PixivAssistantServer} from '../services'
-import * as pathUtils from '../utils/path'
-import * as jQUtils from '../utils/document'
-import {Container as Deps} from '../deps'
-import {injectViewAllButton, ViewAllButtonElementId} from '../injectors/bookmarkDetailViewAll'
+import {RootPage} from 'src/pages/root'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {PixivAssistantServer} from 'src/services'
+import * as pathUtils from 'src/utils/path'
+import * as jQUtils from 'src/utils/document'
+import {Container as Deps} from 'src/deps'
+import {injectViewAllButton, ViewAllButtonElementId} from 'src/injectors/bookmarkDetailViewAll'
 
-import SettingKeys from '../settingKeys'
+import SettingKeys from 'src/settingKeys'
 
 export class BookmarkIllustrationPage extends RootPage {
 

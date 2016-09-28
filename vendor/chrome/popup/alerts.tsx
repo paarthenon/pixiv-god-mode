@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
-import {ConditionalRender} from './components/conditionalRender'
-import {Config, PixivAssistantServer} from './services'
-import ConfigKeys from '../../../src/configKeys'
-import {getSetting} from '../userSettings'
-import SettingKeys from '../../../src/settingKeys'
+import {ConditionalRender} from 'vendor/chrome/popup/components/conditionalRender'
+import {Config, PixivAssistantServer} from 'vendor/chrome/popup/services'
+import ConfigKeys from 'src/configKeys'
+import {getSetting} from 'vendor/chrome/userSettings'
+import SettingKeys from 'src/settingKeys'
 
 let stackedAlertStyle = {
 	'margin-bottom': '0px',

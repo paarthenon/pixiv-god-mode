@@ -1,11 +1,11 @@
-import * as pathUtils from '../utils/path'
-import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
-import {PixivAssistantServer} from '../services'
-import {Container as Deps} from '../deps'
-import SettingKeys from '../settingKeys'
-import {injectMangaPreviousButton} from '../injectors/mangaPreviousButton'
-import {Model} from '../../common/proto'
+import * as pathUtils from 'src/utils/path'
+import {RootPage} from 'src/pages/root'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {PixivAssistantServer} from 'src/services'
+import {Container as Deps} from 'src/deps'
+import SettingKeys from 'src/settingKeys'
+import {injectMangaPreviousButton} from 'src/injectors/mangaPreviousButton'
+import {Model} from 'common/proto'
 
 export class MangaPage extends RootPage {
 	public get artistName(): string {

@@ -1,7 +1,7 @@
-import {RootPage} from './root'
-import {RegisteredAction} from '../utils/actionDecorators'
+import {RootPage} from 'src/pages/root'
+import {RegisteredAction} from 'src/utils/actionDecorators'
 
-import * as pathUtils from '../utils/path'
+import * as pathUtils from 'src/utils/path'
 
 export class RawImagePage extends RootPage {
 	@RegisteredAction({id: 'pa_button_go_to_pixiv_image', label:'Go to Image on Pixiv', icon: 'picture'})

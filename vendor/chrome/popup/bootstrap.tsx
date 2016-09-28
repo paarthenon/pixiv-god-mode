@@ -2,16 +2,16 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as log4js from 'log4js'
 
-import {Tabs} from './tabs'
-import {DictContainer} from './dict'
-import {SettingsPanel} from './settingsPanel'
-import {ConfigPanel} from './configPanel'
-import {ServerStatusPanel} from './serverStatusPanel'
-import {HomePanel} from './homePanel'
-import {DictionaryJSON} from './exportDict'
+import {Tabs} from 'vendor/chrome/popup/tabs'
+import {DictContainer} from 'vendor/chrome/popup/dict'
+import {SettingsPanel} from 'vendor/chrome/popup/settingsPanel'
+import {ConfigPanel} from 'vendor/chrome/popup/configPanel'
+import {ServerStatusPanel} from 'vendor/chrome/popup/serverStatusPanel'
+import {HomePanel} from 'vendor/chrome/popup/homePanel'
+import {DictionaryJSON} from 'vendor/chrome/popup/exportDict'
 
-import configKeys from '../../../src/configKeys'
-import {Config, DictionaryService} from './services'
+import configKeys from 'src/configKeys'
+import {Config, DictionaryService} from 'vendor/chrome/popup/services'
 
 let logger = log4js.getLogger('Bootstrap');
 

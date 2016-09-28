@@ -1,9 +1,9 @@
 import * as log4js from 'log4js'
 
-import * as pathUtils from '../utils/path'
-import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad} from '../utils/actionDecorators'
-import {injectPagingButtons} from '../injectors/pagingButtonInjector'
+import * as pathUtils from 'src/utils/path'
+import {RootPage} from 'src/pages/root'
+import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
+import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 
 let logger = log4js.getLogger('Gallery');
 

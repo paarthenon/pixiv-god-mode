@@ -1,23 +1,23 @@
-import * as pathUtils from '../utils/path'
-import * as jQUtils from '../utils/document'
-import {PixivAssistantServer} from '../services'
-import {RootPage} from './root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from '../utils/actionDecorators'
-import {GalleryPage} from './gallery'
-import SettingKeys from '../settingKeys'
-import {Model} from '../../common/proto'
+import * as pathUtils from 'src/utils/path'
+import * as jQUtils from 'src/utils/document'
+import {PixivAssistantServer} from 'src/services'
+import {RootPage} from 'src/pages/root'
+import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {GalleryPage} from 'src/pages/gallery'
+import SettingKeys from 'src/settingKeys'
+import {Model} from 'common/proto'
 
 import * as log4js from 'log4js'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {UserRelationButton} from '../components/userRelationButton'
+import {UserRelationButton} from 'src/components/userRelationButton'
 
-import {injectPagingButtons} from '../injectors/pagingButtonInjector'
-import {injectUserRelationshipButton} from '../injectors/openFolderInjector'
-import {injectOpenInTabs} from '../injectors/openInTabs'
-import {Container as Deps} from '../deps'
+import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
+import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
+import {injectOpenInTabs} from 'src/injectors/openInTabs'
+import {Container as Deps} from 'src/deps'
 
-import ConfigKeys from '../ConfigKeys'
+import ConfigKeys from 'src/ConfigKeys'
 
 let logger = log4js.getLogger();
 

@@ -1,4 +1,4 @@
-import {RootPage} from './root'
+import {RootPage} from 'src/pages/root'
 
 export class ArtistTagListPage extends RootPage {
 	protected getTagElements() {

@@ -3,10 +3,10 @@ import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 import * as log4js from 'log4js'
 
-import * as ChromeUtils from '../utils'
-import {CachedDictionaryService, cachedDictionary} from '../../../src/core/dictionaryManagementService'
-import {DictionaryAdd} from './components/DictionaryAdd'
-import {ConditionalRender} from './components/conditionalRender'
+import * as ChromeUtils from 'vendor/chrome/utils'
+import {CachedDictionaryService, cachedDictionary} from 'src/core/dictionaryManagementService'
+import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
+import {ConditionalRender} from 'vendor/chrome/popup/components/conditionalRender'
 
 let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
 let removeDiacritics = require('diacritics').remove; //TODO: create typing

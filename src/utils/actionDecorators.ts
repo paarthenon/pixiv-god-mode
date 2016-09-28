@@ -1,9 +1,9 @@
-import {ActionDescriptor, Action, OnLoadFunc} from '../core/IAction'
-import {BasePage} from '../pages/base'
+import {ActionDescriptor, Action, OnLoadFunc} from 'src/core/IAction'
+import {BasePage} from 'src/pages/base'
 
-import {CacheRegistry, pushToArrayCache} from './terribleCache'
+import {CacheRegistry, pushToArrayCache} from 'src/utils/terribleCache'
 
-import {Container as Deps} from '../deps'
+import {Container as Deps} from 'src/deps'
 
 import * as log4js from 'log4js'
 let logger = log4js.getLogger('Decorators');
