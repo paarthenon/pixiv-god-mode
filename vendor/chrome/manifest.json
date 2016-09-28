@@ -14,17 +14,13 @@
   		"http://*.pixiv.net/*"
   	],
   	"js": [
-      "jspm_packages/system.js",
-      "config.js",
-      "vendor/chrome/content/loader.js"
+      "vendor/chrome/content.min.js"
   	],
     "css": ["resources/inject.css"]
   }],
   "background": {
     "scripts": [
-      "jspm_packages/system.js",
-      "config.js",
-      "vendor/chrome/background/loader.js"
+      "vendor/chrome/background.min.js"
     ]
   },
   "permissions": [

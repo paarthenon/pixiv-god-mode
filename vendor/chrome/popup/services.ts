@@ -1,12 +1,12 @@
 
-import ConfigObj from '../config'
-import ConfigKeys from '../../../src/configKeys'
+import ConfigObj from 'vendor/chrome/config'
+import ConfigKeys from 'src/configKeys'
 
-import {DictionaryManagementService} from '../../../src/core/dictionaryManagementService'
-import {GithubDictionaryUtil} from '../../../src/core/githubDictionaryUtil'
-import {PAServer} from '../../../src/core/paServer'
+import {DictionaryManagementService} from 'src/core/dictionaryManagementService'
+import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
+import {PAServer} from 'src/core/paServer'
 
-import Mailman from '../mailman'
+import Mailman from 'vendor/chrome/mailman'
 
 
 export var Config = new ConfigObj();

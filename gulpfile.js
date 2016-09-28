@@ -30,64 +30,39 @@ gulp.task('bundle', ['es5'], function() {
 	builder.config({
 		paths: { '*': 'build/es5/*' }
 	});
+
+	let bundleSettings = {
+		minify: true,
+		mangle: false,
+	}
 	return Promise.all([
-		builder.bundle('vendor/chrome/popup/bootstrap', 'build/merged/bootstrap.js', {minify: true}),
-		builder.bundle('vendor/chrome/background/main', 'build/merged/background.js', {minify: true}),
-		builder.bundle('vendor/chrome/content/chrome', 'build/merged/content.js', {minify: true})
+		builder.buildStatic('vendor/chrome/popup/bootstrap', 'build/merged/popup.min.js', bundleSettings),
+		builder.buildStatic('vendor/chrome/background/main', 'build/merged/background.min.js', bundleSettings),
+		builder.buildStatic('vendor/chrome/content/chrome', 'build/merged/content.min.js', bundleSettings),
 	]);
 });
+
+function fileCopy(src, dst) {
+	return new Promise(resolve => gulp.src(src)
+		.pipe(gulp.dest(dst))
+		.on('end', resolve))
+}
 
 gulp.task('chrome-resources', ['es5'], function(){
 	return Promise.all([
-		new Promise(resolve => gulp.src('build/es5/**/*')
-			.pipe(gulp.dest('dist/chrome'))
-			.on('end', resolve)),
-		new Promise(resolve => gulp.src('vendor/chrome/**/*.html')
-			.pipe(gulp.dest('dist/chrome/vendor/chrome'))
-			.on('end', resolve)),
-		new Promise(resolve => gulp.src('vendor/chrome/manifest.json')
-			.pipe(gulp.dest('dist/chrome'))
-			.on('end', resolve)),
-		new Promise(resolve => gulp.src('vendor/chrome/resources/*')
-			.pipe(gulp.dest('dist/chrome/resources'))
-			.on('end', resolve)),
-		new Promise(resolve => gulp.src('config.js')
-			.pipe(gulp.dest('dist/chrome'))
-			.on('end', resolve)),
-		new Promise(resolve => gulp.src('bower_components/jquery/dist/jquery.js')
-			.pipe(gulp.dest('dist/chrome/resources'))
-			.on('end', resolve))
+		fileCopy('vendor/chrome/**/*.html', 'dist/chrome/vendor/chrome'),
+		fileCopy('vendor/chrome/resources/*', 'dist/chrome/resources'),
+		fileCopy('vendor/chrome/manifest.json', 'dist/chrome'),
+		fileCopy('config.js', 'dist/chrome'),
 	]);
 });
 
-gulp.task('jspm_deps', ['chrome'], function() {
-	return new Promise(resolve => gulp.src('jspm_packages/**/*')
-			.pipe(gulp.dest('dist/chrome/jspm_packages'))
-			.on('end', resolve));
-})
-
-gulp.task('builder', ['chrome-resources'], function() {
-	builder = new jspm.Builder();
-	builder.config({
-		paths: { '*': 'build/es5/*' }
-	});
+gulp.task('chrome-min-code', ['bundle'], function() {
 	return Promise.all([
-		builder.buildStatic('vendor/chrome/popup/bootstrap', 'build/merged/popup.js', {minify: false, mangle: false}),
-		// builder.bundle('vendor/chrome/background/main', 'build/merged/background.js', {minify: true}),
-		// builder.bundle('vendor/chrome/content/chrome', 'build/merged/content.js', {minify: true})
-	]);
-})
-
-gulp.task('chrome-dev', ['chrome-resources'], function() {
-
-});
-gulp.task('chrome-full', ['chrome-resources', 'builder'], function() {
-	return new Promise(resolve => gulp.src('build/merged/popup.js')
-		.pipe(gulp.dest('dist/chrome/vendor/chrome/popup'))
-		.on('end', resolve))
+		fileCopy('build/merged/popup.min.js', 'dist/chrome/vendor/chrome/popup'),
+		fileCopy('build/merged/background.min.js', 'dist/chrome/vendor/chrome/'),
+		fileCopy('build/merged/content.min.js', 'dist/chrome/vendor/chrome/'),
+	])
 });
 
-gulp.task('full', ['jspm_deps']);
-
-
-gulp.task('default', ['chrome']);
+gulp.task('default', ['chrome-min-code', 'chrome-resources']);
