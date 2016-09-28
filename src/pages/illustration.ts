@@ -1,5 +1,4 @@
 import * as jszip from 'jszip'
-// import * as log4js from 'log4js'
 
 import * as pathUtils from 'src/utils/path'
 import {RootPage} from 'src/pages/root'
@@ -18,8 +17,6 @@ import {execSequentially} from 'src/utils/promise'
 import {toCanvasInstance} from 'src/utils/document'
 
 var whammy = require('whammy');
-
-// let logger = log4js.getLogger('Illustration Page');
 
 enum IllustrationType {
 	Picture,

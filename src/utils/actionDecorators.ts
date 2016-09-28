@@ -5,9 +5,6 @@ import {CacheRegistry, pushToArrayCache} from 'src/utils/terribleCache'
 
 import {Container as Deps} from 'src/deps'
 
-// import * as log4js from 'log4js'
-// let logger = log4js.getLogger('Decorators');
-
 export function RegisteredAction(desc:ActionDescriptor) {
 	return (target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
 		let newDesc = <any>desc;

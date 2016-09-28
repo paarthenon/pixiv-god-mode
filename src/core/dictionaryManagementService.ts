@@ -1,13 +1,9 @@
-// import * as log4js from 'log4js'
-
 import IConfig from 'src/core/IConfig'
 import IDictionary from 'src/core/IDictionary'
 
 import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
 import ConfigKeys from 'src/configKeys'
-
-// let logger = log4js.getLogger('Dictionary');
 
 interface AppKeys {
 	global :string

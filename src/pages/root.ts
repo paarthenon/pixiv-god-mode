@@ -1,11 +1,6 @@
-// import * as log4js from 'log4js'
-
 import {BasePage} from 'src/pages/base'
 import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {DictionaryService} from 'src/services'
-import {injectTagAugmentation} from 'src/injectors/tagAugment'
-
-// let logger = log4js.getLogger('Root Page');
 
 export class RootPage extends BasePage {
 	constructor(

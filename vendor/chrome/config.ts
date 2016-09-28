@@ -2,15 +2,11 @@ import IConfig from 'src/core/IConfig'
 import Mailman from 'vendor/chrome/mailman'
 import * as Msg from 'vendor/chrome/messages'
 
-// import * as log4js from 'log4js'
-
 type potentialData = boolean|string|number|Object
 
 interface configValue {
 	data: potentialData
 }
-
-// let logger = log4js.getLogger('Config');
 
 function handleError<T>(value: T) {
 	return new Promise((resolve, reject) => {

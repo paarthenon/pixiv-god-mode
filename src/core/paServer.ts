@@ -1,5 +1,4 @@
 import {resolve} from 'url'
-// import * as log4js from 'log4js'
 
 import {Features, Model, Messages} from 'common/proto'
 
@@ -14,7 +13,6 @@ let HTTP = {
 };
 
 export class PAServer {
-	// protected logger = log4js.getLogger('PAServer Services');
 
 	constructor(protected config:IConfig, protected ajax:AjaxFunction<any,any>) {}
 

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
-// import * as log4js from 'log4js'
 
 import * as ChromeUtils from 'vendor/chrome/utils'
 import {CachedDictionaryService, cachedDictionary} from 'src/core/dictionaryManagementService'
@@ -10,8 +9,6 @@ import {ConditionalRender} from 'vendor/chrome/popup/components/conditionalRende
 
 let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
 let removeDiacritics = require('diacritics').remove; //TODO: create typing
-
-// let logger = log4js.getLogger('Dictionary Panel');
 
 export class DictContainer extends React.Component<{dictService: CachedDictionaryService}, cachedDictionary> {
 	state :cachedDictionary = { cache: [] };

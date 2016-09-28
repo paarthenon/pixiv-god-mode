@@ -1,9 +1,6 @@
-// import * as log4js from 'log4js'
-
 import {AjaxFunction} from 'src/core/IAjax'
 
 export class GoogleTranslateAPI {
-	// private logger = log4js.getLogger('GoogleTranslateAPI');
 
 	constructor(protected ajax:AjaxFunction<any,any>) {}
 

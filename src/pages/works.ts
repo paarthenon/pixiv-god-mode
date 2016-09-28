@@ -7,7 +7,6 @@ import {GalleryPage} from 'src/pages/gallery'
 import SettingKeys from 'src/settingKeys'
 import {Model} from 'common/proto'
 
-// import * as log4js from 'log4js'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {UserRelationButton} from 'src/components/userRelationButton'
@@ -18,8 +17,6 @@ import {injectOpenInTabs} from 'src/injectors/openInTabs'
 import {Container as Deps} from 'src/deps'
 
 import ConfigKeys from 'src/ConfigKeys'
-
-// let logger = log4js.getLogger();
 
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
