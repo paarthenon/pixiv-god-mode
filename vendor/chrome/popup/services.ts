@@ -1,4 +1,3 @@
-import * as log4js from 'log4js'
 
 import ConfigObj from '../config'
 import ConfigKeys from '../../../src/configKeys'
@@ -9,7 +8,6 @@ import {PAServer} from '../../../src/core/paServer'
 
 import Mailman from '../mailman'
 
-let logger = log4js.getLogger('Services');
 
 export var Config = new ConfigObj();
 

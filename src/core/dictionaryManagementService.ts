@@ -1,4 +1,4 @@
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 
 import IConfig from 'src/core/IConfig'
 import IDictionary from 'src/core/IDictionary'
@@ -7,7 +7,7 @@ import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
 import ConfigKeys from 'src/configKeys'
 
-let logger = log4js.getLogger('Dictionary');
+// let logger = log4js.getLogger('Dictionary');
 
 interface AppKeys {
 	global :string
@@ -114,18 +114,18 @@ export class DictionaryManagementService extends CachedDictionaryService {
 	) {	super(config, keys); }
 
 	public get globalUpdateAvailable() : Promise<boolean> {
-		logger.debug('DictionaryService.updateAvailable | entered');
+		// logger.debug('DictionaryService.updateAvailable | entered');
 		return this.ghUtils.masterCommit.then(commitHash => {
 			return this.config.get(ConfigKeys.official_dict_hash).then(currentHash => {
 				let isNewer: boolean = !currentHash || currentHash !== commitHash;
-				logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
+				// logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
 				return isNewer;
 			}).catch(() => true);
 		});
 	}
 
 	public updateGlobalDictionary() : Promise<void> {
-		logger.debug('DictionaryService.updateDictionary | entered');
+		// logger.debug('DictionaryService.updateDictionary | entered');
 		return this.ghUtils.masterCommit.then(commitHash => 
 			this.ghUtils.newestDictionary.then(obj => 
 				Promise.all([

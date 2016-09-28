@@ -1,11 +1,11 @@
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 
 import * as pathUtils from 'src/utils/path'
 import {RootPage} from 'src/pages/root'
 import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 
-let logger = log4js.getLogger('Gallery');
+// let logger = log4js.getLogger('Gallery');
 
 export class GalleryPage extends RootPage {
 	public get imageCountInPage(): number {
@@ -19,7 +19,7 @@ export class GalleryPage extends RootPage {
 		return this.getPageUrl(1);
 	}
 	public get lastPageUrl(): string {
-		logger.trace('Going to last page');
+		// logger.trace('Going to last page');
 
 		let finalPage = Math.ceil(1.0 * this.imageCountTotal / 20.0);
 		return this.getPageUrl(finalPage);
@@ -30,7 +30,7 @@ export class GalleryPage extends RootPage {
 	}
 
 	protected getPageUrl(pageNum:number) {
-		logger.trace('Going to page', pageNum);
+		// logger.trace('Going to page', pageNum);
 		// This takes advantage of the property that &p=2&p=3 will direct to page 3.
 		return `${window.location.href}&p=${pageNum}`;
 	}

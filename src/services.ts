@@ -1,5 +1,3 @@
-import * as log4js from 'log4js'
-
 import * as Deps from 'src/deps'
 import ConfigKeys from 'src/configKeys'
 
@@ -7,8 +5,6 @@ import {PAServer} from 'src/core/paServer'
 import {GoogleTranslateAPI as TranslateAPI} from 'src/core/googleTranslateAPI'
 
 import {CachedDictionaryService} from 'src/core/dictionaryManagementService'
-
-let logger = log4js.getLogger('Services');
 
 export var PixivAssistantServer = new PAServer(Deps.Container.config, Deps.Container.ajaxCall);
 

@@ -25,6 +25,18 @@ gulp.task('es5', ['build'], function() {
 		.pipe(gulp.dest('build/es5'));
 })
 
+gulp.task('bundle', ['es5'], function() {
+	builder = new jspm.Builder();
+	builder.config({
+		paths: { '*': 'build/es5/*' }
+	});
+	return Promise.all([
+		builder.bundle('vendor/chrome/popup/bootstrap', 'build/merged/bootstrap.js', {minify: true}),
+		builder.bundle('vendor/chrome/background/main', 'build/merged/background.js', {minify: true}),
+		builder.bundle('vendor/chrome/content/chrome', 'build/merged/content.js', {minify: true})
+	]);
+});
+
 gulp.task('chrome-resources', ['es5'], function(){
 	return Promise.all([
 		new Promise(resolve => gulp.src('build/es5/**/*')
@@ -60,7 +72,9 @@ gulp.task('builder', ['chrome-resources'], function() {
 		paths: { '*': 'build/es5/*' }
 	});
 	return Promise.all([
-		builder.bundle('vendor/chrome/popup/bootstrap', 'build/merged/bootstrap.js', {minify: true}),
+		builder.buildStatic('vendor/chrome/popup/bootstrap', 'build/merged/popup.js', {minify: false, mangle: false}),
+		// builder.bundle('vendor/chrome/background/main', 'build/merged/background.js', {minify: true}),
+		// builder.bundle('vendor/chrome/content/chrome', 'build/merged/content.js', {minify: true})
 	]);
 })
 
@@ -68,7 +82,7 @@ gulp.task('chrome-dev', ['chrome-resources'], function() {
 
 });
 gulp.task('chrome-full', ['chrome-resources', 'builder'], function() {
-	return new Promise(resolve => gulp.src('build/merged/bootstrap.js')
+	return new Promise(resolve => gulp.src('build/merged/popup.js')
 		.pipe(gulp.dest('dist/chrome/vendor/chrome/popup'))
 		.on('end', resolve))
 });

@@ -1,9 +1,9 @@
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 
 import {AjaxFunction} from 'src/core/IAjax'
 
 export class GoogleTranslateAPI {
-	private logger = log4js.getLogger('GoogleTranslateAPI');
+	// private logger = log4js.getLogger('GoogleTranslateAPI');
 
 	constructor(protected ajax:AjaxFunction<any,any>) {}
 
@@ -13,7 +13,7 @@ export class GoogleTranslateAPI {
 			type: 'GET',
 			url: serviceUrl
 		}).then((response:any) => {
-			this.logger.fatal('response from translation', response);
+			// this.logger.fatal('response from translation', response);
 			let match = response.match(/\[\[\[\"([^\"]+)\",/);
 			if (match && match.length > 1) {
 				return match[1];

@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 
 import Mailman from 'vendor/chrome/mailman'
 import {Action} from 'src/core/IAction'
 
-let logger = log4js.getLogger('Page Actions Pane');
+// let logger = log4js.getLogger('Page Actions Pane');
 
 interface ActionsListState {
 	actions: Action[]
@@ -18,7 +18,7 @@ export class ActionContainer extends React.Component<void,ActionsListState> {
 			.then(actionMsg => {
 				this.setState({ actions: actionMsg.actions});
 			})
-			.catch(error => logger.error(error));
+			.catch(error => console.error(error));
 	}
 	public render() { return <ActionDisplay actions={this.state.actions} />}
 	

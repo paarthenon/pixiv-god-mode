@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as log4js from 'log4js'
 
 import {Tabs} from 'vendor/chrome/popup/tabs'
 import {DictContainer} from 'vendor/chrome/popup/dict'
@@ -12,8 +11,6 @@ import {DictionaryJSON} from 'vendor/chrome/popup/exportDict'
 
 import configKeys from 'src/configKeys'
 import {Config, DictionaryService} from 'vendor/chrome/popup/services'
-
-let logger = log4js.getLogger('Bootstrap');
 
 Config.get(configKeys.debug_mode).catch(() => false).then(debugMode => {
 	if (debugMode) {

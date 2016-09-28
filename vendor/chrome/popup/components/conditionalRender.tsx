@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as log4js from 'log4js'
 
 /**
  * Wrapper component that evaluates a predicate to judge whether or not to render.

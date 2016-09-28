@@ -1,17 +1,17 @@
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 
-log4js.configure({
-	appenders: [
-		{ 
-			type: 'console',
-			layout: {
-				type: 'basic'
-			}
-		 }
-	]
-});
+// log4js.configure({
+// 	appenders: [
+// 		{ 
+// 			type: 'Console',
+// 			layout: {
+// 				type: 'basic'
+// 			}
+// 		 }
+// 	]
+// });
 
-log4js.setGlobalLogLevel(log4js.levels.ALL);
+// log4js.setGlobalLogLevel(log4js.levels.ALL);
 
 import * as jQ from 'jquery'
 import {IDependencyContainer, load as depsLoad} from 'src/deps'

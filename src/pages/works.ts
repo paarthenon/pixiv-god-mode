@@ -7,7 +7,7 @@ import {GalleryPage} from 'src/pages/gallery'
 import SettingKeys from 'src/settingKeys'
 import {Model} from 'common/proto'
 
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {UserRelationButton} from 'src/components/userRelationButton'
@@ -19,7 +19,7 @@ import {Container as Deps} from 'src/deps'
 
 import ConfigKeys from 'src/ConfigKeys'
 
-let logger = log4js.getLogger();
+// let logger = log4js.getLogger();
 
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
@@ -72,7 +72,7 @@ export class WorksPage extends GalleryPage {
 
 		PixivAssistantServer.bulkImageExists(request)
 			.then(matchedImages => matchedImages
-				.map(image => { logger.debug(JSON.stringify(image)); return image; })
+				// .map(image => { logger.debug(JSON.stringify(image)); return image; })
 				.map(match => match.image.id.toString())
 				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
 	}
