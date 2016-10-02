@@ -18,7 +18,12 @@ export class ActionContainer extends React.Component<void,ActionsListState> {
 			})
 			.catch(error => console.error(error));
 	}
-	public render() { return <ActionDisplay actions={this.state.actions} />}
+	public render() {
+		return <Bootstrap.Panel bsSize="small">
+				<h5>Page Actions</h5>
+				<ActionDisplay actions={this.state.actions} />
+			</Bootstrap.Panel>
+	}
 	
 }
 export class ActionDisplay extends React.Component<{actions:Action[]}, void> {

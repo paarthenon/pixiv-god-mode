@@ -23,7 +23,16 @@ export class HomePanel extends React.Component<any,any> {
 						onAdd={(key,value) => DictionaryService.update(key, value)}
 						getTranslation={key => DictionaryService.getTranslation(key)}
 					/>
-					<ActionContainer />
+					<Bootstrap.Row>
+						<Bootstrap.Col xs={6}>
+							<ActionContainer/>
+						</Bootstrap.Col>
+						<Bootstrap.Col xs={6}>
+							<Bootstrap.Panel bsSize="small">
+								<h5>Page Settings</h5>
+							</Bootstrap.Panel>
+						</Bootstrap.Col>
+					</Bootstrap.Row>
 				</main>
 				<footer><AlertsDisplay /></footer>
 			</div>
