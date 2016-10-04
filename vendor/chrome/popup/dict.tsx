@@ -101,7 +101,9 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 			<div>
 				<DictionaryAdd onAdd={this.props.onAdd} getTranslation={this.props.getTranslation}/>
 				<Bootstrap.Panel>
-				<Search onChange={(value:any) => this.setSearch(value)} />
+					<Search onChange={(value:any) => this.setSearch(value)} />
+				</Bootstrap.Panel>				
+				<Bootstrap.Panel>
 				{(this.filteredData.length > 0) ? 
 					<div style={{height: '320px', overflow: 'auto'}}>
 					<InfiniteScroll
@@ -190,6 +192,10 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 		return (this.props.hasGlobalDef) ? 'revert' : 'delete'
 	}
 	public render() {
+		let buttonStyle = {
+			float: 'right',
+			padding: '3px',
+		}
 		if (!this.state.editOpen)
 			return <div>
 				<big><span onClick={this.handleSearch.bind(this)}
@@ -197,14 +203,18 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 					className="glyphicon glyphicon-search" aria-hidden="true"></span>
 				{this.props.translation}</big>
 				<small style={{color:'#999'}}>{this.props.japanese}</small>
-				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button></span>
-				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>{this.deleteText}</Bootstrap.Button></span>
+				<span style={buttonStyle}>
+					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) }>edit</Bootstrap.Button>
+					<Bootstrap.Button bsSize="xsmall" onClick={this.handleDelete.bind(this)}>{this.deleteText}</Bootstrap.Button>
+				</span>
 			</div>
 		else return <div>
 				<big><input defaultValue={this.props.translation} ref="translation"></input></big>
 				<small style={{color:'#999'}}>{this.props.japanese}</small>
-				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) }>update</Bootstrap.Button></span>
-				<span class="text-right"><Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) }>cancel</Bootstrap.Button></span>
+				<span style={buttonStyle}>
+					<Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) }>update</Bootstrap.Button>
+					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) }>cancel</Bootstrap.Button>
+				</span>
 			</div>
 	}
 }
@@ -217,13 +227,17 @@ class ReadOnlyDictEntry extends React.Component<ReadOnlyDictEntryProps, void> {
 		ChromeUtils.newTab("http://www.pixiv.net/search.php?s_mode=s_tag_full&word="+this.props.japanese)
 	}
 	public render() {
+		let buttonStyle = {
+			float: 'right',
+			padding: '3px',
+		}
 		return <div>
 			<big><span onClick={this.handleSearch.bind(this)}
 				style={{cursor:'pointer','padding-right':'5px'}}
 				className="glyphicon glyphicon-search" aria-hidden="true"></span>
 			{this.props.translation}</big>
 			<small style={{color:'#999'}}>{this.props.japanese}</small>
-			<span><Bootstrap.Button bsSize="xsmall" onClick={this.handleImport.bind(this)}>Import</Bootstrap.Button></span>
+			<span style={buttonStyle}><Bootstrap.Button bsSize="xsmall" onClick={this.handleImport.bind(this)}>Import</Bootstrap.Button></span>
 		</div>
 	}
 }
