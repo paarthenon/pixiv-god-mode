@@ -5,8 +5,17 @@ import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
 import {ActionContainer} from 'vendor/chrome/popup/pageActions'
 import {AlertsDisplay} from 'vendor/chrome/popup/alerts'
 import {DictionaryService} from 'vendor/chrome/popup/services'
+import {PageBasedSettings} from 'vendor/chrome/popup/settingsPanel'
 
-export class HomePanel extends React.Component<any,any> {
+import Mailman from 'vendor/chrome/mailman'
+
+export class HomePanel extends React.Component<any,{pageName:string}> {
+	state = {pageName: ''};
+	public componentWillMount() {
+		Mailman.ContentScript.getName().then(pageName => {
+			this.setState({pageName});
+		})
+	}
 	public render() {
 		let style = {
 			flex: 1,
@@ -28,8 +37,8 @@ export class HomePanel extends React.Component<any,any> {
 							<ActionContainer/>
 						</Bootstrap.Col>
 						<Bootstrap.Col xs={6}>
-							<Bootstrap.Panel bsSize="small">
-								<h5>Page Settings</h5>
+							<Bootstrap.Panel>
+								<PageBasedSettings pageName={this.state.pageName} />
 							</Bootstrap.Panel>
 						</Bootstrap.Col>
 					</Bootstrap.Row>

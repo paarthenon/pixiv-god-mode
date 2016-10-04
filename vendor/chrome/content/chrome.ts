@@ -31,6 +31,7 @@ let page = dispatch(document.location.href, $);
 
 defineImplementation<Msg.ContentScriptProtocol>("CONTENT_SCRIPT", {
 	getActions: () => Promise.resolve({actions: page.actionCache}),
+	getName: () => Promise.resolve(page.constructor.name),
 	performAction: msg => {
 		let item = page.actionCache.find(action => action.id == msg.actionId);
 		if (item) {

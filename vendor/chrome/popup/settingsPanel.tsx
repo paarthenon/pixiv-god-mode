@@ -31,93 +31,145 @@ export class SettingsPanel extends React.Component<void,{userSettings: {[id:stri
 							settingKey={SettingKeys.general.disableServerConnectionAlert} 
 							label={'Disable server connection alert'}/>
 					</IndividualPanel>
-					<IndividualPanel header="Illustration Page">
-						<SettingContainer 
-							settingKey={SettingKeys.pages.illust.inject.openFolder} 
-							label={'Inject open folder button'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.illust.autoOpen} 
-							label={'Automatically zoom into image'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.illust.boxImage} 
-							label={'Limit image size to the window (illustration)'}/>
-					</IndividualPanel>
-					<IndividualPanel header="Manga Page">
-						<SettingContainer 
-							settingKey={SettingKeys.pages.manga.inject.previousButton} 
-							label={'Inject previous page button'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.manga.loadFullSize} 
-							label={'Load full size versions of manga images'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.manga.fitImage} 
-							label={'Fit image to window'}/>
-					</IndividualPanel>
-					<IndividualPanel header="Works Page">
-						<SettingContainer 
-							settingKey={SettingKeys.pages.works.inject.openFolder} 
-							label={'Inject open folder button'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.works.inject.openInTabs} 
-							label={'Inject open in tabs button'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.works.inject.pagingButtons} 
-							label={'Inject paging buttons'}/>
-
-						<SettingContainer 
-							settingKey={SettingKeys.pages.works.autoDarken} 
-							label={'Fade out downloaded images'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.works.directToManga} 
-							label={'Link directly to manga'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.works.openTabsImagesOnly} 
-							label={'Open in tabs uses the direct image files instead of the pages'}/>
-					</IndividualPanel>
-					<IndividualPanel header="Bookmark Illustration Page">
-						<SettingContainer 
-							settingKey={SettingKeys.pages.bookmarkIllustration.inject.viewAll} 
-							label={'Inject view all button'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.bookmarkIllustration.fadeDownloaded} 
-							label={'Fade out downloaded images'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.bookmarkIllustration.fadeBookmarked} 
-							label={'Fade out images from bookmarked artists'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.bookmarkIllustration.skipToDetail} 
-							label={'Skip to bookmark detail page'}/>
-					</IndividualPanel>
-					<IndividualPanel header="Artist's Bookmarks Page">
-						<SettingContainer 
-							settingKey={SettingKeys.pages.artistBookmarks.inject.openFolder} 
-							label={'Inject open folder button'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.artistBookmarks.inject.pagingButtons} 
-							label={'Inject paging buttons'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.artistBookmarks.directToManga} 
-							label={'Link directly to manga'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.artistBookmarks.fadeDownloaded} 
-							label={'Fade out downloaded images'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.artistBookmarks.fadeBookmarked} 
-							label={'Fade out images from bookmarked artists'}/>
-					</IndividualPanel>
-					<IndividualPanel header="Search Page">
-						<SettingContainer 
-							settingKey={SettingKeys.pages.search.directToManga} 
-							label={'Link directly to manga'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.search.fadeDownloaded} 
-							label={'Fade out downloaded images'}/>
-						<SettingContainer 
-							settingKey={SettingKeys.pages.search.fadeBookmarked} 
-							label={'Fade out images from bookmarked artists'}/>
-					</IndividualPanel>
+					<IllustrationPageSettings />
+					<MangaPageSettings />
+					<WorksPageSettings />
+					<BookmarkIllustrationPageSettings />
+					<ArtistBookmarksPageSettings />
+					<SearchPageSettings />
 			</Bootstrap.Panel>
 		);
+	}
+}
+export class PageBasedSettings extends React.Component<{pageName:string}, void> {
+	/**
+	 * TODO: This is an implicit dependency on the page names. Instead, register pages
+	 *  with a key based on a shared object that's enforceable at compile time instead
+	 *  of using raw strings.
+	 */
+	private pageMap : {[id:string] : JSX.Element } = {
+		'IllustrationPage': <IllustrationPageSettings />,
+		'MangaPage': <MangaPageSettings />,
+		'WorksPage': <WorksPageSettings />,
+		'BookmarkIllustrationPage': <BookmarkIllustrationPageSettings />,
+		'ArtistBookmarksPage': <ArtistBookmarksPageSettings />,
+		'SearchPage': <SearchPageSettings />,
+	}
+	public render() {
+		return this.pageMap[this.props.pageName] || null;
+	}
+}
+class IllustrationPageSettings extends React.Component<void, void> {
+	public render() {
+		return <IndividualPanel header="Illustration Page">
+			<SettingContainer 
+				settingKey={SettingKeys.pages.illust.inject.openFolder} 
+				label={'Inject open folder button'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.illust.autoOpen} 
+				label={'Automatically zoom into image'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.illust.boxImage} 
+				label={'Limit image size to the window (illustration)'}/>
+		</IndividualPanel>
+	}
+}
+
+class MangaPageSettings extends React.Component<void, void> {
+	public render() {
+		return <IndividualPanel header="Manga Page">
+			<SettingContainer 
+				settingKey={SettingKeys.pages.manga.inject.previousButton} 
+				label={'Inject previous page button'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.manga.loadFullSize} 
+				label={'Load full size versions of manga images'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.manga.fitImage} 
+				label={'Fit image to window'}/>
+		</IndividualPanel>
+	}
+}
+
+class WorksPageSettings extends React.Component<void, void> {
+	public render() {
+		return <IndividualPanel header="Works Page">
+			<SettingContainer 
+				settingKey={SettingKeys.pages.works.inject.openFolder} 
+				label={'Inject open folder button'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.works.inject.openInTabs} 
+				label={'Inject open in tabs button'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.works.inject.pagingButtons} 
+				label={'Inject paging buttons'}/>
+
+			<SettingContainer 
+				settingKey={SettingKeys.pages.works.autoDarken} 
+				label={'Fade out downloaded images'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.works.directToManga} 
+				label={'Link directly to manga'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.works.openTabsImagesOnly} 
+				label={'Open in tabs uses the direct image files instead of the pages'}/>
+		</IndividualPanel>
+	}
+}
+class BookmarkIllustrationPageSettings extends React.Component<void, void> {
+	public render() {
+		return <IndividualPanel header="Bookmark Illustration Page">
+			<SettingContainer 
+				settingKey={SettingKeys.pages.bookmarkIllustration.inject.viewAll} 
+				label={'Inject view all button'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.bookmarkIllustration.fadeDownloaded} 
+				label={'Fade out downloaded images'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.bookmarkIllustration.fadeBookmarked} 
+				label={'Fade out images from bookmarked artists'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.bookmarkIllustration.skipToDetail} 
+				label={'Skip to bookmark detail page'}/>
+		</IndividualPanel>
+	}
+}
+
+class ArtistBookmarksPageSettings extends React.Component<void, void> {
+	public render() {
+		return <IndividualPanel header="Artist's Bookmarks Page">
+			<SettingContainer 
+				settingKey={SettingKeys.pages.artistBookmarks.inject.openFolder} 
+				label={'Inject open folder button'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.artistBookmarks.inject.pagingButtons} 
+				label={'Inject paging buttons'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.artistBookmarks.directToManga} 
+				label={'Link directly to manga'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.artistBookmarks.fadeDownloaded} 
+				label={'Fade out downloaded images'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.artistBookmarks.fadeBookmarked} 
+				label={'Fade out images from bookmarked artists'}/>
+		</IndividualPanel>
+	}
+}
+
+class SearchPageSettings extends React.Component<void, void> {
+	public render() {
+		return <IndividualPanel header="Search Page">
+			<SettingContainer 
+				settingKey={SettingKeys.pages.search.directToManga} 
+				label={'Link directly to manga'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.search.fadeDownloaded} 
+				label={'Fade out downloaded images'}/>
+			<SettingContainer 
+				settingKey={SettingKeys.pages.search.fadeBookmarked} 
+				label={'Fade out images from bookmarked artists'}/>
+		</IndividualPanel>
 	}
 }
 

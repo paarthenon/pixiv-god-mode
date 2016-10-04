@@ -17,6 +17,7 @@ export interface Protocol extends ConfigProtocol {
 
 export interface ContentScriptProtocol {
 	getActions: () => Promise<GetActionsResponse>
+	getName: () => Promise<string>
 	performAction: (msg: PerformActionRequest) => Promise<void>
 }
 
