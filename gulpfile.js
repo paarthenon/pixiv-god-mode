@@ -39,6 +39,7 @@ gulp.task('bundle', ['es5'], function() {
 		builder.buildStatic('vendor/chrome/popup/bootstrap', 'build/merged/popup.min.js', bundleSettings),
 		builder.buildStatic('vendor/chrome/background/main', 'build/merged/background.min.js', bundleSettings),
 		builder.buildStatic('vendor/chrome/content/chrome', 'build/merged/content.min.js', bundleSettings),
+		builder.buildStatic('vendor/chrome/options/options', 'build/merged/options.min.js', bundleSettings),
 	]);
 });
 
@@ -62,6 +63,7 @@ gulp.task('chrome-min-code', ['bundle'], function() {
 		fileCopy('build/merged/popup.min.js', 'dist/chrome/vendor/chrome/popup'),
 		fileCopy('build/merged/background.min.js', 'dist/chrome/vendor/chrome/'),
 		fileCopy('build/merged/content.min.js', 'dist/chrome/vendor/chrome/'),
+		fileCopy('build/merged/options.min.js', 'dist/chrome/vendor/chrome/options'),
 	])
 });
 

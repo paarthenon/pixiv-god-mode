@@ -1,1 +1,0 @@
-SystemJS.import('./vendor/chrome/background/main.js');

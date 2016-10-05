@@ -23,6 +23,9 @@
       "vendor/chrome/background.min.js"
     ]
   },
+  "options_ui": {
+    "page": "vendor/chrome/options/index.html"
+  },
   "permissions": [
     "storage",
     "bookmarks",
@@ -41,6 +44,5 @@
     "jspm_packages/*",
     "src/*",
     "vendor/chrome/*"
-  ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  ]
 }

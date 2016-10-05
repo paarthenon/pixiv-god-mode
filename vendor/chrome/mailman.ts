@@ -7,8 +7,9 @@ import * as Msg from 'vendor/chrome/messages'
  * using the defineImplementation function and can be referenced through mailman.[section]
  * However, a chrome extension page's onMessage is not triggered by messages it sends,
  * so the background page attempting to access mailman.Background will fail.
+ * 
+ * TODO: Consider improving and splitting into separate package.
  */
-
 export type Target = "BACKGROUND_PAGE" | "CONTENT_SCRIPT" | "RESPONSE";
 
 function send<T, V>(target: Target, name:string, msg: T): Promise<V> {
