@@ -13,11 +13,15 @@ interface AppKeys {
 
 export type naiveDictionary = { [id:string]:string };
 
+export enum EntryType {
+	GLOBAL,
+	LOCAL,
+	BOTH,
+}
 export interface cachedDictionaryEntry {
 	key:string
 	value:string
-	local:boolean
-	hasGlobalDef?:boolean
+	type:EntryType
 }
 
 export type cachedDictionary = { cache: cachedDictionaryEntry[] };
@@ -32,14 +36,13 @@ export class CachedDictionaryService {
 		let keySet = new Set(Object.keys(global).concat(Object.keys(local)));
 		
 		let cache = [...keySet].map(key => {
-				if (key in local) {
-					let hasGlobalDef = key in global;
-					return {key, value: local[key], local:true, hasGlobalDef};
-				} else {
-					return {key, value: global[key], local:false};
-				}
-			})
-			.sort((a,b) => a.value.localeCompare(b.value) || a.key.localeCompare(b.key));
+			if (key in local) {
+				return {key, value: local[key], type: (key in global)? EntryType.BOTH : EntryType.LOCAL};
+			} else {
+				return {key, value: global[key], type: EntryType.GLOBAL};
+			}
+		})
+		.sort((a,b) => a.value.localeCompare(b.value) || a.key.localeCompare(b.key));
 
 		return {cache};
 	}
