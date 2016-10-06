@@ -61,11 +61,11 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 		}
 
 		return <Bootstrap.Panel bsSize="small">
-			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} bsSize="small" style={noBottomMargin}>
-				<Bootstrap.FormGroup bsSize="small">
+			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} style={noBottomMargin}>
+				<Bootstrap.FormGroup>
 					<Bootstrap.FormControl type="text" placeholder="Translation" ref="translation"/>
 					<Bootstrap.FormControl type="text" placeholder="Original" ref="original" style={gap}/>
-					<Bootstrap.Button bsSize="small" type="submit" onClick={this.handleAdd.bind(this)}>{buttonText}</Bootstrap.Button>
+					<Bootstrap.Button type="submit" onClick={this.handleAdd.bind(this)}>{buttonText}</Bootstrap.Button>
 				</Bootstrap.FormGroup>
 			</Bootstrap.Form>
 		</Bootstrap.Panel>
