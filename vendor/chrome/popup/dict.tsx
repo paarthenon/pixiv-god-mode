@@ -155,7 +155,7 @@ class Search extends React.Component<{ onChange: (search: string) => any }, { cu
 	}
 	public render() {
 		return <FormControl type="text"
-					placeholder="search" 
+					placeholder="Search" 
 					value={this.state.current} 
 					onChange={this.handleChange.bind(this)} 
 				/>
