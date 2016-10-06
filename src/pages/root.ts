@@ -1,5 +1,4 @@
 import {BasePage} from 'src/pages/base'
-import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {DictionaryService} from 'src/services'
 
 export class RootPage extends BasePage {

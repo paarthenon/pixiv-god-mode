@@ -1,6 +1,6 @@
 import * as pathUtils from 'src/utils/path'
 import {PixivAssistantServer} from 'src/services'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import * as jQUtils from 'src/utils/document'
 import {Model} from 'common/proto'

@@ -1,7 +1,7 @@
 import * as pathUtils from 'src/utils/path'
 import {PixivAssistantServer} from 'src/services'
 import {RootPage} from 'src/pages/root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import {DictionaryService} from 'src/services'
 import {Container as Deps} from 'src/deps'
@@ -77,11 +77,6 @@ export class SearchPage extends GalleryPage {
 	public translateTagsOnPage(): void {
 		this.changeTitle();
 		super.translateTagsOnPage();
-	}
-
-	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'fast-forward' })
-	public goToLastPage() {
-		window.location.href = this.lastPageUrl;
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.search.directToManga)

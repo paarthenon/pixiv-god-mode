@@ -1,5 +1,5 @@
 import * as pathUtils from 'src/utils/path'
-import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
+import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {Model} from 'common/proto'

@@ -1,6 +1,6 @@
 import * as pathUtils from 'src/utils/path'
 import {RootPage} from 'src/pages/root'
-import {RegisteredAction, ExecuteOnLoad} from 'src/utils/actionDecorators'
+import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 
 export class GalleryPage extends RootPage {

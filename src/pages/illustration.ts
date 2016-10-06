@@ -150,11 +150,6 @@ export class IllustrationPage extends RootPage {
 		});
 	}
 
-	@RegisteredAction({ 
-		id: 'pa_download_animation_button', 
-		label: 'Download Animation',
-		icon: 'compressed',
-	})
 	public downloadAnimation() {
 		function getBase64(blob:Blob) :Promise<string> {
 			return new Promise((resolve, reject) => {
@@ -190,12 +185,10 @@ export class IllustrationPage extends RootPage {
 		}
 	}
 
-	@RegisteredAction({ id: 'pa_button_download', label: 'Download Image', icon: 'floppy-save' })
 	public downloadSinglePicture() {
 		return PixivAssistantServer.download(this.artist, this.fullImageUrl);
 	}
 
-	@RegisteredAction({ id: 'pa_button_download_manga', label: 'Download Manga', icon: 'floppy-save' })
 	public downloadManga() {
 		let url = this.jQuery('div.works_display div._layout-thumbnail img').attr('src');
 

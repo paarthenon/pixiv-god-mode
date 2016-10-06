@@ -74,11 +74,6 @@ export class WorksPage extends GalleryPage {
 				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
 	}
 
-	@RegisteredAction({ id: 'pa_button_go_to_last_page', label: 'Go To Last Page', icon: 'fast-forward' })
-	public goToLastPage() {
-		window.location.href = this.lastPageUrl;
-	}
-
 	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-window' })
 	public openTabs():void {
 		Deps.getSetting(SettingKeys.pages.works.openTabsImagesOnly).then(imagesOnly => {
@@ -125,38 +120,7 @@ export class WorksPage extends GalleryPage {
 	public openFolder():void {
 		PixivAssistantServer.openFolder(this.artist);
 	}
-
-	@RegisteredAction({ 
-		id: 'pa_download_all_images_debug', 
-		label: 'Download All (DEBUG)', 
-		icon: 'new-tab', 
-		if: () => Deps.config.get(ConfigKeys.debug_mode),
-	})
-	public debugDownloadAllImagesForArtist():void {
-		Deps.execOnPixiv(
-			(pixiv, props) => {
-				return pixiv.api.userProfile({
-					user_ids: props.artistId,
-					illust_num: 1000000
-				}, {})
-			},{
-				artistId: this.artistId
-			}
-		).then((result: any) => {
-			let combined_urls = result.body[0].illusts.map((illust: any) => {
-				let url = illust.url[Object.keys(illust.url)[0]];
-				let pages = illust.illust_page_count;
-
-				let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
-				let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
-
-				return urls;
-			}).reduce((previous: string[], current: string[]) => previous.concat(current));
-
-			PixivAssistantServer.downloadMulti(this.artist, combined_urls);
-		});
-	}
-
+	
 	@ExecuteIfSetting(SettingKeys.pages.works.directToManga)
 	public replaceMangaThumbnailLinksToFull(){
 		super.replaceMangaThumbnailLinksToFull();

@@ -1,5 +1,5 @@
 import {RootPage} from 'src/pages/root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {PixivAssistantServer} from 'src/services'
 import * as pathUtils from 'src/utils/path'
 import * as jQUtils from 'src/utils/document'
@@ -88,7 +88,6 @@ export class BookmarkIllustrationPage extends RootPage {
 		if (/bookmark_add/.test(window.location.href)) window.location.reload();
 	}
 
-	@RegisteredAction({id: 'pa_load_all_bookmarks', label: 'Load All Bookmarks', icon: 'th'})
 	public loadAllBookmarks() {
 		for (let i = 0; i < 15; i++) { 
 			Deps.execOnPixiv(pixiv => {
