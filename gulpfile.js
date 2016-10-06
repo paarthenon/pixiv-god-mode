@@ -33,7 +33,8 @@ gulp.task('bundle', ['es5'], function() {
 
 	let bundleSettings = {
 		minify: true,
-		mangle: false,
+		mangle: false, // terribleCache is truly terrible and uses constructor function names, which can't work if mangled
+		uglify: {beautify: {ascii_only: true}}, // diacritics needs to faithfully store the unicode string map.
 	}
 	return Promise.all([
 		builder.buildStatic('vendor/chrome/popup/bootstrap', 'build/merged/popup.min.js', bundleSettings),
