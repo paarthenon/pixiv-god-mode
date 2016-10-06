@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
+import {ServerStatusContainer} from 'vendor/chrome/popup/serverStatus'
+
 class Navigation extends React.Component<void, void> {
 	handleOpenSettings() {
 		chrome.runtime.openOptionsPage();		
@@ -20,6 +22,9 @@ class Navigation extends React.Component<void, void> {
 				</Bootstrap.Navbar.Brand>
 			</Bootstrap.Navbar.Header>
 			<Bootstrap.Nav pullRight>
+				<Bootstrap.NavItem>
+					<ServerStatusContainer />
+				</Bootstrap.NavItem>
 				<Bootstrap.NavItem onClick={this.handleOpenSettings.bind(this)}>Settings</Bootstrap.NavItem>
 			</Bootstrap.Nav>
 		</Bootstrap.Navbar>
