@@ -10,8 +10,9 @@ export class RootPage extends BasePage {
 	) {
 		super(path, jQuery);
 
-		Container.getSetting(SettingKeys.global.translateTags);
-		this.translateTagsOnPage();
+		Container.getSetting(SettingKeys.global.translateTags).then(translate => {
+			if (translate) this.translateTagsOnPage();
+		})
 	}
 	protected getTagElements():JQuery[] {
 		return [];

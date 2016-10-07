@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import * as Bootstrap from 'react-bootstrap'
 
 import {TranslationSettingsPanel} from 'vendor/chrome/options/translationSettingsPanel'
 import {ServerSettingsPanel} from 'vendor/chrome/options/serverSettingsPanel'
@@ -18,7 +19,7 @@ class SettingsPage extends React.Component<void, void> {
         width: '800px'
     }
     public render() {
-        return <div style={this.style}>
+        return <Bootstrap.Grid>
             <TranslationSettingsPanel />
             <ServerSettingsPanel />
             <IllustrationSettingsPanel />
@@ -28,7 +29,7 @@ class SettingsPage extends React.Component<void, void> {
             <ArtistBookmarksSettingsPanel />
             <SearchSettingsPanel />
             <DictionaryJSON />
-        </div>
+        </Bootstrap.Grid>
     }
 }
 ReactDOM.render(<SettingsPage />, document.getElementById('content'));

@@ -7,6 +7,7 @@ import SettingKeys from 'src/settingKeys'
 let defaultSettings: { [id:string]:any } = {};
 
 let trueSettings = [
+	SettingKeys.global.translateTags,
 	SettingKeys.global.directToManga,
 	SettingKeys.pages.illust.inject.openFolder,
 	SettingKeys.pages.illust.autoOpen,
