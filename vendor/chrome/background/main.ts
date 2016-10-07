@@ -81,17 +81,3 @@ function setDebugMode(mode:boolean){
 }
 
 (window as any).setDebugMode = setDebugMode;
-
-
-function getBlob (src :string) {
-	let req = new XMLHttpRequest();
-	req.open('GET', src);
-	req.responseType = 'blob';
-	req.send();
-	return new Promise((resolve, reject) => {
-		req.addEventListener('load', () => resolve(req.response));
-		req.addEventListener('error', err => reject(err));
-	})
-}
-
-(window as any).getBlob = getBlob;
