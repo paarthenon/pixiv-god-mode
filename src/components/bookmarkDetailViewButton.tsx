@@ -1,6 +1,12 @@
 import * as React from 'react'
 
-export class BookmarkDetailViewButton extends React.Component<{text:string,clickAction:Function, id?:string},any> {
+interface BookmarkDetailViewButtonProps {
+	id? :string
+	text :string
+	clickAction :Function
+}
+
+export class BookmarkDetailViewButton extends React.Component<BookmarkDetailViewButtonProps,any> {
 	public render() {
 		return (
 			<div id={this.props.id} 

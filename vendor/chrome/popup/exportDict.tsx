@@ -5,10 +5,10 @@ import Mailman from 'vendor/chrome/mailman'
 import {DictionaryManagementService, cachedDictionary, naiveDictionary} from 'src/core/dictionaryManagementService'
 import Config from 'vendor/chrome/config'
 import ConfigKeys from 'src/configKeys'
-import {ConditionalRender} from 'vendor/chrome/popup/components/conditionalRender'
+import {ConditionalRender} from 'src/components/util/conditionalRender'
 import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
-import {DictionaryService} from 'vendor/chrome/popup/services'
+import {DictionaryService} from 'vendor/chrome/services'
 
 interface DictStates {
 	global: naiveDictionary

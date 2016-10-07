@@ -1,8 +1,12 @@
 let settingKeys = {
+	global: {
+		translateTags: 'GLOBAL_TRANSLATE_TAGS',
+		directToManga: 'GLOBAL_LINK_THUMBNAIL_DIRECTLY_TO_MANGA',
+	},
 	pages: {
 		illust: {
 			inject: {
-				openFolder: 'ILLUST_PAGE_INJECT_OPEN_FOLDER_BUTTON'
+				openFolder: 'ILLUST_PAGE_INJECT_OPEN_FOLDER_BUTTON',
 			},
 			autoOpen: 'ILLUST_PAGE_AUTO_OPEN',
 			boxImage: 'ILLUST_PAGE_BOX_IMAGE_IN_WINDOW',
@@ -21,7 +25,6 @@ let settingKeys = {
 				openInTabs: 'WORKS_PAGE_INJECT_OPEN_IN_TABS'
 			},
 			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',
-			directToManga: 'WORKS_PAGE_OPEN_MANGA_DIRECTLY',
 			openTabsImagesOnly: 'WORKS_PAGE_OPEN_DIRECT_IMAGES_IN_TABS',
 		},
 		bookmarkIllustration: {
@@ -39,16 +42,11 @@ let settingKeys = {
 			},
 			fadeDownloaded: 'ARTIST_BOOKMARKS_FADE_DOWNLOADED',
 			fadeBookmarked: 'ARTIST_BOOKMARKS_FADE_BOOKMARKED',
-			directToManga: 'ARTIST_BOOKMARKS_OPEN_MANGA_DIRECTLY',
 		},
 		search: {
-			directToManga: 'SEARCH_PAGE_OPEN_MANGA_DIRECTLY',
 			fadeDownloaded: 'SEARCH_PAGE_FADE_DOWNLOADED',
 			fadeBookmarked: 'SEARCH_PAGE_FADE_BOOKMARKED',
 		}
-	},
-	general: {
-		disableServerConnectionAlert: 'GENERAL_DISABLE_SERVER_CONNECTION_ALERT',
 	},
 };
 

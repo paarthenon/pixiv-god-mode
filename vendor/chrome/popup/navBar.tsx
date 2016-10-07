@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
-import {ServerStatusContainer} from 'vendor/chrome/popup/serverStatus'
+import {ServerStatusContainer} from 'vendor/chrome/popup/serverStatusContainer'
 
 export class PopupNavbar extends React.Component<void, void> {
 	handleOpenSettings() {

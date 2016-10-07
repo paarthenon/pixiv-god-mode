@@ -120,8 +120,8 @@ export class WorksPage extends GalleryPage {
 	public openFolder():void {
 		PixivAssistantServer.openFolder(this.artist);
 	}
-	
-	@ExecuteIfSetting(SettingKeys.pages.works.directToManga)
+
+	@ExecuteIfSetting(SettingKeys.global.directToManga)
 	public replaceMangaThumbnailLinksToFull(){
 		super.replaceMangaThumbnailLinksToFull();
 	}

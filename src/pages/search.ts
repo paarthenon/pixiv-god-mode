@@ -79,7 +79,7 @@ export class SearchPage extends GalleryPage {
 		super.translateTagsOnPage();
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.search.directToManga)
+	@ExecuteIfSetting(SettingKeys.global.directToManga)
 	public replaceMangaThumbnailLinksToFull(){
 		super.replaceMangaThumbnailLinksToFull();
 	}

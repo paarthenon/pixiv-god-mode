@@ -1,5 +1,7 @@
 import {BasePage} from 'src/pages/base'
 import {DictionaryService} from 'src/services'
+import {Container} from 'src/deps'
+import SettingKeys from 'src/settingKeys'
 
 export class RootPage extends BasePage {
 	constructor(
@@ -8,6 +10,7 @@ export class RootPage extends BasePage {
 	) {
 		super(path, jQuery);
 
+		Container.getSetting(SettingKeys.global.translateTags);
 		this.translateTagsOnPage();
 	}
 	protected getTagElements():JQuery[] {

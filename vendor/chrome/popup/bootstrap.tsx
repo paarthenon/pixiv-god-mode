@@ -5,7 +5,7 @@ import * as Bootstrap from 'react-bootstrap'
 import {PopupWindowFrame, PopupContentFrame} from 'vendor/chrome/popup/popupFrame'
 import {PopupNavbar} from 'vendor/chrome/popup/navBar'
 import {DictContainer} from 'vendor/chrome/popup/dict'
-import {DictionaryService} from 'vendor/chrome/popup/services'
+import {DictionaryService} from 'vendor/chrome/services'
 
 ReactDOM.render(
 	<PopupWindowFrame>

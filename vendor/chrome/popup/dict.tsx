@@ -5,7 +5,7 @@ import * as Bootstrap from 'react-bootstrap'
 import * as ChromeUtils from 'vendor/chrome/utils'
 import {CachedDictionaryService, cachedDictionary, EntryType} from 'src/core/dictionaryManagementService'
 import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
-import {ConditionalRender} from 'vendor/chrome/popup/components/conditionalRender'
+import {ConditionalRender} from 'src/components/util/conditionalRender'
 
 let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
 let removeDiacritics = require('diacritics').remove; //TODO: create typing
@@ -105,7 +105,7 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 				</Bootstrap.Panel>				
 				<Bootstrap.Panel>
 				{(this.filteredData.length > 0) ? 
-					<div style={{height: '320px', overflow: 'auto'}}>
+					<div style={{height: '325px', overflow: 'auto'}}>
 					<InfiniteScroll
 						pageStart={0}
 						loadMore={this.loadMore.bind(this)}

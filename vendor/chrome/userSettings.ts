@@ -7,6 +7,7 @@ import SettingKeys from 'src/settingKeys'
 let defaultSettings: { [id:string]:any } = {};
 
 let trueSettings = [
+	SettingKeys.global.directToManga,
 	SettingKeys.pages.illust.inject.openFolder,
 	SettingKeys.pages.illust.autoOpen,
 	SettingKeys.pages.illust.boxImage,
@@ -17,16 +18,13 @@ let trueSettings = [
 	SettingKeys.pages.works.inject.openFolder,
 	SettingKeys.pages.works.inject.pagingButtons,
 	SettingKeys.pages.works.autoDarken,
-	SettingKeys.pages.works.directToManga,
 	SettingKeys.pages.bookmarkIllustration.inject.viewAll,
 	SettingKeys.pages.bookmarkIllustration.fadeDownloaded,
 	SettingKeys.pages.bookmarkIllustration.fadeBookmarked,
 	SettingKeys.pages.artistBookmarks.inject.pagingButtons,
 	SettingKeys.pages.artistBookmarks.inject.openFolder,
-	SettingKeys.pages.artistBookmarks.directToManga,
 	SettingKeys.pages.artistBookmarks.fadeDownloaded,
 	SettingKeys.pages.artistBookmarks.fadeBookmarked,
-	SettingKeys.pages.search.directToManga,
 	SettingKeys.pages.search.fadeBookmarked,
 	SettingKeys.pages.search.fadeDownloaded,
 ];

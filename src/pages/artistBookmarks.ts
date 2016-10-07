@@ -69,7 +69,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 		});
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.directToManga)
+	@ExecuteIfSetting(SettingKeys.global.directToManga)
 	public replaceMangaThumbnailLinksToFull(){
 		super.replaceMangaThumbnailLinksToFull();
 	}

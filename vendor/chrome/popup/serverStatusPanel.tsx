@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
-import {PixivAssistantServer} from 'vendor/chrome/popup/services'
+import {PixivAssistantServer} from 'vendor/chrome/services'
 
 interface ServerStatus {
 	connected? :boolean
