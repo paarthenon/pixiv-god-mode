@@ -35,7 +35,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 	injectOpenFolder() {
 		injectUserRelationshipButton(this.jQuery, this.artist);
 	}
-	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.inject.pagingButtons)
+	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
 	public injectPagingButtons(){
 		super.injectPagingButtons();
 	}

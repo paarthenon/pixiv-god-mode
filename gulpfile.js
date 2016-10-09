@@ -53,7 +53,7 @@ function fileCopy(src, dst) {
 gulp.task('chrome-resources', ['es5'], function(){
 	return Promise.all([
 		fileCopy('vendor/chrome/**/*.html', 'dist/chrome/vendor/chrome'),
-		fileCopy('vendor/chrome/resources/*', 'dist/chrome/resources'),
+		fileCopy('vendor/chrome/resources/**/*', 'dist/chrome/resources'),
 		fileCopy('vendor/chrome/manifest.json', 'dist/chrome'),
 		fileCopy('config.js', 'dist/chrome'),
 	]);

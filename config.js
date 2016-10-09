@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "chrome-extension://ampfopajacjambmibebojphiamddnhcc/",
+  baseURL: "/",
   defaultJSExtensions: true,
   transpiler: false,
   paths: {

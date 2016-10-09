@@ -15,9 +15,6 @@ export class WorksSettingsPanel extends React.Component<void, void> {
 				settingKey={SettingKeys.pages.works.inject.openInTabs} 
 				label={'Inject open in tabs button'}/>
 			<BooleanSettingContainer 
-				settingKey={SettingKeys.pages.works.inject.pagingButtons} 
-				label={'Inject paging buttons'}/>
-			<BooleanSettingContainer 
 				settingKey={SettingKeys.pages.works.autoDarken} 
 				label={'Fade out downloaded images'}/>
 			<BooleanSettingContainer 

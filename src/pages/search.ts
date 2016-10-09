@@ -44,7 +44,7 @@ export class SearchPage extends GalleryPage {
 		});
 	}
 
-	@ExecuteOnLoad
+	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
 	public injectPagingButtons(){
 		super.injectPagingButtons();
 	}

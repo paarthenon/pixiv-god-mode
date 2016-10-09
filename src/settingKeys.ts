@@ -2,6 +2,8 @@ let settingKeys = {
 	global: {
 		translateTags: 'GLOBAL_TRANSLATE_TAGS',
 		directToManga: 'GLOBAL_LINK_THUMBNAIL_DIRECTLY_TO_MANGA',
+		injectPagingButtons: 'GLOBAL_INJECT_PAGING_BUTTONS',
+		fadeDownloadedImages: 'GLOBAL_FADE_DOWNLOADED_IMAGES',
 	},
 	pages: {
 		illust: {
@@ -21,7 +23,6 @@ let settingKeys = {
 		works: {
 			inject: {
 				openFolder: 'WORKS_PAGE_INJECT_OPEN_FOLDER_BUTTON',
-				pagingButtons: 'WORKS_PAGE_INJECT_PAGING_BUTTONS',
 				openInTabs: 'WORKS_PAGE_INJECT_OPEN_IN_TABS'
 			},
 			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',
@@ -38,7 +39,6 @@ let settingKeys = {
 		artistBookmarks: {
 			inject: {
 				openFolder: 'ARTIST_BOOKMARKS_INJECT_OPEN_FOLDER_BUTTON',
-				pagingButtons: 'ARTIST_BOOKMARKS_INJECT_PAGING_BUTTONS'
 			},
 			fadeDownloaded: 'ARTIST_BOOKMARKS_FADE_DOWNLOADED',
 			fadeBookmarked: 'ARTIST_BOOKMARKS_FADE_BOOKMARKED',

@@ -179,7 +179,7 @@ export class IllustrationPage extends RootPage {
 			case IllustrationType.Picture:
 				return this.downloadSinglePicture();
 			case IllustrationType.Manga:
-				return this.downloadManga();
+				return this.zipManga();
 			case IllustrationType.Animation:
 				return this.downloadAnimation();
 		}
@@ -189,18 +189,43 @@ export class IllustrationPage extends RootPage {
 		return PixivAssistantServer.download(this.artist, this.fullImageUrl);
 	}
 
+	protected generateMangaPageUrls() {
+		return Deps.execOnPixiv(
+			(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
+			{
+				illustId: this.imageId
+			}
+		).then((response: any) => { 
+			let extension = response.body[this.imageId].illust_ext;
+			let pageCount = response.body[this.imageId].illust_page_count;
+
+			let url = this.jQuery('div.works_display div._layout-thumbnail img').attr('src');
+			let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url, extension);
+
+			let fullUrls = pathUtils.explodeImagePathPages(fullResUrl, pageCount);
+
+			return Promise.resolve(fullUrls);
+		});
+	}
 	public downloadManga() {
-		let url = this.jQuery('div.works_display div._layout-thumbnail img').attr('src');
+		return this.generateMangaPageUrls().then(urls => 
+			PixivAssistantServer.downloadMulti(this.artist, urls)
+		)
+	}
 
-		let metaPageString = this.jQuery('ul.meta li:contains("Multiple images")').text();
-		let pages = pathUtils.numPagesFromMeta(metaPageString);
 
-		let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url);
-		let urls = pathUtils.explodeImagePathPages(fullResUrl, pages);
-
-		console.log('Images',urls);
-
-		return PixivAssistantServer.downloadMulti(this.artist, urls);
+	public zipManga() {
+		return this.generateMangaPageUrls().then(urls => {
+			let zip = new jszip();
+			urls.forEach(url => {
+				let fileName = url.split('/').pop();
+				zip.file(fileName, getBlob(url));
+			})
+			zip.generateAsync({type:'blob'}).then(zipFile => {
+				let zipString = URL.createObjectURL(zipFile);
+				Deps.download(zipString, this.imageId + '.zip');
+			})
+		})
 	}
 
 	@RegisteredAction({ id: 'pa_make_webm', label: 'WEBM', icon: 'folder-open' })

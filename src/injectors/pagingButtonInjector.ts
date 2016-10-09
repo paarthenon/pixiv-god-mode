@@ -5,7 +5,7 @@ import {PagingButton} from 'src/components/pagingButton'
 import {GenerateElement} from 'src/injectors/utils'
 
 function injectFirstButton($:JQueryStatic, url:string) {
-	let componentProps =  {text: '<<', tooltip: 'First', rel: 'prev', href:url};
+	let componentProps =  {className: 'glyphicon-step-backward', tooltip: 'First', rel: 'prev', href:url};
 	let cssProps = {position: 'absolute', left: '-100%'};
 
 	$('span.prev').css('position','relative');
@@ -20,7 +20,7 @@ function injectFirstButton($:JQueryStatic, url:string) {
 }
 
 function injectLastButton($:JQueryStatic, url:string) {
-	let componentProps = {text: '>>', tooltip: 'Last', rel: 'next', href:url};
+	let componentProps = {className: 'glyphicon-step-forward', tooltip: 'Last', rel: 'next', href:url};
 	let cssProps = {position: 'absolute', left: '100%'};
 
 	$('span.next').css('position','relative');

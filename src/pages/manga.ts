@@ -5,6 +5,10 @@ import {PixivAssistantServer} from 'src/services'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 import {injectMangaPreviousButton} from 'src/injectors/mangaPreviousButton'
+import {injectMangaDownloadButton} from 'src/injectors/mangaDownloadButton'
+import {injectMangaDownloadLocalButton} from 'src/injectors/mangaDownloadLocalButton'
+import {injectMangaNextButton} from 'src/injectors/mangaNextButton'
+import {injectMangaOpenFolderButton} from 'src/injectors/mangaOpenFolderButton'
 import {Model} from 'common/proto'
 
 export class MangaPage extends RootPage {
@@ -29,7 +33,11 @@ export class MangaPage extends RootPage {
 
 	@ExecuteIfSetting(SettingKeys.pages.manga.inject.previousButton)
 	public injectMangaPreviousButton(){
+
 		injectMangaPreviousButton(this.jQuery, this.goToPreviousPage.bind(this));
+		injectMangaDownloadButton(this.jQuery, this.downloadMulti.bind(this));
+		injectMangaOpenFolderButton(this.jQuery, this.openFolder.bind(this));
+		// injectMangaNextButton(this.jQuery, )
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)

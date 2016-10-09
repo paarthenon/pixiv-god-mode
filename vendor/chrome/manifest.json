@@ -16,7 +16,10 @@
   	"js": [
       "vendor/chrome/content.min.js"
   	],
-    "css": ["resources/inject.css"]
+    "css": [
+      "resources/css/inject.css",
+      "resources/css/prefixedBootstrap.css"
+    ]
   }],
   "background": {
     "scripts": [
@@ -43,6 +46,7 @@
     "common/*",
     "jspm_packages/*",
     "src/*",
+    "resources/*",
     "vendor/chrome/*"
   ]
 }

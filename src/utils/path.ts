@@ -1,3 +1,5 @@
+import {Model} from 'common/proto'
+
 function extract(str: string, re: RegExp):string {
 	if (str == undefined) return undefined;
 	let out = str.match(re);
@@ -18,11 +20,16 @@ export function getResultFromBadge(badgeText:string):number{
 	return parseInt(extract(badgeText, /^([0-9]+)/));
 }
 
-export function experimentalMaxSizeImageUrl(url: string):string {
-	return url
+export function experimentalMaxSizeImageUrl(url: string, ext?:string):string {
+	let fullUrl = url
 		.replace(/c\/(?:[0-9]+)x(?:[0-9]+)\/img-master/, 'img-original')
 		.replace('_master1200', '')
 		.replace('_square1200', '')
+	
+	if (ext) {
+		return fullUrl.replace(/\.[^\.]+$/, '.' + ext)
+	}
+	return fullUrl;
 }
 
 export function explodeImagePathPages(url:string, pages:number):string[]{
@@ -49,8 +56,8 @@ export function getPotentialTag(url:string):string {
 	return '';
 }
 
-export function getImageIdFromSourceUrl(url:string):number {
-	return parseInt(extract(url, /\/([0-9]+)(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/));
+export function getImageIdFromSourceUrl(url:string) {
+	return parseInt(extract(url,/\/([0-9]+)(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/));
 }
 
 export function generateImageLink(id:number):string {

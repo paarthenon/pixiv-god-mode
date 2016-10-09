@@ -12,9 +12,6 @@ export class ArtistBookmarksSettingsPanel extends React.Component<void, void> {
 				settingKey={SettingKeys.pages.artistBookmarks.inject.openFolder} 
 				label={'Inject open folder button'}/>
 			<BooleanSettingContainer 
-				settingKey={SettingKeys.pages.artistBookmarks.inject.pagingButtons} 
-				label={'Inject paging buttons'}/>
-			<BooleanSettingContainer 
 				settingKey={SettingKeys.pages.artistBookmarks.fadeDownloaded} 
 				label={'Fade out downloaded images'}/>
 			<BooleanSettingContainer 

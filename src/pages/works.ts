@@ -50,8 +50,8 @@ export class WorksPage extends GalleryPage {
 	@ExecuteIfSetting(SettingKeys.pages.works.inject.openInTabs)
 	public injectOpenTabs(){
 		injectOpenInTabs(this.jQuery, 'Open In Tabs', this.openTabs.bind(this));
-	}	
-	@ExecuteIfSetting(SettingKeys.pages.works.inject.pagingButtons)
+	}
+	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
 	public injectPagingButtons(){
 		super.injectPagingButtons();
 	}

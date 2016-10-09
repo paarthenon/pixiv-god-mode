@@ -1,0 +1,1557 @@
+/* */
+
+/*
+Generated with http://www.css-prefix.com/ followed by manual adjustments.
+
+TODO: Desperately need to start using bootstrap's less/scss files and using .pixiv-assistant as a @namespace
+*/
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400, 700");/*!
+ * bootswatch v3.3.7
+ * Homepage: http://bootswatch.com
+ * Copyright 2012-2016 Thomas Park
+ * Licensed under MIT
+ * Based on Bootstrap
+*/
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, .pixiv-assistant  Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+.pixiv-assistant /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+.pixiv-assistant html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+.pixiv-assistant body{margin:0}
+.pixiv-assistant article, .pixiv-assistant aside, .pixiv-assistant details, .pixiv-assistant figcaption, .pixiv-assistant figure, .pixiv-assistant footer, .pixiv-assistant header, .pixiv-assistant hgroup, .pixiv-assistant main, .pixiv-assistant menu, .pixiv-assistant nav, .pixiv-assistant section, .pixiv-assistant summary{display:block}
+.pixiv-assistant audio, .pixiv-assistant canvas, .pixiv-assistant progress, .pixiv-assistant video{display:inline-block;vertical-align:baseline}
+.pixiv-assistant audio:not([controls]){display:none;height:0}
+.pixiv-assistant [hidden], .pixiv-assistant template{display:none}
+.pixiv-assistant a{background-color:transparent}
+.pixiv-assistant a:active, .pixiv-assistant a:hover{outline:0}
+.pixiv-assistant abbr[title]{border-bottom:1px dotted}
+.pixiv-assistant b, .pixiv-assistant strong{font-weight:bold}
+.pixiv-assistant dfn{font-style:italic}
+.pixiv-assistant h1{font-size:2em;margin:0.67em 0}
+.pixiv-assistant mark{background:#ff0;color:#000}
+.pixiv-assistant small{font-size:80%}
+.pixiv-assistant sub, .pixiv-assistant sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+.pixiv-assistant sup{top:-0.5em}
+.pixiv-assistant sub{bottom:-0.25em}
+.pixiv-assistant img{border:0}
+.pixiv-assistant svg:not(:root){overflow:hidden}
+.pixiv-assistant figure{margin:1em 40px}
+.pixiv-assistant hr{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+.pixiv-assistant pre{overflow:auto}
+.pixiv-assistant code, .pixiv-assistant kbd, .pixiv-assistant pre, .pixiv-assistant samp{font-family:monospace, monospace;font-size:1em}
+.pixiv-assistant button, .pixiv-assistant input, .pixiv-assistant optgroup, .pixiv-assistant select, .pixiv-assistant textarea{color:inherit;font:inherit;margin:0}
+.pixiv-assistant button{overflow:visible}
+.pixiv-assistant button, .pixiv-assistant select{text-transform:none}
+.pixiv-assistant button, .pixiv-assistant html input[type="button"], .pixiv-assistant input[type="reset"], .pixiv-assistant input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+.pixiv-assistant button[disabled], .pixiv-assistant html input[disabled]{cursor:default}
+.pixiv-assistant button::-moz-focus-inner, .pixiv-assistant input::-moz-focus-inner{border:0;padding:0}
+.pixiv-assistant input{line-height:normal}
+.pixiv-assistant input[type="checkbox"], .pixiv-assistant input[type="radio"]{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:0}
+.pixiv-assistant input[type="number"]::-webkit-inner-spin-button, .pixiv-assistant input[type="number"]::-webkit-outer-spin-button{height:auto}
+.pixiv-assistant input[type="search"]{-webkit-appearance:textfield;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
+.pixiv-assistant input[type="search"]::-webkit-search-cancel-button, .pixiv-assistant input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+.pixiv-assistant fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:0.35em 0.625em 0.75em}
+.pixiv-assistant legend{border:0;padding:0}
+.pixiv-assistant textarea{overflow:auto}
+.pixiv-assistant optgroup{font-weight:bold}
+.pixiv-assistant table{border-collapse:collapse;border-spacing:0}
+.pixiv-assistant td, .pixiv-assistant th{padding:0}
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+@media print{*, .pixiv-assistant *:before, .pixiv-assistant *:after{background:transparent !important;color:#000 !important;-webkit-box-shadow:none !important;box-shadow:none !important;text-shadow:none !important}
+.pixiv-assistant a, .pixiv-assistant a:visited{text-decoration:underline}
+.pixiv-assistant a[href]:after{content:" (" attr(href) ")"}
+.pixiv-assistant abbr[title]:after{content:" (" attr(title) ")"}
+.pixiv-assistant a[href^="#"]:after, .pixiv-assistant a[href^="javascript:"]:after{content:""}
+.pixiv-assistant pre, .pixiv-assistant blockquote{border:1px solid #999;page-break-inside:avoid}
+.pixiv-assistant thead{display:table-header-group}
+.pixiv-assistant tr, .pixiv-assistant img{page-break-inside:avoid}
+.pixiv-assistant img{max-width:100% !important}
+.pixiv-assistant p, .pixiv-assistant h2, .pixiv-assistant h3{orphans:3;widows:3}
+.pixiv-assistant h2, .pixiv-assistant h3{page-break-after:avoid}
+.pixiv-assistant .navbar{display:none}
+.pixiv-assistant .btn>.caret, .pixiv-assistant .dropup>.btn>.caret{border-top-color:#000 !important}
+.pixiv-assistant .label{border:1px solid #000}
+.pixiv-assistant .table{border-collapse:collapse !important}
+.pixiv-assistant .table td, .pixiv-assistant .table th{background-color:#fff !important}
+.pixiv-assistant .table-bordered th, .pixiv-assistant .table-bordered td{border:1px solid #ddd !important}
+}
+@font-face{font-family:'Glyphicons Halflings';src:url('chrome-extension://__MSG_@@extension_id__/resources/fonts/glyphicons-halflings-regular.eot');src:url('chrome-extension://__MSG_@@extension_id__/resources/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),  url('chrome-extension://__MSG_@@extension_id__/resources/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('chrome-extension://__MSG_@@extension_id__/resources/fonts/glyphicons-halflings-regular.woff') format('woff'), url('chrome-extension://__MSG_@@extension_id__/resources/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('chrome-extension://__MSG_@@extension_id__/resources/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg')}
+.pixiv-assistant .glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.pixiv-assistant .glyphicon-asterisk:before{content:"\002a"}
+.pixiv-assistant .glyphicon-plus:before{content:"\002b"}
+.pixiv-assistant .glyphicon-euro:before, .pixiv-assistant .glyphicon-eur:before{content:"\20ac"}
+.pixiv-assistant .glyphicon-minus:before{content:"\2212"}
+.pixiv-assistant .glyphicon-cloud:before{content:"\2601"}
+.pixiv-assistant .glyphicon-envelope:before{content:"\2709"}
+.pixiv-assistant .glyphicon-pencil:before{content:"\270f"}
+.pixiv-assistant .glyphicon-glass:before{content:"\e001"}
+.pixiv-assistant .glyphicon-music:before{content:"\e002"}
+.pixiv-assistant .glyphicon-search:before{content:"\e003"}
+.pixiv-assistant .glyphicon-heart:before{content:"\e005"}
+.pixiv-assistant .glyphicon-star:before{content:"\e006"}
+.pixiv-assistant .glyphicon-star-empty:before{content:"\e007"}
+.pixiv-assistant .glyphicon-user:before{content:"\e008"}
+.pixiv-assistant .glyphicon-film:before{content:"\e009"}
+.pixiv-assistant .glyphicon-th-large:before{content:"\e010"}
+.pixiv-assistant .glyphicon-th:before{content:"\e011"}
+.pixiv-assistant .glyphicon-th-list:before{content:"\e012"}
+.pixiv-assistant .glyphicon-ok:before{content:"\e013"}
+.pixiv-assistant .glyphicon-remove:before{content:"\e014"}
+.pixiv-assistant .glyphicon-zoom-in:before{content:"\e015"}
+.pixiv-assistant .glyphicon-zoom-out:before{content:"\e016"}
+.pixiv-assistant .glyphicon-off:before{content:"\e017"}
+.pixiv-assistant .glyphicon-signal:before{content:"\e018"}
+.pixiv-assistant .glyphicon-cog:before{content:"\e019"}
+.pixiv-assistant .glyphicon-trash:before{content:"\e020"}
+.pixiv-assistant .glyphicon-home:before{content:"\e021"}
+.pixiv-assistant .glyphicon-file:before{content:"\e022"}
+.pixiv-assistant .glyphicon-time:before{content:"\e023"}
+.pixiv-assistant .glyphicon-road:before{content:"\e024"}
+.pixiv-assistant .glyphicon-download-alt:before{content:"\e025"}
+.pixiv-assistant .glyphicon-download:before{content:"\e026"}
+.pixiv-assistant .glyphicon-upload:before{content:"\e027"}
+.pixiv-assistant .glyphicon-inbox:before{content:"\e028"}
+.pixiv-assistant .glyphicon-play-circle:before{content:"\e029"}
+.pixiv-assistant .glyphicon-repeat:before{content:"\e030"}
+.pixiv-assistant .glyphicon-refresh:before{content:"\e031"}
+.pixiv-assistant .glyphicon-list-alt:before{content:"\e032"}
+.pixiv-assistant .glyphicon-lock:before{content:"\e033"}
+.pixiv-assistant .glyphicon-flag:before{content:"\e034"}
+.pixiv-assistant .glyphicon-headphones:before{content:"\e035"}
+.pixiv-assistant .glyphicon-volume-off:before{content:"\e036"}
+.pixiv-assistant .glyphicon-volume-down:before{content:"\e037"}
+.pixiv-assistant .glyphicon-volume-up:before{content:"\e038"}
+.pixiv-assistant .glyphicon-qrcode:before{content:"\e039"}
+.pixiv-assistant .glyphicon-barcode:before{content:"\e040"}
+.pixiv-assistant .glyphicon-tag:before{content:"\e041"}
+.pixiv-assistant .glyphicon-tags:before{content:"\e042"}
+.pixiv-assistant .glyphicon-book:before{content:"\e043"}
+.pixiv-assistant .glyphicon-bookmark:before{content:"\e044"}
+.pixiv-assistant .glyphicon-print:before{content:"\e045"}
+.pixiv-assistant .glyphicon-camera:before{content:"\e046"}
+.pixiv-assistant .glyphicon-font:before{content:"\e047"}
+.pixiv-assistant .glyphicon-bold:before{content:"\e048"}
+.pixiv-assistant .glyphicon-italic:before{content:"\e049"}
+.pixiv-assistant .glyphicon-text-height:before{content:"\e050"}
+.pixiv-assistant .glyphicon-text-width:before{content:"\e051"}
+.pixiv-assistant .glyphicon-align-left:before{content:"\e052"}
+.pixiv-assistant .glyphicon-align-center:before{content:"\e053"}
+.pixiv-assistant .glyphicon-align-right:before{content:"\e054"}
+.pixiv-assistant .glyphicon-align-justify:before{content:"\e055"}
+.pixiv-assistant .glyphicon-list:before{content:"\e056"}
+.pixiv-assistant .glyphicon-indent-left:before{content:"\e057"}
+.pixiv-assistant .glyphicon-indent-right:before{content:"\e058"}
+.pixiv-assistant .glyphicon-facetime-video:before{content:"\e059"}
+.pixiv-assistant .glyphicon-picture:before{content:"\e060"}
+.pixiv-assistant .glyphicon-map-marker:before{content:"\e062"}
+.pixiv-assistant .glyphicon-adjust:before{content:"\e063"}
+.pixiv-assistant .glyphicon-tint:before{content:"\e064"}
+.pixiv-assistant .glyphicon-edit:before{content:"\e065"}
+.pixiv-assistant .glyphicon-share:before{content:"\e066"}
+.pixiv-assistant .glyphicon-check:before{content:"\e067"}
+.pixiv-assistant .glyphicon-move:before{content:"\e068"}
+.pixiv-assistant .glyphicon-step-backward:before{content:"\e069"}
+.pixiv-assistant .glyphicon-fast-backward:before{content:"\e070"}
+.pixiv-assistant .glyphicon-backward:before{content:"\e071"}
+.pixiv-assistant .glyphicon-play:before{content:"\e072"}
+.pixiv-assistant .glyphicon-pause:before{content:"\e073"}
+.pixiv-assistant .glyphicon-stop:before{content:"\e074"}
+.pixiv-assistant .glyphicon-forward:before{content:"\e075"}
+.pixiv-assistant .glyphicon-fast-forward:before{content:"\e076"}
+.pixiv-assistant .glyphicon-step-forward:before{content:"\e077"}
+.pixiv-assistant .glyphicon-eject:before{content:"\e078"}
+.pixiv-assistant .glyphicon-chevron-left:before{content:"\e079"}
+.pixiv-assistant .glyphicon-chevron-right:before{content:"\e080"}
+.pixiv-assistant .glyphicon-plus-sign:before{content:"\e081"}
+.pixiv-assistant .glyphicon-minus-sign:before{content:"\e082"}
+.pixiv-assistant .glyphicon-remove-sign:before{content:"\e083"}
+.pixiv-assistant .glyphicon-ok-sign:before{content:"\e084"}
+.pixiv-assistant .glyphicon-question-sign:before{content:"\e085"}
+.pixiv-assistant .glyphicon-info-sign:before{content:"\e086"}
+.pixiv-assistant .glyphicon-screenshot:before{content:"\e087"}
+.pixiv-assistant .glyphicon-remove-circle:before{content:"\e088"}
+.pixiv-assistant .glyphicon-ok-circle:before{content:"\e089"}
+.pixiv-assistant .glyphicon-ban-circle:before{content:"\e090"}
+.pixiv-assistant .glyphicon-arrow-left:before{content:"\e091"}
+.pixiv-assistant .glyphicon-arrow-right:before{content:"\e092"}
+.pixiv-assistant .glyphicon-arrow-up:before{content:"\e093"}
+.pixiv-assistant .glyphicon-arrow-down:before{content:"\e094"}
+.pixiv-assistant .glyphicon-share-alt:before{content:"\e095"}
+.pixiv-assistant .glyphicon-resize-full:before{content:"\e096"}
+.pixiv-assistant .glyphicon-resize-small:before{content:"\e097"}
+.pixiv-assistant .glyphicon-exclamation-sign:before{content:"\e101"}
+.pixiv-assistant .glyphicon-gift:before{content:"\e102"}
+.pixiv-assistant .glyphicon-leaf:before{content:"\e103"}
+.pixiv-assistant .glyphicon-fire:before{content:"\e104"}
+.pixiv-assistant .glyphicon-eye-open:before{content:"\e105"}
+.pixiv-assistant .glyphicon-eye-close:before{content:"\e106"}
+.pixiv-assistant .glyphicon-warning-sign:before{content:"\e107"}
+.pixiv-assistant .glyphicon-plane:before{content:"\e108"}
+.pixiv-assistant .glyphicon-calendar:before{content:"\e109"}
+.pixiv-assistant .glyphicon-random:before{content:"\e110"}
+.pixiv-assistant .glyphicon-comment:before{content:"\e111"}
+.pixiv-assistant .glyphicon-magnet:before{content:"\e112"}
+.pixiv-assistant .glyphicon-chevron-up:before{content:"\e113"}
+.pixiv-assistant .glyphicon-chevron-down:before{content:"\e114"}
+.pixiv-assistant .glyphicon-retweet:before{content:"\e115"}
+.pixiv-assistant .glyphicon-shopping-cart:before{content:"\e116"}
+.pixiv-assistant .glyphicon-folder-close:before{content:"\e117"}
+.pixiv-assistant .glyphicon-folder-open:before{content:"\e118"}
+.pixiv-assistant .glyphicon-resize-vertical:before{content:"\e119"}
+.pixiv-assistant .glyphicon-resize-horizontal:before{content:"\e120"}
+.pixiv-assistant .glyphicon-hdd:before{content:"\e121"}
+.pixiv-assistant .glyphicon-bullhorn:before{content:"\e122"}
+.pixiv-assistant .glyphicon-bell:before{content:"\e123"}
+.pixiv-assistant .glyphicon-certificate:before{content:"\e124"}
+.pixiv-assistant .glyphicon-thumbs-up:before{content:"\e125"}
+.pixiv-assistant .glyphicon-thumbs-down:before{content:"\e126"}
+.pixiv-assistant .glyphicon-hand-right:before{content:"\e127"}
+.pixiv-assistant .glyphicon-hand-left:before{content:"\e128"}
+.pixiv-assistant .glyphicon-hand-up:before{content:"\e129"}
+.pixiv-assistant .glyphicon-hand-down:before{content:"\e130"}
+.pixiv-assistant .glyphicon-circle-arrow-right:before{content:"\e131"}
+.pixiv-assistant .glyphicon-circle-arrow-left:before{content:"\e132"}
+.pixiv-assistant .glyphicon-circle-arrow-up:before{content:"\e133"}
+.pixiv-assistant .glyphicon-circle-arrow-down:before{content:"\e134"}
+.pixiv-assistant .glyphicon-globe:before{content:"\e135"}
+.pixiv-assistant .glyphicon-wrench:before{content:"\e136"}
+.pixiv-assistant .glyphicon-tasks:before{content:"\e137"}
+.pixiv-assistant .glyphicon-filter:before{content:"\e138"}
+.pixiv-assistant .glyphicon-briefcase:before{content:"\e139"}
+.pixiv-assistant .glyphicon-fullscreen:before{content:"\e140"}
+.pixiv-assistant .glyphicon-dashboard:before{content:"\e141"}
+.pixiv-assistant .glyphicon-paperclip:before{content:"\e142"}
+.pixiv-assistant .glyphicon-heart-empty:before{content:"\e143"}
+.pixiv-assistant .glyphicon-link:before{content:"\e144"}
+.pixiv-assistant .glyphicon-phone:before{content:"\e145"}
+.pixiv-assistant .glyphicon-pushpin:before{content:"\e146"}
+.pixiv-assistant .glyphicon-usd:before{content:"\e148"}
+.pixiv-assistant .glyphicon-gbp:before{content:"\e149"}
+.pixiv-assistant .glyphicon-sort:before{content:"\e150"}
+.pixiv-assistant .glyphicon-sort-by-alphabet:before{content:"\e151"}
+.pixiv-assistant .glyphicon-sort-by-alphabet-alt:before{content:"\e152"}
+.pixiv-assistant .glyphicon-sort-by-order:before{content:"\e153"}
+.pixiv-assistant .glyphicon-sort-by-order-alt:before{content:"\e154"}
+.pixiv-assistant .glyphicon-sort-by-attributes:before{content:"\e155"}
+.pixiv-assistant .glyphicon-sort-by-attributes-alt:before{content:"\e156"}
+.pixiv-assistant .glyphicon-unchecked:before{content:"\e157"}
+.pixiv-assistant .glyphicon-expand:before{content:"\e158"}
+.pixiv-assistant .glyphicon-collapse-down:before{content:"\e159"}
+.pixiv-assistant .glyphicon-collapse-up:before{content:"\e160"}
+.pixiv-assistant .glyphicon-log-in:before{content:"\e161"}
+.pixiv-assistant .glyphicon-flash:before{content:"\e162"}
+.pixiv-assistant .glyphicon-log-out:before{content:"\e163"}
+.pixiv-assistant .glyphicon-new-window:before{content:"\e164"}
+.pixiv-assistant .glyphicon-record:before{content:"\e165"}
+.pixiv-assistant .glyphicon-save:before{content:"\e166"}
+.pixiv-assistant .glyphicon-open:before{content:"\e167"}
+.pixiv-assistant .glyphicon-saved:before{content:"\e168"}
+.pixiv-assistant .glyphicon-import:before{content:"\e169"}
+.pixiv-assistant .glyphicon-export:before{content:"\e170"}
+.pixiv-assistant .glyphicon-send:before{content:"\e171"}
+.pixiv-assistant .glyphicon-floppy-disk:before{content:"\e172"}
+.pixiv-assistant .glyphicon-floppy-saved:before{content:"\e173"}
+.pixiv-assistant .glyphicon-floppy-remove:before{content:"\e174"}
+.pixiv-assistant .glyphicon-floppy-save:before{content:"\e175"}
+.pixiv-assistant .glyphicon-floppy-open:before{content:"\e176"}
+.pixiv-assistant .glyphicon-credit-card:before{content:"\e177"}
+.pixiv-assistant .glyphicon-transfer:before{content:"\e178"}
+.pixiv-assistant .glyphicon-cutlery:before{content:"\e179"}
+.pixiv-assistant .glyphicon-header:before{content:"\e180"}
+.pixiv-assistant .glyphicon-compressed:before{content:"\e181"}
+.pixiv-assistant .glyphicon-earphone:before{content:"\e182"}
+.pixiv-assistant .glyphicon-phone-alt:before{content:"\e183"}
+.pixiv-assistant .glyphicon-tower:before{content:"\e184"}
+.pixiv-assistant .glyphicon-stats:before{content:"\e185"}
+.pixiv-assistant .glyphicon-sd-video:before{content:"\e186"}
+.pixiv-assistant .glyphicon-hd-video:before{content:"\e187"}
+.pixiv-assistant .glyphicon-subtitles:before{content:"\e188"}
+.pixiv-assistant .glyphicon-sound-stereo:before{content:"\e189"}
+.pixiv-assistant .glyphicon-sound-dolby:before{content:"\e190"}
+.pixiv-assistant .glyphicon-sound-5-1:before{content:"\e191"}
+.pixiv-assistant .glyphicon-sound-6-1:before{content:"\e192"}
+.pixiv-assistant .glyphicon-sound-7-1:before{content:"\e193"}
+.pixiv-assistant .glyphicon-copyright-mark:before{content:"\e194"}
+.pixiv-assistant .glyphicon-registration-mark:before{content:"\e195"}
+.pixiv-assistant .glyphicon-cloud-download:before{content:"\e197"}
+.pixiv-assistant .glyphicon-cloud-upload:before{content:"\e198"}
+.pixiv-assistant .glyphicon-tree-conifer:before{content:"\e199"}
+.pixiv-assistant .glyphicon-tree-deciduous:before{content:"\e200"}
+.pixiv-assistant .glyphicon-cd:before{content:"\e201"}
+.pixiv-assistant .glyphicon-save-file:before{content:"\e202"}
+.pixiv-assistant .glyphicon-open-file:before{content:"\e203"}
+.pixiv-assistant .glyphicon-level-up:before{content:"\e204"}
+.pixiv-assistant .glyphicon-copy:before{content:"\e205"}
+.pixiv-assistant .glyphicon-paste:before{content:"\e206"}
+.pixiv-assistant .glyphicon-alert:before{content:"\e209"}
+.pixiv-assistant .glyphicon-equalizer:before{content:"\e210"}
+.pixiv-assistant .glyphicon-king:before{content:"\e211"}
+.pixiv-assistant .glyphicon-queen:before{content:"\e212"}
+.pixiv-assistant .glyphicon-pawn:before{content:"\e213"}
+.pixiv-assistant .glyphicon-bishop:before{content:"\e214"}
+.pixiv-assistant .glyphicon-knight:before{content:"\e215"}
+.pixiv-assistant .glyphicon-baby-formula:before{content:"\e216"}
+.pixiv-assistant .glyphicon-tent:before{content:"\26fa"}
+.pixiv-assistant .glyphicon-blackboard:before{content:"\e218"}
+.pixiv-assistant .glyphicon-bed:before{content:"\e219"}
+.pixiv-assistant .glyphicon-apple:before{content:"\f8ff"}
+.pixiv-assistant .glyphicon-erase:before{content:"\e221"}
+.pixiv-assistant .glyphicon-hourglass:before{content:"\231b"}
+.pixiv-assistant .glyphicon-lamp:before{content:"\e223"}
+.pixiv-assistant .glyphicon-duplicate:before{content:"\e224"}
+.pixiv-assistant .glyphicon-piggy-bank:before{content:"\e225"}
+.pixiv-assistant .glyphicon-scissors:before{content:"\e226"}
+.pixiv-assistant .glyphicon-bitcoin:before{content:"\e227"}
+.pixiv-assistant .glyphicon-btc:before{content:"\e227"}
+.pixiv-assistant .glyphicon-xbt:before{content:"\e227"}
+.pixiv-assistant .glyphicon-yen:before{content:"\00a5"}
+.pixiv-assistant .glyphicon-jpy:before{content:"\00a5"}
+.pixiv-assistant .glyphicon-ruble:before{content:"\20bd"}
+.pixiv-assistant .glyphicon-rub:before{content:"\20bd"}
+.pixiv-assistant .glyphicon-scale:before{content:"\e230"}
+.pixiv-assistant .glyphicon-ice-lolly:before{content:"\e231"}
+.pixiv-assistant .glyphicon-ice-lolly-tasted:before{content:"\e232"}
+.pixiv-assistant .glyphicon-education:before{content:"\e233"}
+.pixiv-assistant .glyphicon-option-horizontal:before{content:"\e234"}
+.pixiv-assistant .glyphicon-option-vertical:before{content:"\e235"}
+.pixiv-assistant .glyphicon-menu-hamburger:before{content:"\e236"}
+.pixiv-assistant .glyphicon-modal-window:before{content:"\e237"}
+.pixiv-assistant .glyphicon-oil:before{content:"\e238"}
+.pixiv-assistant .glyphicon-grain:before{content:"\e239"}
+.pixiv-assistant .glyphicon-sunglasses:before{content:"\e240"}
+.pixiv-assistant .glyphicon-text-size:before{content:"\e241"}
+.pixiv-assistant .glyphicon-text-color:before{content:"\e242"}
+.pixiv-assistant .glyphicon-text-background:before{content:"\e243"}
+.pixiv-assistant .glyphicon-object-align-top:before{content:"\e244"}
+.pixiv-assistant .glyphicon-object-align-bottom:before{content:"\e245"}
+.pixiv-assistant .glyphicon-object-align-horizontal:before{content:"\e246"}
+.pixiv-assistant .glyphicon-object-align-left:before{content:"\e247"}
+.pixiv-assistant .glyphicon-object-align-vertical:before{content:"\e248"}
+.pixiv-assistant .glyphicon-object-align-right:before{content:"\e249"}
+.pixiv-assistant .glyphicon-triangle-right:before{content:"\e250"}
+.pixiv-assistant .glyphicon-triangle-left:before{content:"\e251"}
+.pixiv-assistant .glyphicon-triangle-bottom:before{content:"\e252"}
+.pixiv-assistant .glyphicon-triangle-top:before{content:"\e253"}
+.pixiv-assistant .glyphicon-console:before{content:"\e254"}
+.pixiv-assistant .glyphicon-superscript:before{content:"\e255"}
+.pixiv-assistant .glyphicon-subscript:before{content:"\e256"}
+.pixiv-assistant .glyphicon-menu-left:before{content:"\e257"}
+.pixiv-assistant .glyphicon-menu-right:before{content:"\e258"}
+.pixiv-assistant .glyphicon-menu-down:before{content:"\e259"}
+.pixiv-assistant .glyphicon-menu-up:before{content:"\e260"}
+.pixiv-assistant *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.pixiv-assistant *:before, .pixiv-assistant *:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.pixiv-assistant html{font-size:10px;-webkit-tap-highlight-color:rgba(0, 0, 0, 0)}
+.pixiv-assistant body{font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size:13px;line-height:1.42857143;color:#777777;background-color:#fcfcfc}
+.pixiv-assistant input, .pixiv-assistant button, .pixiv-assistant select, .pixiv-assistant textarea{font-family:inherit;font-size:inherit;line-height:inherit}
+.pixiv-assistant a{color:#d9230f;text-decoration:none}
+.pixiv-assistant a:hover, .pixiv-assistant a:focus{color:#91170a;text-decoration:underline}
+.pixiv-assistant a:focus{outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}
+.pixiv-assistant figure{margin:0}
+.pixiv-assistant img{vertical-align:middle}
+.pixiv-assistant .img-responsive, .pixiv-assistant .thumbnail>img, .pixiv-assistant .thumbnail a>img, .pixiv-assistant .carousel-inner>.item>img, .pixiv-assistant .carousel-inner>.item>a>img{display:block;max-width:100%;height:auto}
+.pixiv-assistant .img-rounded{border-radius:6px}
+.pixiv-assistant .img-thumbnail{padding:4px;line-height:1.42857143;background-color:#fcfcfc;border:1px solid #dddddd;border-radius:4px;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;transition:all .2s ease-in-out;display:inline-block;max-width:100%;height:auto}
+.pixiv-assistant .img-circle{border-radius:50%}
+.pixiv-assistant hr{margin-top:18px;margin-bottom:18px;border:0;border-top:1px solid #dddddd}
+.pixiv-assistant .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,  0,   0, 0);border:0}
+.pixiv-assistant .sr-only-focusable:active, .pixiv-assistant .sr-only-focusable:focus{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto}
+.pixiv-assistant [role="button"]{cursor:pointer}
+.pixiv-assistant h1, .pixiv-assistant h2, .pixiv-assistant h3, .pixiv-assistant h4, .pixiv-assistant h5, .pixiv-assistant h6, .pixiv-assistant .h1, .pixiv-assistant .h2, .pixiv-assistant .h3, .pixiv-assistant .h4, .pixiv-assistant .h5, .pixiv-assistant .h6{font-family:"Open Sans", "Helvetica Neue", Helvetica,  Arial, sans-serif;font-weight:300;line-height:1.1;color:#444444}
+.pixiv-assistant h1 small, .pixiv-assistant h2 small, .pixiv-assistant h3 small, .pixiv-assistant h4 small, .pixiv-assistant h5 small, .pixiv-assistant h6 small, .pixiv-assistant .h1 small, .pixiv-assistant .h2 small, .pixiv-assistant .h3 small, .pixiv-assistant .h4 small, .pixiv-assistant .h5 small, .pixiv-assistant .h6 small, .pixiv-assistant h1 .small, .pixiv-assistant h2 .small, .pixiv-assistant h3 .small, .pixiv-assistant h4 .small, .pixiv-assistant h5 .small, .pixiv-assistant h6 .small, .pixiv-assistant .h1 .small, .pixiv-assistant .h2 .small, .pixiv-assistant .h3 .small, .pixiv-assistant .h4 .small, .pixiv-assistant .h5 .small, .pixiv-assistant .h6 .small{font-weight:normal;line-height:1;color:#808080}
+.pixiv-assistant h1, .pixiv-assistant .h1, .pixiv-assistant h2, .pixiv-assistant .h2, .pixiv-assistant h3, .pixiv-assistant .h3{margin-top:18px;margin-bottom:9px}
+.pixiv-assistant h1 small, .pixiv-assistant .h1 small, .pixiv-assistant h2 small, .pixiv-assistant .h2 small, .pixiv-assistant h3 small, .pixiv-assistant .h3 small, .pixiv-assistant h1 .small, .pixiv-assistant .h1 .small, .pixiv-assistant h2 .small, .pixiv-assistant .h2 .small, .pixiv-assistant h3 .small, .pixiv-assistant .h3 .small{font-size:65%}
+.pixiv-assistant h4, .pixiv-assistant .h4, .pixiv-assistant h5, .pixiv-assistant .h5, .pixiv-assistant h6, .pixiv-assistant .h6{margin-top:9px;margin-bottom:9px}
+.pixiv-assistant h4 small, .pixiv-assistant .h4 small, .pixiv-assistant h5 small, .pixiv-assistant .h5 small, .pixiv-assistant h6 small, .pixiv-assistant .h6 small, .pixiv-assistant h4 .small, .pixiv-assistant .h4 .small, .pixiv-assistant h5 .small, .pixiv-assistant .h5 .small, .pixiv-assistant h6 .small, .pixiv-assistant .h6 .small{font-size:75%}
+.pixiv-assistant h1, .pixiv-assistant .h1{font-size:33px}
+.pixiv-assistant h2, .pixiv-assistant .h2{font-size:27px}
+.pixiv-assistant h3, .pixiv-assistant .h3{font-size:23px}
+.pixiv-assistant h4, .pixiv-assistant .h4{font-size:17px}
+.pixiv-assistant h5, .pixiv-assistant .h5{font-size:13px}
+.pixiv-assistant h6, .pixiv-assistant .h6{font-size:12px}
+.pixiv-assistant p{margin:0 0 9px}
+.pixiv-assistant .lead{margin-bottom:18px;font-size:14px;font-weight:300;line-height:1.4}
+@media (min-width:768px){.lead{font-size:19.5px}
+}
+.pixiv-assistant small, .pixiv-assistant .small{font-size:92%}
+.pixiv-assistant mark, .pixiv-assistant .mark{background-color:#fcf8e3;padding:.2em}
+.pixiv-assistant .text-left{text-align:left}
+.pixiv-assistant .text-right{text-align:right}
+.pixiv-assistant .text-center{text-align:center}
+.pixiv-assistant .text-justify{text-align:justify}
+.pixiv-assistant .text-nowrap{white-space:nowrap}
+.pixiv-assistant .text-lowercase{text-transform:lowercase}
+.pixiv-assistant .text-uppercase{text-transform:uppercase}
+.pixiv-assistant .text-capitalize{text-transform:capitalize}
+.pixiv-assistant .text-muted{color:#808080}
+.pixiv-assistant .text-primary{color:#d9230f}
+.pixiv-assistant a.text-primary:hover, .pixiv-assistant a.text-primary:focus{color:#a91b0c}
+.pixiv-assistant .text-success{color:#468847}
+.pixiv-assistant a.text-success:hover, .pixiv-assistant a.text-success:focus{color:#356635}
+.pixiv-assistant .text-info{color:#3a87ad}
+.pixiv-assistant a.text-info:hover, .pixiv-assistant a.text-info:focus{color:#2d6987}
+.pixiv-assistant .text-warning{color:#c09853}
+.pixiv-assistant a.text-warning:hover, .pixiv-assistant a.text-warning:focus{color:#a47e3c}
+.pixiv-assistant .text-danger{color:#b94a48}
+.pixiv-assistant a.text-danger:hover, .pixiv-assistant a.text-danger:focus{color:#953b39}
+.pixiv-assistant .bg-primary{color:#fff;background-color:#d9230f}
+.pixiv-assistant a.bg-primary:hover, .pixiv-assistant a.bg-primary:focus{background-color:#a91b0c}
+.pixiv-assistant .bg-success{background-color:#dff0d8}
+.pixiv-assistant a.bg-success:hover, .pixiv-assistant a.bg-success:focus{background-color:#c1e2b3}
+.pixiv-assistant .bg-info{background-color:#d9edf7}
+.pixiv-assistant a.bg-info:hover, .pixiv-assistant a.bg-info:focus{background-color:#afd9ee}
+.pixiv-assistant .bg-warning{background-color:#fcf8e3}
+.pixiv-assistant a.bg-warning:hover, .pixiv-assistant a.bg-warning:focus{background-color:#f7ecb5}
+.pixiv-assistant .bg-danger{background-color:#f2dede}
+.pixiv-assistant a.bg-danger:hover, .pixiv-assistant a.bg-danger:focus{background-color:#e4b9b9}
+.pixiv-assistant .page-header{padding-bottom:8px;margin:36px 0 18px;border-bottom:1px solid #dddddd}
+.pixiv-assistant ul, .pixiv-assistant ol{margin-top:0;margin-bottom:9px}
+.pixiv-assistant ul ul, .pixiv-assistant ol ul, .pixiv-assistant ul ol, .pixiv-assistant ol ol{margin-bottom:0}
+.pixiv-assistant .list-unstyled{padding-left:0;list-style:none}
+.pixiv-assistant .list-inline{padding-left:0;list-style:none;margin-left:-5px}
+.pixiv-assistant .list-inline>li{display:inline-block;padding-left:5px;padding-right:5px}
+.pixiv-assistant dl{margin-top:0;margin-bottom:18px}
+.pixiv-assistant dt, .pixiv-assistant dd{line-height:1.42857143}
+.pixiv-assistant dt{font-weight:bold}
+.pixiv-assistant dd{margin-left:0}
+@media (min-width:768px){.dl-horizontal dt{float:left;width:160px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pixiv-assistant .dl-horizontal dd{margin-left:180px}
+}
+.pixiv-assistant abbr[title], .pixiv-assistant abbr[data-original-title]{cursor:help;border-bottom:1px dotted #808080}
+.pixiv-assistant .initialism{font-size:90%;text-transform:uppercase}
+.pixiv-assistant blockquote{padding:9px 18px;margin:0 0 18px;font-size:16.25px;border-left:5px solid #dddddd}
+.pixiv-assistant blockquote p:last-child, .pixiv-assistant blockquote ul:last-child, .pixiv-assistant blockquote ol:last-child{margin-bottom:0}
+.pixiv-assistant blockquote footer, .pixiv-assistant blockquote small, .pixiv-assistant blockquote .small{display:block;font-size:80%;line-height:1.42857143;color:#808080}
+.pixiv-assistant blockquote footer:before, .pixiv-assistant blockquote small:before, .pixiv-assistant blockquote .small:before{content:'\2014 \00A0'}
+.pixiv-assistant .blockquote-reverse, .pixiv-assistant blockquote.pull-right{padding-right:15px;padding-left:0;border-right:5px solid #dddddd;border-left:0;text-align:right}
+.pixiv-assistant .blockquote-reverse footer:before, .pixiv-assistant blockquote.pull-right footer:before, .pixiv-assistant .blockquote-reverse small:before, .pixiv-assistant blockquote.pull-right small:before, .pixiv-assistant .blockquote-reverse .small:before, .pixiv-assistant blockquote.pull-right .small:before{content:''}
+.pixiv-assistant .blockquote-reverse footer:after, .pixiv-assistant blockquote.pull-right footer:after, .pixiv-assistant .blockquote-reverse small:after, .pixiv-assistant blockquote.pull-right small:after, .pixiv-assistant .blockquote-reverse .small:after, .pixiv-assistant blockquote.pull-right .small:after{content:'\00A0 \2014'}
+.pixiv-assistant address{margin-bottom:18px;font-style:normal;line-height:1.42857143}
+.pixiv-assistant code, .pixiv-assistant kbd, .pixiv-assistant pre, .pixiv-assistant samp{font-family:Menlo,  Monaco,  Consolas,  "Courier New", monospace}
+.pixiv-assistant code{padding:2px 4px;font-size:90%;color:#c7254e;background-color:#f9f2f4;border-radius:4px}
+.pixiv-assistant kbd{padding:2px 4px;font-size:90%;color:#ffffff;background-color:#333333;border-radius:3px;-webkit-box-shadow:inset 0 -1px 0 rgba(0, 0,  0, 0.25);box-shadow:inset 0 -1px 0 rgba(0, 0,  0, 0.25)}
+.pixiv-assistant kbd kbd{padding:0;font-size:100%;font-weight:bold;-webkit-box-shadow:none;box-shadow:none}
+.pixiv-assistant pre{display:block;padding:8.5px;margin:0 0 9px;font-size:12px;line-height:1.42857143;word-break:break-all;word-wrap:break-word;color:#444444;background-color:#f5f5f5;border:1px solid #cccccc;border-radius:4px}
+.pixiv-assistant pre code{padding:0;font-size:inherit;color:inherit;white-space:pre-wrap;background-color:transparent;border-radius:0}
+.pixiv-assistant .pre-scrollable{max-height:340px;overflow-y:scroll}
+.pixiv-assistant .container{margin-right:auto;margin-left:auto;padding-left:15px;padding-right:15px}
+@media (min-width:768px){.container{width:750px}
+}
+@media (min-width:992px){.container{width:970px}
+}
+@media (min-width:1200px){.container{width:1170px}
+}
+.pixiv-assistant .container-fluid{margin-right:auto;margin-left:auto;padding-left:15px;padding-right:15px}
+.pixiv-assistant .row{margin-left:-15px;margin-right:-15px}
+.pixiv-assistant .col-xs-1, .pixiv-assistant .col-sm-1, .pixiv-assistant .col-md-1, .pixiv-assistant .col-lg-1, .pixiv-assistant .col-xs-2, .pixiv-assistant .col-sm-2, .pixiv-assistant .col-md-2, .pixiv-assistant .col-lg-2, .pixiv-assistant .col-xs-3, .pixiv-assistant .col-sm-3, .pixiv-assistant .col-md-3, .pixiv-assistant .col-lg-3, .pixiv-assistant .col-xs-4, .pixiv-assistant .col-sm-4, .pixiv-assistant .col-md-4, .pixiv-assistant .col-lg-4, .pixiv-assistant .col-xs-5, .pixiv-assistant .col-sm-5, .pixiv-assistant .col-md-5, .pixiv-assistant .col-lg-5, .pixiv-assistant .col-xs-6, .pixiv-assistant .col-sm-6, .pixiv-assistant .col-md-6, .pixiv-assistant .col-lg-6, .pixiv-assistant .col-xs-7, .pixiv-assistant .col-sm-7, .pixiv-assistant .col-md-7, .pixiv-assistant .col-lg-7, .pixiv-assistant .col-xs-8, .pixiv-assistant .col-sm-8, .pixiv-assistant .col-md-8, .pixiv-assistant .col-lg-8, .pixiv-assistant .col-xs-9, .pixiv-assistant .col-sm-9, .pixiv-assistant .col-md-9, .pixiv-assistant .col-lg-9, .pixiv-assistant .col-xs-10, .pixiv-assistant .col-sm-10, .pixiv-assistant .col-md-10, .pixiv-assistant .col-lg-10, .pixiv-assistant .col-xs-11, .pixiv-assistant .col-sm-11, .pixiv-assistant .col-md-11, .pixiv-assistant .col-lg-11, .pixiv-assistant .col-xs-12, .pixiv-assistant .col-sm-12, .pixiv-assistant .col-md-12, .pixiv-assistant .col-lg-12{position:relative;min-height:1px;padding-left:15px;padding-right:15px}
+.pixiv-assistant .col-xs-1, .pixiv-assistant .col-xs-2, .pixiv-assistant .col-xs-3, .pixiv-assistant .col-xs-4, .pixiv-assistant .col-xs-5, .pixiv-assistant .col-xs-6, .pixiv-assistant .col-xs-7, .pixiv-assistant .col-xs-8, .pixiv-assistant .col-xs-9, .pixiv-assistant .col-xs-10, .pixiv-assistant .col-xs-11, .pixiv-assistant .col-xs-12{float:left}
+.pixiv-assistant .col-xs-12{width:100%}
+.pixiv-assistant .col-xs-11{width:91.66666667%}
+.pixiv-assistant .col-xs-10{width:83.33333333%}
+.pixiv-assistant .col-xs-9{width:75%}
+.pixiv-assistant .col-xs-8{width:66.66666667%}
+.pixiv-assistant .col-xs-7{width:58.33333333%}
+.pixiv-assistant .col-xs-6{width:50%}
+.pixiv-assistant .col-xs-5{width:41.66666667%}
+.pixiv-assistant .col-xs-4{width:33.33333333%}
+.pixiv-assistant .col-xs-3{width:25%}
+.pixiv-assistant .col-xs-2{width:16.66666667%}
+.pixiv-assistant .col-xs-1{width:8.33333333%}
+.pixiv-assistant .col-xs-pull-12{right:100%}
+.pixiv-assistant .col-xs-pull-11{right:91.66666667%}
+.pixiv-assistant .col-xs-pull-10{right:83.33333333%}
+.pixiv-assistant .col-xs-pull-9{right:75%}
+.pixiv-assistant .col-xs-pull-8{right:66.66666667%}
+.pixiv-assistant .col-xs-pull-7{right:58.33333333%}
+.pixiv-assistant .col-xs-pull-6{right:50%}
+.pixiv-assistant .col-xs-pull-5{right:41.66666667%}
+.pixiv-assistant .col-xs-pull-4{right:33.33333333%}
+.pixiv-assistant .col-xs-pull-3{right:25%}
+.pixiv-assistant .col-xs-pull-2{right:16.66666667%}
+.pixiv-assistant .col-xs-pull-1{right:8.33333333%}
+.pixiv-assistant .col-xs-pull-0{right:auto}
+.pixiv-assistant .col-xs-push-12{left:100%}
+.pixiv-assistant .col-xs-push-11{left:91.66666667%}
+.pixiv-assistant .col-xs-push-10{left:83.33333333%}
+.pixiv-assistant .col-xs-push-9{left:75%}
+.pixiv-assistant .col-xs-push-8{left:66.66666667%}
+.pixiv-assistant .col-xs-push-7{left:58.33333333%}
+.pixiv-assistant .col-xs-push-6{left:50%}
+.pixiv-assistant .col-xs-push-5{left:41.66666667%}
+.pixiv-assistant .col-xs-push-4{left:33.33333333%}
+.pixiv-assistant .col-xs-push-3{left:25%}
+.pixiv-assistant .col-xs-push-2{left:16.66666667%}
+.pixiv-assistant .col-xs-push-1{left:8.33333333%}
+.pixiv-assistant .col-xs-push-0{left:auto}
+.pixiv-assistant .col-xs-offset-12{margin-left:100%}
+.pixiv-assistant .col-xs-offset-11{margin-left:91.66666667%}
+.pixiv-assistant .col-xs-offset-10{margin-left:83.33333333%}
+.pixiv-assistant .col-xs-offset-9{margin-left:75%}
+.pixiv-assistant .col-xs-offset-8{margin-left:66.66666667%}
+.pixiv-assistant .col-xs-offset-7{margin-left:58.33333333%}
+.pixiv-assistant .col-xs-offset-6{margin-left:50%}
+.pixiv-assistant .col-xs-offset-5{margin-left:41.66666667%}
+.pixiv-assistant .col-xs-offset-4{margin-left:33.33333333%}
+.pixiv-assistant .col-xs-offset-3{margin-left:25%}
+.pixiv-assistant .col-xs-offset-2{margin-left:16.66666667%}
+.pixiv-assistant .col-xs-offset-1{margin-left:8.33333333%}
+.pixiv-assistant .col-xs-offset-0{margin-left:0%}
+@media (min-width:768px){.col-sm-1, .pixiv-assistant .col-sm-2, .pixiv-assistant .col-sm-3, .pixiv-assistant .col-sm-4, .pixiv-assistant .col-sm-5, .pixiv-assistant .col-sm-6, .pixiv-assistant .col-sm-7, .pixiv-assistant .col-sm-8, .pixiv-assistant .col-sm-9, .pixiv-assistant .col-sm-10, .pixiv-assistant .col-sm-11, .pixiv-assistant .col-sm-12{float:left}
+.pixiv-assistant .col-sm-12{width:100%}
+.pixiv-assistant .col-sm-11{width:91.66666667%}
+.pixiv-assistant .col-sm-10{width:83.33333333%}
+.pixiv-assistant .col-sm-9{width:75%}
+.pixiv-assistant .col-sm-8{width:66.66666667%}
+.pixiv-assistant .col-sm-7{width:58.33333333%}
+.pixiv-assistant .col-sm-6{width:50%}
+.pixiv-assistant .col-sm-5{width:41.66666667%}
+.pixiv-assistant .col-sm-4{width:33.33333333%}
+.pixiv-assistant .col-sm-3{width:25%}
+.pixiv-assistant .col-sm-2{width:16.66666667%}
+.pixiv-assistant .col-sm-1{width:8.33333333%}
+.pixiv-assistant .col-sm-pull-12{right:100%}
+.pixiv-assistant .col-sm-pull-11{right:91.66666667%}
+.pixiv-assistant .col-sm-pull-10{right:83.33333333%}
+.pixiv-assistant .col-sm-pull-9{right:75%}
+.pixiv-assistant .col-sm-pull-8{right:66.66666667%}
+.pixiv-assistant .col-sm-pull-7{right:58.33333333%}
+.pixiv-assistant .col-sm-pull-6{right:50%}
+.pixiv-assistant .col-sm-pull-5{right:41.66666667%}
+.pixiv-assistant .col-sm-pull-4{right:33.33333333%}
+.pixiv-assistant .col-sm-pull-3{right:25%}
+.pixiv-assistant .col-sm-pull-2{right:16.66666667%}
+.pixiv-assistant .col-sm-pull-1{right:8.33333333%}
+.pixiv-assistant .col-sm-pull-0{right:auto}
+.pixiv-assistant .col-sm-push-12{left:100%}
+.pixiv-assistant .col-sm-push-11{left:91.66666667%}
+.pixiv-assistant .col-sm-push-10{left:83.33333333%}
+.pixiv-assistant .col-sm-push-9{left:75%}
+.pixiv-assistant .col-sm-push-8{left:66.66666667%}
+.pixiv-assistant .col-sm-push-7{left:58.33333333%}
+.pixiv-assistant .col-sm-push-6{left:50%}
+.pixiv-assistant .col-sm-push-5{left:41.66666667%}
+.pixiv-assistant .col-sm-push-4{left:33.33333333%}
+.pixiv-assistant .col-sm-push-3{left:25%}
+.pixiv-assistant .col-sm-push-2{left:16.66666667%}
+.pixiv-assistant .col-sm-push-1{left:8.33333333%}
+.pixiv-assistant .col-sm-push-0{left:auto}
+.pixiv-assistant .col-sm-offset-12{margin-left:100%}
+.pixiv-assistant .col-sm-offset-11{margin-left:91.66666667%}
+.pixiv-assistant .col-sm-offset-10{margin-left:83.33333333%}
+.pixiv-assistant .col-sm-offset-9{margin-left:75%}
+.pixiv-assistant .col-sm-offset-8{margin-left:66.66666667%}
+.pixiv-assistant .col-sm-offset-7{margin-left:58.33333333%}
+.pixiv-assistant .col-sm-offset-6{margin-left:50%}
+.pixiv-assistant .col-sm-offset-5{margin-left:41.66666667%}
+.pixiv-assistant .col-sm-offset-4{margin-left:33.33333333%}
+.pixiv-assistant .col-sm-offset-3{margin-left:25%}
+.pixiv-assistant .col-sm-offset-2{margin-left:16.66666667%}
+.pixiv-assistant .col-sm-offset-1{margin-left:8.33333333%}
+.pixiv-assistant .col-sm-offset-0{margin-left:0%}
+}
+@media (min-width:992px){.col-md-1, .pixiv-assistant .col-md-2, .pixiv-assistant .col-md-3, .pixiv-assistant .col-md-4, .pixiv-assistant .col-md-5, .pixiv-assistant .col-md-6, .pixiv-assistant .col-md-7, .pixiv-assistant .col-md-8, .pixiv-assistant .col-md-9, .pixiv-assistant .col-md-10, .pixiv-assistant .col-md-11, .pixiv-assistant .col-md-12{float:left}
+.pixiv-assistant .col-md-12{width:100%}
+.pixiv-assistant .col-md-11{width:91.66666667%}
+.pixiv-assistant .col-md-10{width:83.33333333%}
+.pixiv-assistant .col-md-9{width:75%}
+.pixiv-assistant .col-md-8{width:66.66666667%}
+.pixiv-assistant .col-md-7{width:58.33333333%}
+.pixiv-assistant .col-md-6{width:50%}
+.pixiv-assistant .col-md-5{width:41.66666667%}
+.pixiv-assistant .col-md-4{width:33.33333333%}
+.pixiv-assistant .col-md-3{width:25%}
+.pixiv-assistant .col-md-2{width:16.66666667%}
+.pixiv-assistant .col-md-1{width:8.33333333%}
+.pixiv-assistant .col-md-pull-12{right:100%}
+.pixiv-assistant .col-md-pull-11{right:91.66666667%}
+.pixiv-assistant .col-md-pull-10{right:83.33333333%}
+.pixiv-assistant .col-md-pull-9{right:75%}
+.pixiv-assistant .col-md-pull-8{right:66.66666667%}
+.pixiv-assistant .col-md-pull-7{right:58.33333333%}
+.pixiv-assistant .col-md-pull-6{right:50%}
+.pixiv-assistant .col-md-pull-5{right:41.66666667%}
+.pixiv-assistant .col-md-pull-4{right:33.33333333%}
+.pixiv-assistant .col-md-pull-3{right:25%}
+.pixiv-assistant .col-md-pull-2{right:16.66666667%}
+.pixiv-assistant .col-md-pull-1{right:8.33333333%}
+.pixiv-assistant .col-md-pull-0{right:auto}
+.pixiv-assistant .col-md-push-12{left:100%}
+.pixiv-assistant .col-md-push-11{left:91.66666667%}
+.pixiv-assistant .col-md-push-10{left:83.33333333%}
+.pixiv-assistant .col-md-push-9{left:75%}
+.pixiv-assistant .col-md-push-8{left:66.66666667%}
+.pixiv-assistant .col-md-push-7{left:58.33333333%}
+.pixiv-assistant .col-md-push-6{left:50%}
+.pixiv-assistant .col-md-push-5{left:41.66666667%}
+.pixiv-assistant .col-md-push-4{left:33.33333333%}
+.pixiv-assistant .col-md-push-3{left:25%}
+.pixiv-assistant .col-md-push-2{left:16.66666667%}
+.pixiv-assistant .col-md-push-1{left:8.33333333%}
+.pixiv-assistant .col-md-push-0{left:auto}
+.pixiv-assistant .col-md-offset-12{margin-left:100%}
+.pixiv-assistant .col-md-offset-11{margin-left:91.66666667%}
+.pixiv-assistant .col-md-offset-10{margin-left:83.33333333%}
+.pixiv-assistant .col-md-offset-9{margin-left:75%}
+.pixiv-assistant .col-md-offset-8{margin-left:66.66666667%}
+.pixiv-assistant .col-md-offset-7{margin-left:58.33333333%}
+.pixiv-assistant .col-md-offset-6{margin-left:50%}
+.pixiv-assistant .col-md-offset-5{margin-left:41.66666667%}
+.pixiv-assistant .col-md-offset-4{margin-left:33.33333333%}
+.pixiv-assistant .col-md-offset-3{margin-left:25%}
+.pixiv-assistant .col-md-offset-2{margin-left:16.66666667%}
+.pixiv-assistant .col-md-offset-1{margin-left:8.33333333%}
+.pixiv-assistant .col-md-offset-0{margin-left:0%}
+}
+@media (min-width:1200px){.col-lg-1, .pixiv-assistant .col-lg-2, .pixiv-assistant .col-lg-3, .pixiv-assistant .col-lg-4, .pixiv-assistant .col-lg-5, .pixiv-assistant .col-lg-6, .pixiv-assistant .col-lg-7, .pixiv-assistant .col-lg-8, .pixiv-assistant .col-lg-9, .pixiv-assistant .col-lg-10, .pixiv-assistant .col-lg-11, .pixiv-assistant .col-lg-12{float:left}
+.pixiv-assistant .col-lg-12{width:100%}
+.pixiv-assistant .col-lg-11{width:91.66666667%}
+.pixiv-assistant .col-lg-10{width:83.33333333%}
+.pixiv-assistant .col-lg-9{width:75%}
+.pixiv-assistant .col-lg-8{width:66.66666667%}
+.pixiv-assistant .col-lg-7{width:58.33333333%}
+.pixiv-assistant .col-lg-6{width:50%}
+.pixiv-assistant .col-lg-5{width:41.66666667%}
+.pixiv-assistant .col-lg-4{width:33.33333333%}
+.pixiv-assistant .col-lg-3{width:25%}
+.pixiv-assistant .col-lg-2{width:16.66666667%}
+.pixiv-assistant .col-lg-1{width:8.33333333%}
+.pixiv-assistant .col-lg-pull-12{right:100%}
+.pixiv-assistant .col-lg-pull-11{right:91.66666667%}
+.pixiv-assistant .col-lg-pull-10{right:83.33333333%}
+.pixiv-assistant .col-lg-pull-9{right:75%}
+.pixiv-assistant .col-lg-pull-8{right:66.66666667%}
+.pixiv-assistant .col-lg-pull-7{right:58.33333333%}
+.pixiv-assistant .col-lg-pull-6{right:50%}
+.pixiv-assistant .col-lg-pull-5{right:41.66666667%}
+.pixiv-assistant .col-lg-pull-4{right:33.33333333%}
+.pixiv-assistant .col-lg-pull-3{right:25%}
+.pixiv-assistant .col-lg-pull-2{right:16.66666667%}
+.pixiv-assistant .col-lg-pull-1{right:8.33333333%}
+.pixiv-assistant .col-lg-pull-0{right:auto}
+.pixiv-assistant .col-lg-push-12{left:100%}
+.pixiv-assistant .col-lg-push-11{left:91.66666667%}
+.pixiv-assistant .col-lg-push-10{left:83.33333333%}
+.pixiv-assistant .col-lg-push-9{left:75%}
+.pixiv-assistant .col-lg-push-8{left:66.66666667%}
+.pixiv-assistant .col-lg-push-7{left:58.33333333%}
+.pixiv-assistant .col-lg-push-6{left:50%}
+.pixiv-assistant .col-lg-push-5{left:41.66666667%}
+.pixiv-assistant .col-lg-push-4{left:33.33333333%}
+.pixiv-assistant .col-lg-push-3{left:25%}
+.pixiv-assistant .col-lg-push-2{left:16.66666667%}
+.pixiv-assistant .col-lg-push-1{left:8.33333333%}
+.pixiv-assistant .col-lg-push-0{left:auto}
+.pixiv-assistant .col-lg-offset-12{margin-left:100%}
+.pixiv-assistant .col-lg-offset-11{margin-left:91.66666667%}
+.pixiv-assistant .col-lg-offset-10{margin-left:83.33333333%}
+.pixiv-assistant .col-lg-offset-9{margin-left:75%}
+.pixiv-assistant .col-lg-offset-8{margin-left:66.66666667%}
+.pixiv-assistant .col-lg-offset-7{margin-left:58.33333333%}
+.pixiv-assistant .col-lg-offset-6{margin-left:50%}
+.pixiv-assistant .col-lg-offset-5{margin-left:41.66666667%}
+.pixiv-assistant .col-lg-offset-4{margin-left:33.33333333%}
+.pixiv-assistant .col-lg-offset-3{margin-left:25%}
+.pixiv-assistant .col-lg-offset-2{margin-left:16.66666667%}
+.pixiv-assistant .col-lg-offset-1{margin-left:8.33333333%}
+.pixiv-assistant .col-lg-offset-0{margin-left:0%}
+}
+.pixiv-assistant table{background-color:transparent}
+.pixiv-assistant caption{padding-top:8px;padding-bottom:8px;color:#808080;text-align:left}
+.pixiv-assistant th{text-align:left}
+.pixiv-assistant .table{width:100%;max-width:100%;margin-bottom:18px}
+.pixiv-assistant .table>thead>tr>th, .pixiv-assistant .table>tbody>tr>th, .pixiv-assistant .table>tfoot>tr>th, .pixiv-assistant .table>thead>tr>td, .pixiv-assistant .table>tbody>tr>td, .pixiv-assistant .table>tfoot>tr>td{padding:8px;line-height:1.42857143;vertical-align:top;border-top:1px solid #dddddd}
+.pixiv-assistant .table>thead>tr>th{vertical-align:bottom;border-bottom:2px solid #dddddd}
+.pixiv-assistant .table>caption+thead>tr:first-child>th, .pixiv-assistant .table>colgroup+thead>tr:first-child>th, .pixiv-assistant .table>thead:first-child>tr:first-child>th, .pixiv-assistant .table>caption+thead>tr:first-child>td, .pixiv-assistant .table>colgroup+thead>tr:first-child>td, .pixiv-assistant .table>thead:first-child>tr:first-child>td{border-top:0}
+.pixiv-assistant .table>tbody+tbody{border-top:2px solid #dddddd}
+.pixiv-assistant .table .table{background-color:#fcfcfc}
+.pixiv-assistant .table-condensed>thead>tr>th, .pixiv-assistant .table-condensed>tbody>tr>th, .pixiv-assistant .table-condensed>tfoot>tr>th, .pixiv-assistant .table-condensed>thead>tr>td, .pixiv-assistant .table-condensed>tbody>tr>td, .pixiv-assistant .table-condensed>tfoot>tr>td{padding:5px}
+.pixiv-assistant .table-bordered{border:1px solid #dddddd}
+.pixiv-assistant .table-bordered>thead>tr>th, .pixiv-assistant .table-bordered>tbody>tr>th, .pixiv-assistant .table-bordered>tfoot>tr>th, .pixiv-assistant .table-bordered>thead>tr>td, .pixiv-assistant .table-bordered>tbody>tr>td, .pixiv-assistant .table-bordered>tfoot>tr>td{border:1px solid #dddddd}
+.pixiv-assistant .table-bordered>thead>tr>th, .pixiv-assistant .table-bordered>thead>tr>td{border-bottom-width:2px}
+.pixiv-assistant .table-striped>tbody>tr:nth-of-type(odd){background-color:#f9f9f9}
+.pixiv-assistant .table-hover>tbody>tr:hover{background-color:#f5f5f5}
+.pixiv-assistant table col[class*="col-"]{position:static;float:none;display:table-column}
+.pixiv-assistant table td[class*="col-"], .pixiv-assistant table th[class*="col-"]{position:static;float:none;display:table-cell}
+.pixiv-assistant .table>thead>tr>td.active, .pixiv-assistant .table>tbody>tr>td.active, .pixiv-assistant .table>tfoot>tr>td.active, .pixiv-assistant .table>thead>tr>th.active, .pixiv-assistant .table>tbody>tr>th.active, .pixiv-assistant .table>tfoot>tr>th.active, .pixiv-assistant .table>thead>tr.active>td, .pixiv-assistant .table>tbody>tr.active>td, .pixiv-assistant .table>tfoot>tr.active>td, .pixiv-assistant .table>thead>tr.active>th, .pixiv-assistant .table>tbody>tr.active>th, .pixiv-assistant .table>tfoot>tr.active>th{background-color:#f5f5f5}
+.pixiv-assistant .table-hover>tbody>tr>td.active:hover, .pixiv-assistant .table-hover>tbody>tr>th.active:hover, .pixiv-assistant .table-hover>tbody>tr.active:hover>td, .pixiv-assistant .table-hover>tbody>tr:hover>.active, .pixiv-assistant .table-hover>tbody>tr.active:hover>th{background-color:#e8e8e8}
+.pixiv-assistant .table>thead>tr>td.success, .pixiv-assistant .table>tbody>tr>td.success, .pixiv-assistant .table>tfoot>tr>td.success, .pixiv-assistant .table>thead>tr>th.success, .pixiv-assistant .table>tbody>tr>th.success, .pixiv-assistant .table>tfoot>tr>th.success, .pixiv-assistant .table>thead>tr.success>td, .pixiv-assistant .table>tbody>tr.success>td, .pixiv-assistant .table>tfoot>tr.success>td, .pixiv-assistant .table>thead>tr.success>th, .pixiv-assistant .table>tbody>tr.success>th, .pixiv-assistant .table>tfoot>tr.success>th{background-color:#dff0d8}
+.pixiv-assistant .table-hover>tbody>tr>td.success:hover, .pixiv-assistant .table-hover>tbody>tr>th.success:hover, .pixiv-assistant .table-hover>tbody>tr.success:hover>td, .pixiv-assistant .table-hover>tbody>tr:hover>.success, .pixiv-assistant .table-hover>tbody>tr.success:hover>th{background-color:#d0e9c6}
+.pixiv-assistant .table>thead>tr>td.info, .pixiv-assistant .table>tbody>tr>td.info, .pixiv-assistant .table>tfoot>tr>td.info, .pixiv-assistant .table>thead>tr>th.info, .pixiv-assistant .table>tbody>tr>th.info, .pixiv-assistant .table>tfoot>tr>th.info, .pixiv-assistant .table>thead>tr.info>td, .pixiv-assistant .table>tbody>tr.info>td, .pixiv-assistant .table>tfoot>tr.info>td, .pixiv-assistant .table>thead>tr.info>th, .pixiv-assistant .table>tbody>tr.info>th, .pixiv-assistant .table>tfoot>tr.info>th{background-color:#d9edf7}
+.pixiv-assistant .table-hover>tbody>tr>td.info:hover, .pixiv-assistant .table-hover>tbody>tr>th.info:hover, .pixiv-assistant .table-hover>tbody>tr.info:hover>td, .pixiv-assistant .table-hover>tbody>tr:hover>.info, .pixiv-assistant .table-hover>tbody>tr.info:hover>th{background-color:#c4e3f3}
+.pixiv-assistant .table>thead>tr>td.warning, .pixiv-assistant .table>tbody>tr>td.warning, .pixiv-assistant .table>tfoot>tr>td.warning, .pixiv-assistant .table>thead>tr>th.warning, .pixiv-assistant .table>tbody>tr>th.warning, .pixiv-assistant .table>tfoot>tr>th.warning, .pixiv-assistant .table>thead>tr.warning>td, .pixiv-assistant .table>tbody>tr.warning>td, .pixiv-assistant .table>tfoot>tr.warning>td, .pixiv-assistant .table>thead>tr.warning>th, .pixiv-assistant .table>tbody>tr.warning>th, .pixiv-assistant .table>tfoot>tr.warning>th{background-color:#fcf8e3}
+.pixiv-assistant .table-hover>tbody>tr>td.warning:hover, .pixiv-assistant .table-hover>tbody>tr>th.warning:hover, .pixiv-assistant .table-hover>tbody>tr.warning:hover>td, .pixiv-assistant .table-hover>tbody>tr:hover>.warning, .pixiv-assistant .table-hover>tbody>tr.warning:hover>th{background-color:#faf2cc}
+.pixiv-assistant .table>thead>tr>td.danger, .pixiv-assistant .table>tbody>tr>td.danger, .pixiv-assistant .table>tfoot>tr>td.danger, .pixiv-assistant .table>thead>tr>th.danger, .pixiv-assistant .table>tbody>tr>th.danger, .pixiv-assistant .table>tfoot>tr>th.danger, .pixiv-assistant .table>thead>tr.danger>td, .pixiv-assistant .table>tbody>tr.danger>td, .pixiv-assistant .table>tfoot>tr.danger>td, .pixiv-assistant .table>thead>tr.danger>th, .pixiv-assistant .table>tbody>tr.danger>th, .pixiv-assistant .table>tfoot>tr.danger>th{background-color:#f2dede}
+.pixiv-assistant .table-hover>tbody>tr>td.danger:hover, .pixiv-assistant .table-hover>tbody>tr>th.danger:hover, .pixiv-assistant .table-hover>tbody>tr.danger:hover>td, .pixiv-assistant .table-hover>tbody>tr:hover>.danger, .pixiv-assistant .table-hover>tbody>tr.danger:hover>th{background-color:#ebcccc}
+.pixiv-assistant .table-responsive{overflow-x:auto;min-height:0.01%}
+@media screen and (max-width:767px){.table-responsive{width:100%;margin-bottom:13.5px;overflow-y:hidden;-ms-overflow-style:-ms-autohiding-scrollbar;border:1px solid #dddddd}
+.pixiv-assistant .table-responsive>.table{margin-bottom:0}
+.pixiv-assistant .table-responsive>.table>thead>tr>th, .pixiv-assistant .table-responsive>.table>tbody>tr>th, .pixiv-assistant .table-responsive>.table>tfoot>tr>th, .pixiv-assistant .table-responsive>.table>thead>tr>td, .pixiv-assistant .table-responsive>.table>tbody>tr>td, .pixiv-assistant .table-responsive>.table>tfoot>tr>td{white-space:nowrap}
+.pixiv-assistant .table-responsive>.table-bordered{border:0}
+.pixiv-assistant .table-responsive>.table-bordered>thead>tr>th:first-child, .pixiv-assistant .table-responsive>.table-bordered>tbody>tr>th:first-child, .pixiv-assistant .table-responsive>.table-bordered>tfoot>tr>th:first-child, .pixiv-assistant .table-responsive>.table-bordered>thead>tr>td:first-child, .pixiv-assistant .table-responsive>.table-bordered>tbody>tr>td:first-child, .pixiv-assistant .table-responsive>.table-bordered>tfoot>tr>td:first-child{border-left:0}
+.pixiv-assistant .table-responsive>.table-bordered>thead>tr>th:last-child, .pixiv-assistant .table-responsive>.table-bordered>tbody>tr>th:last-child, .pixiv-assistant .table-responsive>.table-bordered>tfoot>tr>th:last-child, .pixiv-assistant .table-responsive>.table-bordered>thead>tr>td:last-child, .pixiv-assistant .table-responsive>.table-bordered>tbody>tr>td:last-child, .pixiv-assistant .table-responsive>.table-bordered>tfoot>tr>td:last-child{border-right:0}
+.pixiv-assistant .table-responsive>.table-bordered>tbody>tr:last-child>th, .pixiv-assistant .table-responsive>.table-bordered>tfoot>tr:last-child>th, .pixiv-assistant .table-responsive>.table-bordered>tbody>tr:last-child>td, .pixiv-assistant .table-responsive>.table-bordered>tfoot>tr:last-child>td{border-bottom:0}
+}
+.pixiv-assistant fieldset{padding:0;margin:0;border:0;min-width:0}
+.pixiv-assistant legend{display:block;width:100%;padding:0;margin-bottom:18px;font-size:19.5px;line-height:inherit;color:#777777;border:0;border-bottom:1px solid #e5e5e5}
+.pixiv-assistant label{display:inline-block;max-width:100%;margin-bottom:5px;font-weight:bold}
+.pixiv-assistant input[type="search"]{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.pixiv-assistant input[type="radio"], .pixiv-assistant input[type="checkbox"]{margin:4px 0 0;margin-top:1px \9;line-height:normal}
+.pixiv-assistant input[type="file"]{display:block}
+.pixiv-assistant input[type="range"]{display:block;width:100%}
+.pixiv-assistant select[multiple], .pixiv-assistant select[size]{height:auto}
+.pixiv-assistant input[type="file"]:focus, .pixiv-assistant input[type="radio"]:focus, .pixiv-assistant input[type="checkbox"]:focus{outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}
+.pixiv-assistant output{display:block;padding-top:9px;font-size:13px;line-height:1.42857143;color:#777777}
+.pixiv-assistant .form-control{display:block;width:100%;height:36px;padding:8px 12px;font-size:13px;line-height:1.42857143;color:#777777;background-color:#ffffff;background-image:none;border:1px solid #dddddd;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0,  0, 0.075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);-webkit-transition:border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s, .pixiv-assistant box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s, .pixiv-assistant box-shadow ease-in-out .15s}
+.pixiv-assistant .form-control:focus{border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, .pixiv-assistant 175, .pixiv-assistant 233, 0.6);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, .pixiv-assistant 175, .pixiv-assistant 233, 0.6)}
+.pixiv-assistant .form-control::-moz-placeholder{color:#dddddd;opacity:1}
+.pixiv-assistant .form-control:-ms-input-placeholder{color:#dddddd}
+.pixiv-assistant .form-control::-webkit-input-placeholder{color:#dddddd}
+.pixiv-assistant .form-control::-ms-expand{border:0;background-color:transparent}
+.pixiv-assistant .form-control[disabled], .pixiv-assistant .form-control[readonly], .pixiv-assistant fieldset[disabled] .form-control{background-color:#dddddd;opacity:1}
+.pixiv-assistant .form-control[disabled], .pixiv-assistant fieldset[disabled] .form-control{cursor:not-allowed}
+.pixiv-assistant textarea.form-control{height:auto}
+.pixiv-assistant input[type="search"]{-webkit-appearance:none}
+@media screen and (-webkit-min-device-pixel-ratio:0){input[type="date"].form-control, .pixiv-assistant input[type="time"].form-control, .pixiv-assistant input[type="datetime-local"].form-control, .pixiv-assistant input[type="month"].form-control{line-height:36px}
+.pixiv-assistant input[type="date"].input-sm, .pixiv-assistant input[type="time"].input-sm, .pixiv-assistant input[type="datetime-local"].input-sm, .pixiv-assistant input[type="month"].input-sm, .pixiv-assistant .input-group-sm input[type="date"], .pixiv-assistant .input-group-sm input[type="time"], .pixiv-assistant .input-group-sm input[type="datetime-local"], .pixiv-assistant .input-group-sm input[type="month"]{line-height:30px}
+.pixiv-assistant input[type="date"].input-lg, .pixiv-assistant input[type="time"].input-lg, .pixiv-assistant input[type="datetime-local"].input-lg, .pixiv-assistant input[type="month"].input-lg, .pixiv-assistant .input-group-lg input[type="date"], .pixiv-assistant .input-group-lg input[type="time"], .pixiv-assistant .input-group-lg input[type="datetime-local"], .pixiv-assistant .input-group-lg input[type="month"]{line-height:53px}
+}
+.pixiv-assistant .form-group{margin-bottom:15px}
+.pixiv-assistant .radio, .pixiv-assistant .checkbox{position:relative;display:block;margin-top:10px;margin-bottom:10px}
+.pixiv-assistant .radio label, .pixiv-assistant .checkbox label{min-height:18px;padding-left:20px;margin-bottom:0;font-weight:normal;cursor:pointer}
+.pixiv-assistant .radio input[type="radio"], .pixiv-assistant .radio-inline input[type="radio"], .pixiv-assistant .checkbox input[type="checkbox"], .pixiv-assistant .checkbox-inline input[type="checkbox"]{position:absolute;margin-left:-20px;margin-top:4px \9}
+.pixiv-assistant .radio+.radio, .pixiv-assistant .checkbox+.checkbox{margin-top:-5px}
+.pixiv-assistant .radio-inline, .pixiv-assistant .checkbox-inline{position:relative;display:inline-block;padding-left:20px;margin-bottom:0;vertical-align:middle;font-weight:normal;cursor:pointer}
+.pixiv-assistant .radio-inline+.radio-inline, .pixiv-assistant .checkbox-inline+.checkbox-inline{margin-top:0;margin-left:10px}
+.pixiv-assistant input[type="radio"][disabled], .pixiv-assistant input[type="checkbox"][disabled], .pixiv-assistant input[type="radio"].disabled, .pixiv-assistant input[type="checkbox"].disabled, .pixiv-assistant fieldset[disabled] input[type="radio"], .pixiv-assistant fieldset[disabled] input[type="checkbox"]{cursor:not-allowed}
+.pixiv-assistant .radio-inline.disabled, .pixiv-assistant .checkbox-inline.disabled, .pixiv-assistant fieldset[disabled] .radio-inline, .pixiv-assistant fieldset[disabled] .checkbox-inline{cursor:not-allowed}
+.pixiv-assistant .radio.disabled label, .pixiv-assistant .checkbox.disabled label, .pixiv-assistant fieldset[disabled] .radio label, .pixiv-assistant fieldset[disabled] .checkbox label{cursor:not-allowed}
+.pixiv-assistant .form-control-static{padding-top:9px;padding-bottom:9px;margin-bottom:0;min-height:31px}
+.pixiv-assistant .form-control-static.input-lg, .pixiv-assistant .form-control-static.input-sm{padding-left:0;padding-right:0}
+.pixiv-assistant .input-sm{height:30px;padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}
+.pixiv-assistant select.input-sm{height:30px;line-height:30px}
+.pixiv-assistant textarea.input-sm, .pixiv-assistant select[multiple].input-sm{height:auto}
+.pixiv-assistant .form-group-sm .form-control{height:30px;padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}
+.pixiv-assistant .form-group-sm select.form-control{height:30px;line-height:30px}
+.pixiv-assistant .form-group-sm textarea.form-control, .pixiv-assistant .form-group-sm select[multiple].form-control{height:auto}
+.pixiv-assistant .form-group-sm .form-control-static{height:30px;min-height:30px;padding:6px 10px;font-size:12px;line-height:1.5}
+.pixiv-assistant .input-lg{height:53px;padding:14px 16px;font-size:17px;line-height:1.3333333;border-radius:6px}
+.pixiv-assistant select.input-lg{height:53px;line-height:53px}
+.pixiv-assistant textarea.input-lg, .pixiv-assistant select[multiple].input-lg{height:auto}
+.pixiv-assistant .form-group-lg .form-control{height:53px;padding:14px 16px;font-size:17px;line-height:1.3333333;border-radius:6px}
+.pixiv-assistant .form-group-lg select.form-control{height:53px;line-height:53px}
+.pixiv-assistant .form-group-lg textarea.form-control, .pixiv-assistant .form-group-lg select[multiple].form-control{height:auto}
+.pixiv-assistant .form-group-lg .form-control-static{height:53px;min-height:35px;padding:15px 16px;font-size:17px;line-height:1.3333333}
+.pixiv-assistant .has-feedback{position:relative}
+.pixiv-assistant .has-feedback .form-control{padding-right:45px}
+.pixiv-assistant .form-control-feedback{position:absolute;top:0;right:0;z-index:2;display:block;width:36px;height:36px;line-height:36px;text-align:center;pointer-events:none}
+.pixiv-assistant .input-lg+.form-control-feedback, .pixiv-assistant .input-group-lg+.form-control-feedback, .pixiv-assistant .form-group-lg .form-control+.form-control-feedback{width:53px;height:53px;line-height:53px}
+.pixiv-assistant .input-sm+.form-control-feedback, .pixiv-assistant .input-group-sm+.form-control-feedback, .pixiv-assistant .form-group-sm .form-control+.form-control-feedback{width:30px;height:30px;line-height:30px}
+.pixiv-assistant .has-success .help-block, .pixiv-assistant .has-success .control-label, .pixiv-assistant .has-success .radio, .pixiv-assistant .has-success .checkbox, .pixiv-assistant .has-success .radio-inline, .pixiv-assistant .has-success .checkbox-inline, .pixiv-assistant .has-success.radio label, .pixiv-assistant .has-success.checkbox label, .pixiv-assistant .has-success.radio-inline label, .pixiv-assistant .has-success.checkbox-inline label{color:#468847}
+.pixiv-assistant .has-success .form-control{border-color:#468847;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075)}
+.pixiv-assistant .has-success .form-control:focus{border-color:#356635;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b}
+.pixiv-assistant .has-success .input-group-addon{color:#468847;border-color:#468847;background-color:#dff0d8}
+.pixiv-assistant .has-success .form-control-feedback{color:#468847}
+.pixiv-assistant .has-warning .help-block, .pixiv-assistant .has-warning .control-label, .pixiv-assistant .has-warning .radio, .pixiv-assistant .has-warning .checkbox, .pixiv-assistant .has-warning .radio-inline, .pixiv-assistant .has-warning .checkbox-inline, .pixiv-assistant .has-warning.radio label, .pixiv-assistant .has-warning.checkbox label, .pixiv-assistant .has-warning.radio-inline label, .pixiv-assistant .has-warning.checkbox-inline label{color:#c09853}
+.pixiv-assistant .has-warning .form-control{border-color:#c09853;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075)}
+.pixiv-assistant .has-warning .form-control:focus{border-color:#a47e3c;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e}
+.pixiv-assistant .has-warning .input-group-addon{color:#c09853;border-color:#c09853;background-color:#fcf8e3}
+.pixiv-assistant .has-warning .form-control-feedback{color:#c09853}
+.pixiv-assistant .has-error .help-block, .pixiv-assistant .has-error .control-label, .pixiv-assistant .has-error .radio, .pixiv-assistant .has-error .checkbox, .pixiv-assistant .has-error .radio-inline, .pixiv-assistant .has-error .checkbox-inline, .pixiv-assistant .has-error.radio label, .pixiv-assistant .has-error.checkbox label, .pixiv-assistant .has-error.radio-inline label, .pixiv-assistant .has-error.checkbox-inline label{color:#b94a48}
+.pixiv-assistant .has-error .form-control{border-color:#b94a48;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075)}
+.pixiv-assistant .has-error .form-control:focus{border-color:#953b39;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392}
+.pixiv-assistant .has-error .input-group-addon{color:#b94a48;border-color:#b94a48;background-color:#f2dede}
+.pixiv-assistant .has-error .form-control-feedback{color:#b94a48}
+.pixiv-assistant .has-feedback label~.form-control-feedback{top:23px}
+.pixiv-assistant .has-feedback label.sr-only~.form-control-feedback{top:0}
+.pixiv-assistant .help-block{display:block;margin-top:5px;margin-bottom:10px;color:#b7b7b7}
+@media (min-width:768px){.form-inline .form-group{display:inline-block;margin-bottom:0;vertical-align:middle}
+.pixiv-assistant .form-inline .form-control{display:inline-block;width:auto;vertical-align:middle}
+.pixiv-assistant .form-inline .form-control-static{display:inline-block}
+.pixiv-assistant .form-inline .input-group{display:inline-table;vertical-align:middle}
+.pixiv-assistant .form-inline .input-group .input-group-addon, .pixiv-assistant .form-inline .input-group .input-group-btn, .pixiv-assistant .form-inline .input-group .form-control{width:auto}
+.pixiv-assistant .form-inline .input-group>.form-control{width:100%}
+.pixiv-assistant .form-inline .control-label{margin-bottom:0;vertical-align:middle}
+.pixiv-assistant .form-inline .radio, .pixiv-assistant .form-inline .checkbox{display:inline-block;margin-top:0;margin-bottom:0;vertical-align:middle}
+.pixiv-assistant .form-inline .radio label, .pixiv-assistant .form-inline .checkbox label{padding-left:0}
+.pixiv-assistant .form-inline .radio input[type="radio"], .pixiv-assistant .form-inline .checkbox input[type="checkbox"]{position:relative;margin-left:0}
+.pixiv-assistant .form-inline .has-feedback .form-control-feedback{top:0}
+}
+.pixiv-assistant .form-horizontal .radio, .pixiv-assistant .form-horizontal .checkbox, .pixiv-assistant .form-horizontal .radio-inline, .pixiv-assistant .form-horizontal .checkbox-inline{margin-top:0;margin-bottom:0;padding-top:9px}
+.pixiv-assistant .form-horizontal .radio, .pixiv-assistant .form-horizontal .checkbox{min-height:27px}
+.pixiv-assistant .form-horizontal .form-group{margin-left:-15px;margin-right:-15px}
+@media (min-width:768px){.form-horizontal .control-label{text-align:right;margin-bottom:0;padding-top:9px}
+}
+.pixiv-assistant .form-horizontal .has-feedback .form-control-feedback{right:15px}
+@media (min-width:768px){.form-horizontal .form-group-lg .control-label{padding-top:15px;font-size:17px}
+}
+@media (min-width:768px){.form-horizontal .form-group-sm .control-label{padding-top:6px;font-size:12px}
+}
+.pixiv-assistant .btn{display:inline-block;margin-bottom:0;font-weight:normal;text-align:center;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;background-image:none;border:1px solid transparent;white-space:nowrap;padding:8px 12px;font-size:13px;line-height:1.42857143;border-radius:4px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+.pixiv-assistant .btn:focus, .pixiv-assistant .btn:active:focus, .pixiv-assistant .btn.active:focus, .pixiv-assistant .btn.focus, .pixiv-assistant .btn:active.focus, .pixiv-assistant .btn.active.focus{outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}
+.pixiv-assistant .btn:hover, .pixiv-assistant .btn:focus, .pixiv-assistant .btn.focus{color:#ffffff;text-decoration:none}
+.pixiv-assistant .btn:active, .pixiv-assistant .btn.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0, 0, 0, 0.125);box-shadow:inset 0 3px 5px rgba(0, 0, 0, 0.125)}
+.pixiv-assistant .btn.disabled, .pixiv-assistant .btn[disabled], .pixiv-assistant fieldset[disabled] .btn{cursor:not-allowed;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none}
+.pixiv-assistant a.btn.disabled, .pixiv-assistant fieldset[disabled] a.btn{pointer-events:none}
+.pixiv-assistant .btn-default{color:#ffffff;background-color:#474949;border-color:#474949}
+.pixiv-assistant .btn-default:focus, .pixiv-assistant .btn-default.focus{color:#ffffff;background-color:#2e2f2f;border-color:#080808}
+.pixiv-assistant .btn-default:hover{color:#ffffff;background-color:#2e2f2f;border-color:#292a2a}
+.pixiv-assistant .btn-default:active, .pixiv-assistant .btn-default.active, .pixiv-assistant .open>.dropdown-toggle.btn-default{color:#ffffff;background-color:#2e2f2f;border-color:#292a2a}
+.pixiv-assistant .btn-default:active:hover, .pixiv-assistant .btn-default.active:hover, .pixiv-assistant .open>.dropdown-toggle.btn-default:hover, .pixiv-assistant .btn-default:active:focus, .pixiv-assistant .btn-default.active:focus, .pixiv-assistant .open>.dropdown-toggle.btn-default:focus, .pixiv-assistant .btn-default:active.focus, .pixiv-assistant .btn-default.active.focus, .pixiv-assistant .open>.dropdown-toggle.btn-default.focus{color:#ffffff;background-color:#1c1d1d;border-color:#080808}
+.pixiv-assistant .btn-default:active, .pixiv-assistant .btn-default.active, .pixiv-assistant .open>.dropdown-toggle.btn-default{background-image:none}
+.pixiv-assistant .btn-default.disabled:hover, .pixiv-assistant .btn-default[disabled]:hover, .pixiv-assistant fieldset[disabled] .btn-default:hover, .pixiv-assistant .btn-default.disabled:focus, .pixiv-assistant .btn-default[disabled]:focus, .pixiv-assistant fieldset[disabled] .btn-default:focus, .pixiv-assistant .btn-default.disabled.focus, .pixiv-assistant .btn-default[disabled].focus, .pixiv-assistant fieldset[disabled] .btn-default.focus{background-color:#474949;border-color:#474949}
+.pixiv-assistant .btn-default .badge{color:#474949;background-color:#ffffff}
+.pixiv-assistant .btn-primary{color:#ffffff;background-color:#d9230f;border-color:#d9230f}
+.pixiv-assistant .btn-primary:focus, .pixiv-assistant .btn-primary.focus{color:#ffffff;background-color:#a91b0c;border-color:#621007}
+.pixiv-assistant .btn-primary:hover{color:#ffffff;background-color:#a91b0c;border-color:#a01a0b}
+.pixiv-assistant .btn-primary:active, .pixiv-assistant .btn-primary.active, .pixiv-assistant .open>.dropdown-toggle.btn-primary{color:#ffffff;background-color:#a91b0c;border-color:#a01a0b}
+.pixiv-assistant .btn-primary:active:hover, .pixiv-assistant .btn-primary.active:hover, .pixiv-assistant .open>.dropdown-toggle.btn-primary:hover, .pixiv-assistant .btn-primary:active:focus, .pixiv-assistant .btn-primary.active:focus, .pixiv-assistant .open>.dropdown-toggle.btn-primary:focus, .pixiv-assistant .btn-primary:active.focus, .pixiv-assistant .btn-primary.active.focus, .pixiv-assistant .open>.dropdown-toggle.btn-primary.focus{color:#ffffff;background-color:#881609;border-color:#621007}
+.pixiv-assistant .btn-primary:active, .pixiv-assistant .btn-primary.active, .pixiv-assistant .open>.dropdown-toggle.btn-primary{background-image:none}
+.pixiv-assistant .btn-primary.disabled:hover, .pixiv-assistant .btn-primary[disabled]:hover, .pixiv-assistant fieldset[disabled] .btn-primary:hover, .pixiv-assistant .btn-primary.disabled:focus, .pixiv-assistant .btn-primary[disabled]:focus, .pixiv-assistant fieldset[disabled] .btn-primary:focus, .pixiv-assistant .btn-primary.disabled.focus, .pixiv-assistant .btn-primary[disabled].focus, .pixiv-assistant fieldset[disabled] .btn-primary.focus{background-color:#d9230f;border-color:#d9230f}
+.pixiv-assistant .btn-primary .badge{color:#d9230f;background-color:#ffffff}
+.pixiv-assistant .btn-success{color:#ffffff;background-color:#469408;border-color:#469408}
+.pixiv-assistant .btn-success:focus, .pixiv-assistant .btn-success.focus{color:#ffffff;background-color:#2f6405;border-color:#0d1b01}
+.pixiv-assistant .btn-success:hover{color:#ffffff;background-color:#2f6405;border-color:#2b5a05}
+.pixiv-assistant .btn-success:active, .pixiv-assistant .btn-success.active, .pixiv-assistant .open>.dropdown-toggle.btn-success{color:#ffffff;background-color:#2f6405;border-color:#2b5a05}
+.pixiv-assistant .btn-success:active:hover, .pixiv-assistant .btn-success.active:hover, .pixiv-assistant .open>.dropdown-toggle.btn-success:hover, .pixiv-assistant .btn-success:active:focus, .pixiv-assistant .btn-success.active:focus, .pixiv-assistant .open>.dropdown-toggle.btn-success:focus, .pixiv-assistant .btn-success:active.focus, .pixiv-assistant .btn-success.active.focus, .pixiv-assistant .open>.dropdown-toggle.btn-success.focus{color:#ffffff;background-color:#1f4204;border-color:#0d1b01}
+.pixiv-assistant .btn-success:active, .pixiv-assistant .btn-success.active, .pixiv-assistant .open>.dropdown-toggle.btn-success{background-image:none}
+.pixiv-assistant .btn-success.disabled:hover, .pixiv-assistant .btn-success[disabled]:hover, .pixiv-assistant fieldset[disabled] .btn-success:hover, .pixiv-assistant .btn-success.disabled:focus, .pixiv-assistant .btn-success[disabled]:focus, .pixiv-assistant fieldset[disabled] .btn-success:focus, .pixiv-assistant .btn-success.disabled.focus, .pixiv-assistant .btn-success[disabled].focus, .pixiv-assistant fieldset[disabled] .btn-success.focus{background-color:#469408;border-color:#469408}
+.pixiv-assistant .btn-success .badge{color:#469408;background-color:#ffffff}
+.pixiv-assistant .btn-info{color:#ffffff;background-color:#029acf;border-color:#029acf}
+.pixiv-assistant .btn-info:focus, .pixiv-assistant .btn-info.focus{color:#ffffff;background-color:#02749c;border-color:#013c51}
+.pixiv-assistant .btn-info:hover{color:#ffffff;background-color:#02749c;border-color:#016d92}
+.pixiv-assistant .btn-info:active, .pixiv-assistant .btn-info.active, .pixiv-assistant .open>.dropdown-toggle.btn-info{color:#ffffff;background-color:#02749c;border-color:#016d92}
+.pixiv-assistant .btn-info:active:hover, .pixiv-assistant .btn-info.active:hover, .pixiv-assistant .open>.dropdown-toggle.btn-info:hover, .pixiv-assistant .btn-info:active:focus, .pixiv-assistant .btn-info.active:focus, .pixiv-assistant .open>.dropdown-toggle.btn-info:focus, .pixiv-assistant .btn-info:active.focus, .pixiv-assistant .btn-info.active.focus, .pixiv-assistant .open>.dropdown-toggle.btn-info.focus{color:#ffffff;background-color:#015a79;border-color:#013c51}
+.pixiv-assistant .btn-info:active, .pixiv-assistant .btn-info.active, .pixiv-assistant .open>.dropdown-toggle.btn-info{background-image:none}
+.pixiv-assistant .btn-info.disabled:hover, .pixiv-assistant .btn-info[disabled]:hover, .pixiv-assistant fieldset[disabled] .btn-info:hover, .pixiv-assistant .btn-info.disabled:focus, .pixiv-assistant .btn-info[disabled]:focus, .pixiv-assistant fieldset[disabled] .btn-info:focus, .pixiv-assistant .btn-info.disabled.focus, .pixiv-assistant .btn-info[disabled].focus, .pixiv-assistant fieldset[disabled] .btn-info.focus{background-color:#029acf;border-color:#029acf}
+.pixiv-assistant .btn-info .badge{color:#029acf;background-color:#ffffff}
+.pixiv-assistant .btn-warning{color:#ffffff;background-color:#9b479f;border-color:#9b479f}
+.pixiv-assistant .btn-warning:focus, .pixiv-assistant .btn-warning.focus{color:#ffffff;background-color:#79377c;border-color:#452047}
+.pixiv-assistant .btn-warning:hover{color:#ffffff;background-color:#79377c;border-color:#723475}
+.pixiv-assistant .btn-warning:active, .pixiv-assistant .btn-warning.active, .pixiv-assistant .open>.dropdown-toggle.btn-warning{color:#ffffff;background-color:#79377c;border-color:#723475}
+.pixiv-assistant .btn-warning:active:hover, .pixiv-assistant .btn-warning.active:hover, .pixiv-assistant .open>.dropdown-toggle.btn-warning:hover, .pixiv-assistant .btn-warning:active:focus, .pixiv-assistant .btn-warning.active:focus, .pixiv-assistant .open>.dropdown-toggle.btn-warning:focus, .pixiv-assistant .btn-warning:active.focus, .pixiv-assistant .btn-warning.active.focus, .pixiv-assistant .open>.dropdown-toggle.btn-warning.focus{color:#ffffff;background-color:#612c63;border-color:#452047}
+.pixiv-assistant .btn-warning:active, .pixiv-assistant .btn-warning.active, .pixiv-assistant .open>.dropdown-toggle.btn-warning{background-image:none}
+.pixiv-assistant .btn-warning.disabled:hover, .pixiv-assistant .btn-warning[disabled]:hover, .pixiv-assistant fieldset[disabled] .btn-warning:hover, .pixiv-assistant .btn-warning.disabled:focus, .pixiv-assistant .btn-warning[disabled]:focus, .pixiv-assistant fieldset[disabled] .btn-warning:focus, .pixiv-assistant .btn-warning.disabled.focus, .pixiv-assistant .btn-warning[disabled].focus, .pixiv-assistant fieldset[disabled] .btn-warning.focus{background-color:#9b479f;border-color:#9b479f}
+.pixiv-assistant .btn-warning .badge{color:#9b479f;background-color:#ffffff}
+.pixiv-assistant .btn-danger{color:#ffffff;background-color:#d9831f;border-color:#d9831f}
+.pixiv-assistant .btn-danger:focus, .pixiv-assistant .btn-danger.focus{color:#ffffff;background-color:#ac6819;border-color:#69400f}
+.pixiv-assistant .btn-danger:hover{color:#ffffff;background-color:#ac6819;border-color:#a36317}
+.pixiv-assistant .btn-danger:active, .pixiv-assistant .btn-danger.active, .pixiv-assistant .open>.dropdown-toggle.btn-danger{color:#ffffff;background-color:#ac6819;border-color:#a36317}
+.pixiv-assistant .btn-danger:active:hover, .pixiv-assistant .btn-danger.active:hover, .pixiv-assistant .open>.dropdown-toggle.btn-danger:hover, .pixiv-assistant .btn-danger:active:focus, .pixiv-assistant .btn-danger.active:focus, .pixiv-assistant .open>.dropdown-toggle.btn-danger:focus, .pixiv-assistant .btn-danger:active.focus, .pixiv-assistant .btn-danger.active.focus, .pixiv-assistant .open>.dropdown-toggle.btn-danger.focus{color:#ffffff;background-color:#8d5514;border-color:#69400f}
+.pixiv-assistant .btn-danger:active, .pixiv-assistant .btn-danger.active, .pixiv-assistant .open>.dropdown-toggle.btn-danger{background-image:none}
+.pixiv-assistant .btn-danger.disabled:hover, .pixiv-assistant .btn-danger[disabled]:hover, .pixiv-assistant fieldset[disabled] .btn-danger:hover, .pixiv-assistant .btn-danger.disabled:focus, .pixiv-assistant .btn-danger[disabled]:focus, .pixiv-assistant fieldset[disabled] .btn-danger:focus, .pixiv-assistant .btn-danger.disabled.focus, .pixiv-assistant .btn-danger[disabled].focus, .pixiv-assistant fieldset[disabled] .btn-danger.focus{background-color:#d9831f;border-color:#d9831f}
+.pixiv-assistant .btn-danger .badge{color:#d9831f;background-color:#ffffff}
+.pixiv-assistant .btn-link{color:#d9230f;font-weight:normal;border-radius:0}
+.pixiv-assistant .btn-link, .pixiv-assistant .btn-link:active, .pixiv-assistant .btn-link.active, .pixiv-assistant .btn-link[disabled], .pixiv-assistant fieldset[disabled] .btn-link{background-color:transparent;-webkit-box-shadow:none;box-shadow:none}
+.pixiv-assistant .btn-link, .pixiv-assistant .btn-link:hover, .pixiv-assistant .btn-link:focus, .pixiv-assistant .btn-link:active{border-color:transparent}
+.pixiv-assistant .btn-link:hover, .pixiv-assistant .btn-link:focus{color:#91170a;text-decoration:underline;background-color:transparent}
+.pixiv-assistant .btn-link[disabled]:hover, .pixiv-assistant fieldset[disabled] .btn-link:hover, .pixiv-assistant .btn-link[disabled]:focus, .pixiv-assistant fieldset[disabled] .btn-link:focus{color:#808080;text-decoration:none}
+.pixiv-assistant .btn-lg, .pixiv-assistant .btn-group-lg>.btn{padding:14px 16px;font-size:17px;line-height:1.3333333;border-radius:6px}
+.pixiv-assistant .btn-sm, .pixiv-assistant .btn-group-sm>.btn{padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}
+.pixiv-assistant .btn-xs, .pixiv-assistant .btn-group-xs>.btn{padding:1px 5px;font-size:12px;line-height:1.5;border-radius:3px}
+.pixiv-assistant .btn-block{display:block;width:100%}
+.pixiv-assistant .btn-block+.btn-block{margin-top:5px}
+.pixiv-assistant input[type="submit"].btn-block, .pixiv-assistant input[type="reset"].btn-block, .pixiv-assistant input[type="button"].btn-block{width:100%}
+.pixiv-assistant .fade{opacity:0;-webkit-transition:opacity 0.15s linear;-o-transition:opacity 0.15s linear;transition:opacity 0.15s linear}
+.pixiv-assistant .fade.in{opacity:1}
+.pixiv-assistant .collapse{display:none}
+.pixiv-assistant .collapse.in{display:block}
+.pixiv-assistant tr.collapse.in{display:table-row}
+.pixiv-assistant tbody.collapse.in{display:table-row-group}
+.pixiv-assistant .collapsing{position:relative;height:0;overflow:hidden;-webkit-transition-property:height, .pixiv-assistant  visibility;-o-transition-property:height, .pixiv-assistant  visibility;transition-property:height, .pixiv-assistant  visibility;-webkit-transition-duration:0.35s;-o-transition-duration:0.35s;transition-duration:0.35s;-webkit-transition-timing-function:ease;-o-transition-timing-function:ease;transition-timing-function:ease}
+.pixiv-assistant .caret{display:inline-block;width:0;height:0;margin-left:2px;vertical-align:middle;border-top:4px dashed;border-top:4px solid \9;border-right:4px solid transparent;border-left:4px solid transparent}
+.pixiv-assistant .dropup, .pixiv-assistant .dropdown{position:relative}
+.pixiv-assistant .dropdown-toggle:focus{outline:0}
+.pixiv-assistant .dropdown-menu{position:absolute;top:100%;left:0;z-index:1000;display:none;float:left;min-width:160px;padding:5px 0;margin:2px 0 0;list-style:none;font-size:13px;text-align:left;background-color:#ffffff;border:1px solid #cccccc;border:1px solid rgba(0, 0, 0, 0.15);border-radius:4px;-webkit-box-shadow:0 6px 12px rgba(0, 0, 0, 0.175);box-shadow:0 6px 12px rgba(0, 0, 0, 0.175);-webkit-background-clip:padding-box;background-clip:padding-box}
+.pixiv-assistant .dropdown-menu.pull-right{right:0;left:auto}
+.pixiv-assistant .dropdown-menu .divider{height:1px;margin:8px 0;overflow:hidden;background-color:#e5e5e5}
+.pixiv-assistant .dropdown-menu>li>a{display:block;padding:3px 20px;clear:both;font-weight:normal;line-height:1.42857143;color:#444444;white-space:nowrap}
+.pixiv-assistant .dropdown-menu>li>a:hover, .pixiv-assistant .dropdown-menu>li>a:focus{text-decoration:none;color:#ffffff;background-color:#d9230f}
+.pixiv-assistant .dropdown-menu>.active>a, .pixiv-assistant .dropdown-menu>.active>a:hover, .pixiv-assistant .dropdown-menu>.active>a:focus{color:#ffffff;text-decoration:none;outline:0;background-color:#d9230f}
+.pixiv-assistant .dropdown-menu>.disabled>a, .pixiv-assistant .dropdown-menu>.disabled>a:hover, .pixiv-assistant .dropdown-menu>.disabled>a:focus{color:#808080}
+.pixiv-assistant .dropdown-menu>.disabled>a:hover, .pixiv-assistant .dropdown-menu>.disabled>a:focus{text-decoration:none;background-color:transparent;background-image:none;filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);cursor:not-allowed}
+.pixiv-assistant .open>.dropdown-menu{display:block}
+.pixiv-assistant .open>a{outline:0}
+.pixiv-assistant .dropdown-menu-right{left:auto;right:0}
+.pixiv-assistant .dropdown-menu-left{left:0;right:auto}
+.pixiv-assistant .dropdown-header{display:block;padding:3px 20px;font-size:12px;line-height:1.42857143;color:#808080;white-space:nowrap}
+.pixiv-assistant .dropdown-backdrop{position:fixed;left:0;right:0;bottom:0;top:0;z-index:990}
+.pixiv-assistant .pull-right>.dropdown-menu{right:0;left:auto}
+.pixiv-assistant .dropup .caret, .pixiv-assistant .navbar-fixed-bottom .dropdown .caret{border-top:0;border-bottom:4px dashed;border-bottom:4px solid \9;content:""}
+.pixiv-assistant .dropup .dropdown-menu, .pixiv-assistant .navbar-fixed-bottom .dropdown .dropdown-menu{top:auto;bottom:100%;margin-bottom:2px}
+@media (min-width:768px){.navbar-right .dropdown-menu{left:auto;right:0}
+.pixiv-assistant .navbar-right .dropdown-menu-left{left:0;right:auto}
+}
+.pixiv-assistant .btn-group, .pixiv-assistant .btn-group-vertical{position:relative;display:inline-block;vertical-align:middle}
+.pixiv-assistant .btn-group>.btn, .pixiv-assistant .btn-group-vertical>.btn{position:relative;float:left}
+.pixiv-assistant .btn-group>.btn:hover, .pixiv-assistant .btn-group-vertical>.btn:hover, .pixiv-assistant .btn-group>.btn:focus, .pixiv-assistant .btn-group-vertical>.btn:focus, .pixiv-assistant .btn-group>.btn:active, .pixiv-assistant .btn-group-vertical>.btn:active, .pixiv-assistant .btn-group>.btn.active, .pixiv-assistant .btn-group-vertical>.btn.active{z-index:2}
+.pixiv-assistant .btn-group .btn+.btn, .pixiv-assistant .btn-group .btn+.btn-group, .pixiv-assistant .btn-group .btn-group+.btn, .pixiv-assistant .btn-group .btn-group+.btn-group{margin-left:-1px}
+.pixiv-assistant .btn-toolbar{margin-left:-5px}
+.pixiv-assistant .btn-toolbar .btn, .pixiv-assistant .btn-toolbar .btn-group, .pixiv-assistant .btn-toolbar .input-group{float:left}
+.pixiv-assistant .btn-toolbar>.btn, .pixiv-assistant .btn-toolbar>.btn-group, .pixiv-assistant .btn-toolbar>.input-group{margin-left:5px}
+.pixiv-assistant .btn-group>.btn:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}
+.pixiv-assistant .btn-group>.btn:first-child{margin-left:0}
+.pixiv-assistant .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius:0;border-top-right-radius:0}
+.pixiv-assistant .btn-group>.btn:last-child:not(:first-child), .pixiv-assistant .btn-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0}
+.pixiv-assistant .btn-group>.btn-group{float:left}
+.pixiv-assistant .btn-group>.btn-group:not(:first-child):not(:last-child)>.btn{border-radius:0}
+.pixiv-assistant .btn-group>.btn-group:first-child:not(:last-child)>.btn:last-child, .pixiv-assistant .btn-group>.btn-group:first-child:not(:last-child)>.dropdown-toggle{border-bottom-right-radius:0;border-top-right-radius:0}
+.pixiv-assistant .btn-group>.btn-group:last-child:not(:first-child)>.btn:first-child{border-bottom-left-radius:0;border-top-left-radius:0}
+.pixiv-assistant .btn-group .dropdown-toggle:active, .pixiv-assistant .btn-group.open .dropdown-toggle{outline:0}
+.pixiv-assistant .btn-group>.btn+.dropdown-toggle{padding-left:8px;padding-right:8px}
+.pixiv-assistant .btn-group>.btn-lg+.dropdown-toggle{padding-left:12px;padding-right:12px}
+.pixiv-assistant .btn-group.open .dropdown-toggle{-webkit-box-shadow:inset 0 3px 5px rgba(0, 0, 0, 0.125);box-shadow:inset 0 3px 5px rgba(0, 0, 0, 0.125)}
+.pixiv-assistant .btn-group.open .dropdown-toggle.btn-link{-webkit-box-shadow:none;box-shadow:none}
+.pixiv-assistant .btn .caret{margin-left:0}
+.pixiv-assistant .btn-lg .caret{border-width:5px 5px 0;border-bottom-width:0}
+.pixiv-assistant .dropup .btn-lg .caret{border-width:0 5px 5px}
+.pixiv-assistant .btn-group-vertical>.btn, .pixiv-assistant .btn-group-vertical>.btn-group, .pixiv-assistant .btn-group-vertical>.btn-group>.btn{display:block;float:none;width:100%;max-width:100%}
+.pixiv-assistant .btn-group-vertical>.btn-group>.btn{float:none}
+.pixiv-assistant .btn-group-vertical>.btn+.btn, .pixiv-assistant .btn-group-vertical>.btn+.btn-group, .pixiv-assistant .btn-group-vertical>.btn-group+.btn, .pixiv-assistant .btn-group-vertical>.btn-group+.btn-group{margin-top:-1px;margin-left:0}
+.pixiv-assistant .btn-group-vertical>.btn:not(:first-child):not(:last-child){border-radius:0}
+.pixiv-assistant .btn-group-vertical>.btn:first-child:not(:last-child){border-top-right-radius:4px;border-top-left-radius:4px;border-bottom-right-radius:0;border-bottom-left-radius:0}
+.pixiv-assistant .btn-group-vertical>.btn:last-child:not(:first-child){border-top-right-radius:0;border-top-left-radius:0;border-bottom-right-radius:4px;border-bottom-left-radius:4px}
+.pixiv-assistant .btn-group-vertical>.btn-group:not(:first-child):not(:last-child)>.btn{border-radius:0}
+.pixiv-assistant .btn-group-vertical>.btn-group:first-child:not(:last-child)>.btn:last-child, .pixiv-assistant .btn-group-vertical>.btn-group:first-child:not(:last-child)>.dropdown-toggle{border-bottom-right-radius:0;border-bottom-left-radius:0}
+.pixiv-assistant .btn-group-vertical>.btn-group:last-child:not(:first-child)>.btn:first-child{border-top-right-radius:0;border-top-left-radius:0}
+.pixiv-assistant .btn-group-justified{display:table;width:100%;table-layout:fixed;border-collapse:separate}
+.pixiv-assistant .btn-group-justified>.btn, .pixiv-assistant .btn-group-justified>.btn-group{float:none;display:table-cell;width:1%}
+.pixiv-assistant .btn-group-justified>.btn-group .btn{width:100%}
+.pixiv-assistant .btn-group-justified>.btn-group .dropdown-menu{left:auto}
+.pixiv-assistant [data-toggle="buttons"]>.btn input[type="radio"], .pixiv-assistant [data-toggle="buttons"]>.btn-group>.btn input[type="radio"], .pixiv-assistant [data-toggle="buttons"]>.btn input[type="checkbox"], .pixiv-assistant [data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"]{position:absolute;clip:rect(0, 0, 0, 0);pointer-events:none}
+.pixiv-assistant .input-group{position:relative;display:table;border-collapse:separate}
+.pixiv-assistant .input-group[class*="col-"]{float:none;padding-left:0;padding-right:0}
+.pixiv-assistant .input-group .form-control{position:relative;z-index:2;float:left;width:100%;margin-bottom:0}
+.pixiv-assistant .input-group .form-control:focus{z-index:3}
+.pixiv-assistant .input-group-lg>.form-control, .pixiv-assistant .input-group-lg>.input-group-addon, .pixiv-assistant .input-group-lg>.input-group-btn>.btn{height:53px;padding:14px 16px;font-size:17px;line-height:1.3333333;border-radius:6px}
+.pixiv-assistant select.input-group-lg>.form-control, .pixiv-assistant select.input-group-lg>.input-group-addon, .pixiv-assistant select.input-group-lg>.input-group-btn>.btn{height:53px;line-height:53px}
+.pixiv-assistant textarea.input-group-lg>.form-control, .pixiv-assistant textarea.input-group-lg>.input-group-addon, .pixiv-assistant textarea.input-group-lg>.input-group-btn>.btn, .pixiv-assistant select[multiple].input-group-lg>.form-control, .pixiv-assistant select[multiple].input-group-lg>.input-group-addon, .pixiv-assistant select[multiple].input-group-lg>.input-group-btn>.btn{height:auto}
+.pixiv-assistant .input-group-sm>.form-control, .pixiv-assistant .input-group-sm>.input-group-addon, .pixiv-assistant .input-group-sm>.input-group-btn>.btn{height:30px;padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}
+.pixiv-assistant select.input-group-sm>.form-control, .pixiv-assistant select.input-group-sm>.input-group-addon, .pixiv-assistant select.input-group-sm>.input-group-btn>.btn{height:30px;line-height:30px}
+.pixiv-assistant textarea.input-group-sm>.form-control, .pixiv-assistant textarea.input-group-sm>.input-group-addon, .pixiv-assistant textarea.input-group-sm>.input-group-btn>.btn, .pixiv-assistant select[multiple].input-group-sm>.form-control, .pixiv-assistant select[multiple].input-group-sm>.input-group-addon, .pixiv-assistant select[multiple].input-group-sm>.input-group-btn>.btn{height:auto}
+.pixiv-assistant .input-group-addon, .pixiv-assistant .input-group-btn, .pixiv-assistant .input-group .form-control{display:table-cell}
+.pixiv-assistant .input-group-addon:not(:first-child):not(:last-child), .pixiv-assistant .input-group-btn:not(:first-child):not(:last-child), .pixiv-assistant .input-group .form-control:not(:first-child):not(:last-child){border-radius:0}
+.pixiv-assistant .input-group-addon, .pixiv-assistant .input-group-btn{width:1%;white-space:nowrap;vertical-align:middle}
+.pixiv-assistant .input-group-addon{padding:8px 12px;font-size:13px;font-weight:normal;line-height:1;color:#777777;text-align:center;background-color:#dddddd;border:1px solid #dddddd;border-radius:4px}
+.pixiv-assistant .input-group-addon.input-sm{padding:5px 10px;font-size:12px;border-radius:3px}
+.pixiv-assistant .input-group-addon.input-lg{padding:14px 16px;font-size:17px;border-radius:6px}
+.pixiv-assistant .input-group-addon input[type="radio"], .pixiv-assistant .input-group-addon input[type="checkbox"]{margin-top:0}
+.pixiv-assistant .input-group .form-control:first-child, .pixiv-assistant .input-group-addon:first-child, .pixiv-assistant .input-group-btn:first-child>.btn, .pixiv-assistant .input-group-btn:first-child>.btn-group>.btn, .pixiv-assistant .input-group-btn:first-child>.dropdown-toggle, .pixiv-assistant .input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle), .pixiv-assistant .input-group-btn:last-child>.btn-group:not(:last-child)>.btn{border-bottom-right-radius:0;border-top-right-radius:0}
+.pixiv-assistant .input-group-addon:first-child{border-right:0}
+.pixiv-assistant .input-group .form-control:last-child, .pixiv-assistant .input-group-addon:last-child, .pixiv-assistant .input-group-btn:last-child>.btn, .pixiv-assistant .input-group-btn:last-child>.btn-group>.btn, .pixiv-assistant .input-group-btn:last-child>.dropdown-toggle, .pixiv-assistant .input-group-btn:first-child>.btn:not(:first-child), .pixiv-assistant .input-group-btn:first-child>.btn-group:not(:first-child)>.btn{border-bottom-left-radius:0;border-top-left-radius:0}
+.pixiv-assistant .input-group-addon:last-child{border-left:0}
+.pixiv-assistant .input-group-btn{position:relative;font-size:0;white-space:nowrap}
+.pixiv-assistant .input-group-btn>.btn{position:relative}
+.pixiv-assistant .input-group-btn>.btn+.btn{margin-left:-1px}
+.pixiv-assistant .input-group-btn>.btn:hover, .pixiv-assistant .input-group-btn>.btn:focus, .pixiv-assistant .input-group-btn>.btn:active{z-index:2}
+.pixiv-assistant .input-group-btn:first-child>.btn, .pixiv-assistant .input-group-btn:first-child>.btn-group{margin-right:-1px}
+.pixiv-assistant .input-group-btn:last-child>.btn, .pixiv-assistant .input-group-btn:last-child>.btn-group{z-index:2;margin-left:-1px}
+.pixiv-assistant .nav{margin-bottom:0;padding-left:0;list-style:none}
+.pixiv-assistant .nav>li{position:relative;display:block}
+.pixiv-assistant .nav>li>a{position:relative;display:block;padding:10px 15px}
+.pixiv-assistant .nav>li>a:hover, .pixiv-assistant .nav>li>a:focus{text-decoration:none;background-color:#dddddd}
+.pixiv-assistant .nav>li.disabled>a{color:#808080}
+.pixiv-assistant .nav>li.disabled>a:hover, .pixiv-assistant .nav>li.disabled>a:focus{color:#808080;text-decoration:none;background-color:transparent;cursor:not-allowed}
+.pixiv-assistant .nav .open>a, .pixiv-assistant .nav .open>a:hover, .pixiv-assistant .nav .open>a:focus{background-color:#dddddd;border-color:#d9230f}
+.pixiv-assistant .nav .nav-divider{height:1px;margin:8px 0;overflow:hidden;background-color:#e5e5e5}
+.pixiv-assistant .nav>li>a>img{max-width:none}
+.pixiv-assistant .nav-tabs{border-bottom:1px solid #dddddd}
+.pixiv-assistant .nav-tabs>li{float:left;margin-bottom:-1px}
+.pixiv-assistant .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}
+.pixiv-assistant .nav-tabs>li>a:hover{border-color:#dddddd #dddddd #dddddd}
+.pixiv-assistant .nav-tabs>li.active>a, .pixiv-assistant .nav-tabs>li.active>a:hover, .pixiv-assistant .nav-tabs>li.active>a:focus{color:#777777;background-color:#fcfcfc;border:1px solid #dddddd;border-bottom-color:transparent;cursor:default}
+.pixiv-assistant .nav-tabs.nav-justified{width:100%;border-bottom:0}
+.pixiv-assistant .nav-tabs.nav-justified>li{float:none}
+.pixiv-assistant .nav-tabs.nav-justified>li>a{text-align:center;margin-bottom:5px}
+.pixiv-assistant .nav-tabs.nav-justified>.dropdown .dropdown-menu{top:auto;left:auto}
+@media (min-width:768px){.nav-tabs.nav-justified>li{display:table-cell;width:1%}
+.pixiv-assistant .nav-tabs.nav-justified>li>a{margin-bottom:0}
+}
+.pixiv-assistant .nav-tabs.nav-justified>li>a{margin-right:0;border-radius:4px}
+.pixiv-assistant .nav-tabs.nav-justified>.active>a, .pixiv-assistant .nav-tabs.nav-justified>.active>a:hover, .pixiv-assistant .nav-tabs.nav-justified>.active>a:focus{border:1px solid #dddddd}
+@media (min-width:768px){.nav-tabs.nav-justified>li>a{border-bottom:1px solid #dddddd;border-radius:4px 4px 0 0}
+.pixiv-assistant .nav-tabs.nav-justified>.active>a, .pixiv-assistant .nav-tabs.nav-justified>.active>a:hover, .pixiv-assistant .nav-tabs.nav-justified>.active>a:focus{border-bottom-color:#fcfcfc}
+}
+.pixiv-assistant .nav-pills>li{float:left}
+.pixiv-assistant .nav-pills>li>a{border-radius:4px}
+.pixiv-assistant .nav-pills>li+li{margin-left:2px}
+.pixiv-assistant .nav-pills>li.active>a, .pixiv-assistant .nav-pills>li.active>a:hover, .pixiv-assistant .nav-pills>li.active>a:focus{color:#ffffff;background-color:#d9230f}
+.pixiv-assistant .nav-stacked>li{float:none}
+.pixiv-assistant .nav-stacked>li+li{margin-top:2px;margin-left:0}
+.pixiv-assistant .nav-justified{width:100%}
+.pixiv-assistant .nav-justified>li{float:none}
+.pixiv-assistant .nav-justified>li>a{text-align:center;margin-bottom:5px}
+.pixiv-assistant .nav-justified>.dropdown .dropdown-menu{top:auto;left:auto}
+@media (min-width:768px){.nav-justified>li{display:table-cell;width:1%}
+.pixiv-assistant .nav-justified>li>a{margin-bottom:0}
+}
+.pixiv-assistant .nav-tabs-justified{border-bottom:0}
+.pixiv-assistant .nav-tabs-justified>li>a{margin-right:0;border-radius:4px}
+.pixiv-assistant .nav-tabs-justified>.active>a, .pixiv-assistant .nav-tabs-justified>.active>a:hover, .pixiv-assistant .nav-tabs-justified>.active>a:focus{border:1px solid #dddddd}
+@media (min-width:768px){.nav-tabs-justified>li>a{border-bottom:1px solid #dddddd;border-radius:4px 4px 0 0}
+.pixiv-assistant .nav-tabs-justified>.active>a, .pixiv-assistant .nav-tabs-justified>.active>a:hover, .pixiv-assistant .nav-tabs-justified>.active>a:focus{border-bottom-color:#fcfcfc}
+}
+.pixiv-assistant .tab-content>.tab-pane{display:none}
+.pixiv-assistant .tab-content>.active{display:block}
+.pixiv-assistant .nav-tabs .dropdown-menu{margin-top:-1px;border-top-right-radius:0;border-top-left-radius:0}
+.pixiv-assistant .navbar{position:relative;min-height:40px;margin-bottom:18px;border:1px solid transparent}
+@media (min-width:768px){.navbar{border-radius:4px}
+}
+@media (min-width:768px){.navbar-header{float:left}
+}
+.pixiv-assistant .navbar-collapse{overflow-x:visible;padding-right:15px;padding-left:15px;border-top:1px solid transparent;-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.1);box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.1);-webkit-overflow-scrolling:touch}
+.pixiv-assistant .navbar-collapse.in{overflow-y:auto}
+@media (min-width:768px){.navbar-collapse{width:auto;border-top:0;-webkit-box-shadow:none;box-shadow:none}
+.pixiv-assistant .navbar-collapse.collapse{display:block !important;height:auto !important;padding-bottom:0;overflow:visible !important}
+.pixiv-assistant .navbar-collapse.in{overflow-y:visible}
+.pixiv-assistant .navbar-fixed-top .navbar-collapse, .pixiv-assistant .navbar-static-top .navbar-collapse, .pixiv-assistant .navbar-fixed-bottom .navbar-collapse{padding-left:0;padding-right:0}
+}
+.pixiv-assistant .navbar-fixed-top .navbar-collapse, .pixiv-assistant .navbar-fixed-bottom .navbar-collapse{max-height:340px}
+@media (max-device-width:480px) and (orientation:landscape){.navbar-fixed-top .navbar-collapse, .pixiv-assistant .navbar-fixed-bottom .navbar-collapse{max-height:200px}
+}
+.pixiv-assistant .container>.navbar-header, .pixiv-assistant .container-fluid>.navbar-header, .pixiv-assistant .container>.navbar-collapse, .pixiv-assistant .container-fluid>.navbar-collapse{margin-right:-15px;margin-left:-15px}
+@media (min-width:768px){.container>.navbar-header, .pixiv-assistant .container-fluid>.navbar-header, .pixiv-assistant .container>.navbar-collapse, .pixiv-assistant .container-fluid>.navbar-collapse{margin-right:0;margin-left:0}
+}
+.pixiv-assistant .navbar-static-top{z-index:1000;border-width:0 0 1px}
+@media (min-width:768px){.navbar-static-top{border-radius:0}
+}
+.pixiv-assistant .navbar-fixed-top, .pixiv-assistant .navbar-fixed-bottom{position:fixed;right:0;left:0;z-index:1030}
+@media (min-width:768px){.navbar-fixed-top, .pixiv-assistant .navbar-fixed-bottom{border-radius:0}
+}
+.pixiv-assistant .navbar-fixed-top{top:0;border-width:0 0 1px}
+.pixiv-assistant .navbar-fixed-bottom{bottom:0;margin-bottom:0;border-width:1px 0 0}
+.pixiv-assistant .navbar-brand{float:left;padding:11px 15px;font-size:17px;line-height:18px;height:40px}
+.pixiv-assistant .navbar-brand:hover, .pixiv-assistant .navbar-brand:focus{text-decoration:none}
+.pixiv-assistant .navbar-brand>img{display:block}
+@media (min-width:768px){.navbar>.container .navbar-brand, .pixiv-assistant .navbar>.container-fluid .navbar-brand{margin-left:-15px}
+}
+.pixiv-assistant .navbar-toggle{position:relative;float:right;margin-right:15px;padding:9px 10px;margin-top:3px;margin-bottom:3px;background-color:transparent;background-image:none;border:1px solid transparent;border-radius:4px}
+.pixiv-assistant .navbar-toggle:focus{outline:0}
+.pixiv-assistant .navbar-toggle .icon-bar{display:block;width:22px;height:2px;border-radius:1px}
+.pixiv-assistant .navbar-toggle .icon-bar+.icon-bar{margin-top:4px}
+@media (min-width:768px){.navbar-toggle{display:none}
+}
+.pixiv-assistant .navbar-nav{margin:5.5px -15px}
+.pixiv-assistant .navbar-nav>li>a{padding-top:10px;padding-bottom:10px;line-height:18px}
+@media (max-width:767px){.navbar-nav .open .dropdown-menu{position:static;float:none;width:auto;margin-top:0;background-color:transparent;border:0;-webkit-box-shadow:none;box-shadow:none}
+.pixiv-assistant .navbar-nav .open .dropdown-menu>li>a, .pixiv-assistant .navbar-nav .open .dropdown-menu .dropdown-header{padding:5px 15px 5px 25px}
+.pixiv-assistant .navbar-nav .open .dropdown-menu>li>a{line-height:18px}
+.pixiv-assistant .navbar-nav .open .dropdown-menu>li>a:hover, .pixiv-assistant .navbar-nav .open .dropdown-menu>li>a:focus{background-image:none}
+}
+@media (min-width:768px){.navbar-nav{float:left;margin:0}
+.pixiv-assistant .navbar-nav>li{float:left}
+.pixiv-assistant .navbar-nav>li>a{padding-top:11px;padding-bottom:11px}
+}
+.pixiv-assistant .navbar-form{margin-left:-15px;margin-right:-15px;padding:10px 15px;border-top:1px solid transparent;border-bottom:1px solid transparent;-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);margin-top:2px;margin-bottom:2px}
+@media (min-width:768px){.navbar-form .form-group{display:inline-block;margin-bottom:0;vertical-align:middle}
+.pixiv-assistant .navbar-form .form-control{display:inline-block;width:auto;vertical-align:middle}
+.pixiv-assistant .navbar-form .form-control-static{display:inline-block}
+.pixiv-assistant .navbar-form .input-group{display:inline-table;vertical-align:middle}
+.pixiv-assistant .navbar-form .input-group .input-group-addon, .pixiv-assistant .navbar-form .input-group .input-group-btn, .pixiv-assistant .navbar-form .input-group .form-control{width:auto}
+.pixiv-assistant .navbar-form .input-group>.form-control{width:100%}
+.pixiv-assistant .navbar-form .control-label{margin-bottom:0;vertical-align:middle}
+.pixiv-assistant .navbar-form .radio, .pixiv-assistant .navbar-form .checkbox{display:inline-block;margin-top:0;margin-bottom:0;vertical-align:middle}
+.pixiv-assistant .navbar-form .radio label, .pixiv-assistant .navbar-form .checkbox label{padding-left:0}
+.pixiv-assistant .navbar-form .radio input[type="radio"], .pixiv-assistant .navbar-form .checkbox input[type="checkbox"]{position:relative;margin-left:0}
+.pixiv-assistant .navbar-form .has-feedback .form-control-feedback{top:0}
+}
+@media (max-width:767px){.navbar-form .form-group{margin-bottom:5px}
+.pixiv-assistant .navbar-form .form-group:last-child{margin-bottom:0}
+}
+@media (min-width:768px){.navbar-form{width:auto;border:0;margin-left:0;margin-right:0;padding-top:0;padding-bottom:0;-webkit-box-shadow:none;box-shadow:none}
+}
+.pixiv-assistant .navbar-nav>li>.dropdown-menu{margin-top:0;border-top-right-radius:0;border-top-left-radius:0}
+.pixiv-assistant .navbar-fixed-bottom .navbar-nav>li>.dropdown-menu{margin-bottom:0;border-top-right-radius:4px;border-top-left-radius:4px;border-bottom-right-radius:0;border-bottom-left-radius:0}
+.pixiv-assistant .navbar-btn{margin-top:2px;margin-bottom:2px}
+.pixiv-assistant .navbar-btn.btn-sm{margin-top:5px;margin-bottom:5px}
+.pixiv-assistant .navbar-btn.btn-xs{margin-top:9px;margin-bottom:9px}
+.pixiv-assistant .navbar-text{margin-top:11px;margin-bottom:11px}
+@media (min-width:768px){.navbar-text{float:left;margin-left:15px;margin-right:15px}
+}
+@media (min-width:768px){.navbar-left{float:left !important}
+.pixiv-assistant .navbar-right{float:right !important;margin-right:-15px}
+.pixiv-assistant .navbar-right~.navbar-right{margin-right:0}
+}
+.pixiv-assistant .navbar-default{background-color:#ffffff;border-color:#eeeeee}
+.pixiv-assistant .navbar-default .navbar-brand{color:#777777}
+.pixiv-assistant .navbar-default .navbar-brand:hover, .pixiv-assistant .navbar-default .navbar-brand:focus{color:#d9230f;background-color:transparent}
+.pixiv-assistant .navbar-default .navbar-text{color:#777777}
+.pixiv-assistant .navbar-default .navbar-nav>li>a{color:#777777}
+.pixiv-assistant .navbar-default .navbar-nav>li>a:hover, .pixiv-assistant .navbar-default .navbar-nav>li>a:focus{color:#d9230f;background-color:transparent}
+.pixiv-assistant .navbar-default .navbar-nav>.active>a, .pixiv-assistant .navbar-default .navbar-nav>.active>a:hover, .pixiv-assistant .navbar-default .navbar-nav>.active>a:focus{color:#d9230f;background-color:transparent}
+.pixiv-assistant .navbar-default .navbar-nav>.disabled>a, .pixiv-assistant .navbar-default .navbar-nav>.disabled>a:hover, .pixiv-assistant .navbar-default .navbar-nav>.disabled>a:focus{color:#444444;background-color:transparent}
+.pixiv-assistant .navbar-default .navbar-toggle{border-color:#dddddd}
+.pixiv-assistant .navbar-default .navbar-toggle:hover, .pixiv-assistant .navbar-default .navbar-toggle:focus{background-color:#dddddd}
+.pixiv-assistant .navbar-default .navbar-toggle .icon-bar{background-color:#cccccc}
+.pixiv-assistant .navbar-default .navbar-collapse, .pixiv-assistant .navbar-default .navbar-form{border-color:#eeeeee}
+.pixiv-assistant .navbar-default .navbar-nav>.open>a, .pixiv-assistant .navbar-default .navbar-nav>.open>a:hover, .pixiv-assistant .navbar-default .navbar-nav>.open>a:focus{background-color:transparent;color:#d9230f}
+@media (max-width:767px){.navbar-default .navbar-nav .open .dropdown-menu>li>a{color:#777777}
+.pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, .pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus{color:#d9230f;background-color:transparent}
+.pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>.active>a, .pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover, .pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus{color:#d9230f;background-color:transparent}
+.pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>.disabled>a, .pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>.disabled>a:hover, .pixiv-assistant .navbar-default .navbar-nav .open .dropdown-menu>.disabled>a:focus{color:#444444;background-color:transparent}
+}
+.pixiv-assistant .navbar-default .navbar-link{color:#777777}
+.pixiv-assistant .navbar-default .navbar-link:hover{color:#d9230f}
+.pixiv-assistant .navbar-default .btn-link{color:#777777}
+.pixiv-assistant .navbar-default .btn-link:hover, .pixiv-assistant .navbar-default .btn-link:focus{color:#d9230f}
+.pixiv-assistant .navbar-default .btn-link[disabled]:hover, .pixiv-assistant fieldset[disabled] .navbar-default .btn-link:hover, .pixiv-assistant .navbar-default .btn-link[disabled]:focus, .pixiv-assistant fieldset[disabled] .navbar-default .btn-link:focus{color:#444444}
+.pixiv-assistant .navbar-inverse{background-color:#d9230f;border-color:#a91b0c}
+.pixiv-assistant .navbar-inverse .navbar-brand{color:#fac0ba}
+.pixiv-assistant .navbar-inverse .navbar-brand:hover, .pixiv-assistant .navbar-inverse .navbar-brand:focus{color:#ffffff;background-color:transparent}
+.pixiv-assistant .navbar-inverse .navbar-text{color:#fac0ba}
+.pixiv-assistant .navbar-inverse .navbar-nav>li>a{color:#fac0ba}
+.pixiv-assistant .navbar-inverse .navbar-nav>li>a:hover, .pixiv-assistant .navbar-inverse .navbar-nav>li>a:focus{color:#ffffff;background-color:transparent}
+.pixiv-assistant .navbar-inverse .navbar-nav>.active>a, .pixiv-assistant .navbar-inverse .navbar-nav>.active>a:hover, .pixiv-assistant .navbar-inverse .navbar-nav>.active>a:focus{color:#ffffff;background-color:transparent}
+.pixiv-assistant .navbar-inverse .navbar-nav>.disabled>a, .pixiv-assistant .navbar-inverse .navbar-nav>.disabled>a:hover, .pixiv-assistant .navbar-inverse .navbar-nav>.disabled>a:focus{color:#cccccc;background-color:transparent}
+.pixiv-assistant .navbar-inverse .navbar-toggle{border-color:#a91b0c}
+.pixiv-assistant .navbar-inverse .navbar-toggle:hover, .pixiv-assistant .navbar-inverse .navbar-toggle:focus{background-color:#a91b0c}
+.pixiv-assistant .navbar-inverse .navbar-toggle .icon-bar{background-color:#ffffff}
+.pixiv-assistant .navbar-inverse .navbar-collapse, .pixiv-assistant .navbar-inverse .navbar-form{border-color:#b81e0d}
+.pixiv-assistant .navbar-inverse .navbar-nav>.open>a, .pixiv-assistant .navbar-inverse .navbar-nav>.open>a:hover, .pixiv-assistant .navbar-inverse .navbar-nav>.open>a:focus{background-color:transparent;color:#ffffff}
+@media (max-width:767px){.navbar-inverse .navbar-nav .open .dropdown-menu>.dropdown-header{border-color:#a91b0c}
+.pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu .divider{background-color:#a91b0c}
+.pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>li>a{color:#fac0ba}
+.pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover, .pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:focus{color:#ffffff;background-color:transparent}
+.pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>.active>a, .pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>.active>a:hover, .pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>.active>a:focus{color:#ffffff;background-color:transparent}
+.pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>.disabled>a, .pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>.disabled>a:hover, .pixiv-assistant .navbar-inverse .navbar-nav .open .dropdown-menu>.disabled>a:focus{color:#cccccc;background-color:transparent}
+}
+.pixiv-assistant .navbar-inverse .navbar-link{color:#fac0ba}
+.pixiv-assistant .navbar-inverse .navbar-link:hover{color:#ffffff}
+.pixiv-assistant .navbar-inverse .btn-link{color:#fac0ba}
+.pixiv-assistant .navbar-inverse .btn-link:hover, .pixiv-assistant .navbar-inverse .btn-link:focus{color:#ffffff}
+.pixiv-assistant .navbar-inverse .btn-link[disabled]:hover, .pixiv-assistant fieldset[disabled] .navbar-inverse .btn-link:hover, .pixiv-assistant .navbar-inverse .btn-link[disabled]:focus, .pixiv-assistant fieldset[disabled] .navbar-inverse .btn-link:focus{color:#cccccc}
+.pixiv-assistant .breadcrumb{padding:8px 15px;margin-bottom:18px;list-style:none;background-color:transparent;border-radius:4px}
+.pixiv-assistant .breadcrumb>li{display:inline-block}
+.pixiv-assistant .breadcrumb>li+li:before{content:"/\00a0";padding:0 5px;color:#cccccc}
+.pixiv-assistant .breadcrumb>.active{color:#808080}
+.pixiv-assistant .pagination{display:inline-block;padding-left:0;margin:18px 0;border-radius:4px}
+.pixiv-assistant .pagination>li{display:inline}
+.pixiv-assistant .pagination>li>a, .pixiv-assistant .pagination>li>span{position:relative;float:left;padding:8px 12px;line-height:1.42857143;text-decoration:none;color:#444444;background-color:#ffffff;border:1px solid #dddddd;margin-left:-1px}
+.pixiv-assistant .pagination>li:first-child>a, .pixiv-assistant .pagination>li:first-child>span{margin-left:0;border-bottom-left-radius:4px;border-top-left-radius:4px}
+.pixiv-assistant .pagination>li:last-child>a, .pixiv-assistant .pagination>li:last-child>span{border-bottom-right-radius:4px;border-top-right-radius:4px}
+.pixiv-assistant .pagination>li>a:hover, .pixiv-assistant .pagination>li>span:hover, .pixiv-assistant .pagination>li>a:focus, .pixiv-assistant .pagination>li>span:focus{z-index:2;color:#ffffff;background-color:#d9230f;border-color:#d9230f}
+.pixiv-assistant .pagination>.active>a, .pixiv-assistant .pagination>.active>span, .pixiv-assistant .pagination>.active>a:hover, .pixiv-assistant .pagination>.active>span:hover, .pixiv-assistant .pagination>.active>a:focus, .pixiv-assistant .pagination>.active>span:focus{z-index:3;color:#ffffff;background-color:#d9230f;border-color:#d9230f;cursor:default}
+.pixiv-assistant .pagination>.disabled>span, .pixiv-assistant .pagination>.disabled>span:hover, .pixiv-assistant .pagination>.disabled>span:focus, .pixiv-assistant .pagination>.disabled>a, .pixiv-assistant .pagination>.disabled>a:hover, .pixiv-assistant .pagination>.disabled>a:focus{color:#dddddd;background-color:#ffffff;border-color:#dddddd;cursor:not-allowed}
+.pixiv-assistant .pagination-lg>li>a, .pixiv-assistant .pagination-lg>li>span{padding:14px 16px;font-size:17px;line-height:1.3333333}
+.pixiv-assistant .pagination-lg>li:first-child>a, .pixiv-assistant .pagination-lg>li:first-child>span{border-bottom-left-radius:6px;border-top-left-radius:6px}
+.pixiv-assistant .pagination-lg>li:last-child>a, .pixiv-assistant .pagination-lg>li:last-child>span{border-bottom-right-radius:6px;border-top-right-radius:6px}
+.pixiv-assistant .pagination-sm>li>a, .pixiv-assistant .pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}
+.pixiv-assistant .pagination-sm>li:first-child>a, .pixiv-assistant .pagination-sm>li:first-child>span{border-bottom-left-radius:3px;border-top-left-radius:3px}
+.pixiv-assistant .pagination-sm>li:last-child>a, .pixiv-assistant .pagination-sm>li:last-child>span{border-bottom-right-radius:3px;border-top-right-radius:3px}
+.pixiv-assistant .pager{padding-left:0;margin:18px 0;list-style:none;text-align:center}
+.pixiv-assistant .pager li{display:inline}
+.pixiv-assistant .pager li>a, .pixiv-assistant .pager li>span{display:inline-block;padding:5px 14px;background-color:#ffffff;border:1px solid #dddddd;border-radius:15px}
+.pixiv-assistant .pager li>a:hover, .pixiv-assistant .pager li>a:focus{text-decoration:none;background-color:#d9230f}
+.pixiv-assistant .pager .next>a, .pixiv-assistant .pager .next>span{float:right}
+.pixiv-assistant .pager .previous>a, .pixiv-assistant .pager .previous>span{float:left}
+.pixiv-assistant .pager .disabled>a, .pixiv-assistant .pager .disabled>a:hover, .pixiv-assistant .pager .disabled>a:focus, .pixiv-assistant .pager .disabled>span{color:#dddddd;background-color:#ffffff;cursor:not-allowed}
+.pixiv-assistant .label{display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:bold;line-height:1;color:#ffffff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em}
+.pixiv-assistant a.label:hover, .pixiv-assistant a.label:focus{color:#ffffff;text-decoration:none;cursor:pointer}
+.pixiv-assistant .label:empty{display:none}
+.pixiv-assistant .btn .label{position:relative;top:-1px}
+.pixiv-assistant .label-default{background-color:#474949}
+.pixiv-assistant .label-default[href]:hover, .pixiv-assistant .label-default[href]:focus{background-color:#2e2f2f}
+.pixiv-assistant .label-primary{background-color:#d9230f}
+.pixiv-assistant .label-primary[href]:hover, .pixiv-assistant .label-primary[href]:focus{background-color:#a91b0c}
+.pixiv-assistant .label-success{background-color:#469408}
+.pixiv-assistant .label-success[href]:hover, .pixiv-assistant .label-success[href]:focus{background-color:#2f6405}
+.pixiv-assistant .label-info{background-color:#029acf}
+.pixiv-assistant .label-info[href]:hover, .pixiv-assistant .label-info[href]:focus{background-color:#02749c}
+.pixiv-assistant .label-warning{background-color:#9b479f}
+.pixiv-assistant .label-warning[href]:hover, .pixiv-assistant .label-warning[href]:focus{background-color:#79377c}
+.pixiv-assistant .label-danger{background-color:#d9831f}
+.pixiv-assistant .label-danger[href]:hover, .pixiv-assistant .label-danger[href]:focus{background-color:#ac6819}
+.pixiv-assistant .badge{display:inline-block;min-width:10px;padding:3px 7px;font-size:12px;font-weight:bold;color:#ffffff;line-height:1;vertical-align:middle;white-space:nowrap;text-align:center;background-color:#d9230f;border-radius:10px}
+.pixiv-assistant .badge:empty{display:none}
+.pixiv-assistant .btn .badge{position:relative;top:-1px}
+.pixiv-assistant .btn-xs .badge, .pixiv-assistant .btn-group-xs>.btn .badge{top:0;padding:1px 5px}
+.pixiv-assistant a.badge:hover, .pixiv-assistant a.badge:focus{color:#ffffff;text-decoration:none;cursor:pointer}
+.pixiv-assistant .list-group-item.active>.badge, .pixiv-assistant .nav-pills>.active>a>.badge{color:#d9230f;background-color:#ffffff}
+.pixiv-assistant .list-group-item>.badge{float:right}
+.pixiv-assistant .list-group-item>.badge+.badge{margin-right:5px}
+.pixiv-assistant .nav-pills>li>a>.badge{margin-left:3px}
+.pixiv-assistant .jumbotron{padding-top:30px;padding-bottom:30px;margin-bottom:30px;color:inherit;background-color:#f4f4f4}
+.pixiv-assistant .jumbotron h1, .pixiv-assistant .jumbotron .h1{color:inherit}
+.pixiv-assistant .jumbotron p{margin-bottom:15px;font-size:20px;font-weight:200}
+.pixiv-assistant .jumbotron>hr{border-top-color:#dbdbdb}
+.pixiv-assistant .container .jumbotron, .pixiv-assistant .container-fluid .jumbotron{border-radius:6px;padding-left:15px;padding-right:15px}
+.pixiv-assistant .jumbotron .container{max-width:100%}
+@media screen and (min-width:768px){.jumbotron{padding-top:48px;padding-bottom:48px}
+.pixiv-assistant .container .jumbotron, .pixiv-assistant .container-fluid .jumbotron{padding-left:60px;padding-right:60px}
+.pixiv-assistant .jumbotron h1, .pixiv-assistant .jumbotron .h1{font-size:59px}
+}
+.pixiv-assistant .thumbnail{display:block;padding:4px;margin-bottom:18px;line-height:1.42857143;background-color:#fcfcfc;border:1px solid #dddddd;border-radius:4px;-webkit-transition:border .2s ease-in-out;-o-transition:border .2s ease-in-out;transition:border .2s ease-in-out}
+.pixiv-assistant .thumbnail>img, .pixiv-assistant .thumbnail a>img{margin-left:auto;margin-right:auto}
+.pixiv-assistant a.thumbnail:hover, .pixiv-assistant a.thumbnail:focus, .pixiv-assistant a.thumbnail.active{border-color:#d9230f}
+.pixiv-assistant .thumbnail .caption{padding:9px;color:#777777}
+.pixiv-assistant .alert{padding:15px;margin-bottom:18px;border:1px solid transparent;border-radius:4px}
+.pixiv-assistant .alert h4{margin-top:0;color:inherit}
+.pixiv-assistant .alert .alert-link{font-weight:bold}
+.pixiv-assistant .alert>p, .pixiv-assistant .alert>ul{margin-bottom:0}
+.pixiv-assistant .alert>p+p{margin-top:5px}
+.pixiv-assistant .alert-dismissable, .pixiv-assistant .alert-dismissible{padding-right:35px}
+.pixiv-assistant .alert-dismissable .close, .pixiv-assistant .alert-dismissible .close{position:relative;top:-2px;right:-21px;color:inherit}
+.pixiv-assistant .alert-success{background-color:#dff0d8;border-color:#d6e9c6;color:#468847}
+.pixiv-assistant .alert-success hr{border-top-color:#c9e2b3}
+.pixiv-assistant .alert-success .alert-link{color:#356635}
+.pixiv-assistant .alert-info{background-color:#d9edf7;border-color:#bce8f1;color:#3a87ad}
+.pixiv-assistant .alert-info hr{border-top-color:#a6e1ec}
+.pixiv-assistant .alert-info .alert-link{color:#2d6987}
+.pixiv-assistant .alert-warning{background-color:#fcf8e3;border-color:#fbeed5;color:#c09853}
+.pixiv-assistant .alert-warning hr{border-top-color:#f8e5be}
+.pixiv-assistant .alert-warning .alert-link{color:#a47e3c}
+.pixiv-assistant .alert-danger{background-color:#f2dede;border-color:#eed3d7;color:#b94a48}
+.pixiv-assistant .alert-danger hr{border-top-color:#e6c1c7}
+.pixiv-assistant .alert-danger .alert-link{color:#953b39}
+@-webkit-keyframes progress-bar-stripes{from{background-position:40px 0}
+to{background-position:0 0}
+}
+@-o-keyframes progress-bar-stripes{from{background-position:40px 0}
+to{background-position:0 0}
+}
+@keyframes progress-bar-stripes{from{background-position:40px 0}
+to{background-position:0 0}
+}
+.pixiv-assistant .progress{overflow:hidden;height:18px;margin-bottom:18px;background-color:#f5f5f5;border-radius:4px;-webkit-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
+.pixiv-assistant .progress-bar{float:left;width:0%;height:100%;font-size:12px;line-height:18px;color:#ffffff;text-align:center;background-color:#d9230f;-webkit-box-shadow:inset 0 -1px 0 rgba(0, 0, 0, 0.15);box-shadow:inset 0 -1px 0 rgba(0, 0, 0, 0.15);-webkit-transition:width 0.6s ease;-o-transition:width 0.6s ease;transition:width 0.6s ease}
+.pixiv-assistant .progress-striped .progress-bar, .pixiv-assistant .progress-bar-striped{background-image:-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:-o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);-webkit-background-size:40px 40px;background-size:40px 40px}
+.pixiv-assistant .progress.active .progress-bar, .pixiv-assistant .progress-bar.active{-webkit-animation:progress-bar-stripes 2s linear infinite;-o-animation:progress-bar-stripes 2s linear infinite;animation:progress-bar-stripes 2s linear infinite}
+.pixiv-assistant .progress-bar-success{background-color:#469408}
+.pixiv-assistant .progress-striped .progress-bar-success{background-image:-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:-o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)}
+.pixiv-assistant .progress-bar-info{background-color:#029acf}
+.pixiv-assistant .progress-striped .progress-bar-info{background-image:-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:-o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)}
+.pixiv-assistant .progress-bar-warning{background-color:#9b479f}
+.pixiv-assistant .progress-striped .progress-bar-warning{background-image:-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:-o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)}
+.pixiv-assistant .progress-bar-danger{background-color:#d9831f}
+.pixiv-assistant .progress-striped .progress-bar-danger{background-image:-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:-o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);background-image:linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)}
+.pixiv-assistant .media{margin-top:15px}
+.pixiv-assistant .media:first-child{margin-top:0}
+.pixiv-assistant .media, .pixiv-assistant .media-body{zoom:1;overflow:hidden}
+.pixiv-assistant .media-body{width:10000px}
+.pixiv-assistant .media-object{display:block}
+.pixiv-assistant .media-object.img-thumbnail{max-width:none}
+.pixiv-assistant .media-right, .pixiv-assistant .media>.pull-right{padding-left:10px}
+.pixiv-assistant .media-left, .pixiv-assistant .media>.pull-left{padding-right:10px}
+.pixiv-assistant .media-left, .pixiv-assistant .media-right, .pixiv-assistant .media-body{display:table-cell;vertical-align:top}
+.pixiv-assistant .media-middle{vertical-align:middle}
+.pixiv-assistant .media-bottom{vertical-align:bottom}
+.pixiv-assistant .media-heading{margin-top:0;margin-bottom:5px}
+.pixiv-assistant .media-list{padding-left:0;list-style:none}
+.pixiv-assistant .list-group{margin-bottom:20px;padding-left:0}
+.pixiv-assistant .list-group-item{position:relative;display:block;padding:10px 15px;margin-bottom:-1px;background-color:#ffffff;border:1px solid #dddddd}
+.pixiv-assistant .list-group-item:first-child{border-top-right-radius:4px;border-top-left-radius:4px}
+.pixiv-assistant .list-group-item:last-child{margin-bottom:0;border-bottom-right-radius:4px;border-bottom-left-radius:4px}
+.pixiv-assistant a.list-group-item, .pixiv-assistant button.list-group-item{color:#555555}
+.pixiv-assistant a.list-group-item .list-group-item-heading, .pixiv-assistant button.list-group-item .list-group-item-heading{color:#333333}
+.pixiv-assistant a.list-group-item:hover, .pixiv-assistant button.list-group-item:hover, .pixiv-assistant a.list-group-item:focus, .pixiv-assistant button.list-group-item:focus{text-decoration:none;color:#555555;background-color:#f5f5f5}
+.pixiv-assistant button.list-group-item{width:100%;text-align:left}
+.pixiv-assistant .list-group-item.disabled, .pixiv-assistant .list-group-item.disabled:hover, .pixiv-assistant .list-group-item.disabled:focus{background-color:#dddddd;color:#808080;cursor:not-allowed}
+.pixiv-assistant .list-group-item.disabled .list-group-item-heading, .pixiv-assistant .list-group-item.disabled:hover .list-group-item-heading, .pixiv-assistant .list-group-item.disabled:focus .list-group-item-heading{color:inherit}
+.pixiv-assistant .list-group-item.disabled .list-group-item-text, .pixiv-assistant .list-group-item.disabled:hover .list-group-item-text, .pixiv-assistant .list-group-item.disabled:focus .list-group-item-text{color:#808080}
+.pixiv-assistant .list-group-item.active, .pixiv-assistant .list-group-item.active:hover, .pixiv-assistant .list-group-item.active:focus{z-index:2;color:#ffffff;background-color:#d9230f;border-color:#d9230f}
+.pixiv-assistant .list-group-item.active .list-group-item-heading, .pixiv-assistant .list-group-item.active:hover .list-group-item-heading, .pixiv-assistant .list-group-item.active:focus .list-group-item-heading, .pixiv-assistant .list-group-item.active .list-group-item-heading>small, .pixiv-assistant .list-group-item.active:hover .list-group-item-heading>small, .pixiv-assistant .list-group-item.active:focus .list-group-item-heading>small, .pixiv-assistant .list-group-item.active .list-group-item-heading>.small, .pixiv-assistant .list-group-item.active:hover .list-group-item-heading>.small, .pixiv-assistant .list-group-item.active:focus .list-group-item-heading>.small{color:inherit}
+.pixiv-assistant .list-group-item.active .list-group-item-text, .pixiv-assistant .list-group-item.active:hover .list-group-item-text, .pixiv-assistant .list-group-item.active:focus .list-group-item-text{color:#fac0ba}
+.pixiv-assistant .list-group-item-success{color:#468847;background-color:#dff0d8}
+.pixiv-assistant a.list-group-item-success, .pixiv-assistant button.list-group-item-success{color:#468847}
+.pixiv-assistant a.list-group-item-success .list-group-item-heading, .pixiv-assistant button.list-group-item-success .list-group-item-heading{color:inherit}
+.pixiv-assistant a.list-group-item-success:hover, .pixiv-assistant button.list-group-item-success:hover, .pixiv-assistant a.list-group-item-success:focus, .pixiv-assistant button.list-group-item-success:focus{color:#468847;background-color:#d0e9c6}
+.pixiv-assistant a.list-group-item-success.active, .pixiv-assistant button.list-group-item-success.active, .pixiv-assistant a.list-group-item-success.active:hover, .pixiv-assistant button.list-group-item-success.active:hover, .pixiv-assistant a.list-group-item-success.active:focus, .pixiv-assistant button.list-group-item-success.active:focus{color:#fff;background-color:#468847;border-color:#468847}
+.pixiv-assistant .list-group-item-info{color:#3a87ad;background-color:#d9edf7}
+.pixiv-assistant a.list-group-item-info, .pixiv-assistant button.list-group-item-info{color:#3a87ad}
+.pixiv-assistant a.list-group-item-info .list-group-item-heading, .pixiv-assistant button.list-group-item-info .list-group-item-heading{color:inherit}
+.pixiv-assistant a.list-group-item-info:hover, .pixiv-assistant button.list-group-item-info:hover, .pixiv-assistant a.list-group-item-info:focus, .pixiv-assistant button.list-group-item-info:focus{color:#3a87ad;background-color:#c4e3f3}
+.pixiv-assistant a.list-group-item-info.active, .pixiv-assistant button.list-group-item-info.active, .pixiv-assistant a.list-group-item-info.active:hover, .pixiv-assistant button.list-group-item-info.active:hover, .pixiv-assistant a.list-group-item-info.active:focus, .pixiv-assistant button.list-group-item-info.active:focus{color:#fff;background-color:#3a87ad;border-color:#3a87ad}
+.pixiv-assistant .list-group-item-warning{color:#c09853;background-color:#fcf8e3}
+.pixiv-assistant a.list-group-item-warning, .pixiv-assistant button.list-group-item-warning{color:#c09853}
+.pixiv-assistant a.list-group-item-warning .list-group-item-heading, .pixiv-assistant button.list-group-item-warning .list-group-item-heading{color:inherit}
+.pixiv-assistant a.list-group-item-warning:hover, .pixiv-assistant button.list-group-item-warning:hover, .pixiv-assistant a.list-group-item-warning:focus, .pixiv-assistant button.list-group-item-warning:focus{color:#c09853;background-color:#faf2cc}
+.pixiv-assistant a.list-group-item-warning.active, .pixiv-assistant button.list-group-item-warning.active, .pixiv-assistant a.list-group-item-warning.active:hover, .pixiv-assistant button.list-group-item-warning.active:hover, .pixiv-assistant a.list-group-item-warning.active:focus, .pixiv-assistant button.list-group-item-warning.active:focus{color:#fff;background-color:#c09853;border-color:#c09853}
+.pixiv-assistant .list-group-item-danger{color:#b94a48;background-color:#f2dede}
+.pixiv-assistant a.list-group-item-danger, .pixiv-assistant button.list-group-item-danger{color:#b94a48}
+.pixiv-assistant a.list-group-item-danger .list-group-item-heading, .pixiv-assistant button.list-group-item-danger .list-group-item-heading{color:inherit}
+.pixiv-assistant a.list-group-item-danger:hover, .pixiv-assistant button.list-group-item-danger:hover, .pixiv-assistant a.list-group-item-danger:focus, .pixiv-assistant button.list-group-item-danger:focus{color:#b94a48;background-color:#ebcccc}
+.pixiv-assistant a.list-group-item-danger.active, .pixiv-assistant button.list-group-item-danger.active, .pixiv-assistant a.list-group-item-danger.active:hover, .pixiv-assistant button.list-group-item-danger.active:hover, .pixiv-assistant a.list-group-item-danger.active:focus, .pixiv-assistant button.list-group-item-danger.active:focus{color:#fff;background-color:#b94a48;border-color:#b94a48}
+.pixiv-assistant .list-group-item-heading{margin-top:0;margin-bottom:5px}
+.pixiv-assistant .list-group-item-text{margin-bottom:0;line-height:1.3}
+.pixiv-assistant .panel{margin-bottom:18px;background-color:#ffffff;border:1px solid transparent;border-radius:4px;-webkit-box-shadow:0 1px 1px rgba(0, 0, 0, 0.05);box-shadow:0 1px 1px rgba(0, 0, 0, 0.05)}
+.pixiv-assistant .panel-body{padding:15px}
+.pixiv-assistant .panel-heading{padding:10px 15px;border-bottom:1px solid transparent;border-top-right-radius:3px;border-top-left-radius:3px}
+.pixiv-assistant .panel-heading>.dropdown .dropdown-toggle{color:inherit}
+.pixiv-assistant .panel-title{margin-top:0;margin-bottom:0;font-size:15px;color:inherit}
+.pixiv-assistant .panel-title>a, .pixiv-assistant .panel-title>small, .pixiv-assistant .panel-title>.small, .pixiv-assistant .panel-title>small>a, .pixiv-assistant .panel-title>.small>a{color:inherit}
+.pixiv-assistant .panel-footer{padding:10px 15px;background-color:#fcfcfc;border-top:1px solid #dddddd;border-bottom-right-radius:3px;border-bottom-left-radius:3px}
+.pixiv-assistant .panel>.list-group, .pixiv-assistant .panel>.panel-collapse>.list-group{margin-bottom:0}
+.pixiv-assistant .panel>.list-group .list-group-item, .pixiv-assistant .panel>.panel-collapse>.list-group .list-group-item{border-width:1px 0;border-radius:0}
+.pixiv-assistant .panel>.list-group:first-child .list-group-item:first-child, .pixiv-assistant .panel>.panel-collapse>.list-group:first-child .list-group-item:first-child{border-top:0;border-top-right-radius:3px;border-top-left-radius:3px}
+.pixiv-assistant .panel>.list-group:last-child .list-group-item:last-child, .pixiv-assistant .panel>.panel-collapse>.list-group:last-child .list-group-item:last-child{border-bottom:0;border-bottom-right-radius:3px;border-bottom-left-radius:3px}
+.pixiv-assistant .panel>.panel-heading+.panel-collapse>.list-group .list-group-item:first-child{border-top-right-radius:0;border-top-left-radius:0}
+.pixiv-assistant .panel-heading+.list-group .list-group-item:first-child{border-top-width:0}
+.pixiv-assistant .list-group+.panel-footer{border-top-width:0}
+.pixiv-assistant .panel>.table, .pixiv-assistant .panel>.table-responsive>.table, .pixiv-assistant .panel>.panel-collapse>.table{margin-bottom:0}
+.pixiv-assistant .panel>.table caption, .pixiv-assistant .panel>.table-responsive>.table caption, .pixiv-assistant .panel>.panel-collapse>.table caption{padding-left:15px;padding-right:15px}
+.pixiv-assistant .panel>.table:first-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child{border-top-right-radius:3px;border-top-left-radius:3px}
+.pixiv-assistant .panel>.table:first-child>thead:first-child>tr:first-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>thead:first-child>tr:first-child, .pixiv-assistant .panel>.table:first-child>tbody:first-child>tr:first-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>tbody:first-child>tr:first-child{border-top-left-radius:3px;border-top-right-radius:3px}
+.pixiv-assistant .panel>.table:first-child>thead:first-child>tr:first-child td:first-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>thead:first-child>tr:first-child td:first-child, .pixiv-assistant .panel>.table:first-child>tbody:first-child>tr:first-child td:first-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>tbody:first-child>tr:first-child td:first-child, .pixiv-assistant .panel>.table:first-child>thead:first-child>tr:first-child th:first-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>thead:first-child>tr:first-child th:first-child, .pixiv-assistant .panel>.table:first-child>tbody:first-child>tr:first-child th:first-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>tbody:first-child>tr:first-child th:first-child{border-top-left-radius:3px}
+.pixiv-assistant .panel>.table:first-child>thead:first-child>tr:first-child td:last-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>thead:first-child>tr:first-child td:last-child, .pixiv-assistant .panel>.table:first-child>tbody:first-child>tr:first-child td:last-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>tbody:first-child>tr:first-child td:last-child, .pixiv-assistant .panel>.table:first-child>thead:first-child>tr:first-child th:last-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>thead:first-child>tr:first-child th:last-child, .pixiv-assistant .panel>.table:first-child>tbody:first-child>tr:first-child th:last-child, .pixiv-assistant .panel>.table-responsive:first-child>.table:first-child>tbody:first-child>tr:first-child th:last-child{border-top-right-radius:3px}
+.pixiv-assistant .panel>.table:last-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child{border-bottom-right-radius:3px;border-bottom-left-radius:3px}
+.pixiv-assistant .panel>.table:last-child>tbody:last-child>tr:last-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tbody:last-child>tr:last-child, .pixiv-assistant .panel>.table:last-child>tfoot:last-child>tr:last-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tfoot:last-child>tr:last-child{border-bottom-left-radius:3px;border-bottom-right-radius:3px}
+.pixiv-assistant .panel>.table:last-child>tbody:last-child>tr:last-child td:first-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tbody:last-child>tr:last-child td:first-child, .pixiv-assistant .panel>.table:last-child>tfoot:last-child>tr:last-child td:first-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tfoot:last-child>tr:last-child td:first-child, .pixiv-assistant .panel>.table:last-child>tbody:last-child>tr:last-child th:first-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tbody:last-child>tr:last-child th:first-child, .pixiv-assistant .panel>.table:last-child>tfoot:last-child>tr:last-child th:first-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tfoot:last-child>tr:last-child th:first-child{border-bottom-left-radius:3px}
+.pixiv-assistant .panel>.table:last-child>tbody:last-child>tr:last-child td:last-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tbody:last-child>tr:last-child td:last-child, .pixiv-assistant .panel>.table:last-child>tfoot:last-child>tr:last-child td:last-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tfoot:last-child>tr:last-child td:last-child, .pixiv-assistant .panel>.table:last-child>tbody:last-child>tr:last-child th:last-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tbody:last-child>tr:last-child th:last-child, .pixiv-assistant .panel>.table:last-child>tfoot:last-child>tr:last-child th:last-child, .pixiv-assistant .panel>.table-responsive:last-child>.table:last-child>tfoot:last-child>tr:last-child th:last-child{border-bottom-right-radius:3px}
+.pixiv-assistant .panel>.panel-body+.table, .pixiv-assistant .panel>.panel-body+.table-responsive, .pixiv-assistant .panel>.table+.panel-body, .pixiv-assistant .panel>.table-responsive+.panel-body{border-top:1px solid #dddddd}
+.pixiv-assistant .panel>.table>tbody:first-child>tr:first-child th, .pixiv-assistant .panel>.table>tbody:first-child>tr:first-child td{border-top:0}
+.pixiv-assistant .panel>.table-bordered, .pixiv-assistant .panel>.table-responsive>.table-bordered{border:0}
+.pixiv-assistant .panel>.table-bordered>thead>tr>th:first-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>thead>tr>th:first-child, .pixiv-assistant .panel>.table-bordered>tbody>tr>th:first-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr>th:first-child, .pixiv-assistant .panel>.table-bordered>tfoot>tr>th:first-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tfoot>tr>th:first-child, .pixiv-assistant .panel>.table-bordered>thead>tr>td:first-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>thead>tr>td:first-child, .pixiv-assistant .panel>.table-bordered>tbody>tr>td:first-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr>td:first-child, .pixiv-assistant .panel>.table-bordered>tfoot>tr>td:first-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tfoot>tr>td:first-child{border-left:0}
+.pixiv-assistant .panel>.table-bordered>thead>tr>th:last-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>thead>tr>th:last-child, .pixiv-assistant .panel>.table-bordered>tbody>tr>th:last-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr>th:last-child, .pixiv-assistant .panel>.table-bordered>tfoot>tr>th:last-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tfoot>tr>th:last-child, .pixiv-assistant .panel>.table-bordered>thead>tr>td:last-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>thead>tr>td:last-child, .pixiv-assistant .panel>.table-bordered>tbody>tr>td:last-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr>td:last-child, .pixiv-assistant .panel>.table-bordered>tfoot>tr>td:last-child, .pixiv-assistant .panel>.table-responsive>.table-bordered>tfoot>tr>td:last-child{border-right:0}
+.pixiv-assistant .panel>.table-bordered>thead>tr:first-child>td, .pixiv-assistant .panel>.table-responsive>.table-bordered>thead>tr:first-child>td, .pixiv-assistant .panel>.table-bordered>tbody>tr:first-child>td, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr:first-child>td, .pixiv-assistant .panel>.table-bordered>thead>tr:first-child>th, .pixiv-assistant .panel>.table-responsive>.table-bordered>thead>tr:first-child>th, .pixiv-assistant .panel>.table-bordered>tbody>tr:first-child>th, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr:first-child>th{border-bottom:0}
+.pixiv-assistant .panel>.table-bordered>tbody>tr:last-child>td, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr:last-child>td, .pixiv-assistant .panel>.table-bordered>tfoot>tr:last-child>td, .pixiv-assistant .panel>.table-responsive>.table-bordered>tfoot>tr:last-child>td, .pixiv-assistant .panel>.table-bordered>tbody>tr:last-child>th, .pixiv-assistant .panel>.table-responsive>.table-bordered>tbody>tr:last-child>th, .pixiv-assistant .panel>.table-bordered>tfoot>tr:last-child>th, .pixiv-assistant .panel>.table-responsive>.table-bordered>tfoot>tr:last-child>th{border-bottom:0}
+.pixiv-assistant .panel>.table-responsive{border:0;margin-bottom:0}
+.pixiv-assistant .panel-group{margin-bottom:18px}
+.pixiv-assistant .panel-group .panel{margin-bottom:0;border-radius:4px}
+.pixiv-assistant .panel-group .panel+.panel{margin-top:5px}
+.pixiv-assistant .panel-group .panel-heading{border-bottom:0}
+.pixiv-assistant .panel-group .panel-heading+.panel-collapse>.panel-body, .pixiv-assistant .panel-group .panel-heading+.panel-collapse>.list-group{border-top:1px solid #dddddd}
+.pixiv-assistant .panel-group .panel-footer{border-top:0}
+.pixiv-assistant .panel-group .panel-footer+.panel-collapse .panel-body{border-bottom:1px solid #dddddd}
+.pixiv-assistant .panel-default{border-color:#dddddd}
+.pixiv-assistant .panel-default>.panel-heading{color:#444444;background-color:#fcfcfc;border-color:#dddddd}
+.pixiv-assistant .panel-default>.panel-heading+.panel-collapse>.panel-body{border-top-color:#dddddd}
+.pixiv-assistant .panel-default>.panel-heading .badge{color:#fcfcfc;background-color:#444444}
+.pixiv-assistant .panel-default>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#dddddd}
+.pixiv-assistant .panel-primary{border-color:#d9230f}
+.pixiv-assistant .panel-primary>.panel-heading{color:#ffffff;background-color:#d9230f;border-color:#d9230f}
+.pixiv-assistant .panel-primary>.panel-heading+.panel-collapse>.panel-body{border-top-color:#d9230f}
+.pixiv-assistant .panel-primary>.panel-heading .badge{color:#d9230f;background-color:#ffffff}
+.pixiv-assistant .panel-primary>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#d9230f}
+.pixiv-assistant .panel-success{border-color:#469408}
+.pixiv-assistant .panel-success>.panel-heading{color:#ffffff;background-color:#469408;border-color:#469408}
+.pixiv-assistant .panel-success>.panel-heading+.panel-collapse>.panel-body{border-top-color:#469408}
+.pixiv-assistant .panel-success>.panel-heading .badge{color:#469408;background-color:#ffffff}
+.pixiv-assistant .panel-success>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#469408}
+.pixiv-assistant .panel-info{border-color:#029acf}
+.pixiv-assistant .panel-info>.panel-heading{color:#ffffff;background-color:#029acf;border-color:#029acf}
+.pixiv-assistant .panel-info>.panel-heading+.panel-collapse>.panel-body{border-top-color:#029acf}
+.pixiv-assistant .panel-info>.panel-heading .badge{color:#029acf;background-color:#ffffff}
+.pixiv-assistant .panel-info>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#029acf}
+.pixiv-assistant .panel-warning{border-color:#9b479f}
+.pixiv-assistant .panel-warning>.panel-heading{color:#ffffff;background-color:#9b479f;border-color:#9b479f}
+.pixiv-assistant .panel-warning>.panel-heading+.panel-collapse>.panel-body{border-top-color:#9b479f}
+.pixiv-assistant .panel-warning>.panel-heading .badge{color:#9b479f;background-color:#ffffff}
+.pixiv-assistant .panel-warning>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#9b479f}
+.pixiv-assistant .panel-danger{border-color:#d9831f}
+.pixiv-assistant .panel-danger>.panel-heading{color:#ffffff;background-color:#d9831f;border-color:#d9831f}
+.pixiv-assistant .panel-danger>.panel-heading+.panel-collapse>.panel-body{border-top-color:#d9831f}
+.pixiv-assistant .panel-danger>.panel-heading .badge{color:#d9831f;background-color:#ffffff}
+.pixiv-assistant .panel-danger>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#d9831f}
+.pixiv-assistant .embed-responsive{position:relative;display:block;height:0;padding:0;overflow:hidden}
+.pixiv-assistant .embed-responsive .embed-responsive-item, .pixiv-assistant .embed-responsive iframe, .pixiv-assistant .embed-responsive embed, .pixiv-assistant .embed-responsive object, .pixiv-assistant .embed-responsive video{position:absolute;top:0;left:0;bottom:0;height:100%;width:100%;border:0}
+.pixiv-assistant .embed-responsive-16by9{padding-bottom:56.25%}
+.pixiv-assistant .embed-responsive-4by3{padding-bottom:75%}
+.pixiv-assistant .well{min-height:20px;padding:19px;margin-bottom:20px;background-color:#f4f4f4;border:1px solid #e3e3e3;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05)}
+.pixiv-assistant .well blockquote{border-color:#ddd;border-color:rgba(0, 0, 0, 0.15)}
+.pixiv-assistant .well-lg{padding:24px;border-radius:6px}
+.pixiv-assistant .well-sm{padding:9px;border-radius:3px}
+.pixiv-assistant .close{float:right;font-size:19.5px;font-weight:bold;line-height:1;color:#000000;text-shadow:0 1px 0 #ffffff;opacity:0.2;filter:alpha(opacity=20)}
+.pixiv-assistant .close:hover, .pixiv-assistant .close:focus{color:#000000;text-decoration:none;cursor:pointer;opacity:0.5;filter:alpha(opacity=50)}
+.pixiv-assistant button.close{padding:0;cursor:pointer;background:transparent;border:0;-webkit-appearance:none}
+.pixiv-assistant .modal-open{overflow:hidden}
+.pixiv-assistant .modal{display:none;overflow:hidden;position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;-webkit-overflow-scrolling:touch;outline:0}
+.pixiv-assistant .modal.fade .modal-dialog{-webkit-transform:translate(0, -25%);-ms-transform:translate(0, -25%);-o-transform:translate(0, -25%);transform:translate(0, -25%);-webkit-transition:-webkit-transform .3s ease-out;-o-transition:-o-transform .3s ease-out;transition:transform .3s ease-out}
+.pixiv-assistant .modal.in .modal-dialog{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);-o-transform:translate(0, 0);transform:translate(0, 0)}
+.pixiv-assistant .modal-open .modal{overflow-x:hidden;overflow-y:auto}
+.pixiv-assistant .modal-dialog{position:relative;width:auto;margin:10px}
+.pixiv-assistant .modal-content{position:relative;background-color:#ffffff;border:1px solid #999999;border:1px solid rgba(0, 0, 0, 0.2);border-radius:6px;-webkit-box-shadow:0 3px 9px rgba(0, 0, 0, 0.5);box-shadow:0 3px 9px rgba(0, 0, 0, 0.5);-webkit-background-clip:padding-box;background-clip:padding-box;outline:0}
+.pixiv-assistant .modal-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1040;background-color:#000000}
+.pixiv-assistant .modal-backdrop.fade{opacity:0;filter:alpha(opacity=0)}
+.pixiv-assistant .modal-backdrop.in{opacity:0.5;filter:alpha(opacity=50)}
+.pixiv-assistant .modal-header{padding:15px;border-bottom:1px solid #e5e5e5}
+.pixiv-assistant .modal-header .close{margin-top:-2px}
+.pixiv-assistant .modal-title{margin:0;line-height:1.42857143}
+.pixiv-assistant .modal-body{position:relative;padding:20px}
+.pixiv-assistant .modal-footer{padding:20px;text-align:right;border-top:1px solid #e5e5e5}
+.pixiv-assistant .modal-footer .btn+.btn{margin-left:5px;margin-bottom:0}
+.pixiv-assistant .modal-footer .btn-group .btn+.btn{margin-left:-1px}
+.pixiv-assistant .modal-footer .btn-block+.btn-block{margin-left:0}
+.pixiv-assistant .modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
+@media (min-width:768px){.modal-dialog{width:600px;margin:30px auto}
+.pixiv-assistant .modal-content{-webkit-box-shadow:0 5px 15px rgba(0, 0, 0, 0.5);box-shadow:0 5px 15px rgba(0, 0, 0, 0.5)}
+.pixiv-assistant .modal-sm{width:300px}
+}
+@media (min-width:992px){.modal-lg{width:900px}
+}
+.pixiv-assistant .tooltip{position:absolute;z-index:1070;display:block;font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial,  sans-serif;font-style:normal;font-weight:normal;letter-spacing:normal;line-break:auto;line-height:1.42857143;text-align:left;text-align:start;text-decoration:none;text-shadow:none;text-transform:none;white-space:normal;word-break:normal;word-spacing:normal;word-wrap:normal;font-size:12px;opacity:0;filter:alpha(opacity=0)}
+.pixiv-assistant .tooltip.in{opacity:0.9;filter:alpha(opacity=90)}
+.pixiv-assistant .tooltip.top{margin-top:-3px;padding:5px 0}
+.pixiv-assistant .tooltip.right{margin-left:3px;padding:0 5px}
+.pixiv-assistant .tooltip.bottom{margin-top:3px;padding:5px 0}
+.pixiv-assistant .tooltip.left{margin-left:-3px;padding:0 5px}
+.pixiv-assistant .tooltip-inner{max-width:200px;padding:3px 8px;color:#ffffff;text-align:center;background-color:#000000;border-radius:4px}
+.pixiv-assistant .tooltip-arrow{position:absolute;width:0;height:0;border-color:transparent;border-style:solid}
+.pixiv-assistant .tooltip.top .tooltip-arrow{bottom:0;left:50%;margin-left:-5px;border-width:5px 5px 0;border-top-color:#000000}
+.pixiv-assistant .tooltip.top-left .tooltip-arrow{bottom:0;right:5px;margin-bottom:-5px;border-width:5px 5px 0;border-top-color:#000000}
+.pixiv-assistant .tooltip.top-right .tooltip-arrow{bottom:0;left:5px;margin-bottom:-5px;border-width:5px 5px 0;border-top-color:#000000}
+.pixiv-assistant .tooltip.right .tooltip-arrow{top:50%;left:0;margin-top:-5px;border-width:5px 5px 5px 0;border-right-color:#000000}
+.pixiv-assistant .tooltip.left .tooltip-arrow{top:50%;right:0;margin-top:-5px;border-width:5px 0 5px 5px;border-left-color:#000000}
+.pixiv-assistant .tooltip.bottom .tooltip-arrow{top:0;left:50%;margin-left:-5px;border-width:0 5px 5px;border-bottom-color:#000000}
+.pixiv-assistant .tooltip.bottom-left .tooltip-arrow{top:0;right:5px;margin-top:-5px;border-width:0 5px 5px;border-bottom-color:#000000}
+.pixiv-assistant .tooltip.bottom-right .tooltip-arrow{top:0;left:5px;margin-top:-5px;border-width:0 5px 5px;border-bottom-color:#000000}
+.pixiv-assistant .popover{position:absolute;top:0;left:0;z-index:1060;display:none;max-width:276px;padding:1px;font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial,  sans-serif;font-style:normal;font-weight:normal;letter-spacing:normal;line-break:auto;line-height:1.42857143;text-align:left;text-align:start;text-decoration:none;text-shadow:none;text-transform:none;white-space:normal;word-break:normal;word-spacing:normal;word-wrap:normal;font-size:13px;background-color:#ffffff;-webkit-background-clip:padding-box;background-clip:padding-box;border:1px solid #cccccc;border:1px solid rgba(0, 0, 0, 0.2);border-radius:6px;-webkit-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);box-shadow:0 5px 10px rgba(0, 0, 0, 0.2)}
+.pixiv-assistant .popover.top{margin-top:-10px}
+.pixiv-assistant .popover.right{margin-left:10px}
+.pixiv-assistant .popover.bottom{margin-top:10px}
+.pixiv-assistant .popover.left{margin-left:-10px}
+.pixiv-assistant .popover-title{margin:0;padding:8px 14px;font-size:13px;background-color:#f7f7f7;border-bottom:1px solid #ebebeb;border-radius:5px 5px 0 0}
+.pixiv-assistant .popover-content{padding:9px 14px}
+.pixiv-assistant .popover>.arrow, .pixiv-assistant .popover>.arrow:after{position:absolute;display:block;width:0;height:0;border-color:transparent;border-style:solid}
+.pixiv-assistant .popover>.arrow{border-width:11px}
+.pixiv-assistant .popover>.arrow:after{border-width:10px;content:""}
+.pixiv-assistant .popover.top>.arrow{left:50%;margin-left:-11px;border-bottom-width:0;border-top-color:#999999;border-top-color:rgba(0, 0, 0, 0.25);bottom:-11px}
+.pixiv-assistant .popover.top>.arrow:after{content:" ";bottom:1px;margin-left:-10px;border-bottom-width:0;border-top-color:#ffffff}
+.pixiv-assistant .popover.right>.arrow{top:50%;left:-11px;margin-top:-11px;border-left-width:0;border-right-color:#999999;border-right-color:rgba(0, 0, 0, 0.25)}
+.pixiv-assistant .popover.right>.arrow:after{content:" ";left:1px;bottom:-10px;border-left-width:0;border-right-color:#ffffff}
+.pixiv-assistant .popover.bottom>.arrow{left:50%;margin-left:-11px;border-top-width:0;border-bottom-color:#999999;border-bottom-color:rgba(0, 0, 0, 0.25);top:-11px}
+.pixiv-assistant .popover.bottom>.arrow:after{content:" ";top:1px;margin-left:-10px;border-top-width:0;border-bottom-color:#ffffff}
+.pixiv-assistant .popover.left>.arrow{top:50%;right:-11px;margin-top:-11px;border-right-width:0;border-left-color:#999999;border-left-color:rgba(0, 0, 0, 0.25)}
+.pixiv-assistant .popover.left>.arrow:after{content:" ";right:1px;border-right-width:0;border-left-color:#ffffff;bottom:-10px}
+.pixiv-assistant .carousel{position:relative}
+.pixiv-assistant .carousel-inner{position:relative;overflow:hidden;width:100%}
+.pixiv-assistant .carousel-inner>.item{display:none;position:relative;-webkit-transition:.6s ease-in-out left;-o-transition:.6s ease-in-out left;transition:.6s ease-in-out left}
+.pixiv-assistant .carousel-inner>.item>img, .pixiv-assistant .carousel-inner>.item>a>img{line-height:1}
+@media all and (transform-3d), (-webkit-transform-3d){.carousel-inner>.item{-webkit-transition:-webkit-transform .6s ease-in-out;-o-transition:-o-transform .6s ease-in-out;transition:transform .6s ease-in-out;-webkit-backface-visibility:hidden;backface-visibility:hidden;-webkit-perspective:1000px;perspective:1000px}
+.pixiv-assistant .carousel-inner>.item.next, .pixiv-assistant .carousel-inner>.item.active.right{-webkit-transform:translate3d(100%, 0, 0);transform:translate3d(100%, 0, 0);left:0}
+.pixiv-assistant .carousel-inner>.item.prev, .pixiv-assistant .carousel-inner>.item.active.left{-webkit-transform:translate3d(-100%, 0, 0);transform:translate3d(-100%, 0, 0);left:0}
+.pixiv-assistant .carousel-inner>.item.next.left, .pixiv-assistant .carousel-inner>.item.prev.right, .pixiv-assistant .carousel-inner>.item.active{-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);left:0}
+}
+.pixiv-assistant .carousel-inner>.active, .pixiv-assistant .carousel-inner>.next, .pixiv-assistant .carousel-inner>.prev{display:block}
+.pixiv-assistant .carousel-inner>.active{left:0}
+.pixiv-assistant .carousel-inner>.next, .pixiv-assistant .carousel-inner>.prev{position:absolute;top:0;width:100%}
+.pixiv-assistant .carousel-inner>.next{left:100%}
+.pixiv-assistant .carousel-inner>.prev{left:-100%}
+.pixiv-assistant .carousel-inner>.next.left, .pixiv-assistant .carousel-inner>.prev.right{left:0}
+.pixiv-assistant .carousel-inner>.active.left{left:-100%}
+.pixiv-assistant .carousel-inner>.active.right{left:100%}
+.pixiv-assistant .carousel-control{position:absolute;top:0;left:0;bottom:0;width:15%;opacity:0.5;filter:alpha(opacity=50);font-size:20px;color:#ffffff;text-align:center;text-shadow:0 1px 2px rgba(0, 0, 0, 0.6);background-color:rgba(0, 0, 0, 0)}
+.pixiv-assistant .carousel-control.left{background-image:-webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);background-image:-o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);background-image:-webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.0001)));background-image:linear-gradient(to right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1)}
+.pixiv-assistant .carousel-control.right{left:auto;right:0;background-image:-webkit-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);background-image:-o-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);background-image:-webkit-gradient(linear, left top,  right top, from(rgba(0, 0, 0, 0.0001)), to(rgba(0, 0, 0, 0.5)));background-image:linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1)}
+.pixiv-assistant .carousel-control:hover, .pixiv-assistant .carousel-control:focus{outline:0;color:#ffffff;text-decoration:none;opacity:0.9;filter:alpha(opacity=90)}
+.pixiv-assistant .carousel-control .icon-prev, .pixiv-assistant .carousel-control .icon-next, .pixiv-assistant .carousel-control .glyphicon-chevron-left, .pixiv-assistant .carousel-control .glyphicon-chevron-right{position:absolute;top:50%;margin-top:-10px;z-index:5;display:inline-block}
+.pixiv-assistant .carousel-control .icon-prev, .pixiv-assistant .carousel-control .glyphicon-chevron-left{left:50%;margin-left:-10px}
+.pixiv-assistant .carousel-control .icon-next, .pixiv-assistant .carousel-control .glyphicon-chevron-right{right:50%;margin-right:-10px}
+.pixiv-assistant .carousel-control .icon-prev, .pixiv-assistant .carousel-control .icon-next{width:20px;height:20px;line-height:1;font-family:serif}
+.pixiv-assistant .carousel-control .icon-prev:before{content:'\2039'}
+.pixiv-assistant .carousel-control .icon-next:before{content:'\203a'}
+.pixiv-assistant .carousel-indicators{position:absolute;bottom:10px;left:50%;z-index:15;width:60%;margin-left:-30%;padding-left:0;list-style:none;text-align:center}
+.pixiv-assistant .carousel-indicators li{display:inline-block;width:10px;height:10px;margin:1px;text-indent:-999px;border:1px solid #ffffff;border-radius:10px;cursor:pointer;background-color:#000 \9;background-color:rgba(0, 0, 0, 0)}
+.pixiv-assistant .carousel-indicators .active{margin:0;width:12px;height:12px;background-color:#ffffff}
+.pixiv-assistant .carousel-caption{position:absolute;left:15%;right:15%;bottom:20px;z-index:10;padding-top:20px;padding-bottom:20px;color:#ffffff;text-align:center;text-shadow:0 1px 2px rgba(0, 0, 0, 0.6)}
+.pixiv-assistant .carousel-caption .btn{text-shadow:none}
+@media screen and (min-width:768px){.carousel-control .glyphicon-chevron-left, .pixiv-assistant .carousel-control .glyphicon-chevron-right, .pixiv-assistant .carousel-control .icon-prev, .pixiv-assistant .carousel-control .icon-next{width:30px;height:30px;margin-top:-10px;font-size:30px}
+.pixiv-assistant .carousel-control .glyphicon-chevron-left, .pixiv-assistant .carousel-control .icon-prev{margin-left:-10px}
+.pixiv-assistant .carousel-control .glyphicon-chevron-right, .pixiv-assistant .carousel-control .icon-next{margin-right:-10px}
+.pixiv-assistant .carousel-caption{left:20%;right:20%;padding-bottom:30px}
+.pixiv-assistant .carousel-indicators{bottom:20px}
+}
+.pixiv-assistant .clearfix:before, .pixiv-assistant .clearfix:after, .pixiv-assistant .dl-horizontal dd:before, .pixiv-assistant .dl-horizontal dd:after, .pixiv-assistant .container:before, .pixiv-assistant .container:after, .pixiv-assistant .container-fluid:before, .pixiv-assistant .container-fluid:after, .pixiv-assistant .row:before, .pixiv-assistant .row:after, .pixiv-assistant .form-horizontal .form-group:before, .pixiv-assistant .form-horizontal .form-group:after, .pixiv-assistant .btn-toolbar:before, .pixiv-assistant .btn-toolbar:after, .pixiv-assistant .btn-group-vertical>.btn-group:before, .pixiv-assistant .btn-group-vertical>.btn-group:after, .pixiv-assistant .nav:before, .pixiv-assistant .nav:after, .pixiv-assistant .navbar:before, .pixiv-assistant .navbar:after, .pixiv-assistant .navbar-header:before, .pixiv-assistant .navbar-header:after, .pixiv-assistant .navbar-collapse:before, .pixiv-assistant .navbar-collapse:after, .pixiv-assistant .pager:before, .pixiv-assistant .pager:after, .pixiv-assistant .panel-body:before, .pixiv-assistant .panel-body:after, .pixiv-assistant .modal-header:before, .pixiv-assistant .modal-header:after, .pixiv-assistant .modal-footer:before, .pixiv-assistant .modal-footer:after{content:" ";display:table}
+.pixiv-assistant .clearfix:after, .pixiv-assistant .dl-horizontal dd:after, .pixiv-assistant .container:after, .pixiv-assistant .container-fluid:after, .pixiv-assistant .row:after, .pixiv-assistant .form-horizontal .form-group:after, .pixiv-assistant .btn-toolbar:after, .pixiv-assistant .btn-group-vertical>.btn-group:after, .pixiv-assistant .nav:after, .pixiv-assistant .navbar:after, .pixiv-assistant .navbar-header:after, .pixiv-assistant .navbar-collapse:after, .pixiv-assistant .pager:after, .pixiv-assistant .panel-body:after, .pixiv-assistant .modal-header:after, .pixiv-assistant .modal-footer:after{clear:both}
+.pixiv-assistant .center-block{display:block;margin-left:auto;margin-right:auto}
+.pixiv-assistant .pull-right{float:right !important}
+.pixiv-assistant .pull-left{float:left !important}
+.pixiv-assistant .hide{display:none !important}
+.pixiv-assistant .show{display:block !important}
+.pixiv-assistant .invisible{visibility:hidden}
+.pixiv-assistant .text-hide{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}
+.pixiv-assistant .hidden{display:none !important}
+.pixiv-assistant .affix{position:fixed}
+@-ms-viewport{width:device-width}
+.pixiv-assistant .visible-xs, .pixiv-assistant .visible-sm, .pixiv-assistant .visible-md, .pixiv-assistant .visible-lg{display:none !important}
+.pixiv-assistant .visible-xs-block, .pixiv-assistant .visible-xs-inline, .pixiv-assistant .visible-xs-inline-block, .pixiv-assistant .visible-sm-block, .pixiv-assistant .visible-sm-inline, .pixiv-assistant .visible-sm-inline-block, .pixiv-assistant .visible-md-block, .pixiv-assistant .visible-md-inline, .pixiv-assistant .visible-md-inline-block, .pixiv-assistant .visible-lg-block, .pixiv-assistant .visible-lg-inline, .pixiv-assistant .visible-lg-inline-block{display:none !important}
+@media (max-width:767px){.visible-xs{display:block !important}
+.pixiv-assistant table.visible-xs{display:table !important}
+.pixiv-assistant tr.visible-xs{display:table-row !important}
+.pixiv-assistant th.visible-xs, .pixiv-assistant td.visible-xs{display:table-cell !important}
+}
+@media (max-width:767px){.visible-xs-block{display:block !important}
+}
+@media (max-width:767px){.visible-xs-inline{display:inline !important}
+}
+@media (max-width:767px){.visible-xs-inline-block{display:inline-block !important}
+}
+@media (min-width:768px) and (max-width:991px){.visible-sm{display:block !important}
+.pixiv-assistant table.visible-sm{display:table !important}
+.pixiv-assistant tr.visible-sm{display:table-row !important}
+.pixiv-assistant th.visible-sm, .pixiv-assistant td.visible-sm{display:table-cell !important}
+}
+@media (min-width:768px) and (max-width:991px){.visible-sm-block{display:block !important}
+}
+@media (min-width:768px) and (max-width:991px){.visible-sm-inline{display:inline !important}
+}
+@media (min-width:768px) and (max-width:991px){.visible-sm-inline-block{display:inline-block !important}
+}
+@media (min-width:992px) and (max-width:1199px){.visible-md{display:block !important}
+.pixiv-assistant table.visible-md{display:table !important}
+.pixiv-assistant tr.visible-md{display:table-row !important}
+.pixiv-assistant th.visible-md, .pixiv-assistant td.visible-md{display:table-cell !important}
+}
+@media (min-width:992px) and (max-width:1199px){.visible-md-block{display:block !important}
+}
+@media (min-width:992px) and (max-width:1199px){.visible-md-inline{display:inline !important}
+}
+@media (min-width:992px) and (max-width:1199px){.visible-md-inline-block{display:inline-block !important}
+}
+@media (min-width:1200px){.visible-lg{display:block !important}
+.pixiv-assistant table.visible-lg{display:table !important}
+.pixiv-assistant tr.visible-lg{display:table-row !important}
+.pixiv-assistant th.visible-lg, .pixiv-assistant td.visible-lg{display:table-cell !important}
+}
+@media (min-width:1200px){.visible-lg-block{display:block !important}
+}
+@media (min-width:1200px){.visible-lg-inline{display:inline !important}
+}
+@media (min-width:1200px){.visible-lg-inline-block{display:inline-block !important}
+}
+@media (max-width:767px){.hidden-xs{display:none !important}
+}
+@media (min-width:768px) and (max-width:991px){.hidden-sm{display:none !important}
+}
+@media (min-width:992px) and (max-width:1199px){.hidden-md{display:none !important}
+}
+@media (min-width:1200px){.hidden-lg{display:none !important}
+}
+.pixiv-assistant .visible-print{display:none !important}
+@media print{.visible-print{display:block !important}
+.pixiv-assistant table.visible-print{display:table !important}
+.pixiv-assistant tr.visible-print{display:table-row !important}
+.pixiv-assistant th.visible-print, .pixiv-assistant td.visible-print{display:table-cell !important}
+}
+.pixiv-assistant .visible-print-block{display:none !important}
+@media print{.visible-print-block{display:block !important}
+}
+.pixiv-assistant .visible-print-inline{display:none !important}
+@media print{.visible-print-inline{display:inline !important}
+}
+.pixiv-assistant .visible-print-inline-block{display:none !important}
+@media print{.visible-print-inline-block{display:inline-block !important}
+}
+@media print{.hidden-print{display:none !important}
+}
+.pixiv-assistant .navbar-inverse .badge{background-color:#fff;color:#d9230f}
+.pixiv-assistant .btn{font-family:"Open Sans", "Helvetica Neue", Helvetica, Arial,  sans-serif}
+.pixiv-assistant .btn-default, .pixiv-assistant .btn-default:hover{background-image:-webkit-linear-gradient(#4f5151, #474949 6%, #3f4141);background-image:-o-linear-gradient(#4f5151, #474949 6%, #3f4141);background-image:-webkit-gradient(linear, left top, left bottom, from(#4f5151), color-stop(6%, #474949), to(#3f4141));background-image:linear-gradient(#4f5151, #474949 6%, #3f4141);background-repeat:no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4f5151', endColorstr='#ff3f4141', GradientType=0);-webkit-filter:none;filter:none;border:1px solid #2e2f2f}
+.pixiv-assistant .btn-primary, .pixiv-assistant .btn-primary:hover{background-image:-webkit-linear-gradient(#e72510, #d9230f 6%, #cb210e);background-image:-o-linear-gradient(#e72510, #d9230f 6%, #cb210e);background-image:-webkit-gradient(linear, left top, left bottom, from(#e72510), color-stop(6%, #d9230f), to(#cb210e));background-image:linear-gradient(#e72510, #d9230f 6%, #cb210e);background-repeat:no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe72510', endColorstr='#ffcb210e', GradientType=0);-webkit-filter:none;filter:none;border:1px solid #a91b0c}
+.pixiv-assistant .btn-success, .pixiv-assistant .btn-success:hover{background-image:-webkit-linear-gradient(#4da309, #469408 6%, #3f8507);background-image:-o-linear-gradient(#4da309, #469408 6%, #3f8507);background-image:-webkit-gradient(linear, left top, left bottom, from(#4da309), color-stop(6%, #469408), to(#3f8507));background-image:linear-gradient(#4da309, #469408 6%, #3f8507);background-repeat:no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4da309', endColorstr='#ff3f8507', GradientType=0);-webkit-filter:none;filter:none;border:1px solid #2f6405}
+.pixiv-assistant .btn-info, .pixiv-assistant .btn-info:hover{background-image:-webkit-linear-gradient(#02a5de, #029acf 6%, #028fc0);background-image:-o-linear-gradient(#02a5de, #029acf 6%, #028fc0);background-image:-webkit-gradient(linear, left top, left bottom, from(#02a5de), color-stop(6%, #029acf), to(#028fc0));background-image:linear-gradient(#02a5de, #029acf 6%, #028fc0);background-repeat:no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff02a5de', endColorstr='#ff028fc0', GradientType=0);-webkit-filter:none;filter:none;border:1px solid #02749c}
+.pixiv-assistant .btn-warning, .pixiv-assistant .btn-warning:hover{background-image:-webkit-linear-gradient(#a54caa, #9b479f 6%, #914294);background-image:-o-linear-gradient(#a54caa, #9b479f 6%, #914294);background-image:-webkit-gradient(linear, left top, left bottom, from(#a54caa), color-stop(6%, #9b479f), to(#914294));background-image:linear-gradient(#a54caa, #9b479f 6%, #914294);background-repeat:no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa54caa', endColorstr='#ff914294', GradientType=0);-webkit-filter:none;filter:none;border:1px solid #79377c}
+.pixiv-assistant .btn-danger, .pixiv-assistant .btn-danger:hover{background-image:-webkit-linear-gradient(#e08b27, #d9831f 6%, #cc7b1d);background-image:-o-linear-gradient(#e08b27, #d9831f 6%, #cc7b1d);background-image:-webkit-gradient(linear, left top, left bottom, from(#e08b27), color-stop(6%, #d9831f), to(#cc7b1d));background-image:linear-gradient(#e08b27, #d9831f 6%, #cc7b1d);background-repeat:no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe08b27', endColorstr='#ffcc7b1d', GradientType=0);-webkit-filter:none;filter:none;border:1px solid #ac6819}
+.pixiv-assistant body{font-weight:200}
+.pixiv-assistant th{color:#444444}
+.pixiv-assistant legend{color:#444444}
+.pixiv-assistant label{font-weight:normal}
+.pixiv-assistant .has-warning .help-block, .pixiv-assistant .has-warning .control-label, .pixiv-assistant .has-warning .radio, .pixiv-assistant .has-warning .checkbox, .pixiv-assistant .has-warning .radio-inline, .pixiv-assistant .has-warning .checkbox-inline, .pixiv-assistant .has-warning.radio label, .pixiv-assistant .has-warning.checkbox label, .pixiv-assistant .has-warning.radio-inline label, .pixiv-assistant .has-warning.checkbox-inline label, .pixiv-assistant .has-warning .form-control-feedback{color:#d9831f}
+.pixiv-assistant .has-warning .form-control, .pixiv-assistant .has-warning .form-control:focus{border-color:#d9831f}
+.pixiv-assistant .has-error .help-block, .pixiv-assistant .has-error .control-label, .pixiv-assistant .has-error .radio, .pixiv-assistant .has-error .checkbox, .pixiv-assistant .has-error .radio-inline, .pixiv-assistant .has-error .checkbox-inline, .pixiv-assistant .has-error.radio label, .pixiv-assistant .has-error.checkbox label, .pixiv-assistant .has-error.radio-inline label, .pixiv-assistant .has-error.checkbox-inline label, .pixiv-assistant .has-error .form-control-feedback{color:#d9230f}
+.pixiv-assistant .has-error .form-control, .pixiv-assistant .has-error .form-control:focus{border-color:#d9230f}
+.pixiv-assistant .has-success .help-block, .pixiv-assistant .has-success .control-label, .pixiv-assistant .has-success .radio, .pixiv-assistant .has-success .checkbox, .pixiv-assistant .has-success .radio-inline, .pixiv-assistant .has-success .checkbox-inline, .pixiv-assistant .has-success.radio label, .pixiv-assistant .has-success.checkbox label, .pixiv-assistant .has-success.radio-inline label, .pixiv-assistant .has-success.checkbox-inline label, .pixiv-assistant .has-success .form-control-feedback{color:#469408}
+.pixiv-assistant .has-success .form-control, .pixiv-assistant .has-success .form-control:focus{border-color:#469408}
+.pixiv-assistant .pager a{color:#444444}
+.pixiv-assistant .pager a:hover, .pixiv-assistant .pager .active>a{border-color:#d9230f;color:#fff}
+.pixiv-assistant .pager .disabled>a{border-color:#dddddd}

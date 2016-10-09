@@ -6,7 +6,7 @@ import {Model} from 'common/proto'
 import {ToolmenuButton} from 'src/components/toolmenuButton'
 import {GenerateElement} from 'src/injectors/utils'
 
-export function injectMangaPreviousButton($:JQueryStatic, clickAction:Function) {
-	let component = GenerateElement(React.createElement(ToolmenuButton, {icon: 'glyphicon-chevron-left', tooltip: 'Previous Page', clickAction}), $);
+export function injectMangaOpenFolderButton($:JQueryStatic, clickAction:Function) {
+	let component = GenerateElement(React.createElement(ToolmenuButton, {icon: 'glyphicon-folder-open', tooltip: 'Open Folder', clickAction}), $);
 	$(component).insertBefore($('#back-to-top'));
 }
