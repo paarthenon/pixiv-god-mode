@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {RootPage} from 'src/pages/root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
@@ -13,11 +14,11 @@ import {Model} from 'common/proto'
 
 export class MangaPage extends RootPage {
 	public get artistName(): string {
-		return this.jQuery('section.thumbnail-container a.user').text();
+		return $('section.thumbnail-container a.user').text();
 	}
 	public get artistId(): number {
 		// TODO: Extract to its own function. This currently re-uses the id pattern for URLs which may diverge.
-		return pathUtils.getArtistId(this.jQuery('footer ul.breadcrumbs li a.user').attr('href'));
+		return pathUtils.getArtistId($('footer ul.breadcrumbs li a.user').attr('href'));
 	}
 	public get artist(): Model.Artist {
 		return {id: this.artistId, name: this.artistName};
@@ -34,10 +35,10 @@ export class MangaPage extends RootPage {
 	@ExecuteIfSetting(SettingKeys.pages.manga.inject.previousButton)
 	public injectMangaPreviousButton(){
 
-		injectMangaPreviousButton(this.jQuery, this.goToPreviousPage.bind(this));
-		injectMangaDownloadButton(this.jQuery, this.downloadMulti.bind(this));
-		injectMangaOpenFolderButton(this.jQuery, this.openFolder.bind(this));
-		// injectMangaNextButton(this.jQuery, )
+		injectMangaPreviousButton(this.goToPreviousPage.bind(this));
+		injectMangaDownloadButton(this.downloadMulti.bind(this));
+		injectMangaOpenFolderButton(this.openFolder.bind(this));
+		// injectMangaNextButton($, )
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)
@@ -51,8 +52,8 @@ export class MangaPage extends RootPage {
 			let extension = response.body[this.illustId].illust_ext;
 			let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
 
-			this.jQuery('img.image').toArray().forEach(image => {
-				let jQImage = this.jQuery(image);
+			$('img.image').toArray().forEach(image => {
+				let jQImage = $(image);
 				// pixiv lazy loads image data, the full url is stored in data-src
 				// and copied over to the source attribute once a user comes into view.
 				let src = jQImage.attr('data-src');
@@ -85,7 +86,7 @@ export class MangaPage extends RootPage {
 
 	@RegisteredAction({ id: 'pa_download_manga_images', label: 'Download All', icon: 'download-alt' })
 	public downloadMulti(): void {
-		let fullImages = this.jQuery('img.image').toArray().map(img => this.jQuery(img).attr('data-src'));
+		let fullImages = $('img.image').toArray().map(img => $(img).attr('data-src'));
 		PixivAssistantServer.downloadMulti({ id: this.artistId, name: this.artistName }, fullImages);
 	}
 

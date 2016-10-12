@@ -37,55 +37,55 @@ let patterns = {
 	wiki: /http:\/\/dic.pixiv.net\/a\//,
 }
 
-export function dispatch(path:string, jquery:JQueryStatic):RootPage {
+export function dispatch(path:string):RootPage {
 	if (path.match(patterns.illust)) {
-		return new IllustrationPage(path, jquery);
+		return new IllustrationPage(path);
 	}
 	if (path.match(patterns.manga)) {
-		return new MangaPage(path, jquery);
+		return new MangaPage(path);
 	}
 	if (path.match(patterns.works)) {
-		return new WorksPage(path, jquery);
+		return new WorksPage(path);
 	}
 	if (path.match(patterns.bookmarks)) {
-		return new ArtistBookmarksPage(path, jquery);
+		return new ArtistBookmarksPage(path);
 	}
 	if (path.match(patterns.bookmarkDetail) || path.match(patterns.bookmarkDetailAdd)) {
-		return new BookmarkIllustrationPage(path, jquery);
+		return new BookmarkIllustrationPage(path);
 	}
 	if (path.match(patterns.followArtist)) {
-		return new FollowArtistPage(path, jquery);
+		return new FollowArtistPage(path);
 	}
 	if (path.match(patterns.bookmarkAddIllust)) {
-		return new BookmarkAddPage(path, jquery);
+		return new BookmarkAddPage(path);
 	}
 	if (path.match(patterns.search)) {
-		return new SearchPage(path, jquery);
+		return new SearchPage(path);
 	}
 	if (path.match(patterns.artistTagList)) {
-		return new ArtistTagListPage(path, jquery);
+		return new ArtistTagListPage(path);
 	}
 	if (path.match(patterns.artistProfile)) {
-		return new ArtistProfilePage(path, jquery);
+		return new ArtistProfilePage(path);
 	}
 	if (path.match(patterns.tagOverview)) {
-		return new TagOverviewPage(path, jquery);
+		return new TagOverviewPage(path);
 	}
 	if (path.match(patterns.tagDetail)) {
-		return new TagDetailPage(path, jquery);
+		return new TagDetailPage(path);
 	}
 	if (path.match(patterns.rawImage)) {
-		return new RawImagePage(path, jquery);
+		return new RawImagePage(path);
 	}
 	if (path.match(patterns.suggestedUsers)) {
-		return new SuggestedUsersPage(path, jquery);
+		return new SuggestedUsersPage(path);
 	}
 	if (path.match(patterns.home)) {
-		return new HomePage(path, jquery);
+		return new HomePage(path);
 	}
 	if (path.match(patterns.wiki)) {
-		return new WikiArticlePage(path, jquery);
+		return new WikiArticlePage(path);
 	}
 
-	return new RootPage(path, jquery);
+	return new RootPage(path);
 }

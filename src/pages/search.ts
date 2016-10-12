@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {PixivAssistantServer} from 'src/services'
 import {RootPage} from 'src/pages/root'
@@ -5,7 +6,6 @@ import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import {DictionaryService} from 'src/services'
 import {Container as Deps} from 'src/deps'
-import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 import SettingKeys from 'src/settingKeys'
 
 import * as jQUtils from 'src/utils/document'
@@ -13,7 +13,7 @@ import * as jQUtils from 'src/utils/document'
 export class SearchPage extends GalleryPage {
 
 	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
-		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
+		$('li.image-item').toArray().forEach(image => func($(image)));
 	}
 
 	@ExecuteOnLoad
@@ -54,7 +54,7 @@ export class SearchPage extends GalleryPage {
 			'nav.breadcrumb > span > a > span',
 			'a.self',
 			'dl.column-related ul.tags li.tag a.text'
-		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
+		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
 	public changeTitle(): void {

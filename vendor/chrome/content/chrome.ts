@@ -1,4 +1,3 @@
-import * as jQ from 'jquery'
 import {IDependencyContainer, load as depsLoad} from 'src/deps'
 import {AjaxRequest} from 'src/core/IAjax'
 import {Action} from 'src/core/IAction'
@@ -14,7 +13,6 @@ import * as Dependencies from 'src/deps'
 let broker = new ExecBroker();
 
 let deps: IDependencyContainer = {
-	jQ,
 	config: new Config(),
 	openInTab: (url: string) => Mailman.Background.newTab({url}),
 	execOnPixiv: (func:(pixiv:any, props:any) => any, props?:any) => broker.queueExecution(func, props),
@@ -27,7 +25,7 @@ let deps: IDependencyContainer = {
 Dependencies.load(deps);
 
 import {dispatch} from 'src/dispatch'
-let page = dispatch(document.location.href, $);
+let page = dispatch(document.location.href);
 
 defineImplementation<Msg.ContentScriptProtocol>("CONTENT_SCRIPT", {
 	getActions: () => Promise.resolve({actions: page.actionCache}),

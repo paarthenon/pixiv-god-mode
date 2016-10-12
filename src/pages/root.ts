@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import {BasePage} from 'src/pages/base'
 import {DictionaryService} from 'src/services'
 import {Container} from 'src/deps'
@@ -6,9 +7,8 @@ import SettingKeys from 'src/settingKeys'
 export class RootPage extends BasePage {
 	constructor(
 		protected path: string,
-		protected jQuery: JQueryStatic
 	) {
-		super(path, jQuery);
+		super(path);
 
 		Container.getSetting(SettingKeys.global.translateTags).then(translate => {
 			if (translate) this.translateTagsOnPage();
@@ -19,7 +19,7 @@ export class RootPage extends BasePage {
 	}
 
 	public translateTagsOnPage():void {
-		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => this.jQuery(x)).forEach(tagElement => {
+		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => $(x)).forEach(tagElement => {
 			let textNode = tagElement.contents().filter(function() {
 				return this.nodeType === Node.TEXT_NODE;
 			});
@@ -32,7 +32,7 @@ export class RootPage extends BasePage {
 		}));
 	}
 	public revertTagTranslations():void {
-		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => this.jQuery(x)).forEach(tagElement => {
+		this.getTagElements().forEach(jQTagElement => jQTagElement.toArray().map(x => $(x)).forEach(tagElement => {
 			let textNode = tagElement.contents().filter(function() {
 				return this.nodeType === Node.TEXT_NODE;
 			});

@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
@@ -6,7 +7,7 @@ import {Container as Deps} from 'src/deps'
 
 export class SuggestedUsersPage extends RootPage {
 	public fadeBookmarks() {
-		let recommendations = this.jQuery('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => this.jQuery(x));
+		let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
 
 		recommendations.forEach(recommendation => {
 			let links = recommendation.find('a:not(._work):not(.premium-feature)')

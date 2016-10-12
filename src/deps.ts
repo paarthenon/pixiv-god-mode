@@ -2,7 +2,6 @@ import IConfig from 'src/core/IConfig'
 import {AjaxRequest} from 'src/core/IAjax'
 
 export interface IDependencyContainer {
-	jQ: JQueryStatic
 	config: IConfig
 	openInTab: (url: string) => void
 	execOnPixiv: <T> (func:(pixiv:any, props:T)=>any, props?:T) => Promise<any>
@@ -13,7 +12,6 @@ export interface IDependencyContainer {
 }
 
 export var Container: IDependencyContainer = {
-	jQ: undefined,
 	config: undefined,
 	openInTab: undefined,
 	execOnPixiv: undefined,

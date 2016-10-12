@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import {RootPage} from 'src/pages/root'
 
 export class WikiArticlePage extends RootPage {
@@ -7,6 +8,6 @@ export class WikiArticlePage extends RootPage {
 			'nav#breadcrumbs div.current',
 			'section#relation div.info a',
 			"a[href*='http://dic.pixiv.net/a/']", //links to other wiki articles.
-		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
+		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 }

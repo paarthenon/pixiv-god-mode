@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as jszip from 'jszip'
 
 import * as pathUtils from 'src/utils/path'
@@ -29,19 +30,19 @@ export class IllustrationPage extends RootPage {
 	public isBusy:boolean = false;
 
 	public get artistId():number {
-		return pathUtils.getArtistId(this.jQuery('a.user-link').attr('href'));
+		return pathUtils.getArtistId($('a.user-link').attr('href'));
 	}
 	public get artistName():string {
-		return this.jQuery('a.user-link h1').text();
+		return $('a.user-link h1').text();
 	}
 	public get artist():Model.Artist {
 		return { id: this.artistId, name: this.artistName };
 	}
 	public get thumbUrl():string {
-		return this.jQuery('.boxbody center img').attr('src');
+		return $('.boxbody center img').attr('src');
 	}
 	public get fullImageUrl():string {
-		return this.jQuery('._illust_modal img').attr('data-src');
+		return $('._illust_modal img').attr('data-src');
 	}
 	public get imageId():number {
 		return pathUtils.getImageId(this.path);
@@ -50,7 +51,7 @@ export class IllustrationPage extends RootPage {
 		return Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData);
 	}
 	public get ugokuCanvas():HTMLCanvasElement {
-		return this.jQuery('._ugoku-illust-player-container canvas')[0] as HTMLCanvasElement;
+		return $('._ugoku-illust-player-container canvas')[0] as HTMLCanvasElement;
 	}
 	public get imageDimensions():Promise<geomUtils.Rectangle> {
 		return Deps.execOnPixiv<number[]>(pixiv => pixiv.context.illustSize)
@@ -58,10 +59,10 @@ export class IllustrationPage extends RootPage {
 	}
 
 	public get illustrationType():IllustrationType {
-		if (this.jQuery('.works_display a.multiple').length) {
+		if ($('.works_display a.multiple').length) {
 			return IllustrationType.Manga;
 		}
-		if (this.jQuery('div.works_display > div._ugoku-illust-player-container').length) {
+		if ($('div.works_display > div._ugoku-illust-player-container').length) {
 			return IllustrationType.Animation;
 		}
 		return IllustrationType.Picture;
@@ -71,15 +72,18 @@ export class IllustrationPage extends RootPage {
 		return [
 			'.tags-container li.tag a.text',
 			'div.user-tags li a',
-		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
+		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
 	@ExecuteOnLoad
 	public injectDownloadButton() {
-		injectDownloadIllustrationButton(this.jQuery,
+		injectDownloadIllustrationButton(
+			() => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
+			() => this.downloadIllustrationLocal());
+
+		injectDownloadIllustrationButton(
 			() => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
 			() => this.downloadIllustration());
-		
 	}
 	@ExecuteOnLoad
 	public injectUnloadCallback() {
@@ -104,17 +108,17 @@ export class IllustrationPage extends RootPage {
 
 	@ExecuteIfSetting(SettingKeys.pages.illust.inject.openFolder)
 	public injectOpenFolder() {
-		injectUserRelationshipButton(this.jQuery, this.artist);
+		injectUserRelationshipButton(this.artist);
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.illust.autoOpen)
 	public openImage(): void {
-		this.jQuery("._layout-thumbnail.ui-modal-trigger").click()
+		$("._layout-thumbnail.ui-modal-trigger").click()
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.illust.boxImage)
 	public resizeOpenedImage() : void {
-		let image = this.jQuery('img.original-image');
+		let image = $('img.original-image');
 
 		let originalBounds = {
 			width: parseInt(image.attr('width')),
@@ -134,7 +138,7 @@ export class IllustrationPage extends RootPage {
 	@ExecuteOnLoad
 	public injectTrigger() {
 		let observer = new MutationObserver(this.fadeRecommendations.bind(this))
-			.observe(this.jQuery('section#illust-recommend ul')[0], { childList: true });
+			.observe($('section#illust-recommend ul')[0], { childList: true });
 	}
 	@ExecuteOnLoad
 	public fadeRecommendations() {
@@ -152,7 +156,7 @@ export class IllustrationPage extends RootPage {
 				}
 			}
 		}
-		this.jQuery('section#illust-recommend li').toArray().map(x => this.jQuery(x)).forEach(liElem => {
+		$('section#illust-recommend li').toArray().map(x => $(x)).forEach(liElem => {
 			let msg = recommendationDetails(liElem);
 			PixivAssistantServer.imageExistsInDatabase(msg.artist, msg.image).then(exists => {
 				if (exists) {
@@ -186,17 +190,30 @@ export class IllustrationPage extends RootPage {
 		PixivAssistantServer.openFolder(this.artist);
 	}
 
+	public downloadIllustrationLocal():Promise<void> {
+		switch (this.illustrationType) {
+			case IllustrationType.Picture:
+				return this.downloadSinglePictureLocal();
+			case IllustrationType.Manga:
+				return this.zipManga();
+			case IllustrationType.Animation:
+				return this.localWebM();
+		}
+	}
 	public downloadIllustration():Promise<void> {
 		switch (this.illustrationType) {
 			case IllustrationType.Picture:
 				return this.downloadSinglePicture();
 			case IllustrationType.Manga:
-				return this.zipManga();
+				return this.downloadManga();
 			case IllustrationType.Animation:
 				return this.downloadAnimation();
 		}
 	}
 
+	public downloadSinglePictureLocal() {
+		return Deps.download(this.fullImageUrl, this.fullImageUrl.split('/').pop());
+	}
 	public downloadSinglePicture() {
 		return PixivAssistantServer.download(this.artist, this.fullImageUrl);
 	}
@@ -211,7 +228,7 @@ export class IllustrationPage extends RootPage {
 			let extension = response.body[this.imageId].illust_ext;
 			let pageCount = response.body[this.imageId].illust_page_count;
 
-			let url = this.jQuery('div.works_display div._layout-thumbnail img').attr('src');
+			let url = $('div.works_display div._layout-thumbnail img').attr('src');
 			let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url, extension);
 
 			let fullUrls = pathUtils.explodeImagePathPages(fullResUrl, pageCount);
@@ -240,9 +257,8 @@ export class IllustrationPage extends RootPage {
 		})
 	}
 
-	@RegisteredAction({ id: 'pa_make_webm', label: 'WEBM', icon: 'folder-open' })
-	public localWebM(): void {
-		this.makeWebM().then(video => {
+	public localWebM():Promise<void> {
+		return this.makeWebM().then(video => {
 			let videoString = URL.createObjectURL(video);
 			Deps.download(videoString, `${this.imageId}.webm`);
 		}).then(() => this.isBusy = false)

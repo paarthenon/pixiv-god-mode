@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {PixivAssistantServer} from 'src/services'
 import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
@@ -14,26 +15,26 @@ export class ArtistBookmarksPage extends GalleryPage {
 		return pathUtils.getArtistId(this.path);
 	}
 	public get artistName():string {
-		return this.jQuery('h1.user').text();
+		return $('h1.user').text();
 	}
 	public get artist():Model.Artist {
 		return { id: this.artistId, name: this.artistName };
 	}
 
 	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
-		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
+		$('li.image-item').toArray().forEach(image => func($(image)));
 	}
 	
 	protected getTagElements() {
 		return [
 			'span.tag-badge',
 			'div.bookmark-tags li a'
-		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
+		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.inject.openFolder)
 	injectOpenFolder() {
-		injectUserRelationshipButton(this.jQuery, this.artist);
+		injectUserRelationshipButton(this.artist);
 	}
 	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
 	public injectPagingButtons(){

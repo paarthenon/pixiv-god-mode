@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {RootPage} from 'src/pages/root'
 import {ExecuteOnLoad} from 'src/utils/actionDecorators'
@@ -5,10 +6,10 @@ import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 
 export class GalleryPage extends RootPage {
 	public get imageCountInPage(): number {
-		return this.jQuery('li.image-item').length;
+		return $('li.image-item').length;
 	}
 	public get imageCountTotal(): number {
-		return pathUtils.getResultFromBadge(this.jQuery('span.count-badge').text());
+		return pathUtils.getResultFromBadge($('span.count-badge').text());
 	}
 
 	public get firstPageUrl(): string {
@@ -32,15 +33,15 @@ export class GalleryPage extends RootPage {
 	}
 
 	protected injectPagingButtons() {
-		injectPagingButtons(this.jQuery, this.firstPageUrl, this.lastPageUrl);
+		injectPagingButtons(this.firstPageUrl, this.lastPageUrl);
 	}
 
 	public replaceMangaThumbnailLinksToFull(){
-		this.jQuery('li.image-item a.work.multiple').toArray().forEach(manga => {
-			let path = this.jQuery(manga).attr('href')
+		$('li.image-item a.work.multiple').toArray().forEach(manga => {
+			let path = $(manga).attr('href')
 			let mangaPath = path.replace('medium', 'manga');
-			this.jQuery(manga).attr('data-backup-href', path);
-			this.jQuery(manga).attr('href', mangaPath);
+			$(manga).attr('data-backup-href', path);
+			$(manga).attr('href', mangaPath);
 		})
 	}
 }

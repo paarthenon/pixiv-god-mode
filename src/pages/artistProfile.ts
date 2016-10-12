@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
@@ -9,7 +10,7 @@ export class ArtistProfilePage extends RootPage {
 		return pathUtils.getArtistId(this.path);
 	}
 	public get artistName():string {
-		return this.jQuery('h1.user').text();
+		return $('h1.user').text();
 	}
 	public get artist():Model.Artist {
 		return { id: this.artistId, name: this.artistName };
@@ -17,6 +18,6 @@ export class ArtistProfilePage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectPageElements() {
-		injectUserRelationshipButton(this.jQuery, this.artist);
+		injectUserRelationshipButton(this.artist);
 	}
 }

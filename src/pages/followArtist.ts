@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
@@ -9,14 +10,14 @@ export class FollowArtistPage extends RootPage {
 		return pathUtils.getArtistId(this.path);
 	}
 	public get artistName():string {
-		return this.jQuery('h1.user').text();
+		return $('h1.user').text();
 	}
 	public get artist():Model.Artist {
 		return { id: this.artistId, name: this.artistName };
 	}
 
 	public fadeBookmarks() {
-		let recommendations = this.jQuery('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => this.jQuery(x));
+		let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
 
 		recommendations.forEach(recommendation => {
 			let links = recommendation.find('a:not(._work):not(.premium-feature)').toArray().map((a:HTMLAnchorElement) => a.href);

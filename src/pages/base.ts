@@ -18,7 +18,6 @@ export class BasePage {
 
 	constructor(
 		protected path:string,
-		protected jQuery:JQueryStatic
 	) {
 		// Need to bind these functions to the 'this' object, they were stored at design time
 		// when no instance existed

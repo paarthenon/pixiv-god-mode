@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import * as jQUtils from 'src/utils/document'
 import {PixivAssistantServer} from 'src/services'
@@ -11,7 +12,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {UserRelationButton} from 'src/components/userRelationButton'
 
-import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {injectOpenInTabs} from 'src/injectors/openInTabs'
 import {Container as Deps} from 'src/deps'
@@ -23,33 +23,33 @@ export class WorksPage extends GalleryPage {
 		return pathUtils.getArtistId(this.path);
 	}
 	public get artistName():string {
-		return this.jQuery('h1.user').text();
+		return $('h1.user').text();
 	}
 	public get artist():Model.Artist {
 		return { id: this.artistId, name: this.artistName };
 	}
 	public get allImages():JQuery[] {
-		return this.jQuery('li.image-item').toArray().map(x => this.jQuery(x));
+		return $('li.image-item').toArray().map(x => $(x));
 	}
 
 	protected getTagElements() {
 		return [
 			'span.tag-badge',
 			'div.user-tags li a'
-		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
+		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
 	protected executeOnEachImage<T>(func:(image:JQuery) => T) {
-		this.jQuery('li.image-item').toArray().forEach(image => func(this.jQuery(image)));
+		$('li.image-item').toArray().forEach(image => func($(image)));
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.works.inject.openFolder)
 	public injectOpenFolder(){
-		injectUserRelationshipButton(this.jQuery, this.artist);
+		injectUserRelationshipButton(this.artist);
 	}
 	@ExecuteIfSetting(SettingKeys.pages.works.inject.openInTabs)
 	public injectOpenTabs(){
-		injectOpenInTabs(this.jQuery, 'Open In Tabs', this.openTabs.bind(this));
+		injectOpenInTabs(this.openTabs.bind(this));
 	}
 	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
 	public injectPagingButtons(){
@@ -89,11 +89,11 @@ export class WorksPage extends GalleryPage {
 					- Use a hacked navigate instead of chrome's tabs.create because pixiv needs referer information
 					  to access direct images or it gives 403 Forbidden.
 				*/
-				Promise.all<string>(this.jQuery('li.image-item a.work').toArray().map((imgEntry:HTMLAnchorElement) => {
+				Promise.all<string>($('li.image-item a.work').toArray().map((imgEntry:HTMLAnchorElement) => {
 					if (imgEntry.classList.contains('multiple') || imgEntry.classList.contains('ugoku-illust')) {
 						return Promise.resolve(imgEntry.href);
 					} else {
-						let url = this.jQuery(imgEntry).find('img').attr('src');
+						let url = $(imgEntry).find('img').attr('src');
 						let illustId = pathUtils.getImageIdFromSourceUrl(url);
 						return Deps.execOnPixiv(
 							(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
@@ -109,9 +109,9 @@ export class WorksPage extends GalleryPage {
 						});
 					}
 					
-				})).then(newUrls => newUrls.forEach(url => jQUtils.hackedNewTab(this.jQuery, url)));
+				})).then(newUrls => newUrls.forEach(url => jQUtils.hackedNewTab($, url)));
 			} else {
-				this.jQuery('li.image-item a.work').toArray().forEach((image:HTMLAnchorElement) => Deps.openInTab(image.href));
+				$('li.image-item a.work').toArray().forEach((image:HTMLAnchorElement) => Deps.openInTab(image.href));
 			}
 		});
 	}

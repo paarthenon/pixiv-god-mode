@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import {RootPage} from 'src/pages/root'
 import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {PixivAssistantServer} from 'src/services'
@@ -13,16 +14,16 @@ export class BookmarkIllustrationPage extends RootPage {
 	public getTagElements() {
 		return [
 			'ul.tags a'
-		].map(tag => this.jQuery(tag)).concat(super.getTagElements());
+		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
 	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
-		this.jQuery('section#illust-recommend li.image-item:not([data-pa-processed="true"])').toArray().forEach(image => func(this.jQuery(image)));
+		$('section#illust-recommend li.image-item:not([data-pa-processed="true"])').toArray().forEach(image => func($(image)));
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.bookmarkIllustration.inject.viewAll)
 	public injectItems(){
-		injectViewAllButton(this.jQuery, "View All", this.loadAllBookmarks);
+		injectViewAllButton("View All", this.loadAllBookmarks);
 	}
 
 	@ExecuteOnLoad
