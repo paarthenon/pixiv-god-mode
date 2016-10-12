@@ -47,11 +47,11 @@ export function getPotentialTag(url:string):string {
 	let tagOfWiki = extract(url, /dic.pixiv.net\/a\/([^&\?]+)$/);
 	
 	if (tagOfWorks){
-		return decodeURI(tagOfWorks);
+		return decodeURIComponent(tagOfWorks);
 	} else if (/s_mode=s_tag_full/.test(url) && tagOfSearch) {
-		return decodeURI(tagOfSearch);
+		return decodeURIComponent(tagOfSearch);
 	} else if (tagOfWiki) {
-		return decodeURI(tagOfWiki);
+		return decodeURIComponent(tagOfWiki);
 	}
 	return '';
 }
