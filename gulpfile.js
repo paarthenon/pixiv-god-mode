@@ -25,30 +25,73 @@ gulp.task('es5', ['build'], function() {
 		.pipe(gulp.dest('build/es5'));
 })
 
-gulp.task('bundle', ['es5'], function() {
-	builder = new jspm.Builder();
-	builder.config({
-		paths: { '*': 'build/es5/*' }
-	});
+builder = new jspm.Builder();
+builder.config({
+	paths: { '*': 'build/es5/*' }
+});
 
+function bundleDev(source, output) {
+	let bundleSettings = {
+		minify: false,
+	}
+	return builder.buildStatic(source, output, bundleSettings);
+}
+
+function bundleRelease(source, output) {
 	let bundleSettings = {
 		minify: true,
 		mangle: false, // terribleCache is truly terrible and uses constructor function names, which can't work if mangled
 		uglify: {beautify: {ascii_only: true}}, // diacritics needs to faithfully store the unicode string map.
 	}
-	return Promise.all([
-		builder.buildStatic('vendor/chrome/popup/bootstrap', 'build/merged/popup.min.js', bundleSettings),
-		builder.buildStatic('vendor/chrome/background/main', 'build/merged/background.min.js', bundleSettings),
-		builder.buildStatic('vendor/chrome/content/chrome', 'build/merged/content.min.js', bundleSettings),
-		builder.buildStatic('vendor/chrome/options/options', 'build/merged/options.min.js', bundleSettings),
-	]);
-});
+	return builder.buildStatic(source, output, bundleSettings);
+}
+
+function bundleEntryPoint(props, release) {
+	if (release) {
+		return bundleRelease(props.source, props.merged)
+			.then(() => fileCopy(props.merged, props.dest));
+	} else {
+		return bundleDev(props.source, props.merged)
+			.then(() => fileCopy(props.merged, props.dest));
+	}
+}
 
 function fileCopy(src, dst) {
 	return new Promise(resolve => gulp.src(src)
 		.pipe(gulp.dest(dst))
 		.on('end', resolve))
 }
+
+let popupProps = {
+	source: 'vendor/chrome/popup/bootstrap',
+	merged: 'build/merged/popup.min.js',
+	dest: 'dist/chrome/vendor/chrome/popup',
+}
+let backgroundProps = {
+	source: 'vendor/chrome/background/main',
+	merged: 'build/merged/background.min.js',
+	dest: 'dist/chrome/vendor/chrome/',
+}
+let contentProps = {
+	source: 'vendor/chrome/content/chrome',
+	merged: 'build/merged/content.min.js',
+	dest: 'dist/chrome/vendor/chrome/',
+}
+let optionsProps = {
+	source: 'vendor/chrome/options/options',
+	merged: 'build/merged/options.min.js',
+	dest: 'dist/chrome/vendor/chrome/options',
+}
+
+gulp.task('bundle-popup', ['es5'], () => bundleEntryPoint(popupProps));
+gulp.task('bundle-background', ['es5'], () => bundleEntryPoint(backgroundProps));
+gulp.task('bundle-content', ['es5'], () => bundleEntryPoint(contentProps));
+gulp.task('bundle-options', ['es5'], () => bundleEntryPoint(optionsProps));
+
+gulp.task('bundle-popup-release', ['es5'], () => bundleEntryPoint(popupProps, true));
+gulp.task('bundle-background-release', ['es5'], () => bundleEntryPoint(backgroundProps, true));
+gulp.task('bundle-content-release', ['es5'], () => bundleEntryPoint(contentProps, true));
+gulp.task('bundle-options-release', ['es5'], () => bundleEntryPoint(optionsProps, true));
 
 gulp.task('chrome-resources', ['es5'], function(){
 	return Promise.all([
@@ -59,13 +102,20 @@ gulp.task('chrome-resources', ['es5'], function(){
 	]);
 });
 
-gulp.task('chrome-min-code', ['bundle'], function() {
-	return Promise.all([
-		fileCopy('build/merged/popup.min.js', 'dist/chrome/vendor/chrome/popup'),
-		fileCopy('build/merged/background.min.js', 'dist/chrome/vendor/chrome/'),
-		fileCopy('build/merged/content.min.js', 'dist/chrome/vendor/chrome/'),
-		fileCopy('build/merged/options.min.js', 'dist/chrome/vendor/chrome/options'),
-	])
-});
+gulp.task('dev', [
+	'chrome-resources',
+	'bundle-popup',
+	'bundle-background',
+	'bundle-content',
+	'bundle-options',
+]);
 
-gulp.task('default', ['chrome-min-code', 'chrome-resources']);
+gulp.task('release', [
+	'chrome-resources',
+	'bundle-popup-release',
+	'bundle-background-release',
+	'bundle-content-release',
+	'bundle-options-release',
+]);
+
+gulp.task('default', ['dev']);
