@@ -10,6 +10,7 @@ import {Model, Messages} from 'common/proto'
 import {UgokuInformation} from 'src/core/IUgoku'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {injectDownloadIllustrationButton} from 'src/injectors/downloadIllustration'
+import {injectBookmarksClone} from 'src/injectors/addToBookmarksClone'
 
 import * as geomUtils from 'src/utils/geometry'
 import {getBlob} from 'src/utils/ajax'
@@ -90,6 +91,17 @@ export class IllustrationPage extends RootPage {
 			}
 		});
 	}
+
+	//TODO: Use a setting for this.
+	@ExecuteOnLoad
+	public injectBookmarkButtonClone() {
+		injectBookmarksClone(() => {
+			Deps.execOnPixiv(pixiv => {
+				pixiv.bookmarkModal.open();
+			});
+		})
+	}
+
 	@ExecuteIfSetting(SettingKeys.pages.illust.inject.openFolder)
 	public injectOpenFolder() {
 		injectUserRelationshipButton(this.jQuery, this.artist);
