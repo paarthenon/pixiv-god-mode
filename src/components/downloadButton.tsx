@@ -1,4 +1,7 @@
 import * as React from 'react'
+import * as Bootstrap from 'react-bootstrap'
+
+import {InjectBootstrap} from 'src/components/util/injectBootstrap'
 
 export enum DownloadStates {
 	LOADINGSTATUS,
@@ -8,17 +11,24 @@ export enum DownloadStates {
 }
 
 export class DownloadButton extends React.Component<{mode: DownloadStates, downloadFunc: Function},void> {
-	public render() {
+	public renderButton() {
 		switch (this.props.mode) {
 			case DownloadStates.LOADINGSTATUS:
-				return <p>Loading Download Status</p>
+				return <Bootstrap.Button disabled>Loading Download Status</Bootstrap.Button>
 			case DownloadStates.DOWNLOADAVAILABLE:
-				return <p><a href="#" onClick={() => this.props.downloadFunc()}>Download</a></p>
+				return <Bootstrap.Button onClick={() => this.props.downloadFunc()}>Download</Bootstrap.Button>
 			case DownloadStates.DOWNLOADING:
-				return <p>Downloading</p>
+				return <Bootstrap.Button disabled>Downloading...</Bootstrap.Button>
 			case DownloadStates.DOWNLOADED:
-				return <p>Downloaded</p>
+				return <Bootstrap.Button disabled>Downloaded</Bootstrap.Button>
 		}
+	}
+	public render() {
+		let style = {
+			textAlign: 'center',
+			marginBottom: '20px',
+		}
+		return <div style={style}><InjectBootstrap>{this.renderButton()}</InjectBootstrap></div>
 	}
 }
 

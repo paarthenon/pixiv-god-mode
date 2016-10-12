@@ -8,5 +8,5 @@ import {GenerateElement} from 'src/injectors/utils'
 
 export function injectDownloadIllustrationButton($:JQueryStatic, existsFunc: () => Promise<boolean>, downloadFunc:() => Promise<void>)  {
 	let component = GenerateElement(React.createElement(DownloadButtonContainer, {existsFunc, downloadFunc}), $);
-	$('div.bookmark-container').append(component);
+	$(component).insertAfter('.works_display');
 }
