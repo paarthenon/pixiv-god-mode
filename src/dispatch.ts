@@ -23,7 +23,7 @@ let patterns = {
 	works: /^http:\/\/www.pixiv.net\/member_illust.php\?.*id=[0-9]+/,
 	bookmarks: /^http:\/\/www.pixiv.net\/bookmark.php\?.*id=[0-9]+/,
 	bookmarkDetail: /^http:\/\/www.pixiv.net\/bookmark_detail.php\?illust_id=[0-9]+/,
-	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php\?id=[0-9]+/,
+	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php/,
 	followArtist: /http:\/\/www.pixiv.net\/bookmark_add.php$/,
 	bookmarkAddIllust: /^http:\/\/www.pixiv.net\/bookmark_add.php\?type=illust&illust_id=[0-9]+/,
 	search: /^http:\/\/www.pixiv.net\/search.php/,

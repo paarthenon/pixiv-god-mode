@@ -86,7 +86,11 @@ export class BookmarkIllustrationPage extends RootPage {
 
 	@ExecuteIfSetting(SettingKeys.pages.bookmarkIllustration.skipToDetail)
 	public moveOnToDetail(){
-		if (/bookmark_add/.test(window.location.href)) window.location.reload();
+		// Do not trigger if this is a bookmark_detail page.
+		if (/bookmark_add/.test(window.location.href)) {
+			let detailLink = $('.bookmark-count')[0];
+			if (detailLink) detailLink.click();
+		}
 	}
 
 	public loadAllBookmarks() {
