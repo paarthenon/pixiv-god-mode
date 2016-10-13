@@ -70,7 +70,7 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 				</Bootstrap.InputGroup></Bootstrap.FormGroup>
 				<Bootstrap.FormGroup><Bootstrap.InputGroup inline>
 					<Bootstrap.InputGroup.Addon>Port Number</Bootstrap.InputGroup.Addon>
-					<Bootstrap.FormControl type="text" placeholder="50415" ref="port" />
+					<Bootstrap.FormControl type="text" defaultValue="50415" ref="port" />
 				</Bootstrap.InputGroup></Bootstrap.FormGroup>
 				<Bootstrap.Checkbox inputRef={ref => this.verboseInput = ref}>
 					Verbose Logging
