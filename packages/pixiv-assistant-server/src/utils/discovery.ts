@@ -21,7 +21,10 @@ export function findFilesAddedSince(repoPath:string, predicate:FinderFilter, act
     });
 }
 
-export function initializeFileWatcher(repoPath:string, action:(path:string) => any) {
-    chokidar.watch(repoPath, { persistent: true, ignoreInitial: true })
-        .on('add', action);
+export function initializeFileWatcher(repoPath:string, action:(path:string) => any) : Promise<void> {
+    return new Promise((resolve, reject) => {
+        chokidar.watch(repoPath, { persistent: true, ignoreInitial: true })
+            .on('add', action)
+            .on('ready', resolve)
+    })
 }

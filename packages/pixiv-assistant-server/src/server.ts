@@ -8,7 +8,6 @@ import * as log4js from 'log4js'
 import * as yargs from 'yargs'
 import * as http from 'http'
 
-import * as aiRepo from './repo/artistImageRepo'
 import * as fiRepo from './repo/flatImageRepo'
 import {PixivRepo} from './repo/model'
 
@@ -32,7 +31,11 @@ export class PixivAssistantServer {
 			log4js.setGlobalLogLevel(log4js.levels.INFO);
 		}
 
-		this.repoInstance = new fiRepo.ImageRepo(this.config.path);
+		this.repoInstance = new fiRepo.ImageRepo({
+			path: this.config.path,
+			mangaFormat: fiRepo.MangaDownloadFormat.ARCHIVE,
+			downloadLocation: fiRepo.DownloadLocation.ARTIST,
+		});
 
 		return this.repoInstance.initialize().then(() => {
 			let appLogger = log4js.getLogger('App');
@@ -70,59 +73,8 @@ export class PixivAssistantServer {
 	}
 
 	public close() : Promise<void> {
+		logger.info('Closing Server');
 		return new Promise(resolve => this.serverInstance.close(resolve)) //shut down http server
 			.then(() => this.repoInstance.teardown());
 	}
 }
-
-// function initServer(config:IServerConfig) {
-// 	let verboseLogging = (config.verboseLogging !== undefined)? config.verboseLogging : defaults.verboseLogging;
-// 	if (verboseLogging) {
-// 		log4js.setGlobalLogLevel(log4js.levels.ALL);
-// 		logger.warn('Setting to verbose mode');
-// 	} else {
-// 		log4js.setGlobalLogLevel(log4js.levels.INFO);
-// 	}
-
-// 	let path = config.path || defaults.path;
-// 	logger.info(`Setting repo to path [${path}]`);
-
-// 	let pas = new fiRepo.ImageRepo(path);
-
-// 	pas.initialize().then(() => {
-// 		let appLogger = log4js.getLogger('App');
-// 		let app = express();
-
-// 		app.use(bodyParser.json({limit: '1gb'}));
-
-// 		app.all('/ping', (req, res) => {
-// 			appLogger.debug('Message Received | Ping');
-// 			res.json({success: true, data:true});
-// 		});
-
-// 		app.all('/supports/:action', (req, res) => {
-// 			let action: string = req.params.action;
-// 			appLogger.debug('Message Received | Supports action [', action, ']');
-// 			res.json({success: true, data: pas.supports(action)});
-// 		});
-
-// 		app.post('/:action', (req, res) => {
-// 			let action: string = req.params.action;
-// 			let message: any = req.body;
-// 			appLogger.debug('Message Received | Perform action [', action, ']');
-
-// 			Promise.resolve(pas.dispatch(action, message))
-// 				.then<Proto.Messages.Response>(
-// 					returnValue => ({ success: true, data: returnValue }),
-// 					failureReason => ({ success: false, errors: failureReason }))
-// 				.then(result => res.json(result));
-// 		});
-
-// 		let listeningPort = config.port || defaults.port;
-
-// 		let appServer = app.listen(listeningPort, () => {
-// 			let mainLogger = log4js.getLogger('Main');
-// 			mainLogger.info('listening on port',listeningPort);
-// 		});
-// 	})
-// }

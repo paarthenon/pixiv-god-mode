@@ -9,7 +9,7 @@ let logger = log4js.getLogger('Repo');
 export abstract class BaseRepo implements PixivRepo {
 	protected abstract getCache(): ActionCache;
 
-	constructor(protected repoPath:string) {
+	constructor() {
 		this.getCache().bind(this);
 	}
 
