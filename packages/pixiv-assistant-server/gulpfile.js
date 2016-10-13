@@ -1,7 +1,5 @@
 var gulp = require('gulp');
 
-var nexe = require('nexe');
-
 var exec = require('child_process').exec;
 
 gulp.task('build', function(callback){

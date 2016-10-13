@@ -1,153 +1,83 @@
 import {Features, Model, Messages} from '../../common/proto'
 
-import * as chokidar from 'chokidar'
-import * as fs from 'fs'
 import * as log4js from 'log4js'
-import * as pathLib from 'path'
+import * as path from 'path'
 
 import {ActionCache} from '../utils/actionCache'
-import {RootRepo} from './rootRepo'
+import {BaseRepo} from './baseRepo'
+import {makederp} from '../utils/makederp'
 import * as pathUtils from '../utils/path'
 import * as downloadUtils from '../utils/download'
-import {makederp} from '../utils/makederp'
 import * as promiseUtils from '../utils/promise'
+import * as discoveryUtils from '../utils/discovery'
+import * as dataStoreUtils from '../utils/dataStore'
+
+import {FileRegistry} from './registry'
 
 const opn = require('opn');
-const rrs = require('recursive-readdir-sync');
-const fileFinder = require('node-find-files');
-
-type IdSet = { [id: string]: boolean };
 
 let logger = log4js.getLogger('ImageRepo');
 
-interface ImageDb {
-	date :Date
-	ids :IdSet
+interface RegistryMetaInfo {
+	lastExecution: Date
 }
 
-export class ImageRepo extends RootRepo {
+export class ImageRepo extends BaseRepo {
 	private static actions = new ActionCache();
-
-	protected imageCache :IdSet= {};
-
 	public getCache() {
 		return ImageRepo.actions;
 	}
 
-	protected loadImageCache() :ImageDb {
-		logger.info("Loading saved image cache");
-		return JSON.parse(fs.readFileSync('db.json', 'utf-8'));
+	protected registry : FileRegistry;
+
+	public constructor(repoPath:string) {
+		super(repoPath);
+		this.registry = new FileRegistry(repoPath);
 	}
-	protected filesInPath(repoPath:string):IdSet {
-		logger.info("Initializing file registry, manually reading all files in directory");
-		let cache: IdSet = {};
-
-		try {
-			let fileNames: string[] = rrs(repoPath);
-
-			logger.debug('Filenames loaded. Processing...');
-			fileNames
-				.map(x => pathLib.basename(x))
-				.map(x => pathUtils.fileNameToImage(x).id.toString())
-				.filter(x => !!x)
-				.forEach(x => cache[x] = true);
-
-			logger.info("Image cache constructed");
-		} catch (e) {
-			logger.error("Could not find files in the specified path, does the folder exist?");
-		}
-
-		return cache;
+	
+	protected get metaInfoPath() :string {
+		return path.resolve(this.repoPath, 'metadb.json');
 	}
 
-	protected findFilesAddedSince(repoPath:string, date: Date):Promise<IdSet> {
-		logger.info("Finding files added since last execution on", date);
-		return new Promise((resolve, reject) => {
-			let cache :IdSet = {};
-
-			let finder = new fileFinder({
-				rootFolder: repoPath,
-				fileModifiedDate: date
-			});
-
-			finder.on("match", (path: string, stats: fs.Stats) => {
-				logger.trace('File found:', path);
-				let image = pathUtils.fileNameToImage(pathLib.basename(path));
-				if (image) {
-					cache[image.id.toString()] = true;
-				}
-			});
-
-			finder.on("patherror", function(err:Error, strPath:string) {
-				logger.error('Error accessing path:',strPath);
-				logger.error('Error Details:',err.message);
+	public initialize() :Promise<void> {
+		let count = 0;
+		return this.registry.initialize()
+			.then(() => {
+				dataStoreUtils.load<RegistryMetaInfo>(this.metaInfoPath)
+					.catch(() => undefined)
+					.then(dbInfo => {
+						let predicate :discoveryUtils.FinderFilter = () => true;
+						if (dbInfo) {
+							logger.info('Finding files since last load on', dbInfo.lastExecution);
+							predicate = (path, stats) => stats.mtime > dbInfo.lastExecution;
+						} else {
+							logger.info('Finding all files in repo to build initial registry');
+						}
+						return discoveryUtils.findFilesAddedSince(this.repoPath, predicate, 
+							path => {
+								logger.trace('found file added since last load at',path);
+								count++;
+								if (count % 1000 == 0) {
+									logger.warn('reached',count);
+								}
+								this.registry.addFromPath(path)
+							})
+				})
+				
 			})
-
-			finder.on("error", function(err:Error) {
-				let errorStr = 'Error while finding updated files';
-				logger.error(errorStr, err.message);
-				reject(`${errorStr} [${err.message}]`);
+			.then(() => {
+				logger.info('Initializing file watcher')
+				return discoveryUtils.initializeFileWatcher(this.repoPath, path => {
+					logger.trace('while watching, found a new file',path)
+					this.registry.addFromPath(path)
+				})
 			})
-
-			finder.on("complete", function() {
-				logger.info("Found all files added while server offline");
-				resolve(cache);
-			});
-
-			finder.startSearch();
-		});
 	}
 
-	protected initializeFileWatcher(path:string) {
-		chokidar.watch(path, { persistent: true })
-			.on('add', (filePath: string) => {
-				let baseName: string = pathLib.basename(filePath);
-				let image = pathUtils.fileNameToImage(baseName);
-				if (image) {
-					this.imageCache[image.id.toString()] = true;
-				} else {
-					logger.warn(`Discovered a new file [${filePath}] but it does not register as a valid pixiv image. Please contact the developer if this is an error`);
-				}
-			});
-	}
-
-	public constructor(path:string) {
-		super(path);
-
-		makederp(path).then(() => {
-			let savedObj:ImageDb
-		})
-		let date: Date = undefined;
-
-		try {
-			logger.info("Loading saved image cache");
-			let savedObj:ImageDb = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
-			date = savedObj.date;
-			this.imageCache = savedObj.ids || {} ;
-			logger.info("Completed loading saved image cache");
-		} catch (e) {
-			logger.warn("No saved cache found");
-
-			makederp(path).then(() => {
-				this.imageCache = this.filesInPath(path);
-			});
-		}
-
-		makederp(path).then(() => this.findFilesAddedSince(path, date).then(() => {
-			logger.info("Watching for new files");
-			this.initializeFileWatcher(path);
-			logger.info("Repository initialized. Application ready");
-		}));
-	}
-
-	public teardown() {
-		logger.info("Tearing down repository. Saving in-memory repo DB to disk");
-		try {
-			fs.writeFileSync('db.json', JSON.stringify({ date: new Date(), ids: this.imageCache }), 'utf-8');
-			logger.info("Saved repo database");
-		} catch (e) {
-			logger.fatal("Error saving repo database");
-		}
+	public teardown() : Promise<void> {
+		logger.info('Shutting down repo');
+		return dataStoreUtils.save<RegistryMetaInfo>(this.metaInfoPath, {lastExecution: new Date()})
+			.then(() => this.registry.teardown())
 	}
 
 	@ImageRepo.actions.register(Features.OpenToRepo)
@@ -156,8 +86,9 @@ export class ImageRepo extends RootRepo {
 	}
 
 	@ImageRepo.actions.register(Features.ImageExists)
-	public imageExists(msg:Messages.ImageRequest):boolean {
-		return msg.image.id.toString() in this.imageCache;
+	public imageExists(msg:Messages.ImageRequest):Promise<boolean> {
+		return this.registry.getImagePath(msg.image.id)
+			.then(() => true, () => false);
 	}
 
 	@ImageRepo.actions.register(Features.ImagesExist)
@@ -167,7 +98,7 @@ export class ImageRepo extends RootRepo {
 	
 	@ImageRepo.actions.register(Features.DownloadImage)
 	public downloadImage(msg:Messages.UrlRequest) {
-		return downloadUtils.downloadFromPixiv({ url: msg.url, path: pathLib.join(this.repoPath, pathLib.basename(msg.url)) });
+		return downloadUtils.downloadFromPixiv({ url: msg.url, path: path.join(this.repoPath, path.basename(msg.url)) });
 	}
 	@ImageRepo.actions.register(Features.DownloadManga)
 	public downloadManga(msg: Messages.BulkRequest<Messages.UrlRequest>) {
@@ -184,9 +115,9 @@ export class ImageRepo extends RootRepo {
 	public downloadAnimation(msg:Messages.ArtistImageRequest & {content:string}) {
 		let details = downloadUtils.getDataUrlDetails(msg.content);
 		if (details) {
-			let location = pathLib.join(this.repoPath, `${msg.image.id}.${details.mime.subtype}`);
+			let location = path.join(this.repoPath, `${msg.image.id}.${details.mime.subtype}`);
 
-			return makederp(pathLib.dirname(location))
+			return makederp(path.dirname(location))
 				.then(() => downloadUtils.writeBase64(location, details.content))
 				.catch(err => console.log(err));
 		}

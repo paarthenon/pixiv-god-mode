@@ -9,7 +9,7 @@ import * as urllib from 'url'
 import * as XRegExp from "xregexp"
 import * as sanitize from 'sanitize-filename'
 
-import {RootRepo} from './rootRepo'
+import {BaseRepo} from './baseRepo'
 import {ActionCache} from '../utils/ActionCache'
 import * as pathUtils from '../utils/path'
 import * as downloadUtils from '../utils/download'
@@ -75,7 +75,7 @@ class ArtistImageDatabase {
 	}
 }
 
-export class ArtistImageRepo extends RootRepo {
+export class ArtistImageRepo extends BaseRepo {
 	private static actions = new ActionCache();
 
 	protected db:ArtistImageDatabase;

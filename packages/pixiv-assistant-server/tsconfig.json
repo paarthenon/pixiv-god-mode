@@ -13,9 +13,11 @@
     "exclude": [
         "node_modules"
     ],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+    ],
     "files": [
-        "typings/tsd.d.ts",
-        "src/startup.ts",
-        "src/www/bootstrap.tsx"
+        "typings/tsd.d.ts"
     ]
 }

@@ -1,4 +1,5 @@
 import * as log4js from 'log4js'
+import * as path from 'path'
 
 import {Model} from '../../common/proto'
 
@@ -7,10 +8,32 @@ export function avoidTrailingDot(path:string): string {
 	return (path[path.length - 1] === '.') ? path.substr(0, path.length - 1) : path
 }
 
+/**
+ * Based on a file path, extract the image Id. 
+ */
+export function getImageIdFromFilePath(filePath:string) : number | undefined {
+	return getImageIdFromFileName(path.basename(filePath));
+}
+export function getImageIdFromFileName(fileName: string): number | undefined {
+	let match = fileName.match(/^([0-9]+)(?:_big)?(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/);
+	let aniMatch = fileName.match(/^([0-9]+)\.webm$/);
+	let mangaMatch = fileName.match(/^([0-9]+)\.zip$/);
+	if (match && match.length === 4) {
+		return parseInt(match[1])
+	}
+	if (aniMatch && aniMatch.length === 2) {
+		return parseInt(aniMatch[1])
+	}
+	if (mangaMatch && mangaMatch.length === 2) {
+		return parseInt(mangaMatch[1])
+	}
+	return undefined;
+}
+
 export function fileNameToImage(fileName: string): Model.Image {
-	var match = fileName.match(/^([0-9]+)(?:_big)?(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/);
-	var aniMatch = fileName.match(/^([0-9]+)\.webm$/);
-	var AniZipMatch = fileName.match(/^([0-9]+)_ugoira1920x1080\.zip/);
+	let match = fileName.match(/^([0-9]+)(?:_big)?(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/);
+	let aniMatch = fileName.match(/^([0-9]+)\.webm$/);
+	let mangaMatch = fileName.match(/^([0-9]+)\.zip$/); 
 	if (match && match.length === 4) {
 		return {
 			id: parseInt(match[1]),
@@ -19,16 +42,16 @@ export function fileNameToImage(fileName: string): Model.Image {
 			animation: false
 		}
 	}
-	if (AniZipMatch && AniZipMatch.length === 2) {
-		return {
-			id: parseInt(AniZipMatch[1]),
-			animation: true,
-		}
-	}
 	if (aniMatch && aniMatch.length === 2) {
 		return {
 			id: parseInt(aniMatch[1]),
 			animation: true,
+		}
+	}
+
+	if (mangaMatch && mangaMatch.length === 2) {
+		return {
+			id: parseInt(mangaMatch[1])
 		}
 	}
 	logger.error(`filename ${fileName} failed to match regex`);

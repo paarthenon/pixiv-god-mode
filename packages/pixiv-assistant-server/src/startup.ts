@@ -5,7 +5,7 @@ import * as http from 'http'
 import * as log4js from 'log4js'
 
 import {defineService} from './defineService'
-import * as server from './server'
+import {PixivAssistantServer} from './server'
 import * as electronAppender from './utils/electronAppender'
 
 (<any>log4js).loadAppender(
@@ -19,18 +19,24 @@ log4js.configure({
 });
 log4js.addAppender(log4js.appenders['electron']({}));
 
-let serverInstance :http.Server = undefined;
+let server :PixivAssistantServer | null = null;
 
-//TODO: Make these actually asynchronous by listening for the open and close events and resolving then.
+let defaultConfig = {
+	path: 'pixivRepository',
+	port: 50415,
+	verboseLogging: false
+}
+
 defineService<IServerConfigProtocol>("ServerConfiguration", {
-	initialize: config => 
-		{
-			serverInstance = server.initServer(config);
-			return Promise.resolve();
-		},
+	initialize: config => {
+		let mergedConfig = Object.assign(defaultConfig, config);
+		server = new PixivAssistantServer(config);
+		return server.start();
+	},
 	close: () => {
-		serverInstance.close();
-		return Promise.resolve()
+		let localInstance = server;
+		server = null;
+		return localInstance.close();
 	},
 	openFolderDialog: () => {
 		return new Promise((resolve, reject) => {
@@ -59,8 +65,11 @@ app.on('window-all-closed', () => {
 	// On macOS it is common for applications and their menu bar
 	// to stay active until the user quits explicitly with Cmd + Q
 	if (process.platform !== 'darwin') {
-		serverInstance.close();
-		app.quit()
+		if (server) {
+			server.close().then(() => app.quit());
+		} else {
+			app.quit();
+		}
 	}
 })
 

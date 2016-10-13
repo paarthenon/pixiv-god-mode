@@ -41,16 +41,12 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 	public get repoPathInput() {
 		return ReactDOM.findDOMNode(this.refs['repoPath']) as HTMLInputElement;
 	}
-	public get repoTypeInput() {
-		return ReactDOM.findDOMNode(this.refs['repoType']) as HTMLInputElement;
-	}
 	public get portInput() {
 		return ReactDOM.findDOMNode(this.refs['port']) as HTMLInputElement;
 	}
 	public handleSubmit(){
 		this.props.clickAction({
 			path: this.repoPathInput.value,
-			repoType: parseInt(this.repoTypeInput.value) as proto.RepositoryType,
 			port: parseInt(this.portInput.value),
 			verboseLogging: this.verboseInput.checked,
 		});
@@ -71,13 +67,6 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 					<Bootstrap.InputGroup.Button>
 						<Bootstrap.Button onClick={this.handleBrowse.bind(this)}>Browse</Bootstrap.Button>
 					</Bootstrap.InputGroup.Button>
-				</Bootstrap.InputGroup></Bootstrap.FormGroup>
-				<Bootstrap.FormGroup><Bootstrap.InputGroup inline>
-					<Bootstrap.InputGroup.Addon>Repository Type</Bootstrap.InputGroup.Addon>
-					<Bootstrap.FormControl componentClass="select" placeholder="Repository Type" ref="repoType">
-						<option value={proto.RepositoryType.ArtistBreakdown.toString()}>Repo / Artist / Images</option>
-						<option value={proto.RepositoryType.LooseImages.toString()}>Repo / Loose Images</option>
-					</Bootstrap.FormControl>
 				</Bootstrap.InputGroup></Bootstrap.FormGroup>
 				<Bootstrap.FormGroup><Bootstrap.InputGroup inline>
 					<Bootstrap.InputGroup.Addon>Port Number</Bootstrap.InputGroup.Addon>
