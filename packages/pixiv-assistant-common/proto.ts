@@ -1,6 +1,7 @@
 export const Features = {
 	OpenToRepo: 'openRepo',
 	OpenToArtist: 'openArtist',
+	OpenToImage: 'openImageFolder',
 	DownloadImage: 'downloadImage',
 	DownloadManga: 'downloadManga',
 	DownloadAnimation: 'downloadAnimation',
@@ -53,9 +54,6 @@ export module Messages {
 	export type ArtistUrlRequest = ArtistRequest & UrlRequest
 	export interface BulkRequest<T> {
 		items: T[]
-	}
-	export interface BulkArtistUrlRequest {
-		items: ArtistUrlRequest[]
 	}
 
 }
