@@ -14,7 +14,7 @@ interface DownloadMessage {
 	path: string
 }
 
-function pixivGet(pixivUrl:string) {
+function pixivGet(pixivUrl:string) : Promise<http.IncomingMessage> {
 	let referer = urllib.resolve(pixivUrl, '/');
 	let url = urllib.parse(pixivUrl);
 
@@ -27,64 +27,38 @@ function pixivGet(pixivUrl:string) {
 			headers: {
 				referer: referer
 			}
-		}, response => resolve(response))
+		}, response => resolve(response)).setTimeout(10000);
 	});
 }
 
 export function downloadFromPixiv(msg:DownloadMessage):Promise<boolean> {
 	return makederp(path.dirname(msg.path))
-		.then(() => {
-			let referer = urllib.resolve(msg.url, '/');
-			let url = urllib.parse(msg.url);
-
-			return new Promise((resolve, reject) => {
-				http.get({
-					protocol: url.protocol,
-					hostname: url.hostname,
-					port: url.port,
-					path: url.path,
-					headers: {
-						referer: referer
-					}
-				}, (response) => {
-					response.pipe(fs.createWriteStream(msg.path))
-						.on('finish', () => resolve(msg))
-						.on('error', () => reject('error while writing to file'));
-				});
-			});
-		})
+		.then(() => pixivGet(msg.url).then(response => new Promise((resolve, reject) => {
+			response.pipe(fs.createWriteStream(msg.path))
+					.on('finish', () => {
+						response.socket.destroy();
+						resolve(msg)
+					})
+					.on('error', () => reject('error while writing to file'));
+		})));
 }
 
-export function downloadMangaToZip(files: string[], zipPath:string) {
+export function downloadFilesToZip(files: string[], zipPath:string) {
 	let archive = archiver.create('zip', {});
 	return makederp(path.dirname(zipPath))
-		.then(() => Promise.all(files.map(fileUrl => {
-			let referer = urllib.resolve(fileUrl, '/');
-			let url = urllib.parse(fileUrl);
-
-			return new Promise((resolve, reject) => {
-				http.get({
-					protocol: url.protocol,
-					hostname: url.hostname,
-					port: url.port,
-					path: url.path,
-					headers: {
-						referer: referer
-					}
-				}, (response) => {
-					archive.append(response, {name:path.basename(fileUrl)});
-					resolve();
-				});
-			});
-		}))).then(() => {
-			return new Promise((resolve, reject) => {
-				let outputStream = fs.createWriteStream(zipPath)
-					.on('finish', resolve)
-					.on('error', () => reject('error while writing to file'));
-				archive.pipe(outputStream);
-				archive.finalize();
-			});
-		});
+		.then(() => Promise.all(files.map(fileUrl => // wait for all the files to...
+			pixivGet(fileUrl).then(response => // set up the download stream
+				archive.append(response, {name: path.basename(fileUrl)})) // and add it to the zip
+		)))
+		.then(() =>  new Promise((resolve, reject) => {
+			// Once the zip streams have been registered, set up the output stream.
+			let outputStream = fs.createWriteStream(zipPath)
+				// .on('finish', resolve)
+				// .on('error', () => reject('error while writing to file'));
+			archive.on('end', resolve);
+			archive.pipe(outputStream);
+			archive.finalize();
+		}));
 }
 
 export function getDataUrlDetails(dataUrl:string) {

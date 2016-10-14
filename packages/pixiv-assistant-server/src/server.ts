@@ -33,7 +33,7 @@ export class PixivAssistantServer {
 
 		this.repoInstance = new fiRepo.ImageRepo({
 			path: this.config.path,
-			mangaFormat: fiRepo.MangaDownloadFormat.ARCHIVE,
+			mangaFormat: fiRepo.MangaDownloadFormat.LOOSE,
 			downloadLocation: fiRepo.DownloadLocation.ARTIST,
 		});
 

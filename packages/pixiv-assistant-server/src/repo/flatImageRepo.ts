@@ -179,8 +179,7 @@ export class ImageRepo extends BaseRepo {
 	 */
 	@ImageRepo.actions.register(Features.DownloadImage)
 	public downloadImage(msg:Messages.ArtistUrlRequest) {
-		// return downloadUtils.downloadToZip({url:msg.url, path: path.join(this.config.path, this.getDownloadFolder(msg.artist), path.basename(msg.url) + '.zip')});
-		return downloadUtils.downloadFromPixiv({ url: msg.url, path: path.join(this.config.path, this.getDownloadFolder(msg.artist), path.basename(msg.url)) });
+		return downloadUtils.downloadFromPixiv({ url: msg.url, path: path.resolve(this.config.path, this.getDownloadFolder(msg.artist), path.basename(msg.url)) });
 	}
 	/**
 	 * Download a manga. This will dispatch depending on user configuration.
@@ -218,7 +217,7 @@ export class ImageRepo extends BaseRepo {
 			let imageId = pathUtils.getImageIdFromFileName(path.basename(msg.url));
 			return downloadUtils.downloadFromPixiv({
 				url: msg.url,
-				path: path.join(this.config.path, this.getDownloadFolder(msg.artist), imageId, path.basename(msg.url)),
+				path: path.resolve(this.config.path, this.getDownloadFolder(msg.artist), imageId, path.basename(msg.url)),
 			})
 		}));
 		return promiseUtils.promisePool(tasks, 8)
@@ -231,9 +230,9 @@ export class ImageRepo extends BaseRepo {
 		let artist = msg.items[0].artist;
 		let imageId = pathUtils.getImageIdFromFilePath(msg.items[0].url);
 
-		return downloadUtils.downloadMangaToZip(
+		return downloadUtils.downloadFilesToZip(
 			msg.items.map(item => item.url),
-			path.join(this.config.path, this.getDownloadFolder(artist), imageId + '.zip')
+			path.resolve(this.config.path, this.getDownloadFolder(artist), imageId + '.zip')
 		);
 	}
 
@@ -241,7 +240,7 @@ export class ImageRepo extends BaseRepo {
 	public downloadAnimation(msg:Messages.ArtistImageRequest & {content:string}) {
 		let details = downloadUtils.getDataUrlDetails(msg.content);
 		if (details) {
-			let location = path.join(this.config.path, `${msg.image.id}.${details.mime.subtype}`);
+			let location = path.resolve(this.config.path, this.getDownloadFolder(msg.artist), `${msg.image.id}.${details.mime.subtype}`);
 
 			return makederp(path.dirname(location))
 				.then(() => downloadUtils.writeBase64(location, details.content))
