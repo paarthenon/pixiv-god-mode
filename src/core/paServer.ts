@@ -43,6 +43,10 @@ export class PAServer {
 			.catch(() => this.openRepo());
 	}
 
+	public openImageFolder(image: Model.Image) {
+		return this.callEndpoint(Features.OpenToImage, {image});
+	}
+
 	public openRepo() {
 		// this.logger.debug('openRepo called');
 		return this.callEndpoint(Features.OpenToRepo);
@@ -64,7 +68,7 @@ export class PAServer {
 
 	public downloadMulti(artist: Model.Artist, imageUrls: string[]) {
 		// this.logger.debug(`downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
-		let msg : Messages.BulkArtistUrlRequest = { items: imageUrls.map(url => ({ artist, url })) };
+		let msg : Messages.BulkRequest<Messages.ArtistUrlRequest> = { items: imageUrls.map(url => ({ artist, url })) };
 		return this.callEndpoint(Features.DownloadManga, msg)
 			.then(() => Promise.resolve());
 	}

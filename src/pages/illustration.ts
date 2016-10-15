@@ -11,6 +11,7 @@ import {Model, Messages} from 'common/proto'
 import {UgokuInformation} from 'src/core/IUgoku'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {injectDownloadIllustrationButton} from 'src/injectors/downloadIllustration'
+import {injectImageOpenFolderButton} from 'src/injectors/imageOpenFolderButton'
 import {injectBookmarksClone} from 'src/injectors/addToBookmarksClone'
 
 import * as geomUtils from 'src/utils/geometry'
@@ -84,6 +85,10 @@ export class IllustrationPage extends RootPage {
 		injectDownloadIllustrationButton(
 			() => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
 			() => this.downloadIllustration());
+		
+		injectImageOpenFolderButton(() => {
+			return PixivAssistantServer.openImageFolder({id: this.imageId});
+		});
 	}
 	@ExecuteOnLoad
 	public injectUnloadCallback() {
