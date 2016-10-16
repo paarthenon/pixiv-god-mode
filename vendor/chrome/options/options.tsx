@@ -5,6 +5,7 @@ import * as Bootstrap from 'react-bootstrap'
 import {TranslationSettingsPanel} from 'vendor/chrome/options/translationSettingsPanel'
 import {ServerSettingsPanel} from 'vendor/chrome/options/serverSettingsPanel'
 
+import {GlobalSettingsPanel} from 'vendor/chrome/options/globalSettingsPanel'
 import {ArtistBookmarksSettingsPanel} from 'vendor/chrome/options/artistBookmarksSettingsPanel'
 import {BookmarkIllustrationSettingsPanel} from 'vendor/chrome/options/bookmarkIllustrationSettingsPanel'
 import {IllustrationSettingsPanel} from 'vendor/chrome/options/illustrationSettingsPanel'
@@ -22,6 +23,7 @@ class SettingsPage extends React.Component<void, void> {
         return <Bootstrap.Grid>
             <TranslationSettingsPanel />
             <ServerSettingsPanel />
+            <GlobalSettingsPanel />
             <IllustrationSettingsPanel />
             <MangaSettingsPanel />
             <WorksSettingsPanel />
