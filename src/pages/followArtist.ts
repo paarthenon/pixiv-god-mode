@@ -4,6 +4,7 @@ import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
 import {Model} from 'common/proto'
 import {Container as Deps} from 'src/deps'
+import SettingKeys from 'src/settingKeys'
 
 export class FollowArtistPage extends RootPage {
 	public get artistId():number {
@@ -27,6 +28,17 @@ export class FollowArtistPage extends RootPage {
 						recommendation.addClass('pa-hidden-thumbnail');
 					}
 				});
+
+			Deps.getSetting(SettingKeys.global.directToManga).then(settingValue => {
+				if (settingValue) {
+					recommendation.find('a._work.multiple')
+						.toArray()
+						.map(x => $(x))
+						.forEach(mangaLink => {
+							mangaLink.attr('href', mangaLink.attr('href').replace('medium', 'manga'));
+						})
+				}
+			})
 			recommendation.attr('data-pa-processed', 'true');
 		});
 	}

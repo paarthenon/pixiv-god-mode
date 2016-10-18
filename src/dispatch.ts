@@ -1,3 +1,5 @@
+import * as $ from 'jquery'
+
 import {BasePage} from 'src/pages/base'
 import {RootPage} from 'src/pages/root'
 import {IllustrationPage} from 'src/pages/illustration'
@@ -23,8 +25,7 @@ let patterns = {
 	works: /^http:\/\/www.pixiv.net\/member_illust.php\?.*id=[0-9]+/,
 	bookmarks: /^http:\/\/www.pixiv.net\/bookmark.php\?.*id=[0-9]+/,
 	bookmarkDetail: /^http:\/\/www.pixiv.net\/bookmark_detail.php\?illust_id=[0-9]+/,
-	bookmarkDetailAdd: /^http:\/\/www.pixiv.net\/bookmark_add.php/,
-	followArtist: /http:\/\/www.pixiv.net\/bookmark_add.php$/,
+	bookmarkAdd_and_followArtist: /^http:\/\/www.pixiv.net\/bookmark_add.php/,
 	bookmarkAddIllust: /^http:\/\/www.pixiv.net\/bookmark_add.php\?type=illust&illust_id=[0-9]+/,
 	search: /^http:\/\/www.pixiv.net\/search.php/,
 	artistTagList: /^http:\/\/www.pixiv.net\/member_tag_all.php\?id=[0-9]+/,
@@ -50,11 +51,18 @@ export function dispatch(path:string):RootPage {
 	if (path.match(patterns.bookmarks)) {
 		return new ArtistBookmarksPage(path);
 	}
-	if (path.match(patterns.bookmarkDetail) || path.match(patterns.bookmarkDetailAdd)) {
+	if (path.match(patterns.bookmarkDetail)) {
 		return new BookmarkIllustrationPage(path);
 	}
-	if (path.match(patterns.followArtist)) {
-		return new FollowArtistPage(path);
+	if (path.match(patterns.bookmarkAdd_and_followArtist)) {
+		// Bookmarking an illustration and following an artist have the same
+		// path (bookmark_add.php) so we're forced to differentiate by checking
+		// for a unique element on the page.
+		if ($('.bookmark-count._ui-tooltip').length > 0) {
+			return new BookmarkIllustrationPage(path);
+		} else {
+			return new FollowArtistPage(path);
+		}
 	}
 	if (path.match(patterns.bookmarkAddIllust)) {
 		return new BookmarkAddPage(path);
