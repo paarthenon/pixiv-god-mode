@@ -30,14 +30,14 @@ export module Messages {
 	export interface PositiveResponse<T> extends Response {
 		data :T
 	}
-	export interface NegativeResponse<T> extends Response {
+	export interface NegativeResponse extends Response {
 		errors: string[]
 	}
 
 	export function isPositiveResponse<T>(resp:Response): resp is PositiveResponse<T> {
 		return resp.success;
 	}
-	export function isNegativeResponse<T>(resp:Response): resp is NegativeResponse<T> {
+	export function isNegativeResponse(resp:Response): resp is NegativeResponse {
 		return !resp.success;
 	}
 
