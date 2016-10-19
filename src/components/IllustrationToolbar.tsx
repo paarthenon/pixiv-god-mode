@@ -41,10 +41,13 @@ export class IllustrationToolbar extends React.Component<IllustrationToolbarProp
     }
 }
 
+type updateTextFunc = (text:string) => void;
+type downloadFunc = (update:updateTextFunc) => Promise<void>
+
 export interface IllustrationToolbarContainerProps {
     existsFunc :() => Promise<boolean>
-    downloadInBrowser :() => Promise<void>
-    downloadUsingServer :() => Promise<void>
+    downloadInBrowser :downloadFunc
+    downloadUsingServer :downloadFunc
     openToImage :() => Promise<void>
 }
 interface ContainerState {
@@ -89,11 +92,11 @@ export class IllustrationToolbarContainer extends React.Component<IllustrationTo
     }
 
     public handleBrowserDownload() {
-        this.props.downloadInBrowser();
+        this.props.downloadInBrowser(this.updateProgress.bind(this));
     }
     public handleServerDownload() {
         this.patchState(this.state, {mode: DownloadStates.DOWNLOADING});
-        this.props.downloadUsingServer().then(() => {
+        this.props.downloadUsingServer(this.updateProgress.bind(this)).then(() => {
             this.patchState(this.state, {mode: DownloadStates.DOWNLOADED});
         });
     }

@@ -2,6 +2,7 @@ import * as $ from 'jquery'
 import * as jszip from 'jszip'
 
 import * as pathUtils from 'src/utils/path'
+import {tap} from 'src/utils/promise'
 import {RootPage} from 'src/pages/root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import SettingKeys from 'src/settingKeys'
@@ -167,7 +168,7 @@ export class IllustrationPage extends RootPage {
 		});
 	}
 
-	public downloadAnimation() {
+	public downloadAnimation(updateText:(text:string) => void) {
 		function getBase64(blob:Blob) :Promise<string> {
 			return new Promise((resolve, reject) => {
 				var reader = new FileReader();
@@ -176,14 +177,17 @@ export class IllustrationPage extends RootPage {
 			});
 		}
 
-		return this.makeWebM().then(video => 
-			getBase64(video).then(b64 => 
-				PixivAssistantServer.downloadAnimation({
-					artist: this.artist,
-					image: { id: this.imageId, animation: true },
-				}, b64)
-			)
-		).then(() => {this.isBusy = false});
+		return this.makeWebM(updateText)
+			.then(tap(() => updateText('Preparing video for transport')))
+			.then(video => 
+				getBase64(video).then(b64 => {
+					updateText('Server is downloading the video');
+					return PixivAssistantServer.downloadAnimation({
+						artist: this.artist,
+						image: { id: this.imageId, animation: true },
+					}, b64).then(tap(() => updateText('Download Completed')))
+				})
+			).then(() => {this.isBusy = false});
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
@@ -191,24 +195,26 @@ export class IllustrationPage extends RootPage {
 		PixivAssistantServer.openFolder(this.artist);
 	}
 
-	public downloadIllustrationLocal():Promise<void> {
+	public downloadIllustrationLocal(updateText:(text:string) => void):Promise<void> {
+		updateText('Downloading');
 		switch (this.illustrationType) {
 			case IllustrationType.Picture:
-				return this.downloadSinglePictureLocal();
+				return this.downloadSinglePictureLocal().then(() => updateText('Downloaded'))
 			case IllustrationType.Manga:
-				return this.zipManga();
+				return this.zipManga(updateText);
 			case IllustrationType.Animation:
-				return this.localWebM();
+				return this.localWebM(updateText);
 		}
 	}
-	public downloadIllustration():Promise<void> {
+	public downloadIllustration(updateText:(text:string) => void):Promise<void> {
+		updateText('Downloading');
 		switch (this.illustrationType) {
 			case IllustrationType.Picture:
-				return this.downloadSinglePicture();
+				return this.downloadSinglePicture().then(() => updateText('Downloaded'))
 			case IllustrationType.Manga:
-				return this.downloadManga();
+				return this.downloadManga().then(() => updateText('Downloaded'))
 			case IllustrationType.Animation:
-				return this.downloadAnimation();
+				return this.downloadAnimation(updateText);
 		}
 	}
 
@@ -244,34 +250,43 @@ export class IllustrationPage extends RootPage {
 	}
 
 
-	public zipManga() {
+	public zipManga(updateText:(text:string) => void) {
+		updateText('Collecting image locations');
 		return this.generateMangaPageUrls().then(urls => {
 			let zip = new jszip();
-			urls.forEach(url => {
+			urls.forEach((url, i) => {
+				updateText('Registering file ' + i)
 				let fileName = url.split('/').pop();
 				zip.file(fileName, getBlob(url));
 			})
+			updateText('Generating zip file');
 			zip.generateAsync({type:'blob'}).then(zipFile => {
 				let zipString = URL.createObjectURL(zipFile);
-				Deps.download(zipString, this.imageId + '.zip');
+				updateText('Zip ready to download');
+				Deps.download(zipString, this.imageId + '.zip').then(() => updateText('Zip Downloaded'))
 			})
 		})
 	}
 
-	public localWebM():Promise<void> {
-		return this.makeWebM().then(video => {
+	public localWebM(updateText:(text:string) => void):Promise<void> {
+		return this.makeWebM(updateText).then(video => {
 			let videoString = URL.createObjectURL(video);
-			Deps.download(videoString, `${this.imageId}.webm`);
-		}).then(() => this.isBusy = false)
+			return Deps.download(videoString, `${this.imageId}.webm`);
+		}).then(() => {
+			updateText('Downloading video');
+			this.isBusy = false
+		})
 	}
 
-	protected makeWebM(): Promise<Blob> {
+	protected makeWebM(updateText:(text:string) => void): Promise<Blob> {
 		let video = new whammy.Video(undefined, 1);
 
 		this.isBusy = true;
 
 		return this.ugokuInfo
+			.then(tap(() => updateText('Downloading ugoira data')))
 			.then(info => getBlob(info.src))
+			.then(tap(() => updateText('Reading ugoira data')))
 			.then(data => jszip().loadAsync(data))
 			.then(zip => {
 				let fileData: {[id:string]:Promise<string>} = {}	
@@ -279,18 +294,22 @@ export class IllustrationPage extends RootPage {
 					fileData[path] = file.async('base64');
 				});
 
+				let currentFrame = 1;
 				return this.ugokuInfo.then(info => 
-					execSequentially(info.frames, frame => 
-						fileData[frame.file].then(rawData => 
+					execSequentially(info.frames, frame => {
+						updateText(`Processing frame ${currentFrame++} of ${info.frames.length}`);
+						return fileData[frame.file].then(rawData => 
 							this.imageDimensions.then(dims => {
 								let dataUrl = `data:${info.mime_type};base64,${rawData}`;
 								return toCanvasInstance(dataUrl, dims)
 									.then(canvas => video.add(canvas, frame.delay))
 							})
 						)
-					)
+					})
 				)
-			}).then(() => video.compile())
+			}).then(tap(() => updateText('Encoding video')))
+			.then(() => video.compile())
+			.then(tap(() => updateText('Video ready to download')));
 	}
 
 }
