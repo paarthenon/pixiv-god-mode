@@ -39,3 +39,6 @@ bower_components
 dist
 typings
 build
+
+# editor
+.vscode

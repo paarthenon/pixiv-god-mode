@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Pixiv Assistant",
   "description": "Adds tag translation, a suite of enhancements, and repository management to Pixiv",
-  "version": "0.2",
+  "version": "0.2.1",
 
   "browser_action": {
   	"default_icon": "resources/pa-icon-38.png",
