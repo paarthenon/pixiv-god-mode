@@ -9,8 +9,8 @@ export class IllustrationSettingsPanel extends React.Component<void, void> {
 	public render() {
 		return <IndividualSettingsPanel header="Illustration Page">
 			<BooleanSettingContainer 
-				settingKey={SettingKeys.pages.illust.inject.openFolder} 
-				label={'Inject open folder button'}/>
+				settingKey={SettingKeys.pages.illust.addBookmarkAsModal} 
+				label={'Add Bookmark button launches a modal'}/>
 			<BooleanSettingContainer 
 				settingKey={SettingKeys.pages.illust.autoOpen} 
 				label={'Automatically zoom into image'}/>

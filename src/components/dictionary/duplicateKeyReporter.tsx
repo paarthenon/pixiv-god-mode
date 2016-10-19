@@ -6,7 +6,7 @@ export class DuplicateKeyReporter extends React.Component<{dupes: string[], remo
 		return (this.props.dupes === undefined) ? null :
 			<div> 
 				Found <strong>{this.props.dupes.length}</strong> duplicate entries. 
-				<Bootstrap.Button onClick={() => this.props.removeAction()}>Revert Duplicates</Bootstrap.Button>
+				{(this.props.dupes.length > 0) ? <Bootstrap.Button onClick={() => this.props.removeAction()} small>Revert Duplicates</Bootstrap.Button> : null}
 			</div>
 	}
 }

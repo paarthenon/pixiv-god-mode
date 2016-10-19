@@ -9,8 +9,8 @@ export class MangaSettingsPanel extends React.Component<void, void> {
 	public render() {
 		return <IndividualSettingsPanel header={'Manga Page'}>
 			<BooleanSettingContainer 
-				settingKey={SettingKeys.pages.manga.inject.previousButton} 
-				label={'Inject previous page button'}/>
+				settingKey={SettingKeys.pages.manga.inject.toolbox} 
+				label={'Inject extra buttons (previous, next, download, open folder)'}/>
 			<BooleanSettingContainer 
 				settingKey={SettingKeys.pages.manga.loadFullSize} 
 				label={'Load full size versions of manga images'}/>

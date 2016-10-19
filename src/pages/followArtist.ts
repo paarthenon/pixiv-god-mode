@@ -17,36 +17,41 @@ export class FollowArtistPage extends RootPage {
 		return { id: this.artistId, name: this.artistName };
 	}
 
-	public fadeBookmarks() {
+	protected actOnNewEntries() {
 		let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
 
-		recommendations.forEach(recommendation => {
-			let links = recommendation.find('a:not(._work):not(.premium-feature)').toArray().map((a:HTMLAnchorElement) => a.href);
-			Promise.all<boolean>(links.map(link => Deps.isPageBookmarked(link)))
-				.then(results => {
-					if(results.some(x => x)) {
-						recommendation.addClass('pa-hidden-thumbnail');
-					}
+		Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(settingValue => {
+			if (settingValue) {
+				recommendations.forEach(recommendation => {
+					let links = recommendation.find('a:not(._work):not(.premium-feature)').toArray().map((a:HTMLAnchorElement) => a.href);
+					Promise.all<boolean>(links.map(link => Deps.isPageBookmarked(link)))
+						.then(results => {
+							if(results.some(x => x)) {
+								recommendation.addClass('pa-hidden-thumbnail');
+							}
+						});
 				});
-
-			Deps.getSetting(SettingKeys.global.directToManga).then(settingValue => {
-				if (settingValue) {
+			}
+		})
+		
+		Deps.getSetting(SettingKeys.global.directToManga).then(settingValue => {
+			if (settingValue) {
+				recommendations.forEach(recommendation => {
 					recommendation.find('a._work.multiple')
 						.toArray()
 						.map(x => $(x))
 						.forEach(mangaLink => {
 							mangaLink.attr('href', mangaLink.attr('href').replace('medium', 'manga'));
 						})
-				}
-			})
-			recommendation.attr('data-pa-processed', 'true');
+					recommendation.attr('data-pa-processed', 'true');
+				})
+			}
 		});
 	}
 
-	//TODO: Wire up a setting for this.
 	@ExecuteOnLoad
 	public injectTrigger() {
-		document.addEventListener('pixivFollowRecommenationLoaded', (event) => this.fadeBookmarks());
+		document.addEventListener('pixivFollowRecommenationLoaded', (event) => this.actOnNewEntries());
 
 		Deps.execOnPixiv(pixiv => {
 			function issueNotification(){

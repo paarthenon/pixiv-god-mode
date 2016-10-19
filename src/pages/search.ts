@@ -19,7 +19,7 @@ export class SearchPage extends GalleryPage {
 	@ExecuteOnLoad
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
-			Deps.getSetting(SettingKeys.pages.search.fadeDownloaded).then(fade => {
+			Deps.getSetting(SettingKeys.global.fadeDownloadedImages).then(fade => {
 				if(fade) {
 					let artist = jQUtils.artistFromJQImage(image);
 					let imageObj = jQUtils.imageFromJQImage(image);
@@ -31,7 +31,7 @@ export class SearchPage extends GalleryPage {
 				}
 			});
 
-			Deps.getSetting(SettingKeys.pages.search.fadeBookmarked).then(fade => {
+			Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(fade => {
 				if (fade) {
 					let url = jQUtils.artistUrlFromJQImage(image);
 					Deps.isPageBookmarked(url).then(bookmarked => {
@@ -44,7 +44,7 @@ export class SearchPage extends GalleryPage {
 		});
 	}
 
-	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
+	@ExecuteIfSetting(SettingKeys.global.inject.pagingButtons)
 	public injectPagingButtons(){
 		super.injectPagingButtons();
 	}

@@ -10,11 +10,11 @@ export class TextSetting extends React.Component<{label:string, text:string, onU
 	}
 	public render() {
 		return (
-			<tr>
-				<label> {this.props.label} </label>
-				<input defaultValue={this.props.text} ref="translation"></input>
-				<Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this)}>update</Bootstrap.Button>
-			</tr>
+			<Bootstrap.InputGroup>
+				<Bootstrap.InputGroup.Addon>{this.props.label}</Bootstrap.InputGroup.Addon>
+				<Bootstrap.FormControl  type='text' defaultValue={this.props.text} ref="translation" />
+				<Bootstrap.InputGroup.Button><Bootstrap.Button onClick={this.handleUpdate.bind(this)}>update</Bootstrap.Button></Bootstrap.InputGroup.Button>
+			</Bootstrap.InputGroup>
 		);
 	}
 }

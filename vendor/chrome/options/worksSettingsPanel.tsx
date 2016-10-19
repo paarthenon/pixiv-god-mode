@@ -9,9 +9,6 @@ export class WorksSettingsPanel extends React.Component<void, void> {
 	public render() {
 		return <IndividualSettingsPanel header="Works Page">
 			<BooleanSettingContainer 
-				settingKey={SettingKeys.pages.works.inject.openFolder} 
-				label={'Inject open folder button'}/>
-			<BooleanSettingContainer 
 				settingKey={SettingKeys.pages.works.inject.openInTabs} 
 				label={'Inject open in tabs button'}/>
 			<BooleanSettingContainer 

@@ -32,13 +32,13 @@ export class MangaPage extends RootPage {
 	public fitImagesInPage() : void {
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.manga.inject.previousButton)
+	@ExecuteIfSetting(SettingKeys.pages.manga.inject.toolbox)
 	public injectMangaPreviousButton(){
 
 		injectMangaPreviousButton(this.goToPreviousPage.bind(this));
+		injectMangaNextButton(this.goToNextPage.bind(this));
 		injectMangaDownloadButton(this.downloadMulti.bind(this));
 		injectMangaOpenFolderButton(this.openFolder.bind(this));
-		// injectMangaNextButton($, )
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)
@@ -80,6 +80,11 @@ export class MangaPage extends RootPage {
 	public goToPreviousPage():void {
 		Deps.execOnPixiv(pixiv => {
 			pixiv.mangaViewer.listView.prev();
+		});
+	}
+	public goToNextPage():void {
+		Deps.execOnPixiv(pixiv => {
+			pixiv.mangaViewer.listView.next();
 		});
 	}
 

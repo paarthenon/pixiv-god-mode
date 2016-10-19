@@ -32,11 +32,11 @@ export class ArtistBookmarksPage extends GalleryPage {
 		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.artistBookmarks.inject.openFolder)
+	@ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
 	injectOpenFolder() {
 		injectUserRelationshipButton(this.artist);
 	}
-	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
+	@ExecuteIfSetting(SettingKeys.global.inject.pagingButtons)
 	public injectPagingButtons(){
 		super.injectPagingButtons();
 	}
@@ -44,7 +44,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 	@ExecuteOnLoad
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
-			Deps.getSetting(SettingKeys.pages.artistBookmarks.fadeDownloaded).then(fade => {
+			Deps.getSetting(SettingKeys.global.fadeDownloadedImages).then(fade => {
 				if(fade) {
 					let artist = jQUtils.artistFromJQImage(image);
 					let imageObj = jQUtils.imageFromJQImage(image);
@@ -56,7 +56,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 				}
 			});
 
-			Deps.getSetting(SettingKeys.pages.artistBookmarks.fadeBookmarked).then(fade => {
+			Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(fade => {
 				if (fade) {
 					let url = jQUtils.artistUrlFromJQImage(image);
 					Deps.isPageBookmarked(url).then(bookmarked => {

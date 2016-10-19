@@ -59,7 +59,7 @@ export class BookmarkIllustrationPage extends RootPage {
 			let artist = jQUtils.artistFromJQImage(image);
 			let imageObj = jQUtils.imageFromJQImage(image);
 
-			Deps.getSetting(SettingKeys.pages.bookmarkIllustration.fadeDownloaded).then(settingValue => {
+			Deps.getSetting(SettingKeys.global.fadeDownloadedImages).then(settingValue => {
 				if(settingValue) {
 					PixivAssistantServer.imageExistsInDatabase(artist, imageObj).then(exists => {
 						if (exists) {
@@ -69,7 +69,7 @@ export class BookmarkIllustrationPage extends RootPage {
 				}
 			});
 
-			Deps.getSetting(SettingKeys.pages.bookmarkIllustration.fadeBookmarked).then(settingValue => {
+			Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(settingValue => {
 				if(settingValue) {
 					let url = jQUtils.artistUrlFromJQImage(image);
 					Deps.isPageBookmarked(url).then(bookmarked => {

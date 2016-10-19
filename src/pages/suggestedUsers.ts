@@ -4,25 +4,29 @@ import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
 import {Model} from 'common/proto'
 import {Container as Deps} from 'src/deps'
+import SettingKeys from 'src/settingKeys'
 
 export class SuggestedUsersPage extends RootPage {
 	public fadeBookmarks() {
-		let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
+		Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(settingValue => {
+			if (settingValue) {
+				let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
 
-		recommendations.forEach(recommendation => {
-			let links = recommendation.find('a:not(._work):not(.premium-feature)')
-				.toArray().map((a:HTMLAnchorElement) => a.href);
-			Promise.all<boolean>(links.map(link => Deps.isPageBookmarked(link)))
-				.then(results => {
-					if(results.some(x => x)) {
-						recommendation.addClass('pa-hidden-thumbnail');
-					}
+				recommendations.forEach(recommendation => {
+					let links = recommendation.find('a:not(._work):not(.premium-feature)')
+						.toArray().map((a:HTMLAnchorElement) => a.href);
+					Promise.all<boolean>(links.map(link => Deps.isPageBookmarked(link)))
+						.then(results => {
+							if(results.some(x => x)) {
+								recommendation.addClass('pa-hidden-thumbnail');
+							}
+						});
+					recommendation.attr('data-pa-processed', 'true');
 				});
-			recommendation.attr('data-pa-processed', 'true');
+			}
 		});
 	}
 
-	//TODO: Wire up a setting for this.
 	@ExecuteOnLoad
 	public injectTrigger() {
 		document.addEventListener('pixivSuggestedUserLoaded', (event) => this.fadeBookmarks());

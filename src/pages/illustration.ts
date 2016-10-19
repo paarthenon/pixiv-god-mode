@@ -77,8 +77,8 @@ export class IllustrationPage extends RootPage {
 		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
-	@ExecuteOnLoad
-	public injectDownloadButton() {
+	@ExecuteIfSetting(SettingKeys.pages.illust.inject.toolbar)
+	public injectToolbar() {
 		injectIllustrationToolbar({
 			existsFunc: () => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
 			downloadInBrowser: this.downloadIllustrationLocal.bind(this),
@@ -98,8 +98,7 @@ export class IllustrationPage extends RootPage {
 		});
 	}
 
-	//TODO: Use a setting for this.
-	@ExecuteOnLoad
+	@ExecuteIfSetting(SettingKeys.pages.illust.addBookmarkAsModal)
 	public injectBookmarkButtonClone() {
 		injectBookmarksClone(() => {
 			Deps.execOnPixiv(pixiv => {
@@ -108,7 +107,7 @@ export class IllustrationPage extends RootPage {
 		})
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.illust.inject.openFolder)
+	@ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
 	public injectOpenFolder() {
 		injectUserRelationshipButton(this.artist);
 	}

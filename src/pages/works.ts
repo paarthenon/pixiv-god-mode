@@ -43,7 +43,7 @@ export class WorksPage extends GalleryPage {
 		$('li.image-item').toArray().forEach(image => func($(image)));
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.works.inject.openFolder)
+	@ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
 	public injectOpenFolder(){
 		injectUserRelationshipButton(this.artist);
 	}
@@ -51,7 +51,7 @@ export class WorksPage extends GalleryPage {
 	public injectOpenTabs(){
 		injectOpenInTabs(this.openTabs.bind(this));
 	}
-	@ExecuteIfSetting(SettingKeys.global.injectPagingButtons)
+	@ExecuteIfSetting(SettingKeys.global.inject.pagingButtons)
 	public injectPagingButtons(){
 		super.injectPagingButtons();
 	}
