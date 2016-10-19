@@ -20,7 +20,7 @@ export class FollowArtistPage extends RootPage {
 	protected actOnNewEntries() {
 		let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
 
-		Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(settingValue => {
+		Deps.getSetting(SettingKeys.global.fadeArtistRecommendationsAlreadyBookmarked).then(settingValue => {
 			if (settingValue) {
 				recommendations.forEach(recommendation => {
 					let links = recommendation.find('a:not(._work):not(.premium-feature)').toArray().map((a:HTMLAnchorElement) => a.href);

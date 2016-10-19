@@ -21,6 +21,9 @@ export class GlobalSettingsPanel extends React.Component<void, void> {
 				settingKey={SettingKeys.global.fadeDownloadedImages} 
 				label={'Fade out downloaded images (requires server)'}/>
 			<BooleanSettingContainer 
+				settingKey={SettingKeys.global.fadeArtistRecommendationsAlreadyBookmarked} 
+				label={"Fade out recommendations for artists you've already got bookmarked"}/>
+			<BooleanSettingContainer 
 				settingKey={SettingKeys.global.fadeImagesByBookmarkedArtists} 
 				label={"Fade out images by artists you've bookmarked"}/>
 		</IndividualSettingsPanel>

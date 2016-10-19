@@ -12,6 +12,7 @@ let trueSettings = [
 	SettingKeys.global.inject.openToArtistButton,
 	SettingKeys.global.inject.pagingButtons,
 	SettingKeys.global.fadeDownloadedImages,
+	SettingKeys.global.fadeArtistRecommendationsAlreadyBookmarked,
 	SettingKeys.pages.illust.inject.toolbar,
 	SettingKeys.pages.illust.addBookmarkAsModal,
 	SettingKeys.pages.illust.autoOpen,

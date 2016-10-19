@@ -8,7 +8,7 @@ import SettingKeys from 'src/settingKeys'
 
 export class SuggestedUsersPage extends RootPage {
 	public fadeBookmarks() {
-		Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(settingValue => {
+		Deps.getSetting(SettingKeys.global.fadeArtistRecommendationsAlreadyBookmarked).then(settingValue => {
 			if (settingValue) {
 				let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
 

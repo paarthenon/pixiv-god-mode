@@ -8,6 +8,7 @@ let settingKeys = {
 		directToManga: 'GLOBAL_LINK_THUMBNAIL_DIRECTLY_TO_MANGA',
 		fadeDownloadedImages: 'GLOBAL_FADE_DOWNLOADED_IMAGES',
 		fadeImagesByBookmarkedArtists : 'GLOBAL_FADE_BOOKMARKED_ARTIST_IMAGES',
+		fadeArtistRecommendationsAlreadyBookmarked : 'GLOBAL_FADE_ARTIST_RECOMMENDATIONS_ALREADY_BOOKMARKED',
 	},
 	pages: {
 		illust: {
