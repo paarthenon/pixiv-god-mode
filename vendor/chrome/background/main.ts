@@ -1,7 +1,6 @@
 import * as Msg from 'vendor/chrome/messages'
 import * as ChromeUtils from 'vendor/chrome/utils'
 
-import {AjaxRequest} from 'src/core/IAjax'
 import ConfigKeys from 'src/configKeys'
 import Config from 'vendor/chrome/config'
 import {DictionaryManagementService} from 'src/core/dictionaryManagementService'
@@ -40,6 +39,7 @@ let localImpl = defineImplementation<Msg.Protocol>("BACKGROUND_PAGE", {
 					resolve(xhr.response);
 				}
 			}
+			xhr.onerror = reject
 		});
 	},
 	newTab: msg => {

@@ -1,6 +1,5 @@
 import * as $ from 'jquery'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 import {AddToBookmarksClone} from 'src/components/addToBookmarksClone'
 import {GenerateElement} from 'src/injectors/utils'

@@ -12,7 +12,7 @@ export function setConfig(key:string, value: any): Promise<void> {
 
 export function listConfigKeys() : Promise<string[]> {
 	return new Promise(resolve =>
-		chrome.storage.local.get(null, contents => resolve(Object.keys(contents))));
+		chrome.storage.local.get({}, contents => resolve(Object.keys(contents))));
 }
 export function handleError<T>(value: T):Promise<T> {
 	return new Promise((resolve, reject) => {
@@ -25,7 +25,7 @@ export function handleError<T>(value: T):Promise<T> {
 }
 
 export function queryTabs(obj:chrome.tabs.QueryInfo) : Promise<chrome.tabs.Tab[]> {
-	return new Promise((resolve, reject) => {
+	return new Promise(resolve => {
 		chrome.tabs.query(obj, result => resolve(result));
 	});
 }
@@ -36,7 +36,7 @@ export function getCurrentTab() {
 }
 
 export function newTab(url:string, background?:boolean) {
-	return new Promise<void>(resolve => chrome.tabs.create({url, active: !background}, tab => resolve()));
+	return new Promise(resolve => chrome.tabs.create({url, active: !background}, resolve));
 }
 
 export function isPageBookmarked(url:string) {

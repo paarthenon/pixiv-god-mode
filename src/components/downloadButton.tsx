@@ -1,8 +1,6 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
-import {InjectBootstrap} from 'src/components/util/injectBootstrap'
-
 export enum DownloadStates {
 	LOADINGSTATUS,
 	DOWNLOADAVAILABLE,

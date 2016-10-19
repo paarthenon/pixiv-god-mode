@@ -1,7 +1,6 @@
 import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {RootPage} from 'src/pages/root'
-import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 
 export class GalleryPage extends RootPage {

@@ -1,8 +1,6 @@
 import * as $ from 'jquery'
-import * as pathUtils from 'src/utils/path'
 import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
-import {Model} from 'common/proto'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 
@@ -29,7 +27,7 @@ export class SuggestedUsersPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		document.addEventListener('pixivSuggestedUserLoaded', (event) => this.fadeBookmarks());
+		document.addEventListener('pixivSuggestedUserLoaded', () => this.fadeBookmarks());
 
 		Deps.execOnPixiv(pixiv => {
 			function issueNotification(){

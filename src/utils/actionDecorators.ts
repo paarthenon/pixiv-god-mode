@@ -6,7 +6,7 @@ import {CacheRegistry, pushToArrayCache} from 'src/utils/terribleCache'
 import {Container as Deps} from 'src/deps'
 
 export function RegisteredAction(desc:ActionDescriptor) {
-	return (target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+	return (target: BasePage, _propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
 		let newDesc = <any>desc;
 		newDesc.execute = descriptor.value;
 
@@ -19,7 +19,7 @@ export function RegisteredAction(desc:ActionDescriptor) {
 }
 
 export function ExecuteIf(predicate:() => boolean | Promise<boolean>) {
-	return (target: BasePage, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+	return (target: BasePage, _propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
 		let name = (<any>target)['constructor']['name'];
 		
 		let onload = {

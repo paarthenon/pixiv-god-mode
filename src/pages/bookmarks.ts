@@ -2,7 +2,6 @@ import * as $ from 'jquery'
 import {RootPage} from 'src/pages/root'
 import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {PixivAssistantServer} from 'src/services'
-import * as pathUtils from 'src/utils/path'
 import * as jQUtils from 'src/utils/document'
 import {Container as Deps} from 'src/deps'
 import {injectViewAllButton, ViewAllButtonElementId} from 'src/injectors/bookmarkDetailViewAll'
@@ -28,7 +27,7 @@ export class BookmarkIllustrationPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		document.addEventListener('pixivBookmarkIllustrationRecommenationLoaded', (event) => {
+		document.addEventListener('pixivBookmarkIllustrationRecommenationLoaded', () => {
 			this.experimentalFade();
 			Deps.execOnPixiv(pixiv => pixiv.illustRecommend.completed).then(completed => {
 				console.log('completed status',completed);

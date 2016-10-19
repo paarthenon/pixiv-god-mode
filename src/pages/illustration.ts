@@ -11,7 +11,6 @@ import {Container as Deps} from 'src/deps'
 import {Model, Messages} from 'common/proto'
 import {UgokuInformation} from 'src/core/IUgoku'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
-import {injectImageOpenFolderButton} from 'src/injectors/imageOpenFolderButton'
 import {injectBookmarksClone} from 'src/injectors/addToBookmarksClone'
 import {injectIllustrationToolbar} from 'src/injectors/illustrationToolbar'
 
@@ -95,6 +94,7 @@ export class IllustrationPage extends RootPage {
 				event.returnValue = message;
 				return message;
 			}
+			return undefined;
 		});
 	}
 
@@ -138,7 +138,7 @@ export class IllustrationPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		let observer = new MutationObserver(this.fadeRecommendations.bind(this))
+		new MutationObserver(this.fadeRecommendations.bind(this))
 			.observe($('section#illust-recommend ul')[0], { childList: true });
 	}
 	@ExecuteOnLoad
@@ -173,6 +173,7 @@ export class IllustrationPage extends RootPage {
 				var reader = new FileReader();
 				reader.readAsDataURL(blob);
 				reader.onloadend = () => resolve(reader.result);
+				reader.onerror = err => reject(err);
 			});
 		}
 

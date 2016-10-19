@@ -56,7 +56,7 @@ export function defineImplementation<T>(target:Target, implementation:T) {
 	function dispatch(implementation: T, message: Msg.RequestWrapper<any>) : Promise<any> {
 		return Promise.resolve((<any>implementation)[message.name](message.body));
 	}
-	chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+	chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
 		let message: Msg.RequestWrapper<any> = msg;
 		if (message.target === target) {
 			dispatch(implementation, msg)

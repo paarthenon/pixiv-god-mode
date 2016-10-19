@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as Bootstrap from 'react-bootstrap'
 
 import {TextSettingContainer} from 'vendor/chrome/options/textSettingContainer'
 import ConfigKeys from 'src/configKeys'

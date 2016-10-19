@@ -1,6 +1,5 @@
 import * as $ from 'jquery'
 
-import {BasePage} from 'src/pages/base'
 import {RootPage} from 'src/pages/root'
 import {IllustrationPage} from 'src/pages/illustration'
 import {WorksPage} from 'src/pages/works'

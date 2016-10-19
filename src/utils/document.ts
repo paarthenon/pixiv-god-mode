@@ -22,11 +22,6 @@ export function hackedNewTab(jQ:JQueryStatic, url:string) {
 	jQ(`<a target="_blank" href="${url}"></a>`)[0].click();
 }
 
-interface Dimensions {
-	width: number
-	height: number
-}
-
 export function toCanvasInstance(dataUrl:string, dims:Rectangle) {
 	return new Promise((resolve, reject) => {
 		let invisiCanvas = document.createElement('canvas') as HTMLCanvasElement;
@@ -38,7 +33,10 @@ export function toCanvasInstance(dataUrl:string, dims:Rectangle) {
 		img.addEventListener('load', () => {
 			context.drawImage(img, 0, 0, invisiCanvas.width, invisiCanvas.height);
 			resolve(invisiCanvas);
-		});
+		})
+		img.addEventListener('error', err => {
+			reject(err);
+		})
 		img.src = dataUrl;
 	});
 }

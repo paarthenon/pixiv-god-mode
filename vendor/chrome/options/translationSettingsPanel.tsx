@@ -1,7 +1,5 @@
 import * as React from 'react'
-import * as Bootstrap from 'react-bootstrap'
 
-import {getUserSettings, getSetting, setSetting} from 'vendor/chrome/userSettings'
 import SettingKeys from 'src/settingKeys'
 
 import {IndividualSettingsPanel} from 'src/components/settings/individualSettingsPanel'

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as Bootstrap from 'react-bootstrap'
 
 import {IndividualSettingsPanel} from 'src/components/settings/individualSettingsPanel'
 import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer'

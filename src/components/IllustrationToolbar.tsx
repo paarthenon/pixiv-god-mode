@@ -3,7 +3,6 @@ import * as Bootstrap from 'react-bootstrap'
 
 import {InjectBootstrap} from 'src/components/util/injectBootstrap'
 import {DownloadButton, DownloadStates} from 'src/components/downloadButton'
-import {ImageOpenFolderButton} from 'src/components/imageOpenFolderButton'
 
 interface IllustrationToolbarProps {
     mode :DownloadStates

@@ -1,6 +1,4 @@
-import {IDependencyContainer, load as depsLoad} from 'src/deps'
 import {AjaxRequest} from 'src/core/IAjax'
-import {Action} from 'src/core/IAction'
 
 import * as Msg from 'vendor/chrome/messages'
 import Config from 'vendor/chrome/config'
@@ -12,7 +10,7 @@ import * as Dependencies from 'src/deps'
 
 let broker = new ExecBroker();
 
-let deps: IDependencyContainer = {
+let deps: Dependencies.IDependencyContainer = {
 	config: new Config(),
 	openInTab: (url: string) => Mailman.Background.newTab({url}),
 	execOnPixiv: (func:(pixiv:any, props:any) => any, props?:any) => broker.queueExecution(func, props),

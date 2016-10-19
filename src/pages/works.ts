@@ -2,21 +2,14 @@ import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import * as jQUtils from 'src/utils/document'
 import {PixivAssistantServer} from 'src/services'
-import {RootPage} from 'src/pages/root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {RegisteredAction, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import SettingKeys from 'src/settingKeys'
 import {Model} from 'common/proto'
 
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import {UserRelationButton} from 'src/components/userRelationButton'
-
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {injectOpenInTabs} from 'src/injectors/openInTabs'
 import {Container as Deps} from 'src/deps'
-
-import ConfigKeys from 'src/ConfigKeys'
 
 export class WorksPage extends GalleryPage {
 	public get artistId():number {

@@ -51,7 +51,7 @@ export class FollowArtistPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		document.addEventListener('pixivFollowRecommenationLoaded', (event) => this.actOnNewEntries());
+		document.addEventListener('pixivFollowRecommenationLoaded', () => this.actOnNewEntries());
 
 		Deps.execOnPixiv(pixiv => {
 			function issueNotification(){

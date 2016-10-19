@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as Bootstrap from 'react-bootstrap'
 
 export class PopupWindowFrame extends React.Component<void, void> {
 	protected style = {

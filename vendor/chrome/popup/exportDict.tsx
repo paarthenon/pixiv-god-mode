@@ -1,12 +1,6 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-
-import Mailman from 'vendor/chrome/mailman'
-import {DictionaryManagementService, cachedDictionary, naiveDictionary} from 'src/core/dictionaryManagementService'
-import Config from 'vendor/chrome/config'
-import ConfigKeys from 'src/configKeys'
+import {cachedDictionary, naiveDictionary} from 'src/core/dictionaryManagementService'
 import {ConditionalRender} from 'src/components/util/conditionalRender'
-import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
 import {DictionaryService} from 'vendor/chrome/services'
 

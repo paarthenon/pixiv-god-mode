@@ -7,11 +7,6 @@ import IConfig from 'src/core/IConfig'
 
 import ConfigKeys from 'src/configKeys'
 
-let HTTP = {
-	GET: 'GET',
-	POST: 'POST', 
-};
-
 export class PAServer {
 
 	constructor(protected config:IConfig, protected ajax:AjaxFunction<any,any>) {}
@@ -33,6 +28,7 @@ export class PAServer {
 					// this.logger.error('Server returned failed response', parsedResponse.errors);
 					return Promise.reject('Negative response: ' + JSON.stringify(parsedResponse.errors));
 				}
+				return Promise.reject('Invalid message type');
 			})
 		})
 	}
@@ -84,7 +80,7 @@ export class PAServer {
 	}
 
 	public ping() : Promise<void> {
-		return this.callEndpoint('ping').then(x => Promise.resolve());
+		return this.callEndpoint('ping').then(() => Promise.resolve());
 	}
 
 	public supportsFeature(feature:string) : Promise<boolean> {

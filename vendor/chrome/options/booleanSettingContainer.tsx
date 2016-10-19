@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import {getUserSettings, getSetting, setSetting} from 'vendor/chrome/userSettings'
+import {getSetting, setSetting} from 'vendor/chrome/userSettings'
 import {BooleanSetting} from 'src/components/settings/booleanSetting'
 
 interface BooleanSettingContainerProps {

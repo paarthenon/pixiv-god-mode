@@ -32,7 +32,7 @@ trueSettings.forEach(setting => {
 export function getUserSettings() {
 	return Mailman.Background.getConfig({key: ConfigKeys.user_settings})
 		.then(resp => resp.value)
-		.catch(error => ({}));
+		.catch(() => ({}));
 }
 export function getSetting(key: string) {
 	return getUserSettings().then((userSettings: { [id: string]: any }) => {

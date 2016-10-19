@@ -1,5 +1,3 @@
-import {Model} from 'common/proto'
-
 function extract(str: string, re: RegExp):string {
 	if (str == undefined) return undefined;
 	let out = str.match(re);
@@ -35,7 +33,7 @@ export function experimentalMaxSizeImageUrl(url: string, ext?:string):string {
 export function explodeImagePathPages(url:string, pages:number):string[]{
 	let urls:string[] = [];
 	for (let i = 0; i < pages; i++) {
-		let pageSpecificString = url.replace(/_p[0-9]+\.([a-zA-Z]+)$/, (match, extension) => `_p${i}.${extension}`);
+		let pageSpecificString = url.replace(/_p[0-9]+\.([a-zA-Z]+)$/, (_, extension) => `_p${i}.${extension}`);
 		urls.push(pageSpecificString);
 	}
 	return urls;

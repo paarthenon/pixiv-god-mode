@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as Bootstrap from 'react-bootstrap'
 
 import {PopupWindowFrame, PopupContentFrame} from 'vendor/chrome/popup/popupFrame'
 import {PopupNavbar} from 'vendor/chrome/popup/navBar'

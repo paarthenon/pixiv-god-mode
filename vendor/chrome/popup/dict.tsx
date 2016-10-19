@@ -5,7 +5,6 @@ import * as Bootstrap from 'react-bootstrap'
 import * as ChromeUtils from 'vendor/chrome/utils'
 import {CachedDictionaryService, cachedDictionary, EntryType} from 'src/core/dictionaryManagementService'
 import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
-import {ConditionalRender} from 'src/components/util/conditionalRender'
 
 let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
 let removeDiacritics = require('diacritics').remove; //TODO: create typing

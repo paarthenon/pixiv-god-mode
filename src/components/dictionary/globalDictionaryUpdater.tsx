@@ -8,11 +8,6 @@ export enum GlobalDictUpdateState {
 	DOWNLOADING
 }
 
-interface GlobalDictUpdaterProps {
-	updateAvailable :boolean
-	updateAction :Function
-}
-
 export class GlobalDictionaryUpdater extends React.Component<{mode: GlobalDictUpdateState, updateAction:Function}, void> {
 	protected dictionaryStatusText(){
 		switch (this.props.mode) {

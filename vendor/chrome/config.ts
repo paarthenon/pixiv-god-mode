@@ -4,19 +4,6 @@ import * as Msg from 'vendor/chrome/messages'
 
 type potentialData = boolean|string|number|Object
 
-interface configValue {
-	data: potentialData
-}
-
-function handleError<T>(value: T) {
-	return new Promise((resolve, reject) => {
-		if (!chrome.runtime.lastError) {
-			resolve(value);
-		} else {
-			reject(chrome.runtime.lastError.message);
-		}
-	});
-}
 export default class ContentConfig implements IConfig {
 	protected configEngine :Msg.ConfigProtocol
 	constructor(engine?:Msg.ConfigProtocol) {

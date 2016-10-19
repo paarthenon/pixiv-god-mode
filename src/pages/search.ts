@@ -1,7 +1,5 @@
 import * as $ from 'jquery'
-import * as pathUtils from 'src/utils/path'
 import {PixivAssistantServer} from 'src/services'
-import {RootPage} from 'src/pages/root'
 import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import {DictionaryService} from 'src/services'

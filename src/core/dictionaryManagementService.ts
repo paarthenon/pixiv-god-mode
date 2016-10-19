@@ -1,5 +1,4 @@
 import IConfig from 'src/core/IConfig'
-import IDictionary from 'src/core/IDictionary'
 
 import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
