@@ -24,16 +24,11 @@ export class ServerStatusPanel extends React.Component<any,ServerStatus> {
 	}
 }
 
-export class ServerStatusView extends React.Component<ServerStatus, void> {
-	public handleExecute() {
-	}
-	public render() {
-		return <div>
-				<p>Connected: {(this.props.connected == undefined)? 'loading' : this.props.connected.toString()}</p>
-				<p>Features</p>
-				<ul>
-					{this.props.features.map(feature => <li key={feature}>{feature}</li>)}
-				</ul>
-			</div>;
-	}
-}
+export const ServerStatusView : React.StatelessComponent<ServerStatus> = props =>
+	<div>
+		<p>Connected: {(props.connected == undefined)? 'loading' : props.connected.toString()}</p>
+		<p>Features</p>
+		<ul>
+			{props.features.map(feature => <li key={feature}>{feature}</li>)}
+		</ul>
+	</div>;

@@ -43,15 +43,12 @@ export class DictionaryJSON extends React.Component<void,DictStates> {
 	}
 }
 
-class DictStats extends React.Component<{globalCount: number, localCount: number, cacheCount: number}, void> {
-	public render() {
-		return <div>
-			<p>Global dictionary: {this.props.globalCount}</p>
-			<p>User dictionary: {this.props.localCount}</p>
-			<p>Combined dictionary: {this.props.cacheCount}</p>
-		</div>
-	}
-}
+const DictStats : React.StatelessComponent<{globalCount: number, localCount: number, cacheCount: number}> = props =>
+	<div>
+		<p>Global dictionary: {props.globalCount}</p>
+		<p>User dictionary: {props.localCount}</p>
+		<p>Combined dictionary: {props.cacheCount}</p>
+	</div>
 
 class DictJSON extends React.Component<cachedDictionary,void> {
 	protected get formattedCache() {

@@ -13,18 +13,16 @@ import {WorksSettingsPanel} from 'vendor/chrome/options/worksSettingsPanel'
 
 import {DictionaryJSON} from 'vendor/chrome/popup/exportDict'
 
-class SettingsPage extends React.Component<void, void> {
-    public render() {
-        return <Bootstrap.Grid>
-            <TranslationSettingsPanel />
-            <ServerSettingsPanel />
-            <GlobalSettingsPanel />
-            <IllustrationSettingsPanel />
-            <MangaSettingsPanel />
-            <WorksSettingsPanel />
-            <BookmarkIllustrationSettingsPanel />
-            <DictionaryJSON />
-        </Bootstrap.Grid>
-    }
-}
+const SettingsPage : React.StatelessComponent<void> = () =>
+    <Bootstrap.Grid>
+        <TranslationSettingsPanel />
+        <ServerSettingsPanel />
+        <GlobalSettingsPanel />
+        <IllustrationSettingsPanel />
+        <MangaSettingsPanel />
+        <WorksSettingsPanel />
+        <BookmarkIllustrationSettingsPanel />
+        <DictionaryJSON />
+    </Bootstrap.Grid>
+
 ReactDOM.render(<SettingsPage />, document.getElementById('content'));

@@ -6,15 +6,10 @@ interface BookmarkDetailViewButtonProps {
 	clickAction :Function
 }
 
-export class BookmarkDetailViewButton extends React.Component<BookmarkDetailViewButtonProps,any> {
-	public render() {
-		return (
-			<div id={this.props.id} 
-				className="_button-lite-large" 
-				onClick={() => this.props.clickAction()}
-			>
-				{this.props.text}
-			</div>
-			);
-	}
-}
+export const BookmarkDetailViewButton : React.StatelessComponent<BookmarkDetailViewButtonProps> = props =>
+	<div id={props.id} 
+		className="_button-lite-large" 
+		onClick={() => props.clickAction()}
+	>
+		{props.text}
+	</div>

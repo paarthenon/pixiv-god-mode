@@ -5,10 +5,7 @@ import ConfigKeys from 'src/configKeys'
 
 import {IndividualSettingsPanel} from 'src/components/settings/individualSettingsPanel'
 
-export class ServerSettingsPanel extends React.Component<void, void> {
-    public render() {
-        return <IndividualSettingsPanel header={'Server Settings'}>
-            <TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
-        </IndividualSettingsPanel>
-    }
-}
+export const ServerSettingsPanel : React.StatelessComponent<void> = () =>
+    <IndividualSettingsPanel header={'Server Settings'}>
+        <TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
+    </IndividualSettingsPanel>

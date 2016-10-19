@@ -5,12 +5,5 @@ export enum ConnectionStatus {
     Disconnected,
 }
 
-export class ServerStatus extends React.Component<{status:ConnectionStatus}, void> {
-    public render() {
-        if (this.props.status === ConnectionStatus.Connected) {
-            return <div>Server Connected</div>
-        } else {
-            return <div>Server Disconnected</div>
-        }
-    }
-}
+export const ServerStatus : React.StatelessComponent<{status:ConnectionStatus}> =
+    ({status}) => (status === ConnectionStatus.Connected) ? <div>Server Connected</div> : <div>Server Disconnected</div>

@@ -6,11 +6,8 @@ import {IndividualSettingsPanel} from 'src/components/settings/individualSetting
 import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer'
 import {GlobalDictUpdaterContainer} from 'vendor/chrome/options/globalDictionaryUpdaterContainer'
 
-export class TranslationSettingsPanel extends React.Component<void, void> {
-    public render() {
-        return <IndividualSettingsPanel header={'Translations Panel'}>
-            <BooleanSettingContainer settingKey={SettingKeys.global.translateTags} label={'Translate pixiv tags'}/>
-            <GlobalDictUpdaterContainer />
-        </IndividualSettingsPanel>
-    }
-}
+export const TranslationSettingsPanel : React.StatelessComponent<void> = () =>
+    <IndividualSettingsPanel header={'Translations Panel'}>
+        <BooleanSettingContainer settingKey={SettingKeys.global.translateTags} label={'Translate pixiv tags'}/>
+        <GlobalDictUpdaterContainer />
+    </IndividualSettingsPanel>
