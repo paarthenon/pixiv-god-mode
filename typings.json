@@ -12,7 +12,7 @@
     "jszip": "registry:dt/jszip#0.0.0+20160709055933",
     "log4js": "registry:dt/log4js#0.0.0+20160608042355",
     "node": "registry:dt/node#6.0.0+20160920093002",
-    "react": "registry:dt/react#0.14.0+20160920055104",
+    "react": "registry:dt/react#0.14.0+20161008064207",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160806072414",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "require": "registry:dt/require#2.1.20+20160919185614",
