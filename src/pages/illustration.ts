@@ -10,9 +10,9 @@ import {Container as Deps} from 'src/deps'
 import {Model, Messages} from 'common/proto'
 import {UgokuInformation} from 'src/core/IUgoku'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
-import {injectDownloadIllustrationButton} from 'src/injectors/downloadIllustration'
 import {injectImageOpenFolderButton} from 'src/injectors/imageOpenFolderButton'
 import {injectBookmarksClone} from 'src/injectors/addToBookmarksClone'
+import {injectIllustrationToolbar} from 'src/injectors/illustrationToolbar'
 
 import * as geomUtils from 'src/utils/geometry'
 import {getBlob} from 'src/utils/ajax'
@@ -78,18 +78,14 @@ export class IllustrationPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectDownloadButton() {
-		injectDownloadIllustrationButton(
-			() => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
-			() => this.downloadIllustrationLocal());
-
-		injectDownloadIllustrationButton(
-			() => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
-			() => this.downloadIllustration());
-		
-		injectImageOpenFolderButton(() => {
-			return PixivAssistantServer.openImageFolder({id: this.imageId});
+		injectIllustrationToolbar({
+			existsFunc: () => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
+			downloadInBrowser: this.downloadIllustrationLocal.bind(this),
+			downloadUsingServer: this.downloadIllustration.bind(this),
+			openToImage: () => PixivAssistantServer.openImageFolder({id: this.imageId}),
 		});
 	}
+
 	@ExecuteOnLoad
 	public injectUnloadCallback() {
 		let message = "Pixiv Assistant is currently processing. Please leave the page open";
