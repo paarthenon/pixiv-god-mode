@@ -61,8 +61,8 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 		}
 
 		//setting widths manually. Potentially evil, but it's not quite order of the blackened denarius bad in react.
-		let inputWidth={width:'300px'};
-		let buttonStyle={width:'125px'};
+		let inputWidth={width:'289px'};
+		let buttonStyle={width:'150px'};
 
 		return <Bootstrap.Panel bsSize="small">
 			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} style={noBottomMargin}>
@@ -75,4 +75,3 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 		</Bootstrap.Panel>
 	}
 }
-
