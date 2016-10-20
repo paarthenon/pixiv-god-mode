@@ -43,7 +43,12 @@ export class DictionaryJSON extends React.Component<void,DictStates> {
 	}
 }
 
-const DictStats : React.StatelessComponent<{globalCount: number, localCount: number, cacheCount: number}> = props =>
+interface DictStatsProps {
+	globalCount: number
+	localCount: number
+	cacheCount: number
+}
+const DictStats : React.StatelessComponent<DictStatsProps> = props =>
 	<div>
 		<p>Global dictionary: {props.globalCount}</p>
 		<p>User dictionary: {props.localCount}</p>

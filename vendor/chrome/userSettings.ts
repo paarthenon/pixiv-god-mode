@@ -8,6 +8,7 @@ let defaultSettings: { [id:string]:any } = {};
 
 let trueSettings = [
 	SettingKeys.global.translateTags,
+	SettingKeys.global.autoUpdateDictionary,
 	SettingKeys.global.directToManga,
 	SettingKeys.global.inject.openToArtistButton,
 	SettingKeys.global.inject.pagingButtons,

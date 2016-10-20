@@ -5,6 +5,7 @@ let settingKeys = {
 			openToArtistButton: 'GLOBAL_INJECT_OPEN_TO_ARTIST_BUTTON'
 		},
 		translateTags: 'GLOBAL_TRANSLATE_TAGS',
+		autoUpdateDictionary: 'GLOBAL_AUTO_UPDATE_DICTIONARY',
 		directToManga: 'GLOBAL_LINK_THUMBNAIL_DIRECTLY_TO_MANGA',
 		fadeDownloadedImages: 'GLOBAL_FADE_DOWNLOADED_IMAGES',
 		fadeImagesByBookmarkedArtists : 'GLOBAL_FADE_BOOKMARKED_ARTIST_IMAGES',

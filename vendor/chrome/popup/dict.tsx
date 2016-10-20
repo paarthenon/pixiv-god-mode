@@ -12,7 +12,7 @@ let removeDiacritics = require('diacritics').remove; //TODO: create typing
 export class DictContainer extends React.Component<{dictService: CachedDictionaryService}, cachedDictionary> {
 	state :cachedDictionary = { cache: [] };
 
-	componentDidMount() {
+	componentWillMount() {
 		this.updateDict();
 	}
 
