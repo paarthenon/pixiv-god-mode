@@ -12,7 +12,6 @@ export function RegisteredAction(desc:ActionDescriptor) {
 
 		let name = (<any>target)['constructor']['name'];
 
-		// logger.trace(`Registered Action | registering function ${propertyKey} for ${name}`);
 		pushToArrayCache(CacheRegistry.registeredActionCache, name, <Action>newDesc);
 		return descriptor;
 	}
@@ -27,7 +26,6 @@ export function ExecuteIf(predicate:() => boolean | Promise<boolean>) {
 			execute: descriptor.value
 		};
 		
-		// logger.trace(`ExecuteIf | registering function ${propertyKey} for ${name}`);
 		pushToArrayCache<OnLoadFunc>(CacheRegistry.onLoadFunctionCache, name, onload);
 		return descriptor;
 	}

@@ -10,6 +10,9 @@ import SettingKeys from 'src/settingKeys'
 
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 
+import {prefix} from 'src/utils/log'
+let console = prefix("Artist's Bookmarks Page");
+
 export class ArtistBookmarksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);
@@ -72,6 +75,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 
 	@ExecuteIfSetting(SettingKeys.global.directToManga)
 	public replaceMangaThumbnailLinksToFull(){
+		console.log('Replacing manga links to link to the viewer');
 		super.replaceMangaThumbnailLinksToFull();
 	}
 }

@@ -11,6 +11,9 @@ import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {injectOpenInTabs} from 'src/injectors/openInTabs'
 import {Container as Deps} from 'src/deps'
 
+import {prefix} from 'src/utils/log'
+let console = prefix('Works Page');
+
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);
@@ -51,6 +54,7 @@ export class WorksPage extends GalleryPage {
 
 	@ExecuteIfSetting(SettingKeys.pages.works.autoDarken)
 	public experimentalFade() {
+		console.log('')
 		let imageMap = this.allImages.reduce((acc: { [id:string] : JQuery }, cur:JQuery) => {
 			let imageId = pathUtils.getImageId(cur.find('a.work').attr('href'));
 			acc[imageId.toString()] = cur;
@@ -62,15 +66,16 @@ export class WorksPage extends GalleryPage {
 
 		PixivAssistantServer.bulkImageExists(request)
 			.then(matchedImages => matchedImages
-				// .map(image => { logger.debug(JSON.stringify(image)); return image; })
 				.map(match => match.image.id.toString())
 				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
 	}
 
 	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-window' })
 	public openTabs():void {
+		console.trace('Opening images in tabs');
 		Deps.getSetting(SettingKeys.pages.works.openTabsImagesOnly).then(imagesOnly => {
 			if(imagesOnly) {
+				console.log('opening images only.')
 				/*
 				For each image
 					- if a manga or ugoira page, return the viewing url directly

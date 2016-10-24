@@ -1,5 +1,8 @@
 import {AjaxFunction} from 'src/core/IAjax'
 
+import {prefix} from 'src/utils/log'
+let console = prefix('Google Translate API');
+
 export class GoogleTranslateAPI {
 
 	constructor(protected ajax:AjaxFunction<any,any>) {}
@@ -10,12 +13,17 @@ export class GoogleTranslateAPI {
 			type: 'GET',
 			url: serviceUrl
 		}).then((response:any) => {
-			// this.logger.fatal('response from translation', response);
+			console.debug('response received');
 			let match = response.match(/\[\[\[\"([^\"]+)\",/);
 			if (match && match.length > 1) {
-				return match[1];
+				let translation = match[1];
+				console.debug(`suggested translation for [${japanese}] is [${translation}]`);
+				return translation;
+			} else {
+				let message = 'unexpected response format received';
+				console.debug(message)
+				return Promise.reject(message);
 			}
-			return Promise.reject('incorrectly formatted response received');
 		});
 	}
 }

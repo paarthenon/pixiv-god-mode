@@ -1,11 +1,11 @@
 import {resolve} from 'url'
-
 import {Features, Model, Messages} from 'common/proto'
-
 import {AjaxFunction} from 'src/core/IAjax'
 import IConfig from 'src/core/IConfig'
-
 import ConfigKeys from 'src/configKeys'
+
+import {prefix} from 'src/utils/log'
+let console = prefix('Server Connection');
 
 export class PAServer {
 
@@ -19,13 +19,13 @@ export class PAServer {
 				data: request
 			})
 			.then((response:any) => {
-				// this.logger.debug(response);
+				console.debug('Received response');
 				let parsedResponse: Messages.Response = JSON.parse(response);
 				if(Messages.isPositiveResponse(parsedResponse)) {
 					return parsedResponse.data;
 				}
 				if(Messages.isNegativeResponse(parsedResponse)) {
-					// this.logger.error('Server returned failed response', parsedResponse.errors);
+					console.error('Server returned failed response', parsedResponse.errors);
 					return Promise.reject('Negative response: ' + JSON.stringify(parsedResponse.errors));
 				}
 				return Promise.reject('Invalid message type');
@@ -34,7 +34,7 @@ export class PAServer {
 	}
 
 	public openFolder(artist: Model.Artist) {
-		// this.logger.debug(`openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
+		console.debug(`openFolder called with artist { id: ${artist.id}, name: ${artist.name} }`);
 		return this.callEndpoint(Features.OpenToArtist, artist)
 			.catch(() => this.openRepo());
 	}
@@ -44,33 +44,33 @@ export class PAServer {
 	}
 
 	public openRepo() {
-		// this.logger.debug('openRepo called');
+		console.debug('openRepo called');
 		return this.callEndpoint(Features.OpenToRepo);
 	}
 
 	public download(artist:Model.Artist, imageUrl:string) {
-		// this.logger.debug(`download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
+		console.debug(`download called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrl [${imageUrl}]`);
 		let msg: Messages.ArtistUrlRequest = { artist: artist, url: imageUrl };
 		return this.callEndpoint(Features.DownloadImage, msg)
 			.then(() => Promise.resolve());
 	}
 
 	public downloadAnimation(request: Messages.ArtistImageRequest, content:string) {
-		// this.logger.debug(`download called with artist { id: ${request.artist.id}, name: ${request.artist.name} } and image [${request.image.id}]`);
+		console.debug(`download called with artist { id: ${request.artist.id}, name: ${request.artist.name} } and image [${request.image.id}]`);
 		let msg = Object.assign(request, { content }); 
 		return this.callEndpoint(Features.DownloadAnimation, msg)	
 			.then(() => Promise.resolve());
 	}
 
 	public downloadMulti(artist: Model.Artist, imageUrls: string[]) {
-		// this.logger.debug(`downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
+		console.debug(`downloadMulti called with artist { id: ${artist.id}, name: ${artist.name} } and imageUrls of count [${imageUrls.length}]`);
 		let msg : Messages.BulkRequest<Messages.ArtistUrlRequest> = { items: imageUrls.map(url => ({ artist, url })) };
 		return this.callEndpoint(Features.DownloadManga, msg)
 			.then(() => Promise.resolve());
 	}
 
 	public imageExistsInDatabase(artist: Model.Artist, image: Model.Image) : Promise<boolean> {
-		// this.logger.debug(`imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
+		console.debug(`imageExistsInDatabase called with artist { id: ${artist.id}, name: ${artist.name} } and imageId [${image.id}]`);
 		let msg: Messages.ArtistImageRequest = { artist, image };
 		return this.callEndpoint<Messages.ArtistImageRequest, boolean>(Features.ImageExists, msg)
 	}

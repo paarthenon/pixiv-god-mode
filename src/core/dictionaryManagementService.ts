@@ -3,6 +3,8 @@ import IConfig from 'src/core/IConfig'
 import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
 import ConfigKeys from 'src/configKeys'
+import {prefix} from 'src/utils/log'
+let console = prefix('Dictionary Management Service');
 
 interface AppKeys {
 	global :string
@@ -75,6 +77,7 @@ export class CachedDictionaryService {
 	}
 
 	public update(key:string, value:string) {
+		console.debug(`setting translation for [${key}] to [${value}]`);
 		return this.local.then(localDict => {
 			localDict[key] = value;
 			return this.config.set(this.keys.local, localDict)
@@ -88,6 +91,7 @@ export class CachedDictionaryService {
 		}).then(() => this.recalculateCache());
 	}
 	public delete(key:string) {
+		console.debug(`deleting entry with key [${key}]`)
 		return this.deleteMultiple([key]);
 	}
 
@@ -112,18 +116,19 @@ export class DictionaryManagementService extends CachedDictionaryService {
 	) {	super(config, keys); }
 
 	public get globalUpdateAvailable() : Promise<boolean> {
-		// logger.debug('DictionaryService.updateAvailable | entered');
+		let methodConsole = prefix('globalUpdateAvailable', console);
+		methodConsole.debug('checking if there is a global dictionary update available');
 		return this.ghUtils.masterCommit.then(commitHash => {
 			return this.config.get(ConfigKeys.official_dict_hash).then(currentHash => {
 				let isNewer: boolean = !currentHash || currentHash !== commitHash;
-				// logger.debug(`DictionaryService.updateAvailable | commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
+				methodConsole.debug(`commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
 				return isNewer;
 			}).catch(() => true);
 		});
 	}
 
 	public updateGlobalDictionary() : Promise<void> {
-		// logger.debug('DictionaryService.updateDictionary | entered');
+		console.debug('updating global dictionary');
 		return this.ghUtils.masterCommit.then(commitHash => 
 			this.ghUtils.newestDictionary.then(obj => 
 				Promise.all([

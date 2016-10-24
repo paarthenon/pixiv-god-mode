@@ -15,8 +15,6 @@ export class GalleryPage extends RootPage {
 		return this.getPageUrl(1);
 	}
 	public get lastPageUrl(): string {
-		// logger.trace('Going to last page');
-
 		let finalPage = Math.ceil(1.0 * this.imageCountTotal / 20.0);
 		return this.getPageUrl(finalPage);
 	}
@@ -26,7 +24,6 @@ export class GalleryPage extends RootPage {
 	}
 
 	protected getPageUrl(pageNum:number) {
-		// logger.trace('Going to page', pageNum);
 		// This takes advantage of the property that &p=2&p=3 will direct to page 3.
 		return `${window.location.href}&p=${pageNum}`;
 	}

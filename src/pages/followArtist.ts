@@ -6,6 +6,9 @@ import {Model} from 'common/proto'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 
+import {prefix} from 'src/utils/log'
+let console = prefix('Follow Artist Page');
+
 export class FollowArtistPage extends RootPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);
@@ -18,7 +21,10 @@ export class FollowArtistPage extends RootPage {
 	}
 
 	protected actOnNewEntries() {
+		console.debug('New items loaded, triggering actions');
+
 		let recommendations = $('li.user-recommendation-item:not([data-pa-processed="true"])').toArray().map(x => $(x));
+		console.debug(`Found ${recommendations.length} new items`);
 
 		Deps.getSetting(SettingKeys.global.fadeArtistRecommendationsAlreadyBookmarked).then(settingValue => {
 			if (settingValue) {
