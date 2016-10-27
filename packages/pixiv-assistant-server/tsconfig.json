@@ -6,6 +6,7 @@
         "removeComments": true,
         "outDir": "build",
         "rootDir": ".",
+        "baseUrl": ".",
         "sourceMap": false,
         "experimentalDecorators": true,
         "jsx": "react"
@@ -16,8 +17,5 @@
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx"
-    ],
-    "files": [
-        "typings/tsd.d.ts"
     ]
 }
