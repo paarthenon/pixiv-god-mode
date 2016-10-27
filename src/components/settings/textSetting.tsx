@@ -2,7 +2,15 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 
-export class TextSetting extends React.Component<{label:string, text:string, onUpdate:(val:string)=>any},{editOpen:boolean}> {
+interface TextSettingProps {
+	label:string
+	text:string
+	onUpdate:(val:string) => any
+}
+/**
+ * Simple input group containing a label, text field, and update button.
+ */
+export class TextSetting extends React.Component<TextSettingProps, {editOpen:boolean}> {
 	state = { editOpen: false };
 	public handleUpdate() {
 		let translationInput :any = ReactDOM.findDOMNode(this.refs['translation']);

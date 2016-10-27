@@ -6,6 +6,10 @@ interface BooleanSettingProps {
 	checked :boolean
 	onToggle :(value:boolean) => any
 }
+
+/**
+ * A simple checkbox with label
+ */
 export class BooleanSetting extends React.Component<BooleanSettingProps, void> {
 	private inputElement : HTMLInputElement;
 	

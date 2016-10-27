@@ -27,6 +27,9 @@ export interface cachedDictionaryEntry {
 
 export type cachedDictionary = { cache: cachedDictionaryEntry[] };
 
+/**
+ * Dictionary Service (TODO: fill)
+ */
 export class CachedDictionaryService {
 	constructor(
 		protected config:IConfig,

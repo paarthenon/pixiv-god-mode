@@ -3,6 +3,9 @@ import {AjaxFunction} from 'src/core/IAjax'
 import {prefix} from 'src/utils/log'
 let console = prefix('Google Translate API');
 
+/**
+ * Takes advantage of an undocumented API. May stop working at any point, really. Living on the edge...
+ */
 export class GoogleTranslateAPI {
 
 	constructor(protected ajax:AjaxFunction<any,any>) {}

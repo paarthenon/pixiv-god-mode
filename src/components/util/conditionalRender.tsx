@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-/**
- * Wrapper component that evaluates a predicate to judge whether or not to render.
- */
-
 interface ConditionalRenderProps {
 	predicate: () => boolean | Promise<boolean>
 	default?: boolean
 }
+
+/**
+ * Wrapper component that evaluates a predicate to judge whether or not to render.
+ */
 export class ConditionalRender extends React.Component<ConditionalRenderProps, {render:boolean}> {
 	state = {render: this.props.default}
 

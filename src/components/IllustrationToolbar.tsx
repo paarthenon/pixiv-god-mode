@@ -12,6 +12,9 @@ interface IllustrationToolbarProps {
     serverConnected :boolean
     progressText :string
 }
+/**
+ * A toolbar of actions that renders below the image preview on the illustration page.
+ */
 export class IllustrationToolbar extends React.Component<IllustrationToolbarProps, void> {
     public render() {
         return <InjectBootstrap>
