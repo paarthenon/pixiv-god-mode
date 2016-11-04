@@ -14,7 +14,7 @@ import * as promiseUtils from '../utils/promise'
 import * as discoveryUtils from '../utils/discovery'
 import * as dataStoreUtils from '../utils/dataStore'
 
-import {FileRegistry} from './registry'
+import {Registry, DBRegistry} from './registry'
 
 const opn = require('opn');
 
@@ -47,11 +47,11 @@ export class ImageRepo extends BaseRepo {
 		return ImageRepo.actions;
 	}
 
-	protected registry : FileRegistry;
+	protected registry : Registry;
 
 	public constructor(protected config : RepoConfig) {
 		super();
-		this.registry = new FileRegistry(config.path);
+		this.registry = new DBRegistry(config.path);
 	}
 	
 	protected get metaInfoPath() :string {
@@ -67,7 +67,6 @@ export class ImageRepo extends BaseRepo {
 				dataStoreUtils.load<RegistryMetaInfo>(this.metaInfoPath)
 					.catch(() => null as RegistryMetaInfo) // swallow errors.
 					.then(dbInfo => {
-						let count = 0; // If there's a large amount of content to be loaded offering some user feedback is helpful.
 						let predicate :discoveryUtils.FinderFilter = () => true;
 						if (dbInfo) {
 							logger.info('Finding files since last load on', dbInfo.lastExecution);
@@ -75,14 +74,16 @@ export class ImageRepo extends BaseRepo {
 						} else {
 							logger.info('Finding all files in repo to build initial registry');
 						}
+						let paths :string[] = [];
 						return discoveryUtils.findFilesAddedSince(this.config.path, predicate, 
-							path => {
-								logger.trace('Found file at',path);
-								count++;
-								if (count % 1000 == 0) {
-									logger.info('Found',count,'files so far');
+							fPath => {
+								logger.trace('Found file at',fPath);
+								paths.push(fPath);
+								if (paths.length % 1000 == 0) { // If there's a large amount of content to be loaded offering some user feedback is helpful.
+									logger.info('Found',paths.length,'files so far');
 								}
-								this.registry.addFromPath(path)
+							}).then(() => {
+								return this.registry.addFromPaths(paths);
 							})
 				})
 				
@@ -91,7 +92,7 @@ export class ImageRepo extends BaseRepo {
 				logger.info('Initializing file watcher')
 				return discoveryUtils.initializeFileWatcher(this.config.path, path => {
 					logger.trace('while watching, found a new file',path)
-					this.registry.addFromPath(path)
+					return this.registry.addFromPath(path)
 				})
 			})
 	}
@@ -134,7 +135,8 @@ export class ImageRepo extends BaseRepo {
 	 */
 	@ImageRepo.actions.register(Features.OpenToImage)
 	public openImageFolder(msg:Messages.ImageRequest) {
-		return this.registry.getImagePath(msg.image.id).then(path.dirname).then(opn);
+		//TODO: handle multiple file paths correctly
+		return this.registry.findImage(msg.image.id).then(fPaths => path.dirname(fPaths[0])).then(opn);
 	}
 
 	/**
@@ -142,8 +144,8 @@ export class ImageRepo extends BaseRepo {
 	 */
 	@ImageRepo.actions.register(Features.ImageExists)
 	public imageExists(msg:Messages.ImageRequest):Promise<boolean> {
-		return this.registry.getImagePath(msg.image.id)
-			.then(() => true, () => false);
+		return this.registry.findImage(msg.image.id)
+			.then(paths => paths.length > 0, () => false);
 	}
 
 	/**
@@ -152,15 +154,12 @@ export class ImageRepo extends BaseRepo {
 	 */
 	@ImageRepo.actions.register(Features.ImagesExist)
 	public imagesExist(images: Messages.BulkRequest<Messages.ArtistImageRequest>) {
-		return Promise.all(images.items.map(x => this.imageExists(x))).then(results => {
-			let imagesFound = [] as Array<Messages.ArtistImageRequest>;
-			results.forEach((exists, index) => {
-				if (exists) {
-					imagesFound.push(images.items[index]);
-				}
-			})
-			return imagesFound;
-		})
+		return this.registry.findImages(images.items.map(item => item.image.id))
+			.then(cache => Object.keys(cache))
+			.then(idList => {
+				logger.info('returning positive hits on', idList);
+				return images.items.filter(item => idList.find(id => id == item.image.id.toString()))
+			});
 	}
 
 	protected getDownloadFolder(artist:Model.Artist) {

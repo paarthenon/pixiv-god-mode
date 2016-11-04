@@ -5,10 +5,10 @@
         "noImplicitAny": true,
         "removeComments": true,
         "outDir": "build",
-        "rootDir": ".",
-        "baseUrl": ".",
+        "baseUrl": "src",
         "sourceMap": false,
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "jsx": "react"
     },
     "exclude": [

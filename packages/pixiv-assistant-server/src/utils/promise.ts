@@ -1,5 +1,5 @@
 export function execSequentially<T>(items:T[], action:(x:T)=>any){
-	items.reduce((acc,cur) => acc.then(() => action(cur)), Promise.resolve());
+	return items.reduce((acc,cur) => acc.then(() => action(cur)), Promise.resolve());
 }
 
 export function promisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T[]> {
@@ -21,4 +21,11 @@ export function promisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T
 
 		[...Array(boxedLimit).keys()].forEach(passBaton);
 	})
+}
+
+export function tap<T>(func :(x:T) => any) {
+	return (x:T) => {
+		func(x);
+		return x;
+	}
 }

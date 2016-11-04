@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import {IServerConfigProtocol} from './proto'
 
 import {app, dialog, BrowserWindow} from 'electron'
