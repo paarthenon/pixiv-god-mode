@@ -14,7 +14,8 @@ import * as promiseUtils from '../utils/promise'
 import * as discoveryUtils from '../utils/discovery'
 import * as dataStoreUtils from '../utils/dataStore'
 
-import {Registry, DBRegistry} from './registry'
+import {Registry} from './registry'
+import {DBRegistry} from './dbRegistry'
 
 const opn = require('opn');
 
