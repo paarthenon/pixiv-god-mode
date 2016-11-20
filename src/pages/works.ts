@@ -52,9 +52,8 @@ export class WorksPage extends GalleryPage {
 		super.injectPagingButtons();
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.works.autoDarken)
+	@ExecuteIfSetting(SettingKeys.global.fadeDownloadedImages)
 	public experimentalFade() {
-		console.log('')
 		let imageMap = this.allImages.reduce((acc: { [id:string] : JQuery }, cur:JQuery) => {
 			let imageId = pathUtils.getImageId(cur.find('a.work').attr('href'));
 			acc[imageId.toString()] = cur;

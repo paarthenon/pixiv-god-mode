@@ -10,9 +10,6 @@ export const WorksSettingsPanel : React.StatelessComponent<void> = () =>
 			settingKey={SettingKeys.pages.works.inject.openInTabs} 
 			label={'Inject open in tabs button'}/>
 		<BooleanSettingContainer 
-			settingKey={SettingKeys.pages.works.autoDarken} 
-			label={'Fade out downloaded images'}/>
-		<BooleanSettingContainer 
 			settingKey={SettingKeys.pages.works.openTabsImagesOnly} 
 			label={'Open in tabs uses the direct image files instead of the pages'}/>
 	</IndividualSettingsPanel>

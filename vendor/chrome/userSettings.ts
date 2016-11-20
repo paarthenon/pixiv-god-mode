@@ -22,7 +22,6 @@ let trueSettings = [
 	SettingKeys.pages.manga.loadFullSize,
 	SettingKeys.pages.manga.fitImage,
 	SettingKeys.pages.works.inject.openInTabs,
-	SettingKeys.pages.works.autoDarken,
 	SettingKeys.pages.bookmarkIllustration.inject.viewAll,
 ];
 

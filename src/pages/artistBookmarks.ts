@@ -24,6 +24,10 @@ export class ArtistBookmarksPage extends GalleryPage {
 		return { id: this.artistId, name: this.artistName };
 	}
 
+	public get allImages():JQuery[] {
+		return $('li.image-item').toArray().map(x => $(x));
+	}
+
 	protected executeOnEachImage<T>(func: (image: JQuery) => T) {
 		$('li.image-item').toArray().forEach(image => func($(image)));
 	}
@@ -44,21 +48,28 @@ export class ArtistBookmarksPage extends GalleryPage {
 		super.injectPagingButtons();
 	}
 	
+	@ExecuteIfSetting(SettingKeys.global.fadeDownloadedImages)
+	public fadeDownloaded() {
+		let imageMap = this.allImages.reduce((acc: { [id:string] : JQuery }, cur:JQuery) => {
+			let imageId = jQUtils.imageFromJQImage(cur).id;
+			acc[imageId.toString()] = cur;
+			return acc;
+		}, <{ [id: string]: JQuery }> {});
+
+		let request = Object.keys(imageMap)
+						.map(id => ({ 
+							artist: jQUtils.artistFromJQImage(imageMap[id]), 
+							image: { id: parseInt(id) } 
+						}));
+
+		PixivAssistantServer.bulkImageExists(request)
+			.then(matchedImages => matchedImages
+				.map(match => match.image.id.toString())
+				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
+	}
 	@ExecuteOnLoad
 	public experimentalFade() {
 		this.executeOnEachImage(image => {
-			Deps.getSetting(SettingKeys.global.fadeDownloadedImages).then(fade => {
-				if(fade) {
-					let artist = jQUtils.artistFromJQImage(image);
-					let imageObj = jQUtils.imageFromJQImage(image);
-					PixivAssistantServer.imageExistsInDatabase(artist, imageObj).then(exists => {
-						if (exists) {
-							image.addClass('pa-hidden-thumbnail');
-						}
-					})
-				}
-			});
-
 			Deps.getSetting(SettingKeys.global.fadeImagesByBookmarkedArtists).then(fade => {
 				if (fade) {
 					let url = jQUtils.artistUrlFromJQImage(image);

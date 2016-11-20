@@ -76,7 +76,9 @@ export class PAServer {
 	}
 
 	public bulkImageExists(entries: Messages.ArtistImageRequest[]) : Promise<Messages.ArtistImageRequest[]> {
-		return this.callEndpoint(Features.ImagesExist, { items: entries });
+		console.debug(`bulkImagesExist called with ${entries.length} entries`);
+		return this.callEndpoint(Features.ImagesExist, { items: entries })
+			.then(result => {console.debug('received', result); return result; })
 	}
 
 	public ping() : Promise<void> {

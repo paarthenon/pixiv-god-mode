@@ -31,7 +31,6 @@ let settingKeys = {
 			inject: {
 				openInTabs: 'WORKS_PAGE_INJECT_OPEN_IN_TABS',
 			},
-			autoDarken: 'WORKS_PAGE_AUTO_DARKEN',
 			openTabsImagesOnly: 'WORKS_PAGE_OPEN_DIRECT_IMAGES_IN_TABS',
 		},
 		bookmarkIllustration: {

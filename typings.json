@@ -6,7 +6,6 @@
     "filewriter": "registry:dt/filewriter#0.0.0+20160316155526",
     "jquery": "registry:dt/jquery#1.10.0+20160908203239",
     "jszip": "registry:dt/jszip#0.0.0+20160709055933",
-    "node": "registry:env/node#6.0.0+20161019193037",
     "react": "registry:dt/react#0.14.0+20161008064207",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160806072414",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
