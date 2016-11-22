@@ -16,6 +16,7 @@ import * as dataStoreUtils from '../utils/dataStore'
 
 import {Registry} from './registry'
 import {DBRegistry} from './dbRegistry'
+import {LokiRegistry} from './lokiRegistry'
 
 const opn = require('opn');
 
@@ -52,7 +53,7 @@ export class ImageRepo extends BaseRepo {
 
 	public constructor(protected config : RepoConfig) {
 		super();
-		this.registry = new DBRegistry(config.path);
+		this.registry = new LokiRegistry(config.path);
 	}
 	
 	protected get metaInfoPath() :string {

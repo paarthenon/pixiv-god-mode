@@ -25,6 +25,11 @@ export abstract class Registry {
 	public abstract findImage(imageId:number) : Promise<string[]>
 	public findImages(imageIds:number[]) : Promise<filesById> {
 		return Promise.all(imageIds.map(id => this.findImage(id).then(files => ({id, files}))))
-			.then(items => items.reduce<filesById>((acc, cur) => { acc[cur.id] = cur.files; return acc; }, {}));
+			.then(items => items.reduce<filesById>((acc, cur) => { 
+				if (cur.files.length > 0) {
+					acc[cur.id] = cur.files;
+				}
+				return acc; 
+			}, {}));
 	}
 }
