@@ -1,3 +1,9 @@
+export enum AddToBookmarksButtonType {
+	ORIGINAL,
+	MODAL,
+	ONE_CLICK,
+}
+
 let settingKeys = {
 	global: {
 		inject : {
@@ -16,7 +22,7 @@ let settingKeys = {
 			inject: {
 				toolbar: 'ILLUST_PAGE_INJECT_TOOLBAR',
 			},
-			addBookmarkAsModal: 'ILLUST_PAGE_LOAD_ADD_BOOKMARK_AS_MODAL',
+			addBookmarkButtonType: 'ILLUST_PAGE_ADD_BOOKMARK_BUTTON_TYPE', // Not a bool. TODO: this is hacky, create a proper settings object.
 			autoOpen: 'ILLUST_PAGE_AUTO_OPEN',
 			boxImage: 'ILLUST_PAGE_BOX_IMAGE_IN_WINDOW',
 		},

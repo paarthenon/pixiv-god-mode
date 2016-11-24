@@ -4,9 +4,9 @@ import * as React from 'react'
 import {AddToBookmarksClone} from 'src/components/addToBookmarksClone'
 import {GenerateElement} from 'src/injectors/utils'
 
-export function injectBookmarksClone(clickAction: Function) {
+export function injectBookmarksClone(clickAction: Function, text?:string) {
     let container = $('.bookmark-container');
-    let component = GenerateElement(React.createElement(AddToBookmarksClone, {clickAction}));
+    let component = GenerateElement(React.createElement(AddToBookmarksClone, {clickAction, text}));
 
     // Only replace the button if the add bookmark button is there, not the
     // edit bookmark button

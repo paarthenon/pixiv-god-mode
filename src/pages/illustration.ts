@@ -5,7 +5,7 @@ import * as pathUtils from 'src/utils/path'
 import {tap} from 'src/utils/promise'
 import {RootPage} from 'src/pages/root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
-import SettingKeys from 'src/settingKeys'
+import {default as SettingKeys, AddToBookmarksButtonType} from 'src/settingKeys'
 import {PixivAssistantServer} from 'src/services'
 import {Container as Deps} from 'src/deps'
 import {Model, Messages} from 'common/proto'
@@ -98,12 +98,24 @@ export class IllustrationPage extends RootPage {
 		});
 	}
 
-	@ExecuteIfSetting(SettingKeys.pages.illust.addBookmarkAsModal)
+	@ExecuteOnLoad
 	public injectBookmarkButtonClone() {
-		injectBookmarksClone(() => {
-			Deps.execOnPixiv(pixiv => {
-				pixiv.bookmarkModal.open();
-			});
+		Deps.getSetting(SettingKeys.pages.illust.addBookmarkButtonType).then(type => {
+			let enumType = parseInt(type as any); //Horrible and hacky, need to generalize getSetting.TODO.
+			switch (enumType) {
+				case AddToBookmarksButtonType.MODAL:
+					injectBookmarksClone(() => {
+						Deps.execOnPixiv(pixiv => {
+							pixiv.bookmarkModal.open();
+						});
+					});
+					break;
+				case AddToBookmarksButtonType.ONE_CLICK:
+					injectBookmarksClone(() => {
+						$('div.bookmark-add-modal div.submit-container input[type="submit"]').click()
+					}, 'Instant Add Bookmark');
+					break;
+			}
 		})
 	}
 
