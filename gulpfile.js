@@ -3,6 +3,7 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 var babel = require('gulp-babel');
 var jspm = require('jspm');
+var less = require('gulp-less');
 
 gulp.task('build', function(callback){
     exec('tsc -p .', function(error, stdout, stderr) {
@@ -93,6 +94,20 @@ gulp.task('bundle-background-release', ['es5'], () => bundleEntryPoint(backgroun
 gulp.task('bundle-content-release', ['es5'], () => bundleEntryPoint(contentProps, true));
 gulp.task('bundle-options-release', ['es5'], () => bundleEntryPoint(optionsProps, true));
 
+gulp.task('build-less-popup', () => {
+	return gulp.src('res/less/popup.less')
+		.pipe(less())
+		.pipe(gulp.dest('build/css'));
+})
+
+gulp.task('build-less-content', () => {
+	return gulp.src('res/less/content.less')
+		.pipe(less())
+		.pipe(gulp.dest('build/css'));
+})
+
+gulp.task('build-less',['build-less-popup', 'build-less-content']);
+
 gulp.task('chrome-resources', ['es5'], function(){
 	return Promise.all([
 		fileCopy('vendor/chrome/**/*.html', 'dist/chrome/vendor/chrome'),
@@ -102,12 +117,22 @@ gulp.task('chrome-resources', ['es5'], function(){
 	]);
 });
 
+gulp.task('chrome-css', ['build-less'], () => {
+	return fileCopy('build/css/**/*.css', 'dist/chrome/css');
+})
+
+gulp.task('chrome-fonts', () => {
+	return fileCopy('res/fonts/**/*', 'dist/chrome/fonts');
+})
+
 gulp.task('dev', [
 	'chrome-resources',
 	'bundle-popup',
 	'bundle-background',
 	'bundle-content',
 	'bundle-options',
+	'chrome-css',
+	'chrome-fonts',
 ]);
 
 gulp.task('release', [
@@ -116,6 +141,8 @@ gulp.task('release', [
 	'bundle-background-release',
 	'bundle-content-release',
 	'bundle-options-release',
+	'chrome-css',
+	'chrome-fonts',
 ]);
 
 gulp.task('default', ['dev']);

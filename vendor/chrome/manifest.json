@@ -18,7 +18,7 @@
   	],
     "css": [
       "resources/css/inject.css",
-      "resources/css/prefixedBootstrap.css"
+      "/css/content.css"
     ]
   }],
   "background": {
@@ -47,6 +47,8 @@
     "jspm_packages/*",
     "src/*",
     "resources/*",
-    "vendor/chrome/*"
+    "vendor/chrome/*",
+    "css/*",
+    "fonts/*"
   ]
 }
