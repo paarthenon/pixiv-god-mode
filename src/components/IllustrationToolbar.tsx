@@ -11,6 +11,7 @@ interface IllustrationToolbarProps {
     openToImage :Function
     serverConnected :boolean
     progressText :string
+    bsStyle?:string
 }
 /**
  * A toolbar of actions that renders below the image preview on the illustration page.
@@ -24,17 +25,18 @@ export class IllustrationToolbar extends React.Component<IllustrationToolbarProp
                         {(this.props.serverConnected)?
                             <DownloadButton downloadFunc={this.props.downloadUsingServer} mode={this.props.mode} />
                             :
-                            <Bootstrap.Button onClick={() => this.props.downloadInBrowser()}>Download</Bootstrap.Button>
+                            <Bootstrap.Button onClick={() => this.props.downloadInBrowser()} bsStyle={this.props.bsStyle}>Download</Bootstrap.Button>
                         }
-                        <Bootstrap.Dropdown.Toggle/>
+                        <Bootstrap.Dropdown.Toggle bsStyle={this.props.bsStyle}/>
                         <Bootstrap.Dropdown.Menu>
                             <Bootstrap.MenuItem eventKey="1" onClick={() => this.props.downloadInBrowser()}>Download w/ Chrome</Bootstrap.MenuItem>
                             <Bootstrap.MenuItem eventKey="2" disabled={!this.props.serverConnected} onClick={() => this.props.downloadUsingServer()}>Download w/ Server</Bootstrap.MenuItem>
                         </Bootstrap.Dropdown.Menu>
                     </Bootstrap.Dropdown>
-                    <Bootstrap.Button 
+                    <Bootstrap.Button
                         disabled={!(this.props.serverConnected && this.props.mode === DownloadStates.DOWNLOADED)} 
                         onClick={() => this.props.openToImage()}
+                        bsStyle={this.props.bsStyle}
                     >Open</Bootstrap.Button>
                 </Bootstrap.InputGroup.Button>
                 <Bootstrap.InputGroup.Addon style={{width: 'auto'}}>{this.props.progressText}</Bootstrap.InputGroup.Addon>

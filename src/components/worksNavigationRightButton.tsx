@@ -1,15 +1,11 @@
 import * as React from 'react'
-import * as Bootstrap from 'react-bootstrap'
-
-import {InjectBootstrap} from 'src/components/util/injectBootstrap'
 
 export const WorksNavbarRightButton : React.StatelessComponent<{text:string,clickAction:Function}> = props => 
-	<ul style={{float: 'right'}}>
+	<ul style={{float: 'right', borderLeft: '1px solid rgba(37, 143, 184, 0.3)'}}>
 		<li>
-			<InjectBootstrap>
-			<Bootstrap.Button onClick={() => props.clickAction()} style={{cursor: 'pointer'}} small>
+			<a onClick={() => props.clickAction()} style={{cursor: 'pointer', padding: '0 20px', backgroundColor: '#eaedf1'}}>
 				{props.text}
-			</Bootstrap.Button>
-			</InjectBootstrap>
+				<i className="_icon sprites-next-linked" style={{marginLeft: '2px', verticalAlign: 'auto'}}></i>
+			</a>
 		</li>
 	</ul>

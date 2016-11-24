@@ -8,15 +8,15 @@ export enum DownloadStates {
 	DOWNLOADED,
 }
 
-export const DownloadButton : React.StatelessComponent<{mode: DownloadStates, downloadFunc: Function}> = props => {
+export const DownloadButton : React.StatelessComponent<{mode: DownloadStates, downloadFunc: Function, bsStyle?:string}> = props => {
 	switch (props.mode) {
 		case DownloadStates.LOADINGSTATUS:
-			return <Bootstrap.Button disabled>Loading Download Status</Bootstrap.Button>
+			return <Bootstrap.Button disabled bsStyle={props.bsStyle}>Loading Download Status</Bootstrap.Button>
 		case DownloadStates.DOWNLOADAVAILABLE:
-			return <Bootstrap.Button onClick={() => props.downloadFunc()}>Download</Bootstrap.Button>
+			return <Bootstrap.Button onClick={() => props.downloadFunc()} bsStyle={props.bsStyle}>Download</Bootstrap.Button>
 		case DownloadStates.DOWNLOADING:
-			return <Bootstrap.Button disabled>Downloading...</Bootstrap.Button>
+			return <Bootstrap.Button disabled bsStyle={props.bsStyle}>Downloading...</Bootstrap.Button>
 		case DownloadStates.DOWNLOADED:
-			return <Bootstrap.Button onClick={() => props.downloadFunc()}>Download Again</Bootstrap.Button>
+			return <Bootstrap.Button onClick={() => props.downloadFunc()} bsStyle={props.bsStyle}>Download Again</Bootstrap.Button>
 	}
 }
