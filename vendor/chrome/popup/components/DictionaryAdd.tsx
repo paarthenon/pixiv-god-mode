@@ -5,6 +5,8 @@ import * as Bootstrap from 'react-bootstrap'
 import * as pathUtils from '../../../../src/utils/path'
 import * as chromeUtils from '../../utils'
 
+import vars from '../staticVars'
+
 interface DictionaryAddProps {
 	onAdd :(key:string,value:string) => any
 	getTranslation :(key:string) => Promise<string>
@@ -69,7 +71,7 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 				<Bootstrap.FormGroup>
 					<Bootstrap.FormControl type="text" placeholder="Translation" ref="translation" style={inputWidth}/>
 					<Bootstrap.FormControl type="text" placeholder="Original" ref="original" style={Object.assign(gap, inputWidth)}/>
-					<Bootstrap.Button type="submit" onClick={this.handleAdd.bind(this)} style={buttonStyle}>{buttonText}</Bootstrap.Button>
+					<Bootstrap.Button type="submit" onClick={this.handleAdd.bind(this)} style={buttonStyle} bsStyle={vars.buttonStyle}>{buttonText}</Bootstrap.Button>
 				</Bootstrap.FormGroup>
 			</Bootstrap.Form>
 		</Bootstrap.Panel>

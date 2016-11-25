@@ -6,6 +6,8 @@ import * as ChromeUtils from 'vendor/chrome/utils'
 import {CachedDictionaryService, cachedDictionary, EntryType} from 'src/core/dictionaryManagementService'
 import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
 
+import vars from './staticVars'
+
 let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
 let removeDiacritics = require('diacritics').remove; //TODO: create typing
 
@@ -182,11 +184,11 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 	public renderButton(type:EntryType) {
 		switch (type) {
 			case EntryType.GLOBAL:
-				return <Bootstrap.Button bsSize="xsmall" style={this.styles.entryAction} disabled title="This entry is from the global dictionary and cannot be deleted">delete</Bootstrap.Button>;
+				return <Bootstrap.Button bsStyle={vars.buttonStyle} bsSize="xsmall" style={this.styles.entryAction} disabled title="This entry is from the global dictionary and cannot be deleted">delete</Bootstrap.Button>;
 			case EntryType.LOCAL:
-				return <Bootstrap.Button bsSize="xsmall" style={this.styles.entryAction} onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button>
+				return <Bootstrap.Button bsStyle={vars.buttonStyle} bsSize="xsmall" style={this.styles.entryAction} onClick={this.handleDelete.bind(this)}>delete</Bootstrap.Button>
 			case EntryType.BOTH:
-				return <Bootstrap.Button bsSize="xsmall" style={this.styles.entryAction} onClick={this.handleDelete.bind(this)} title="This entry is also in the global dictionary. The local definition can be reverted after which the global definition will be used">revert</Bootstrap.Button>;
+				return <Bootstrap.Button bsStyle={vars.buttonStyle} bsSize="xsmall" style={this.styles.entryAction} onClick={this.handleDelete.bind(this)} title="This entry is also in the global dictionary. The local definition can be reverted after which the global definition will be used">revert</Bootstrap.Button>;
 		}
 	}
 
@@ -220,13 +222,13 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 
 			{ (!this.state.editOpen) ?
 				<span style={buttonStyle}>
-					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) } style={this.styles.entryAction}>edit</Bootstrap.Button>
+					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: true }) } style={this.styles.entryAction} bsStyle={vars.buttonStyle}>edit</Bootstrap.Button>
 					{this.renderButton(this.props.entryType)}
 				</span>
 			:
 				<span style={buttonStyle}>
-					<Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) } style={this.styles.entryAction}>update</Bootstrap.Button>
-					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) } style={this.styles.entryAction}>cancel</Bootstrap.Button>
+					<Bootstrap.Button bsSize="xsmall" onClick={this.handleUpdate.bind(this) } style={this.styles.entryAction} bsStyle={vars.buttonStyle}>update</Bootstrap.Button>
+					<Bootstrap.Button bsSize="xsmall" onClick={() => this.setState({ editOpen: false }) } style={this.styles.entryAction} bsStyle={vars.buttonStyle}>cancel</Bootstrap.Button>
 				</span>
 			}
 		</div>
