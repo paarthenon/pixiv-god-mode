@@ -130,7 +130,7 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 					})}
 					</InfiniteScroll>
 					</div>
-				: null }
+				: <div>No entries found</div> }
 				</Bootstrap.Panel>
 			</div>
 		);
