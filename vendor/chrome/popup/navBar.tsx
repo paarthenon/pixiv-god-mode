@@ -3,6 +3,8 @@ import * as Bootstrap from 'react-bootstrap'
 
 import {ServerStatusContainer} from 'vendor/chrome/popup/serverStatusContainer'
 
+const NavbarText = (Bootstrap.Navbar as any).Text;
+
 export class PopupNavbar extends React.Component<void, void> {
 	handleOpenSettings() {
 		chrome.runtime.openOptionsPage();		
@@ -22,9 +24,9 @@ export class PopupNavbar extends React.Component<void, void> {
 				</Bootstrap.Navbar.Brand>
 			</Bootstrap.Navbar.Header>
 			<Bootstrap.Nav pullRight>
-				<Bootstrap.NavItem>
+				<NavbarText>
 					<ServerStatusContainer />
-				</Bootstrap.NavItem>
+				</NavbarText>
 				<Bootstrap.NavItem onClick={this.handleOpenSettings.bind(this)}>Settings</Bootstrap.NavItem>
 			</Bootstrap.Nav>
 		</Bootstrap.Navbar>
