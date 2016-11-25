@@ -93,10 +93,10 @@ export class BookmarkIllustrationPage extends RootPage {
 	}
 
 	public loadAllBookmarks() {
-		for (let i = 0; i < 15; i++) { 
-			Deps.execOnPixiv(pixiv => {
+		Deps.execOnPixiv(pixiv => {
+			for (var i = 15; i < pixiv.context.illustRecommendLimit; i+=15) { 
 				pixiv.illustRecommend.load();
-			});
-		}
+			}
+		});
 	}
 }
