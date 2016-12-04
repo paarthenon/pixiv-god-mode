@@ -96,17 +96,19 @@ gulp.task('bundle-background-release', ['es5'], () => bundleEntryPoint(backgroun
 gulp.task('bundle-content-release', ['es5'], () => bundleEntryPoint(contentProps, true));
 gulp.task('bundle-options-release', ['es5'], () => bundleEntryPoint(optionsProps, true));
 
-gulp.task('build-less-popup', () => {
-	return gulp.src('res/less/popup.less')
-		.pipe(less())
-		.pipe(gulp.dest('build/css'));
-})
+function buildLESS(src, dest) {
+	return gulp.src(src)
+		.pipe(less({
+			paths: [
+				'.',
+				'./node_modules/bootstrap-less'
+			]
+		}))
+		.pipe(gulp.dest(dest));
+}
 
-gulp.task('build-less-content', () => {
-	return gulp.src('res/less/content.less')
-		.pipe(less())
-		.pipe(gulp.dest('build/css'));
-})
+gulp.task('build-less-popup', () => buildLESS('res/less/popup.less', 'build/css'));
+gulp.task('build-less-content', () =>  buildLESS('res/less/content.less', 'build/css'));
 
 gulp.task('build-less',['build-less-popup', 'build-less-content']);
 
