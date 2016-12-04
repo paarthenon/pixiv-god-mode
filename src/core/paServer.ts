@@ -7,6 +7,9 @@ import ConfigKeys from 'src/configKeys'
 import {prefix} from 'src/utils/log'
 let console = prefix('Server Connection');
 
+/**
+ * Handles all functionality connecting to the database component. 
+ */
 export class PAServer {
 
 	constructor(protected config:IConfig, protected ajax:AjaxFunction<any,any>) {}

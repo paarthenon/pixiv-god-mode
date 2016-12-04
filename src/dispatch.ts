@@ -3,7 +3,7 @@ import * as $ from 'jquery'
 import {RootPage} from 'src/pages/root'
 import {IllustrationPage} from 'src/pages/illustration'
 import {WorksPage} from 'src/pages/works'
-import {BookmarkIllustrationPage} from 'src/pages/bookmarks'
+import {BookmarkIllustrationPage} from 'src/pages/bookmarkIllustration'
 import {MangaPage} from 'src/pages/manga'
 import {ArtistBookmarksPage} from 'src/pages/artistBookmarks'
 import {SearchPage} from 'src/pages/search'
@@ -37,6 +37,10 @@ let patterns = {
 	wiki: /http:\/\/dic.pixiv.net\/a\//,
 }
 
+/**
+ * Central dispatcher based on urls. Technically we might be able to register individual content scripts
+ * in the manifest.json and optimize the loading here. Eh.
+ */
 export function dispatch(path:string):RootPage {
 	if (path.match(patterns.illust)) {
 		return new IllustrationPage(path);

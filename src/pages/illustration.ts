@@ -27,6 +27,10 @@ enum IllustrationType {
 	Animation,
 }
 
+/**
+ * Viewing a specific work. This is the 'medium' view. Images, manga, and ugoira animations
+ * are all rendered in some capacity in this page.
+ */
 export class IllustrationPage extends RootPage {
 	public isBusy:boolean = false;
 

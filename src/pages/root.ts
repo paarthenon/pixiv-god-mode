@@ -4,6 +4,9 @@ import {DictionaryService} from 'src/services'
 import {Container} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 
+/**
+ * Mainly responsible for handling tag translation.
+ */
 export class RootPage extends BasePage {
 	constructor(
 		protected path: string,

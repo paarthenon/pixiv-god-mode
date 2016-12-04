@@ -1,6 +1,8 @@
 /**
  * console.log(message, message2) => "message message2"
  * prefixedConsole.log(message, message2) => "category | message message2"
+ * 
+ * TODO: Consider extracting and publishing as an independent package.
  */
 export function prefix(category:string, target=console) :Console {
     let logFuncs = new Set(['fatal','error','warn','log','info','debug','trace']);

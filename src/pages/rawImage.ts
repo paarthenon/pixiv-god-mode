@@ -3,6 +3,16 @@ import {RegisteredAction} from 'src/utils/actionDecorators'
 
 import * as pathUtils from 'src/utils/path'
 
+/**
+ * Applies to the raw image files of pixiv. This is mainly useful because of the setting that allows
+ * the open in tabs button to open the direct images rather than the pixiv illustration page for the
+ * image. This setting is very useful for weaker computers that can't handle loading 20 javascript-
+ * laden tabs at once. However, its desirable to have a simple way of getting back to the pixiv
+ * image page if you'd like to add the image to your bookmarks or examine its tags.
+ * 
+ * TODO: This is defunct since I removed page actions from the popup. Need to inject this into something
+ * else, probably the right-click menu.
+ */
 export class RawImagePage extends RootPage {
 	@RegisteredAction({id: 'pa_button_go_to_pixiv_image', label:'Go to Image on Pixiv', icon: 'picture'})
 	public returnToImage(){

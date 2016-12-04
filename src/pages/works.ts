@@ -14,6 +14,9 @@ import {Container as Deps} from 'src/deps'
 import {prefix} from 'src/utils/log'
 let console = prefix('Works Page');
 
+/**
+ * The listing of an artist's works. 
+ */
 export class WorksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);

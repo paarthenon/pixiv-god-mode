@@ -11,6 +11,9 @@ import {injectMangaNextButton} from 'src/injectors/mangaNextButton'
 import {injectMangaOpenFolderButton} from 'src/injectors/mangaOpenFolderButton'
 import {Model} from 'common/proto'
 
+/**
+ * Pixiv's built in manga viewer.
+ */
 export class MangaPage extends RootPage {
 	public get artistName(): string {
 		return $('section.thumbnail-container a.user').text();

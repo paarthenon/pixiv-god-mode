@@ -28,7 +28,8 @@ export interface cachedDictionaryEntry {
 export type cachedDictionary = { cache: cachedDictionaryEntry[] };
 
 /**
- * Dictionary Service (TODO: fill)
+ * An implementation of the dictionary service that provides basic CRUD operations and updates and
+ * internal cache alongside them.
  */
 export class CachedDictionaryService {
 	constructor(
@@ -36,6 +37,8 @@ export class CachedDictionaryService {
 		protected keys:AppKeys
 	) {	}
 
+	// Performance could be improved by modifying the cache in place instead of constructing it every time
+	// but this is logically simpler and hasn't been an issue. 
 	protected generateCachedDictionary(global:naiveDictionary, local:naiveDictionary) :cachedDictionary {
 		let keySet = new Set(Object.keys(global).concat(Object.keys(local)));
 		
@@ -111,6 +114,9 @@ export class CachedDictionaryService {
 
 }
 
+/**
+ * An extended form of the CachedDictionaryService that includes update logic.
+ */
 export class DictionaryManagementService extends CachedDictionaryService {
 	constructor(
 		protected config:IConfig,

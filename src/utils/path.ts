@@ -1,3 +1,4 @@
+// Lazy programmer
 function extract(str: string, re: RegExp):string {
 	if (str == undefined) return undefined;
 	let out = str.match(re);

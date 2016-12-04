@@ -8,8 +8,8 @@ import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
 
 import vars from './staticVars'
 
-let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
-let removeDiacritics = require('diacritics').remove; //TODO: create typing
+const InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
+const removeDiacritics = require('diacritics').remove; //TODO: create typing
 
 export class DictContainer extends React.Component<{dictService: CachedDictionaryService}, cachedDictionary> {
 	state :cachedDictionary = { cache: [] };
