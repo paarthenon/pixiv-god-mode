@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp');
 var fs = require('fs');
 var exec = require('child_process').exec;
@@ -26,7 +28,7 @@ gulp.task('es5', ['build'], function() {
 		.pipe(gulp.dest('build/es5'));
 })
 
-builder = new jspm.Builder();
+let builder = new jspm.Builder();
 builder.config({
 	paths: { '*': 'build/es5/*' }
 });
@@ -63,22 +65,22 @@ function fileCopy(src, dst) {
 		.on('end', resolve))
 }
 
-let popupProps = {
+const popupProps = {
 	source: 'vendor/chrome/popup/bootstrap',
 	merged: 'build/merged/popup.min.js',
 	dest: 'dist/chrome/vendor/chrome/popup',
 }
-let backgroundProps = {
+const backgroundProps = {
 	source: 'vendor/chrome/background/main',
 	merged: 'build/merged/background.min.js',
 	dest: 'dist/chrome/vendor/chrome/',
 }
-let contentProps = {
+const contentProps = {
 	source: 'vendor/chrome/content/chrome',
 	merged: 'build/merged/content.min.js',
 	dest: 'dist/chrome/vendor/chrome/',
 }
-let optionsProps = {
+const optionsProps = {
 	source: 'vendor/chrome/options/options',
 	merged: 'build/merged/options.min.js',
 	dest: 'dist/chrome/vendor/chrome/options',
