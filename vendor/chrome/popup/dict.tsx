@@ -9,7 +9,7 @@ import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
 import vars from './staticVars'
 
 let InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
-let removeDiacritics = require('diacritics').remove; //TODO: create typing
+let removeDiacritics = require('diacritics').remove as (x:string) => string; //TODO: create typing
 
 export class DictContainer extends React.Component<{dictService: CachedDictionaryService}, cachedDictionary> {
 	state :cachedDictionary = { cache: [] };
@@ -43,7 +43,7 @@ export class DictContainer extends React.Component<{dictService: CachedDictionar
 	}
 }
 
-interface DictViewerProps {
+export interface DictViewerProps {
 	cachedDict: cachedDictionary
 	getTranslation: (key:string) => Promise<string>
 	onUpdate: (key:string, value:string) => any
@@ -51,7 +51,7 @@ interface DictViewerProps {
 	onAdd: (key:string, value:string) => any
 }
 
-interface DictViewerState {
+export interface DictViewerState {
 	currentSearch:string
 	loadCount:number
 	hasMore:boolean

@@ -2,13 +2,14 @@ import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import * as jQUtils from 'src/utils/document'
 import {PixivAssistantServer} from 'src/services'
-import {RegisteredAction, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {RegisteredAction, ExecuteIfSetting, ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import SettingKeys from 'src/settingKeys'
 import {Model} from 'common/proto'
 
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {injectOpenInTabs} from 'src/injectors/openInTabs'
+import {injectCountBadge} from 'src/injectors/countBadge'
 import {Container as Deps} from 'src/deps'
 
 import {prefix} from 'src/utils/log'
@@ -45,7 +46,20 @@ export class WorksPage extends GalleryPage {
 	}
 	@ExecuteIfSetting(SettingKeys.pages.works.inject.openInTabs)
 	public injectOpenTabs(){
-		injectOpenInTabs(this.openTabs.bind(this));
+		injectOpenInTabs('Open in Tabs', this.openTabs.bind(this));
+		injectOpenInTabs('Open all in Tabs', this.openAllInTabs.bind(this));
+	}
+	@ExecuteOnLoad
+	public injectTotalWorks() {
+		Deps.execOnPixiv((pixiv, props) => {
+			return pixiv.api.userProfile({
+				user_ids: props.artistId,
+				illust_num: 1000000
+			}, {})
+		}, {artistId: this.artistId}).then(result => {
+			let imageCount = result.body[0].illusts.reduce((acc:number, cur:any) => acc + parseInt(cur.illust_page_count), 0);
+			injectCountBadge(`${imageCount} total images`);
+		})
 	}
 	@ExecuteIfSetting(SettingKeys.global.inject.pagingButtons)
 	public injectPagingButtons(){
@@ -69,9 +83,31 @@ export class WorksPage extends GalleryPage {
 				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
 	}
 
+	public openAllInTabs():void {
+		Deps.execOnPixiv(
+			(pixiv, props) => {
+				return pixiv.api.userProfile({
+					user_ids: props.artistId,
+					illust_num: 1000000
+				}, {})
+			},{
+				artistId: this.artistId
+			}
+		).then(result => {
+			result.body[0].illusts.forEach((illust:any) => {
+				let link = pathUtils.generateImageLink(illust.illust_id);
+				if (parseInt(illust.illust_page_count) > 1) {
+					link = link.replace('medium','manga');
+				}
+				Deps.openInTab(link);
+			})
+		});
+		return;
+	}
 	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-window' })
 	public openTabs():void {
 		console.trace('Opening images in tabs');
+		
 		Deps.getSetting(SettingKeys.pages.works.openTabsImagesOnly).then(imagesOnly => {
 			if(imagesOnly) {
 				console.log('opening images only.')

@@ -4,7 +4,7 @@ import * as Bootstrap from 'react-bootstrap'
 import {InjectBootstrap} from 'src/components/util/injectBootstrap'
 import {DownloadButton, DownloadStates} from 'src/components/downloadButton'
 
-interface IllustrationToolbarProps {
+export interface IllustrationToolbarProps {
     mode :DownloadStates
     downloadInBrowser :Function
     downloadUsingServer :Function
@@ -45,8 +45,8 @@ export class IllustrationToolbar extends React.Component<IllustrationToolbarProp
     }
 }
 
-type updateTextFunc = (text:string) => void;
-type downloadFunc = (update:updateTextFunc) => Promise<void>
+export type updateTextFunc = (text:string) => void;
+export type downloadFunc = (update:updateTextFunc) => Promise<void>
 
 export interface IllustrationToolbarContainerProps {
     existsFunc :() => Promise<boolean>
@@ -54,7 +54,7 @@ export interface IllustrationToolbarContainerProps {
     downloadUsingServer :downloadFunc
     openToImage :() => Promise<void>
 }
-interface ContainerState {
+export interface ContainerState {
     serverConnected :boolean
     mode :DownloadStates
     progressText :string

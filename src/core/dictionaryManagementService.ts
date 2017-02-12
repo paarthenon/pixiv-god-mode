@@ -6,7 +6,7 @@ import ConfigKeys from 'src/configKeys'
 import {prefix} from 'src/utils/log'
 let console = prefix('Dictionary Management Service');
 
-interface AppKeys {
+export interface AppKeys {
 	global :string
 	local :string
 	cache :string
@@ -122,7 +122,7 @@ export class DictionaryManagementService extends CachedDictionaryService {
 		let methodConsole = prefix('globalUpdateAvailable', console);
 		methodConsole.debug('checking if there is a global dictionary update available');
 		return this.ghUtils.masterCommit.then(commitHash => {
-			return this.config.get(ConfigKeys.official_dict_hash).then(currentHash => {
+			return this.config.get(ConfigKeys.official_dict_hash).then<boolean>(currentHash => {
 				let isNewer: boolean = !currentHash || currentHash !== commitHash;
 				methodConsole.debug(`commit has been received: [${commitHash}] is ${(isNewer) ? '' : 'not '} newer than [${currentHash}]`);
 				return isNewer;
@@ -133,7 +133,7 @@ export class DictionaryManagementService extends CachedDictionaryService {
 	public updateGlobalDictionary() : Promise<void> {
 		console.debug('updating global dictionary');
 		return this.ghUtils.masterCommit.then(commitHash => 
-			this.ghUtils.newestDictionary.then(obj => 
+			this.ghUtils.newestDictionary.then<void>(obj => 
 				Promise.all([
 					this.config.set(ConfigKeys.official_dict, obj),
 					this.config.set(ConfigKeys.official_dict_hash, commitHash)

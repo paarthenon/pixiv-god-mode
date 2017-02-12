@@ -3,7 +3,7 @@ import * as React from 'react'
 import {getSetting, setSetting} from 'vendor/chrome/userSettings'
 import {BooleanSetting} from 'src/components/settings/booleanSetting'
 
-interface BooleanSettingContainerProps {
+export interface BooleanSettingContainerProps {
 	settingKey:string
 	label:string
 }

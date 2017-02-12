@@ -21,7 +21,7 @@ import {toCanvasInstance} from 'src/utils/document'
 
 var whammy = require('whammy');
 
-enum IllustrationType {
+export enum IllustrationType {
 	Picture,
 	Manga,
 	Animation,
@@ -237,7 +237,7 @@ export class IllustrationPage extends RootPage {
 		return PixivAssistantServer.download(this.artist, this.fullImageUrl);
 	}
 
-	protected generateMangaPageUrls() {
+	protected generateMangaPageUrls() :Promise<string[]> {
 		return Deps.execOnPixiv(
 			(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
 			{
@@ -299,7 +299,7 @@ export class IllustrationPage extends RootPage {
 			.then(tap(() => updateText('Downloading ugoira data')))
 			.then(info => getBlob(info.src))
 			.then(tap(() => updateText('Reading ugoira data')))
-			.then(data => jszip().loadAsync(data))
+			.then<jszip>(data => jszip().loadAsync(data))
 			.then(zip => {
 				let fileData: {[id:string]:Promise<string>} = {}	
 				zip.forEach((path, file) => {

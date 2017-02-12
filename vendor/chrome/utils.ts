@@ -36,7 +36,7 @@ export function getCurrentTab() {
 }
 
 export function newTab(url:string, background?:boolean) {
-	return new Promise(resolve => chrome.tabs.create({url, active: !background}, resolve));
+	return new Promise<void>(resolve => chrome.tabs.create({url, active: !background}, () => resolve()));
 }
 
 export function isPageBookmarked(url:string) {

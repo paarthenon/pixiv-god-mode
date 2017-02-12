@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
-interface DropdownSettingProps {
+export interface DropdownSettingProps {
 	label :string
     options :{[label:string]:any}
 	selected :any

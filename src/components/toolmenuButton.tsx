@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-interface ToolmenuButtonProps {
+export interface ToolmenuButtonProps {
 	icon:string
 	tooltip?:string
 	clickAction:Function

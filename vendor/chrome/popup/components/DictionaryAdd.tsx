@@ -7,7 +7,7 @@ import * as chromeUtils from '../../utils'
 
 import vars from '../staticVars'
 
-interface DictionaryAddProps {
+export interface DictionaryAddProps {
 	onAdd :(key:string,value:string) => any
 	getTranslation :(key:string) => Promise<string>
 }

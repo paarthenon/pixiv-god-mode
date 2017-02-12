@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 
-interface TextSettingProps {
+export interface TextSettingProps {
 	label:string
 	text:string
 	onUpdate:(val:string) => any

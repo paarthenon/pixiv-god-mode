@@ -3,7 +3,7 @@ import * as React from 'react'
 import {Config} from 'vendor/chrome/services'
 import {TextSetting} from 'src/components/settings/textSetting'
 
-interface TextSettingsContainerProps {
+export interface TextSettingsContainerProps {
     label :string
     settingKey :string
 }

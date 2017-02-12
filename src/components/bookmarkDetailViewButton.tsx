@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-interface BookmarkDetailViewButtonProps {
+export interface BookmarkDetailViewButtonProps {
 	id? :string
 	text :string
 	clickAction :Function

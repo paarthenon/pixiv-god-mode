@@ -4,7 +4,7 @@ import {ConditionalRender} from 'src/components/util/conditionalRender'
 
 import {DictionaryService} from 'vendor/chrome/services'
 
-interface DictStates {
+export interface DictStates {
 	global: naiveDictionary
 	local: naiveDictionary
 	cache: cachedDictionary

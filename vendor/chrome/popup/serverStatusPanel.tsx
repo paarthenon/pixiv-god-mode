@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import {PixivAssistantServer} from 'vendor/chrome/services'
 
-interface ServerStatus {
+export interface ServerStatus {
 	connected? :boolean
 	features :string[]
 }

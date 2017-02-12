@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as Bootstrap from 'react-bootstrap'
 
-interface BooleanSettingProps {
+export interface BooleanSettingProps {
 	label :string
 	checked :boolean
 	onToggle :(value:boolean) => any

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-interface PagingButtonProps {
+export interface PagingButtonProps {
 	className :string
 	tooltip :string
 	rel :string

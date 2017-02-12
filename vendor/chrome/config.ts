@@ -2,7 +2,7 @@ import IConfig from 'src/core/IConfig'
 import Mailman from 'vendor/chrome/mailman'
 import * as Msg from 'vendor/chrome/messages'
 
-type potentialData = boolean|string|number|Object
+export type potentialData = boolean|string|number|Object
 
 export default class ContentConfig implements IConfig {
 	protected configEngine :Msg.ConfigProtocol

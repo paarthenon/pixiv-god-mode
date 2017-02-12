@@ -3,7 +3,7 @@ import * as React from 'react'
 import {getSetting, setSetting} from 'vendor/chrome/userSettings'
 import {DropdownSetting} from 'src/components/settings/dropdownSetting'
 
-interface DropdownSettingContainerProps {
+export interface DropdownSettingContainerProps {
 	settingKey:string
 	options:{[lable:string]:any}
 	label:string

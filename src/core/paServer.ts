@@ -39,8 +39,8 @@ export class PAServer {
 			.catch(() => this.openRepo());
 	}
 
-	public openImageFolder(image: Model.Image) {
-		return this.callEndpoint(Features.OpenToImage, {image});
+	public openImageFolder(image: Model.Image) :Promise<void> {
+		return this.callEndpoint<{image: Model.Image}, void>(Features.OpenToImage, {image});
 	}
 
 	public openRepo() {
@@ -82,7 +82,7 @@ export class PAServer {
 	}
 
 	public ping() : Promise<void> {
-		return this.callEndpoint('ping').then(() => Promise.resolve());
+		return this.callEndpoint('ping').then<void>(() => Promise.resolve());
 	}
 
 	public supportsFeature(feature:string) : Promise<boolean> {

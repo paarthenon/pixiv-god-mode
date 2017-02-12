@@ -6,11 +6,11 @@ export interface ActionDescriptor extends IsConditional {
 	onLoad?: boolean 
 }
 
-interface HasExecutable {
+export interface HasExecutable {
 	execute: () => void
 }
 
-interface IsConditional {
+export interface IsConditional {
 	if?: () => boolean | Promise<boolean>
 }
 
