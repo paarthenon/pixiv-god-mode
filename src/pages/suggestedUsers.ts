@@ -4,6 +4,10 @@ import {RootPage} from 'src/pages/root'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 
+/**
+ * Accessible from the home page, this provides a list of recommended artists based on which other artists
+ * you've followed.
+ */
 export class SuggestedUsersPage extends RootPage {
 	public fadeBookmarks() {
 		Deps.getSetting(SettingKeys.global.fadeArtistRecommendationsAlreadyBookmarked).then(settingValue => {

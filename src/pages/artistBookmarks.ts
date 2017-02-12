@@ -13,6 +13,9 @@ import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {prefix} from 'src/utils/log'
 let console = prefix("Artist's Bookmarks Page");
 
+/**
+ * A listing of images that a specific artist has bookmarked.
+ */
 export class ArtistBookmarksPage extends GalleryPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);

@@ -3,7 +3,10 @@ import * as pathUtils from 'src/utils/path'
 import {RootPage} from 'src/pages/root'
 import {injectPagingButtons} from 'src/injectors/pagingButtonInjector'
 
-export class GalleryPage extends RootPage {
+/**
+ * Generic gallery page that is extended by the search and works pages.
+ */
+export abstract class GalleryPage extends RootPage {
 	public get imageCountInPage(): number {
 		return $('li.image-item').length;
 	}

@@ -5,6 +5,9 @@ import {RootPage} from 'src/pages/root'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {Model} from 'common/proto'
 
+/**
+ * The initial overview page of an artist.
+ */
 export class ArtistProfilePage extends RootPage {
 	public get artistId():number {
 		return pathUtils.getArtistId(this.path);

@@ -1,6 +1,10 @@
 import * as $ from 'jquery'
 import {RootPage} from 'src/pages/root'
 
+/**
+ * The page arrived at when clicking on a tag. Shows the tag, a small bit of its hierarchy, and
+ * links to the search and wiki pages for the tag.
+ */
 export class TagDetailPage extends RootPage {
 	protected getTagElements() {
 		return [

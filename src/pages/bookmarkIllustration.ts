@@ -8,6 +8,9 @@ import {injectViewAllButton, ViewAllButtonElementId} from 'src/injectors/bookmar
 
 import SettingKeys from 'src/settingKeys'
 
+/**
+ * This is the bookmark_detail.php page that appears when viewing the details of one of your bookmarks.
+ */
 export class BookmarkIllustrationPage extends RootPage {
 
 	public getTagElements() {

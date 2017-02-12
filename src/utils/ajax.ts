@@ -1,3 +1,6 @@
+/**
+ * Pull raw assets
+ */
 export function getBlob(src:string) {
 	let req = new XMLHttpRequest();
 	req.open('GET', src);

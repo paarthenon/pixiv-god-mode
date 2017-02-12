@@ -1,6 +1,10 @@
 import IConfig from 'src/core/IConfig'
 import {AjaxRequest} from 'src/core/IAjax'
 
+/**
+ * Another instance of something kind of stupid that works well enough for now. Abstracts out any browser-specific
+ * functionality in case we decide on ~world domination~ multi-browser support.
+ */
 export interface IDependencyContainer {
 	config: IConfig
 	openInTab: (url: string) => void

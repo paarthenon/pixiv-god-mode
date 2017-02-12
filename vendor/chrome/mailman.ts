@@ -52,6 +52,10 @@ var mailMan = {
 export default mailMan;
 
 
+/**
+ * This is vaguely cool, it enforces that the object used to define the protocol meets the appropriate
+ * criteria. The event listener registered shucks the message wrappers.
+ */
 export function defineImplementation<T>(target:Target, implementation:T) {
 	function dispatch(implementation: T, message: Msg.RequestWrapper<any>) : Promise<any> {
 		return Promise.resolve((<any>implementation)[message.name](message.body));
