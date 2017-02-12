@@ -12,6 +12,8 @@ import {injectOpenInTabs} from 'src/injectors/openInTabs'
 import {injectCountBadge} from 'src/injectors/countBadge'
 import {Container as Deps} from 'src/deps'
 
+import * as pixivBridge from 'src/utils/pixivBridge'
+
 import {prefix} from 'src/utils/log'
 let console = prefix('Works Page');
 
@@ -51,12 +53,7 @@ export class WorksPage extends GalleryPage {
 	}
 	@ExecuteOnLoad
 	public injectTotalWorks() {
-		Deps.execOnPixiv((pixiv, props) => {
-			return pixiv.api.userProfile({
-				user_ids: props.artistId,
-				illust_num: 1000000
-			}, {})
-		}, {artistId: this.artistId}).then(result => {
+		pixivBridge.userProfile(this.artistId).then(result => {
 			let imageCount = result.body[0].illusts.reduce((acc:number, cur:any) => acc + parseInt(cur.illust_page_count), 0);
 			injectCountBadge(`${imageCount} total images`);
 		})
@@ -88,16 +85,7 @@ export class WorksPage extends GalleryPage {
 	}
 
 	public openAllInTabs():void {
-		Deps.execOnPixiv(
-			(pixiv, props) => {
-				return pixiv.api.userProfile({
-					user_ids: props.artistId,
-					illust_num: 1000000
-				}, {})
-			},{
-				artistId: this.artistId
-			}
-		).then(result => {
+		pixivBridge.userProfile(this.artistId).then(result => {
 			result.body[0].illusts.forEach((illust:any) => {
 				let link = pathUtils.generateImageLink(illust.illust_id);
 				if (parseInt(illust.illust_page_count) > 1) {
