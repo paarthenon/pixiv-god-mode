@@ -1,5 +1,6 @@
 import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
+import * as pixivBridge from 'src/utils/pixivBridge'
 import {RootPage} from 'src/pages/root'
 import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {PixivAssistantServer} from 'src/services'
@@ -42,12 +43,7 @@ export class MangaPage extends RootPage {
 
 	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)
 	public autoEmbiggenFixImages(): void {
-		Deps.execOnPixiv(
-			(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
-			{
-				illustId: this.illustId
-			}
-		).then((response: any) => { 
+		pixivBridge.illustDetail(this.illustId).then((response: any) => { 
 			let extension = response.body[this.illustId].illust_ext;
 			let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
 

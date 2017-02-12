@@ -11,3 +11,17 @@ export function userProfile(artistId:number) {
             artistId: artistId
         });
 }
+
+export function illustDetails(ids:number[]) {
+    return Deps.execOnPixiv(
+        (pixiv, props) => {
+            return pixiv.api.get('/rpc/index.php', {
+                mode: 'get_illust_detail_by_ids',
+                illust_ids: props.ids.join(),
+            })
+        }, {ids});
+}
+
+export function illustDetail(id:number) {
+    return illustDetails([id]);
+}
