@@ -77,10 +77,14 @@ export class WorksPage extends GalleryPage {
 		let request = Object.keys(imageMap)
 						.map(id => ({ artist: this.artist, image: { id: parseInt(id) } }));
 
-		PixivAssistantServer.bulkImageExists(request)
-			.then(matchedImages => matchedImages
-				.map(match => match.image.id.toString())
-				.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
+		if (request.length > 0) {
+			PixivAssistantServer.bulkImageExists(request)
+				.then(matchedImages => matchedImages
+					.map(match => match.image.id.toString())
+					.forEach(matchId => imageMap[matchId].addClass('pa-hidden-thumbnail')));
+		} else {
+			console.debug('No images found, avoiding server call');
+		}
 	}
 
 	public openAllInTabs():void {
