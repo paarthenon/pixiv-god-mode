@@ -75,14 +75,15 @@ export class MangaPage extends RootPage {
 		});
 	}
 
+	// Based on the pixiv manga viewer keybinds
 	public goToPreviousPage():void {
-		Deps.execOnPixiv(pixiv => {
-			pixiv.mangaViewer.listView.prev();
+		Deps.execOnPixiv(() => {
+			(window as any).colon.ui.shortcut.trigger('K');
 		});
 	}
 	public goToNextPage():void {
-		Deps.execOnPixiv(pixiv => {
-			pixiv.mangaViewer.listView.next();
+		Deps.execOnPixiv(() => {
+			(window as any).colon.ui.shortcut.trigger('J');
 		});
 	}
 
