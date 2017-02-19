@@ -2,7 +2,10 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        content: './vendor/chrome/content/chrome.ts'
+        content: './vendor/chrome/content/chrome.ts',
+        popup: './vendor/chrome/popup/bootstrap.tsx',
+        background: './vendor/chrome/background/main.ts',
+        options: './vendor/chrome/options/options.tsx'
     },
     output: {
         path: path.resolve(__dirname, 'build/webpack'),

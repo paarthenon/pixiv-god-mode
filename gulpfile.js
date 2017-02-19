@@ -7,17 +7,19 @@ var babel = require('gulp-babel');
 var jspm = require('jspm');
 var less = require('gulp-less');
 
+function consoleCommand(cmd) {
+	return new Promise((resolve, reject) => {
+		exec(cmd, function(error, stdout, stderr){
+			if (error) {
+				reject(stderr);
+			} else {
+				resolve();
+			}
+		});
+	});
+}
 gulp.task('build', function(callback){
-    exec('tsc -p .', function(error, stdout, stderr) {
-        if(stdout){ console.log(stdout) }
-        if(stderr){ console.log(stderr) }
-
-        if(error){
-            console.log('Typescript build error');
-        }else{
-            callback();
-        }
-   });
+    consoleCommand('tsc');
 });
 
 gulp.task('es5', ['build'], function() {
