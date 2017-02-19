@@ -8,7 +8,7 @@ import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
 
 import vars from './staticVars'
 
-import InfiniteScroll from 'react-infinite-scroller'
+import * as InfiniteScroll from 'react-infinite-scroller'
 import {remove as removeDiacritics} from 'diacritics'; 
 
 export class DictContainer extends React.Component<{dictService: CachedDictionaryService}, cachedDictionary> {

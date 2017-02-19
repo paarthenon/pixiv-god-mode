@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -34,5 +35,17 @@ module.exports = {
             'node_modules'
         ],
         extensions: ['.ts','.tsx','.js']
-    }
+    },
+    //TODO: separate these plugins between dev and prod.
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            mangle: false,
+            beautify: {
+                ascii_only: true
+            }
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production')
+        })
+    ]
 }
