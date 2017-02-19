@@ -8,14 +8,20 @@ export interface DropdownSettingProps {
 	onChange :(value:any) => any
 }
 
+declare module 'react-bootstrap' {
+    interface FormControlProps {
+        inputRef?: Function
+    }
+}
+
 /**
  * A simple dropdown with label
  */
 export class DropdownSetting extends React.Component<DropdownSettingProps, void> {
 	private inputElement : HTMLInputElement;
 	
-	handleExecute(event:React.FormEvent) {
-        console.log('ev',(event.target as any).value);
+	handleExecute(event:React.FormEvent<HTMLInputElement>) {
+        console.log('ev',(event.target as any).value); //TODO: confirm generic, consider currentTarget property
 		this.props.onChange((event.target as any).value);
 	}
 
@@ -28,10 +34,11 @@ export class DropdownSetting extends React.Component<DropdownSettingProps, void>
 	}
 
 	public render() {
+        // const PersonalFormControl:any = Bootstrap.FormControl; // TODO: fix missing 'inputRef' property on .d.ts
 		return <div>
             <Bootstrap.FormGroup controlId="formControlsSelect">
                 <Bootstrap.ControlLabel>{this.props.label}</Bootstrap.ControlLabel>
-                <Bootstrap.FormControl 
+                <Bootstrap.FormControl
                     componentClass="select"
                     inputRef={this.initializeElement.bind(this)}
                     onChange={this.handleExecute.bind(this)}

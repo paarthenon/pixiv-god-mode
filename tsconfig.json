@@ -25,7 +25,7 @@
         "node_modules"
     ],
     "files": [
-        "typings/index.d.ts"
+        "untyped.d.ts"
     ],
     "include": [
         "src/**/*.ts",

@@ -8,8 +8,8 @@ import {DictionaryAdd} from 'vendor/chrome/popup/components/DictionaryAdd'
 
 import vars from './staticVars'
 
-const InfiniteScroll = require('react-infinite-scroller'); //TODO: create typing
-const removeDiacritics = require('diacritics').remove as (x:string) => string; //TODO: create typing
+import InfiniteScroll from 'react-infinite-scroller'
+import {remove as removeDiacritics} from 'diacritics'; 
 
 export class DictContainer extends React.Component<{dictService: CachedDictionaryService}, cachedDictionary> {
 	state :cachedDictionary = { cache: [] };
@@ -140,8 +140,8 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 class Search extends React.Component<{ onChange: (search: string) => any }, { current: string }> {
 	state = { current: '' };
 
-	public handleChange(event:React.FormEvent) {
-		let newValue = (event.target as any).value;
+	public handleChange(event:React.FormEvent<HTMLInputElement>) {
+		let newValue = (event.target as any).value; //TODO: confirm generic on FormEvent
 		this.setState({ current: newValue });
 		this.props.onChange(newValue);
 	}

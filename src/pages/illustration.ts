@@ -19,7 +19,7 @@ import {getBlob} from 'src/utils/ajax'
 import {execSequentially} from 'src/utils/promise'
 import {toCanvasInstance} from 'src/utils/document'
 
-var whammy = require('whammy');
+import whammy from 'whammy'
 
 export enum IllustrationType {
 	Picture,

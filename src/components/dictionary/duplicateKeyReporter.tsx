@@ -13,7 +13,7 @@ export const DuplicateKeyReporter : React.StatelessComponent<{dupes: string[], r
 			</Bootstrap.InputGroup.Addon>
 			{(dupes.length > 0) ? 
 				<Bootstrap.InputGroup.Button>
-					<Bootstrap.Button onClick={() => removeAction()} small>Revert Duplicates</Bootstrap.Button>
+					<Bootstrap.Button onClick={() => removeAction()}>Revert Duplicates</Bootstrap.Button>
 				</Bootstrap.InputGroup.Button> 
 			: null }
 		</Bootstrap.InputGroup>
