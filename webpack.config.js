@@ -34,7 +34,11 @@ module.exports = {
             __dirname,
             'node_modules'
         ],
-        extensions: ['.ts','.tsx','.js']
+        extensions: ['.ts','.tsx','.js'],
+        alias: {
+            'react': 'preact-compat/dist/preact-compat.js',
+            'react-dom': 'preact-compat/dist/preact-compat.js'
+        }
     },
     //TODO: separate these plugins between dev and prod.
     plugins: [
