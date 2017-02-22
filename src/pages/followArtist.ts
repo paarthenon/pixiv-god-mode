@@ -57,21 +57,8 @@ export class FollowArtistPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		document.addEventListener('pixivFollowRecommenationLoaded', () => this.actOnNewEntries());
-
-		Deps.execOnPixiv(pixiv => {
-			function issueNotification(){
-				var evt = new CustomEvent('pixivFollowRecommenationLoaded', {});
-				document.dispatchEvent(evt);
-			}
-			function paWrapFunction(func:Function, context:any) {
-				return function() {
-					issueNotification();
-					func.call(context);
-				}
-			}
-
-			pixiv.scrollView.process = paWrapFunction(pixiv.scrollView.process, pixiv.scrollView);
-		});
+		//TODO: Print error message if it can't find this.
+		new MutationObserver(this.actOnNewEntries.bind(this))
+			.observe($('ul.user-recommendation-items')[0], { childList: true });
 	}
 }
