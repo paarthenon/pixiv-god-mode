@@ -123,12 +123,7 @@ export class WorksPage extends GalleryPage {
 					} else {
 						let url = $(imgEntry).find('img').attr('src');
 						let illustId = pathUtils.getImageIdFromSourceUrl(url);
-						return Deps.execOnPixiv(
-							(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
-							{
-								illustId
-							}
-						).then((response:any) => {
+						return pixivBridge.illustDetail(illustId).then((response: any) => { 
 							let extension = response.body[illustId].illust_ext;
 							let extensionWithDot = (extension.charAt(0) === '.') ? extension : `.${extension}`;
 							let newSrc = pathUtils.experimentalMaxSizeImageUrl(url).replace(/\.(\w+)$/, extensionWithDot);
