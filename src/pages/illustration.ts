@@ -18,8 +18,9 @@ import * as geomUtils from 'src/utils/geometry'
 import {getBlob} from 'src/utils/ajax'
 import {execSequentially} from 'src/utils/promise'
 import {toCanvasInstance} from 'src/utils/document'
+import * as pixivBridge from 'src/utils/pixivBridge'
 
-import whammy from 'whammy'
+import * as whammy from 'whammy'
 
 export enum IllustrationType {
 	Picture,
@@ -242,12 +243,7 @@ export class IllustrationPage extends RootPage {
 	}
 
 	protected generateMangaPageUrls() :Promise<string[]> {
-		return Deps.execOnPixiv(
-			(pixiv, props) => pixiv.api.illust.detail([props.illustId], {}),
-			{
-				illustId: this.imageId
-			}
-		).then((response: any) => { 
+		return pixivBridge.illustDetail(this.imageId).then((response: any) => { 
 			let extension = response.body[this.imageId].illust_ext;
 			let pageCount = response.body[this.imageId].illust_page_count;
 
