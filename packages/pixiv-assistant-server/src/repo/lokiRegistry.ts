@@ -20,7 +20,7 @@ export class LokiRegistry extends Registry {
     protected images : LokiCollection<Image>
 
     public initialize() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             let dbPath = path.resolve(this.repoPath, 'loki.json');
             this.db = new Loki(dbPath, {
                 autosave: true,
@@ -65,7 +65,7 @@ export class LokiRegistry extends Registry {
     public teardown() {
         console.log(this.images.count());
         this.images.flushChanges();
-        return super.teardown().then(() => new Promise((resolve, reject) => {
+        return super.teardown().then(() => new Promise<void>((resolve, reject) => {
             this.db.saveDatabase(err => {
                 logger.warn('db should be saved');
                 if (err) {

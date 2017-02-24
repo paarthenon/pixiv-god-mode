@@ -40,10 +40,10 @@ export function downloadFromPixiv(msg:DownloadMessage):Promise<boolean> {
 						resolve(msg)
 					})
 					.on('error', () => reject('error while writing to file'));
-		})));
+		}))).then(() => true).catch(() => false);
 }
 
-export function downloadFilesToZip(files: string[], zipPath:string) {
+export function downloadFilesToZip(files: string[], zipPath:string) :Promise<void>{
 	let archive = archiver.create('zip', {});
 	return makederp(path.dirname(zipPath))
 		.then(() => Promise.all(files.map(fileUrl => // wait for all the files to...
@@ -58,7 +58,8 @@ export function downloadFilesToZip(files: string[], zipPath:string) {
 			archive.on('end', resolve);
 			archive.pipe(outputStream);
 			archive.finalize();
-		}));
+		}))
+		.then(() => Promise.resolve())
 }
 
 export function getDataUrlDetails(dataUrl:string) {

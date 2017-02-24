@@ -196,9 +196,9 @@ export class ImageRepo extends BaseRepo {
 
 		switch (this.config.mangaFormat) {
 			case MangaDownloadFormat.LOOSE:
-				return this.downloadMangaAsLooseFiles(msg);
+				return this.downloadMangaAsLooseFiles(msg).then(() => Promise.resolve());
 			case MangaDownloadFormat.FOLDER:
-				return this.downloadMangaInFolder(msg);
+				return this.downloadMangaInFolder(msg).then(() => Promise.resolve());
 			case MangaDownloadFormat.ARCHIVE:
 				return this.downloadMangaAsArchive(msg);
 		}

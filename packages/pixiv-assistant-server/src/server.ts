@@ -66,7 +66,7 @@ export class PixivAssistantServer {
 					.then(result => res.json(result));
 			});
 
-			return new Promise((resolve, reject) => {
+			return new Promise<void>((resolve, reject) => {
 				this.serverInstance = app.listen(this.config.port, resolve);
 			});
 		});
@@ -74,7 +74,7 @@ export class PixivAssistantServer {
 
 	public close() : Promise<void> {
 		logger.info('Closing Server');
-		return new Promise(resolve => this.serverInstance.close(resolve)) //shut down http server
+		return new Promise<void>(resolve => this.serverInstance.close(resolve)) //shut down http server
 			.then(() => this.repoInstance.teardown());
 	}
 }

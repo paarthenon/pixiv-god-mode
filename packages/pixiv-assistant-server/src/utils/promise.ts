@@ -9,7 +9,7 @@ export function promisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T
 
 	let result = Array(arr.length);
 	return new Promise((resolve, reject) => {
-		function passBaton<T>(id:number) :Promise<T>{
+		function passBaton(id:number) :Promise<T>{
 			if (id >= arr.length) {
 				if (++crashCount === boxedLimit) resolve(result);
 			} else {

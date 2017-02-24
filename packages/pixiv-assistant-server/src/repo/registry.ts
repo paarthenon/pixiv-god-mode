@@ -18,8 +18,8 @@ export abstract class Registry {
 
 	public abstract addFromPath(filePath:string) : Promise<void>
 
-	public addFromPaths(filePaths:string[]) {
-		return Promise.all<void>(filePaths.map(fPath => this.addFromPath(fPath)));
+	public addFromPaths(filePaths:string[]) : Promise<void> {
+		return Promise.all(filePaths.map(fPath => this.addFromPath(fPath))).then<void>(() => Promise.resolve());;
 	}
 
 	public abstract findImage(imageId:number) : Promise<string[]>
