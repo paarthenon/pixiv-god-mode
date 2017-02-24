@@ -6,7 +6,7 @@ import * as fs from 'fs'
 import * as sanitize from 'sanitize-filename'
 
 import {ActionCache} from '../utils/actionCache'
-import {BaseRepo} from './baseRepo'
+import {BaseRepo} from './repo'
 import {makederp} from '../utils/makederp'
 import * as pathUtils from '../utils/path'
 import * as downloadUtils from '../utils/download'
@@ -15,7 +15,6 @@ import * as discoveryUtils from '../utils/discovery'
 import * as dataStoreUtils from '../utils/dataStore'
 
 import {Registry} from './registry'
-import {DBRegistry} from './dbRegistry'
 import {LokiRegistry} from './lokiRegistry'
 
 const opn = require('opn');

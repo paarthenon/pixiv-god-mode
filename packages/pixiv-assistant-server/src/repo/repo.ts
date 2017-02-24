@@ -1,9 +1,14 @@
 import * as log4js from 'log4js'
 
-import {PixivRepo} from './model'
 import {ActionCache} from '../utils/actionCache'
 
 let logger = log4js.getLogger('Repo');
+
+export interface PixivRepo {
+	supports: (action: string) => boolean
+	dispatch: <T> (action: string, message: any) => Promise<T> | T
+	teardown: () => void
+}
 
 // Registers dispatching and decorator details (the mechanics of a repo)
 export abstract class BaseRepo implements PixivRepo {

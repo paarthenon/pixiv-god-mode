@@ -9,7 +9,7 @@ import * as yargs from 'yargs'
 import * as http from 'http'
 
 import * as fiRepo from './repo/flatImageRepo'
-import {PixivRepo} from './repo/model'
+import {PixivRepo} from './repo/repo'
 
 let logger = log4js.getLogger('Startup');
 
