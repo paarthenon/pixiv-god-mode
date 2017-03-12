@@ -19,7 +19,7 @@ function consoleCommand(cmd) {
 	});
 }
 gulp.task('build', function(){
-    return consoleCommand('webpack');
+    return consoleCommand('node ./node_modules/webpack/bin/webpack.js');
 });
 
 const popupProps = {

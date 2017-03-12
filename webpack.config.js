@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+process.traceDeprecation = true;
+
 module.exports = {
     entry: {
         content: './vendor/chrome/content/chrome.ts',
