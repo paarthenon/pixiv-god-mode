@@ -10,7 +10,6 @@ function consoleCommand(cmd) {
 		exec(cmd, function(error, stdout, stderr){
 			if (error) {
 				console.log(error);
-				console.log(stderr);
 				reject(stderr);
 			} else {
 				resolve();
@@ -18,9 +17,7 @@ function consoleCommand(cmd) {
 		});
 	});
 }
-gulp.task('build', function(){
-    return consoleCommand('node ./node_modules/webpack/bin/webpack.js');
-});
+gulp.task('build', () => consoleCommand('node ./node_modules/webpack/bin/webpack.js'));
 
 const popupProps = {
 	merged: 'build/webpack/popup.min.js',
