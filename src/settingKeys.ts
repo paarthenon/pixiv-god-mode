@@ -31,7 +31,6 @@ let settingKeys = {
 				toolbox: 'MANGA_PAGE_TOOLBOX',
 			},
 			loadFullSize: 'MANGA_PAGE_LOAD_FULL_SIZE_IMAGES',
-			fitImage: 'MANGA_PAGE_FIT_IMAGE',
 		},
 		works: {
 			inject: {

@@ -63,15 +63,8 @@ export class MangaPage extends RootPage {
 				jQImage.attr('data-src-backup', src);
 				jQImage.attr('data-src', newSrc);
 				jQImage.attr('src', newSrc);
-				jQImage.removeAttr('style');
 			});
 		
-		}).then(()=> {
-			Deps.getSetting(SettingKeys.pages.manga.fitImage).then(fixSize => {
-				if (fixSize) {
-					Deps.execOnPixiv(pixiv => pixiv.mangaViewer.listView.updateSize());
-				}
-			});
 		});
 	}
 

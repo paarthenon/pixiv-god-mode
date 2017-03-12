@@ -19,7 +19,6 @@ let trueSettings = [
 	SettingKeys.pages.illust.boxImage,
 	SettingKeys.pages.manga.inject.toolbox,
 	SettingKeys.pages.manga.loadFullSize,
-	SettingKeys.pages.manga.fitImage,
 	SettingKeys.pages.works.inject.openInTabs,
 	SettingKeys.pages.bookmarkIllustration.inject.viewAll,
 ];

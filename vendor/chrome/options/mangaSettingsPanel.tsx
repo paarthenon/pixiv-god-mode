@@ -12,7 +12,4 @@ export const MangaSettingsPanel : React.StatelessComponent<void> = () =>
 		<BooleanSettingContainer 
 			settingKey={SettingKeys.pages.manga.loadFullSize} 
 			label={'Load full size versions of manga images'}/>
-		<BooleanSettingContainer 
-			settingKey={SettingKeys.pages.manga.fitImage} 
-			label={'Fit image to window'}/>
 	</IndividualSettingsPanel>
