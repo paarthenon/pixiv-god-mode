@@ -286,7 +286,7 @@ export class IllustrationPage extends RootPage {
 	}
 
 	protected makeWebM(updateText:(text:string) => void): Promise<Blob> {
-		let video = new whammy.Video(undefined, 1);
+		let video = new whammy.Video(undefined, 0.9);
 
 		this.isBusy = true;
 
