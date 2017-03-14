@@ -2,7 +2,7 @@ import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import * as pixivBridge from 'src/utils/pixivBridge'
 import {RootPage} from 'src/pages/root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {PixivAssistantServer} from 'src/services'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
@@ -59,7 +59,6 @@ export class MangaPage extends RootPage {
 
 				// Have to alter the data-src as well because if we don't, pixiv will 
 				// automatically copy over data-src again
-
 				jQImage.attr('data-src-backup', src);
 				jQImage.attr('data-src', newSrc);
 				jQImage.attr('src', newSrc);
@@ -81,13 +80,11 @@ export class MangaPage extends RootPage {
 	}
 
 
-	@RegisteredAction({ id: 'pa_download_manga_images', label: 'Download All', icon: 'download-alt' })
 	public downloadMulti(): void {
 		let fullImages = $('img.image').toArray().map(img => $(img).attr('data-src'));
 		PixivAssistantServer.downloadMulti({ id: this.artistId, name: this.artistName }, fullImages);
 	}
 
-	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open'})
 	public openFolder():void {
 		PixivAssistantServer.openFolder(this.artist);
 	}

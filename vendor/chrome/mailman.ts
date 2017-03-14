@@ -45,8 +45,7 @@ function generateMailman<T>(target:Target) {
 }
 
 var mailMan = {
-	Background: generateMailman<Msg.Protocol>("BACKGROUND_PAGE"),
-	ContentScript: generateMailman<Msg.ContentScriptProtocol>("CONTENT_SCRIPT")
+	Background: generateMailman<Msg.Protocol>("BACKGROUND_PAGE")
 }
 
 export default mailMan;

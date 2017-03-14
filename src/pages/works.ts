@@ -2,7 +2,7 @@ import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import * as jQUtils from 'src/utils/document'
 import {PixivAssistantServer} from 'src/services'
-import {RegisteredAction, ExecuteIfSetting, ExecuteOnLoad} from 'src/utils/actionDecorators'
+import {ExecuteIfSetting, ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import SettingKeys from 'src/settingKeys'
 import {Model} from 'common/proto'
@@ -99,7 +99,6 @@ export class WorksPage extends GalleryPage {
 		});
 		return;
 	}
-	@RegisteredAction({ id: 'pa_button_open_in_tabs', label: 'Open in Tabs', icon: 'new-window' })
 	public openTabs():void {
 		console.trace('Opening images in tabs');
 		
@@ -137,11 +136,6 @@ export class WorksPage extends GalleryPage {
 				$('li.image-item a.work').toArray().forEach((image:HTMLAnchorElement) => Deps.openInTab(image.href));
 			}
 		});
-	}
-
-	@RegisteredAction({id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open'})
-	public openFolder():void {
-		PixivAssistantServer.openFolder(this.artist);
 	}
 
 	@ExecuteIfSetting(SettingKeys.global.directToManga)

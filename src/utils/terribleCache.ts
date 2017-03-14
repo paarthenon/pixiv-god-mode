@@ -1,4 +1,4 @@
-import {Action, OnLoadFunc} from 'src/core/IAction'
+import {OnLoadFunc} from 'src/core/IAction'
 
 /**
  * This is a quick and dirty implementaton that's used to store the registered data for a page class.
@@ -13,7 +13,6 @@ import {Action, OnLoadFunc} from 'src/core/IAction'
  * intellectual ugliness. 
  */
 export module CacheRegistry {
-	export var registeredActionCache: { [id: string]: Action[] } = {};
 	export var onLoadFunctionCache: { [id: string]: OnLoadFunc[] } = {};
 }
 

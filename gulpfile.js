@@ -9,6 +9,7 @@ function consoleCommand(cmd) {
 	return new Promise((resolve, reject) => {
 		exec(cmd, function(error, stdout, stderr){
 			if (error) {
+				console.log(stdout);
 				console.log(error);
 				reject(stderr);
 			} else {

@@ -22,9 +22,8 @@ module.exports = {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: {
-                            presets: ['es2015']
-                        }
+                        // TODO: revert to options object once babel-loader fully supports it.
+                        query: 'presets[]=es2015'
                     },
                     'ts-loader'
                 ]

@@ -4,7 +4,7 @@ import * as jszip from 'jszip'
 import * as pathUtils from 'src/utils/path'
 import {tap} from 'src/utils/promise'
 import {RootPage} from 'src/pages/root'
-import {RegisteredAction, ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
+import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {default as SettingKeys, AddToBookmarksButtonType} from 'src/settingKeys'
 import {PixivAssistantServer} from 'src/services'
 import {Container as Deps} from 'src/deps'
@@ -205,11 +205,6 @@ export class IllustrationPage extends RootPage {
 					}, b64).then(tap(() => updateText('Download Completed')))
 				})
 			).then(() => {this.isBusy = false});
-	}
-
-	@RegisteredAction({ id: 'pa_button_open_folder', label: 'Open Folder', icon: 'folder-open' })
-	public openFolder(): void {
-		PixivAssistantServer.openFolder(this.artist);
 	}
 
 	public downloadIllustrationLocal(updateText:(text:string) => void):Promise<void> {

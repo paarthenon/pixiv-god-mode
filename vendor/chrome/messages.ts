@@ -1,6 +1,5 @@
 import {potentialData as IConfigValue} from 'src/core/IConfig'
 import {AjaxRequest} from 'src/core/IAjax'
-import {Action} from 'src/core/IAction'
 
 export interface ConfigProtocol {
 	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
@@ -13,12 +12,6 @@ export interface Protocol extends ConfigProtocol {
 	newTab: (msg: UrlRequest) => Promise<void>
 	isPageBookmarked: (msg: UrlRequest) => Promise<boolean>
 	download: (msg: DownloadRequest) => Promise<boolean>
-}
-
-export interface ContentScriptProtocol {
-	getActions: () => Promise<GetActionsResponse>
-	getName: () => Promise<string>
-	performAction: (msg: PerformActionRequest) => Promise<void>
 }
 
 export interface RequestWrapper<T> {
@@ -51,12 +44,6 @@ export interface FailedResponse extends ResponseMessage {
 export function isSuccessfulResponse(msg: ResponseMessage): msg is SuccessfulResponse<any> { return msg.success }
 export function isFailedResponse(msg: ResponseMessage): msg is FailedResponse { return !msg.success }
 
-export interface GetActionsResponse {
-	actions: Action[]
-}
-export interface PerformActionRequest {
-	actionId: string
-}
 export interface UrlRequest {
 	url: string
 }
