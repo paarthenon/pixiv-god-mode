@@ -83,9 +83,9 @@ export class CachedDictionaryService {
 	}
 
 	public update(key:string, value:string) {
-		console.debug(`setting translation for [${key}] to [${value}]`);
+		console.debug(`setting translation for [${key.trim()}] to [${value.trim()}]`);
 		return this.local.then(localDict => {
-			localDict[key] = value;
+			localDict[key.trim()] = value.trim();
 			return this.config.set(this.keys.local, localDict)
 		}).then(() => this.recalculateCache());
 	}
