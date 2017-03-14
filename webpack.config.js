@@ -45,7 +45,7 @@ module.exports = {
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             mangle: false,
-            beautify: {
+            output: {
                 ascii_only: true
             }
         }),

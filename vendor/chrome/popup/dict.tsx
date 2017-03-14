@@ -65,11 +65,11 @@ export class DictViewer extends React.Component<DictViewerProps,DictViewerState>
 	};
 
 	public get filteredData() {
+		let latinSearch = removeDiacritics(this.state.currentSearch);
 		return this.props.cachedDict.cache
 			.filter(entry => {
 				let latinKey = removeDiacritics(entry.key.toLocaleLowerCase());
 				let latinValue = removeDiacritics(entry.value.toLocaleLowerCase());
-				let latinSearch = removeDiacritics(this.state.currentSearch);
 				return latinKey.includes(latinSearch)
 					|| latinValue.includes(latinSearch)
 			})
