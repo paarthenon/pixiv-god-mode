@@ -12,7 +12,7 @@ export function getArtistId(path: string):number {
 }
 export function getMaxSizeImageUrl(url: string):string {
 	return url
-		.replace(/c\/(:600x600|1200x1200)\/img-master/, 'img-original')
+		.replace(/(c\/(:600x600|1200x1200)\/)?img-master/, 'img-original')
 		.replace('_master1200', '');
 }
 export function getResultFromBadge(badgeText:string):number{
