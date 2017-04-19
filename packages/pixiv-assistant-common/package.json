@@ -1,0 +1,27 @@
+{
+  "name": "pixiv-assistant-common",
+  "version": "1.0.0",
+  "description": "Protocol definition for the pixiv-assistant application",
+  "main": "lib/proto.js",
+  "typings": "lib/proto.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./node_modules/typescript/lib/tsc.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paarthenon/pixiv-assistant-common.git"
+  },
+  "keywords": [
+    "pixiv"
+  ],
+  "author": "Paarth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paarthenon/pixiv-assistant-common/issues"
+  },
+  "homepage": "https://github.com/paarthenon/pixiv-assistant-common#readme",
+  "devDependencies": {
+    "typescript": "^2.2.2"
+  }
+}
