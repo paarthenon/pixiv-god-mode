@@ -1,4 +1,4 @@
-import {Features, Model, Messages} from '../../common/proto'
+import {Features, Model, Messages} from 'pixiv-assistant-common'
 
 import * as fs from 'fs'
 import * as http from 'http'

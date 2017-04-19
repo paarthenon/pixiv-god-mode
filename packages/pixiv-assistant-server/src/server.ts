@@ -1,7 +1,7 @@
 import * as express from "express"
 import * as bodyParser from "body-parser"
 
-import * as Proto from '../common/proto'
+import * as Proto from 'pixiv-assistant-common'
 import {IServerConfig} from './proto'
 
 import * as log4js from 'log4js'

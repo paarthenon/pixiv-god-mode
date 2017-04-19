@@ -1,7 +1,7 @@
 import * as log4js from 'log4js'
 import * as path from 'path'
 
-import {Model} from '../../common/proto'
+import {Model} from 'pixiv-assistant-common'
 
 let logger = log4js.getLogger('Utils | Path');
 export function avoidTrailingDot(path:string): string {

@@ -1,4 +1,4 @@
-import {Features, Model, Messages} from '../../common/proto'
+import {Features, Model, Messages} from 'pixiv-assistant-common'
 
 import * as log4js from 'log4js'
 import * as path from 'path'
