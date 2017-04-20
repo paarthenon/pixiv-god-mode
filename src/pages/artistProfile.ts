@@ -3,7 +3,7 @@ import * as pathUtils from 'src/utils/path'
 import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
-import {Model} from 'common/proto'
+import {Model} from 'pixiv-assistant-common'
 
 /**
  * The initial overview page of an artist.

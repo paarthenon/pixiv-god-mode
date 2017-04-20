@@ -1,4 +1,4 @@
-import {Model} from 'src/../common/proto'
+import {Model} from 'pixiv-assistant-common'
 import * as pathUtils from 'src/utils/path'
 import {Rectangle} from 'src/utils/geometry'
 

@@ -4,7 +4,7 @@ import {PixivAssistantServer} from 'src/services'
 import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import * as jQUtils from 'src/utils/document'
-import {Model} from 'common/proto'
+import {Model} from 'pixiv-assistant-common'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 

@@ -1,5 +1,5 @@
 import {resolve} from 'url'
-import {Features, Model, Messages} from 'common/proto'
+import {Features, Model, Messages} from 'pixiv-assistant-common'
 import {AjaxFunction} from 'src/core/IAjax'
 import IConfig from 'src/core/IConfig'
 import ConfigKeys from 'src/configKeys'

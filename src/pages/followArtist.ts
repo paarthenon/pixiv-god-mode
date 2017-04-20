@@ -2,7 +2,7 @@ import * as $ from 'jquery'
 import * as pathUtils from 'src/utils/path'
 import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {RootPage} from 'src/pages/root'
-import {Model} from 'common/proto'
+import {Model} from 'pixiv-assistant-common'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 

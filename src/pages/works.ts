@@ -5,7 +5,7 @@ import {PixivAssistantServer} from 'src/services'
 import {ExecuteIfSetting, ExecuteOnLoad} from 'src/utils/actionDecorators'
 import {GalleryPage} from 'src/pages/gallery'
 import SettingKeys from 'src/settingKeys'
-import {Model} from 'common/proto'
+import {Model} from 'pixiv-assistant-common'
 
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 import {injectOpenInTabs} from 'src/injectors/openInTabs'

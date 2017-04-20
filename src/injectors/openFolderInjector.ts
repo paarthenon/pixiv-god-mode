@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import {PixivAssistantServer} from 'src/services'
-import {Model} from 'common/proto'
+import {Model} from 'pixiv-assistant-common'
 import {UserRelationButton} from 'src/components/userRelationButton'
 
 export function injectUserRelationshipButton(artist:Model.Artist) {

@@ -10,7 +10,7 @@ import {injectMangaPreviousButton} from 'src/injectors/mangaPreviousButton'
 import {injectMangaDownloadButton} from 'src/injectors/mangaDownloadButton'
 import {injectMangaNextButton} from 'src/injectors/mangaNextButton'
 import {injectMangaOpenFolderButton} from 'src/injectors/mangaOpenFolderButton'
-import {Model} from 'common/proto'
+import {Model} from 'pixiv-assistant-common'
 
 /**
  * Pixiv's built in manga viewer.
