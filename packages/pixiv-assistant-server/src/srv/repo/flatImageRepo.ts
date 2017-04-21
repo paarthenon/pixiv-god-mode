@@ -1,6 +1,6 @@
 import {Features, Model, Messages} from 'pixiv-assistant-common'
 
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 import * as path from 'path'
 import * as fs from 'fs'
 import * as sanitize from 'sanitize-filename'
@@ -19,7 +19,7 @@ import {LokiRegistry} from './lokiRegistry'
 
 const opn = require('opn');
 
-let logger = log4js.getLogger('ImageRepo');
+// let logger = log4js.getLogger('ImageRepo');
 
 interface RegistryMetaInfo {
 	lastExecution: Date
@@ -60,28 +60,28 @@ export class ImageRepo extends BaseRepo {
 	}
 
 	public initialize() :Promise<void> {
-		logger.info('Initializing repository');
+		// logger.info('Initializing repository');
 		return this.registry.initialize()
 			.then(() => {
 				// load meta info
-				logger.trace('Loading repository information');
+				// logger.trace('Loading repository information');
 				dataStoreUtils.load<RegistryMetaInfo>(this.metaInfoPath)
 					.catch(() => null as RegistryMetaInfo) // swallow errors.
 					.then(dbInfo => {
 						let predicate :discoveryUtils.FinderFilter = () => true;
 						if (dbInfo) {
-							logger.info('Finding files since last load on', dbInfo.lastExecution);
+							// logger.info('Finding files since last load on', dbInfo.lastExecution);
 							predicate = (path, stats) => stats.mtime > dbInfo.lastExecution;
 						} else {
-							logger.info('Finding all files in repo to build initial registry');
+							// logger.info('Finding all files in repo to build initial registry');
 						}
 						let paths :string[] = [];
 						return discoveryUtils.findFilesAddedSince(this.config.path, predicate, 
 							fPath => {
-								logger.trace('Found file at',fPath);
+								// logger.trace('Found file at',fPath);
 								paths.push(fPath);
 								if (paths.length % 1000 == 0) { // If there's a large amount of content to be loaded offering some user feedback is helpful.
-									logger.info('Found',paths.length,'files so far');
+									// logger.info('Found',paths.length,'files so far');
 								}
 							}).then(() => {
 								return this.registry.addFromPaths(paths);
@@ -90,20 +90,20 @@ export class ImageRepo extends BaseRepo {
 				
 			})
 			.then(() => {
-				logger.info('Initializing file watcher')
+				// logger.info('Initializing file watcher')
 				return discoveryUtils.initializeFileWatcher(this.config.path, path => {
-					logger.trace('while watching, found a new file',path)
+					// logger.trace('while watching, found a new file',path)
 					return this.registry.addFromPath(path)
 				})
 			})
 	}
 
 	public teardown() : Promise<void> {
-		logger.info('Shutting down repo');
-		logger.info('Saving metadata');
+		// logger.info('Shutting down repo');
+		// logger.info('Saving metadata');
 		return dataStoreUtils.save<RegistryMetaInfo>(this.metaInfoPath, {lastExecution: new Date()})
 			.then(() => {
-				logger.info('Saving registry');
+				// logger.info('Saving registry');
 				return this.registry.teardown();
 			})
 	}
@@ -207,7 +207,7 @@ export class ImageRepo extends BaseRepo {
 		let tasks = msg.items.map(msg => (() => this.downloadImage(msg)));
 		return promiseUtils.promisePool(tasks, 8)
 			.then(x => {
-				logger.info('Completed download of',x.length,'files');
+				// logger.info('Completed download of',x.length,'files');
 				return x;
 			})
 
@@ -222,7 +222,7 @@ export class ImageRepo extends BaseRepo {
 		}));
 		return promiseUtils.promisePool(tasks, 8)
 			.then(x => {
-				logger.info('Completed download of',x.length,'files');
+				// logger.info('Completed download of',x.length,'files');
 				return x;
 			})
 	}

@@ -2,11 +2,11 @@ import {Registry} from './registry'
 import * as pathUtils from '../utils/path'
 import * as dataStoreUtils from '../utils/dataStore'
 import * as path from 'path'
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 
 import * as Loki from 'lokijs'
 
-let logger = log4js.getLogger('Registry')
+// let logger = log4js.getLogger('Registry')
 
 interface Image {
     id :number
@@ -46,7 +46,7 @@ export class LokiRegistry extends Registry {
     }
     public addFromPath(filePath:string) {
         let imageId = pathUtils.getImageIdFromFilePath(filePath);
-        logger.trace('Found id [',imageId,'] for path [',filePath,']');
+        // logger.trace('Found id [',imageId,'] for path [',filePath,']');
         if (!imageId) {
             return Promise.resolve();
         }
@@ -67,7 +67,7 @@ export class LokiRegistry extends Registry {
         this.images.flushChanges();
         return super.teardown().then(() => new Promise<void>((resolve, reject) => {
             this.db.saveDatabase(err => {
-                logger.warn('db should be saved');
+                // logger.warn('db should be saved');
                 if (err) {
                     reject(err);
                 } else {

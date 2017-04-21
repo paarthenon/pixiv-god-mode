@@ -1,17 +1,17 @@
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 
 import Mailman from '../mailman'
 import * as proto from '../proto'
-import * as LogCollector from './logCollector'
+// import * as LogCollector from './logCollector'
 
-let logger = log4js.getLogger('Bootstrap');
+// let logger = log4js.getLogger('Bootstrap');
 
-LogCollector.initialize();
+// LogCollector.initialize();
 
-class ServerStatus extends React.Component<void, any> {
+export class ServerStatus extends React.Component<void, any> {
 	state = {started: false};
 	public handleStart(props:proto.IServerConfig){
 		Mailman.ServerConfig.initialize(props).then(() => {
@@ -101,12 +101,10 @@ class CloseServerForm extends React.Component<{clickAction:Function}, void> {
 class LogViewer extends React.Component<void, {log:any[]}> {
 	state = {log:[] as any[]};
 	componentDidMount(){
-		LogCollector.register((log) => this.setState({log}));
+		// LogCollector.register((log) => this.setState({log}));
 	}
 	public render() {
 		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${(new Date(x.time)).toLocaleString()} [${x.level}] - ${x.category} - ${x.data.join(' ')}`).join('\n')}</pre></Bootstrap.Grid>;
 	}
 }
-
-ReactDOM.render(<ServerStatus />, document.getElementById('content'));
 

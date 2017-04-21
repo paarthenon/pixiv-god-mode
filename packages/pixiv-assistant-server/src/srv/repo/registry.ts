@@ -1,5 +1,4 @@
 import * as path from 'path'
-import * as log4js from 'log4js'
 
 import * as pathUtils from '../utils/path'
 import * as dataStoreUtils from '../utils/dataStore'

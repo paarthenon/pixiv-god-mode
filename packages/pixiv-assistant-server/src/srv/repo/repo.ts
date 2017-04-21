@@ -1,8 +1,8 @@
-import * as log4js from 'log4js'
+// import * as log4js from 'log4js'
 
 import {ActionCache} from '../utils/actionCache'
 
-let logger = log4js.getLogger('Repo');
+// let logger = log4js.getLogger('Repo');
 
 export interface PixivRepo {
 	supports: (action: string) => boolean
@@ -23,7 +23,7 @@ export abstract class BaseRepo implements PixivRepo {
 	}
 	public dispatch(action:string, msg:any):any {
 		let actionFunc = this.getCache().registry[action];
-		logger.debug('Dispatching on ', action, ' method found', actionFunc !== undefined);
+		// logger.debug('Dispatching on ', action, ' method found', actionFunc !== undefined);
 		if (actionFunc !== undefined) {
 			return actionFunc(msg);
 		} else {
