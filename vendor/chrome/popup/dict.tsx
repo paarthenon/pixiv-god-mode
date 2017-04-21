@@ -179,7 +179,7 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 		this.props.onDelete(this.props.original);
 	}
 	public handleSearch() {
-		ChromeUtils.newTab("http://www.pixiv.net/search.php?s_mode=s_tag_full&word="+this.props.original, true)
+		ChromeUtils.newTab("https://www.pixiv.net/search.php?s_mode=s_tag_full&word="+this.props.original, true)
 	}
 	public renderButton(type:EntryType) {
 		switch (type) {

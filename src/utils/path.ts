@@ -60,7 +60,7 @@ export function getImageIdFromSourceUrl(url:string) {
 }
 
 export function generateImageLink(id:number):string {
-	return `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${id}`;
+	return `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${id}`;
 }
 
 export function numPagesFromMeta(str:string):number {
