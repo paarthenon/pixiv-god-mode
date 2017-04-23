@@ -193,11 +193,11 @@ class DictEntry extends React.Component<DictEntryProps,{editOpen:boolean}> {
 	}
 
 	public render() {
-		let divStyle = {
+		let divStyle :React.CSSProperties = {
 			position: 'relative',
 			padding: '3px',
 		}
-		let buttonStyle = {
+		let buttonStyle :React.CSSProperties = {
 			position: 'absolute',
 			right: '0px',
 			padding: '3px',
