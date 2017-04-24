@@ -54,7 +54,8 @@ function buildLESS(src, dest) {
 		.pipe(less({
 			paths: [
 				'.',
-				'./node_modules/bootstrap-less'
+				'./node_modules/bootstrap-less',
+				'./node_modules'
 			]
 		}))
 		.pipe(gulp.dest(dest));
