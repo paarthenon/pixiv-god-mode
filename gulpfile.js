@@ -101,4 +101,8 @@ gulp.task('release', [
 	'chrome-fonts',
 ]);
 
+gulp.task('build-tests', () => consoleCommand('tsc -p test'));
+// TODO: Use alsatian's API like an adult.
+gulp.task('test', ['build-tests'], () => consoleCommand('node ./node_modules/alsatian/cli/alsatian-cli.js build/test/**/*.js'));
+
 gulp.task('default', ['dev']);
