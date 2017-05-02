@@ -2,12 +2,14 @@
   "compilerOptions": {
     "removeComments": false,
     "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "sourceMap": true,
     "declaration": false,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": false,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "noUnusedLocals": true,
     "noImplicitThis": true,
     "noUnusedParameters": true,
@@ -18,5 +20,9 @@
     "pretty": true,
     "target": "es2015",
     "jsx": "react"
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
 }

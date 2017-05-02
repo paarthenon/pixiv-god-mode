@@ -21,11 +21,10 @@ function send<T, V>(target: Msg.BackendTarget, name:string, msg: T): Promise<V> 
 
 		let messageId = uuid.v4();
 
-		ipcRenderer.once(messageId, (event, returnValue) => responseHandler(returnValue));
-		
+		ipcRenderer.once(messageId, (_event, returnValue) => responseHandler(returnValue));
 		ipcRenderer.send(target, {id: messageId, name, body: msg});
 	})
-} 
+}
 
 function generateMailman<T>(target:Msg.BackendTarget) {
 	return new Proxy(<T>{}, {
@@ -33,8 +32,8 @@ function generateMailman<T>(target:Msg.BackendTarget) {
 	});
 }
 
-var mailMan = {
-	ServerConfig: generateMailman<IServerConfigProtocol>("ServerConfiguration"),
+let mailMan = {
+	ServerConfig: generateMailman<IServerConfigProtocol>('ServerConfiguration'),
 }
 
 export default mailMan;

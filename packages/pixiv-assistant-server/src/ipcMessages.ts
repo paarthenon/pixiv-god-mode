@@ -1,4 +1,4 @@
-export type BackendTarget = "ServerConfiguration"
+export type BackendTarget = 'ServerConfiguration'
 
 export interface RequestWrapper<T> {
 	id: string

@@ -1,11 +1,8 @@
-import {Features, Model, Messages} from 'pixiv-assistant-common'
-
 import * as fs from 'fs'
 import * as http from 'http'
 import * as path from 'path'
 import * as urllib from 'url'
-
-const archiver = require('archiver');
+import * as archiver from 'archiver'
 
 import {makederp} from './makederp'
 
@@ -18,7 +15,7 @@ function pixivGet(pixivUrl:string) : Promise<http.IncomingMessage> {
 	let referer = urllib.resolve(pixivUrl, '/');
 	let url = urllib.parse(pixivUrl);
 
-	return new Promise((resolve, reject) => {
+	return new Promise(resolve => {
 		http.get({
 			protocol: url.protocol,
 			hostname: url.hostname,
@@ -27,7 +24,7 @@ function pixivGet(pixivUrl:string) : Promise<http.IncomingMessage> {
 			headers: {
 				referer: referer
 			}
-		}, response => resolve(response)).setTimeout(10000);
+		}, resolve).setTimeout(10000);
 	});
 }
 
@@ -43,14 +40,14 @@ export function downloadFromPixiv(msg:DownloadMessage):Promise<boolean> {
 		}))).then(() => true).catch(() => false);
 }
 
-export function downloadFilesToZip(files: string[], zipPath:string) :Promise<void>{
+export function downloadFilesToZip(files: string[], zipPath:string) :Promise<void> {
 	let archive = archiver.create('zip', {});
 	return makederp(path.dirname(zipPath))
 		.then(() => Promise.all(files.map(fileUrl => // wait for all the files to...
 			pixivGet(fileUrl).then(response => // set up the download stream
 				archive.append(response, {name: path.basename(fileUrl)})) // and add it to the zip
 		)))
-		.then(() =>  new Promise((resolve, reject) => {
+		.then(() =>  new Promise(resolve => {
 			// Once the zip streams have been registered, set up the output stream.
 			let outputStream = fs.createWriteStream(zipPath)
 				// .on('finish', resolve)

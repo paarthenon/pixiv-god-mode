@@ -9,7 +9,7 @@ export function avoidTrailingDot(path:string): string {
 }
 
 /**
- * Based on a file path, extract the image Id. 
+ * Based on a file path, extract the image Id.
  */
 export function getImageIdFromFilePath(filePath:string) : number | undefined {
 	return getImageIdFromFileName(path.basename(filePath));
@@ -33,7 +33,7 @@ export function getImageIdFromFileName(fileName: string): number | undefined {
 export function fileNameToImage(fileName: string): Model.Image {
 	let match = fileName.match(/^([0-9]+)(?:_big)?(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/);
 	let aniMatch = fileName.match(/^([0-9]+)\.webm$/);
-	let mangaMatch = fileName.match(/^([0-9]+)\.zip$/); 
+	let mangaMatch = fileName.match(/^([0-9]+)\.zip$/);
 	if (match && match.length === 4) {
 		return {
 			id: parseInt(match[1]),

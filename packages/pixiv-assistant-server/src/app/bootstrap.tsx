@@ -11,32 +11,8 @@ import * as proto from '../proto'
 
 // LogCollector.initialize();
 
-export class ServerStatus extends React.Component<void, any> {
-	state = {started: false};
-	public handleStart(props:proto.IServerConfig){
-		Mailman.ServerConfig.initialize(props).then(() => {
-			this.setState({started: true});
-		})
-	}
-	public handleClose(){
-		Mailman.ServerConfig.close().then(() => {
-			this.setState({started: false});
-		})
-	}
-	public render() {
-		return <div>
-			{(!this.state.started) ?
-				<ServerConfigurationForm clickAction={this.handleStart.bind(this)} />
-			:
-				<CloseServerForm clickAction={this.handleClose.bind(this)}/>
-			}
-			<LogViewer />
-		</div>
-	}
-}
-
 class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.IServerConfig) => any}, void> {
-	private verboseInput :HTMLInputElement = undefined;
+	private verboseInput :HTMLInputElement | undefined = undefined;
 
 	public get repoPathInput() {
 		return ReactDOM.findDOMNode(this.refs['repoPath']) as HTMLInputElement;
@@ -44,15 +20,16 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.
 	public get portInput() {
 		return ReactDOM.findDOMNode(this.refs['port']) as HTMLInputElement;
 	}
-	public handleSubmit(){
+	public handleSubmit() {
 		this.props.clickAction({
 			path: this.repoPathInput.value,
 			port: parseInt(this.portInput.value),
-			verboseLogging: this.verboseInput.checked,
+			verboseLogging: this.verboseInput && this.verboseInput.checked,
 		});
 	}
-	public handleBrowse(){
-		Mailman.ServerConfig.openFolderDialog().then(str => this.repoPathInput.value = str);
+	public handleBrowse() {
+		let call = Mailman.ServerConfig.openFolderDialog();
+		call.then(str => this.repoPathInput.value = str);
 	}
 	public render() {
 		return (
@@ -98,13 +75,36 @@ class CloseServerForm extends React.Component<{clickAction:Function}, void> {
 			</Bootstrap.Grid>
 	}
 }
-class LogViewer extends React.Component<void, {log:any[]}> {
-	state = {log:[] as any[]};
-	componentDidMount(){
-		// LogCollector.register((log) => this.setState({log}));
+
+export class ServerStatus extends React.Component<void, any> {
+	state = {started: false};
+	public handleStart(props:proto.IServerConfig) {
+		Mailman.ServerConfig.initialize(props).then(() => {
+			this.setState({started: true});
+		})
+	}
+	public handleClose() {
+		Mailman.ServerConfig.close().then(() => {
+			this.setState({started: false});
+		})
 	}
 	public render() {
-		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${(new Date(x.time)).toLocaleString()} [${x.level}] - ${x.category} - ${x.data.join(' ')}`).join('\n')}</pre></Bootstrap.Grid>;
+		return <div>
+			{(!this.state.started) ?
+				<ServerConfigurationForm clickAction={this.handleStart.bind(this)} />
+			:
+				<CloseServerForm clickAction={this.handleClose.bind(this)}/>
+			}
+		</div>
 	}
 }
 
+// class LogViewer extends React.Component<void, {log:any[]}> {
+// 	state = {log:[] as any[]};
+// 	componentDidMount(){
+// 		// LogCollector.register((log) => this.setState({log}));
+// 	}
+// 	public render() {
+// 		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${(new Date(x.time)).toLocaleString()} [${x.level}] - ${x.category} - ${x.data.join(' ')}`).join('\n')}</pre></Bootstrap.Grid>;
+// 	}
+// }

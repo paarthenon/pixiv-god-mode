@@ -1,5 +1,3 @@
-import * as Msg from './ipcMessages'
-
 export interface IServerConfig {
 	path? :string
 	port? :number

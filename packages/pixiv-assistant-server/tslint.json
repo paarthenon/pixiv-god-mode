@@ -4,8 +4,7 @@
     "eofline": false,
     "align": [true, "parameters"],
     "class-name": true,
-    "indent": [true, "spaces"],
-    "max-line-length": [true, 150],
+    "indent": [true, "tabs"],
     "no-consecutive-blank-lines": [true],
     "no-trailing-whitespace": true,
     "no-duplicate-variable": true,
@@ -22,19 +21,14 @@
     "quotemark": [true,
       "single",
       "avoid-escape"],
-    "semicolon": [true, "always"],
     "typedef-whitespace": [true, {
-      "call-signature": "nospace",
-      "index-signature": "nospace",
-      "parameter": "nospace",
-      "property-declaration": "nospace",
-      "variable-declaration": "nospace"
+      "index-signature": "nospace"
     }],
     "whitespace": [true,
       "check-branch",
       "check-decl",
       "check-operator",
-      "check-separator",
-      "check-type"]
+      "check-separator"
+    ]
   }
 }

@@ -17,7 +17,7 @@ import * as dataStoreUtils from '../utils/dataStore'
 import {Registry} from './registry'
 import {LokiRegistry} from './lokiRegistry'
 
-const opn = require('opn');
+import * as opn from 'opn'
 
 // let logger = log4js.getLogger('ImageRepo');
 
@@ -54,7 +54,7 @@ export class ImageRepo extends BaseRepo {
 		super();
 		this.registry = new LokiRegistry(config.path);
 	}
-	
+
 	protected get metaInfoPath() :string {
 		return path.resolve(this.config.path, 'metadb.json');
 	}
@@ -71,12 +71,12 @@ export class ImageRepo extends BaseRepo {
 						let predicate :discoveryUtils.FinderFilter = () => true;
 						if (dbInfo) {
 							// logger.info('Finding files since last load on', dbInfo.lastExecution);
-							predicate = (path, stats) => stats.mtime > dbInfo.lastExecution;
+							predicate = (_path, stats) => stats.mtime > dbInfo.lastExecution;
 						} else {
 							// logger.info('Finding all files in repo to build initial registry');
 						}
 						let paths :string[] = [];
-						return discoveryUtils.findFilesAddedSince(this.config.path, predicate, 
+						return discoveryUtils.findFilesAddedSince(this.config.path, predicate,
 							fPath => {
 								// logger.trace('Found file at',fPath);
 								paths.push(fPath);
@@ -87,7 +87,7 @@ export class ImageRepo extends BaseRepo {
 								return this.registry.addFromPaths(paths);
 							})
 				})
-				
+
 			})
 			.then(() => {
 				// logger.info('Initializing file watcher')
@@ -112,7 +112,7 @@ export class ImageRepo extends BaseRepo {
 	 * Open to root folder of repository
 	 */
 	@ImageRepo.actions.register(Features.OpenToRepo)
-	public openRepo(){
+	public openRepo() {
 		return makederp(this.config.path).then(opn);
 	}
 
@@ -125,7 +125,7 @@ export class ImageRepo extends BaseRepo {
 	protected getEnsuredArtistFolder(artist:Model.Artist) {
 		return this.getArtistFolderById(artist.id) || this.genArtistFolderName(artist);
 	}
-	
+
 	@ImageRepo.actions.register(Features.OpenToArtist)
 	public openArtistFolder(artist:Model.Artist) {
 		return makederp(path.resolve(this.config.path, this.getEnsuredArtistFolder(artist))).then(opn);
@@ -158,7 +158,7 @@ export class ImageRepo extends BaseRepo {
 		return this.registry.findImages(images.items.map(item => item.image.id))
 			.then(cache => Object.keys(cache))
 			.then(idList => {
-				logger.info('returning positive hits on', idList);
+				// logger.info('returning positive hits on', idList);
 				return images.items.filter(item => idList.find(id => id == item.image.id.toString()))
 			});
 	}
@@ -173,7 +173,7 @@ export class ImageRepo extends BaseRepo {
 				return this.config.dropPath || ''
 		}
 	}
-	
+
 	/**
 	 * Download a single image.
 	 */
@@ -183,15 +183,15 @@ export class ImageRepo extends BaseRepo {
 	}
 	/**
 	 * Download a manga. This will dispatch depending on user configuration.
-	 * 
-	 * Options: 
+	 *
+	 * Options:
 	 * 	- Download loose images (id_p0.jpg...id_pN.jpg)
 	 *  - Download to a subdirectory (id/id_p0.jpg...id/id_pN.jpg)
 	 *  - Download as a zip (id.zip)
 	 */
 	@ImageRepo.actions.register(Features.DownloadManga)
 	public downloadManga(msg: Messages.BulkRequest<Messages.ArtistUrlRequest>) : Promise<void> {
-		logger.info('Beginning bulk download of', msg.items.length, 'items');
+		// logger.info('Beginning bulk download of', msg.items.length, 'items');
 
 		switch (this.config.mangaFormat) {
 			case MangaDownloadFormat.LOOSE:
@@ -201,7 +201,7 @@ export class ImageRepo extends BaseRepo {
 			case MangaDownloadFormat.ARCHIVE:
 				return this.downloadMangaAsArchive(msg);
 		}
-		
+
 	}
 	protected downloadMangaAsLooseFiles(msg: Messages.BulkRequest<Messages.ArtistUrlRequest>) {
 		let tasks = msg.items.map(msg => (() => this.downloadImage(msg)));
@@ -245,6 +245,8 @@ export class ImageRepo extends BaseRepo {
 			return makederp(path.dirname(location))
 				.then(() => downloadUtils.writeBase64(location, details.content))
 				.catch(err => console.log(err));
+		} else {
+			return Promise.reject('unable to proecess request details');
 		}
 	}
 }

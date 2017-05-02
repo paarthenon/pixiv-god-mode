@@ -31,5 +31,7 @@ export abstract class BaseRepo implements PixivRepo {
 		}
 	}
 
-	public teardown():void { }
+	public teardown():void {
+		// Nothing
+	}
 }

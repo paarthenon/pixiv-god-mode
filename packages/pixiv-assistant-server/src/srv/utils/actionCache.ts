@@ -14,7 +14,7 @@ export class ActionCache {
 	}
 
 	public register(name: string) {
-		return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+		return (_target: any, _propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
 			this.actions[name] = descriptor.value;
 			return descriptor;
 		}

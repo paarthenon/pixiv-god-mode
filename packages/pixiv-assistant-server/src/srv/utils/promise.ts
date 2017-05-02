@@ -1,5 +1,5 @@
-export function execSequentially<T>(items:T[], action:(x:T)=>any){
-	return items.reduce((acc,cur) => acc.then(() => action(cur)), Promise.resolve());
+export function execSequentially<T>(items:T[], action:(x:T) => any) {
+	return items.reduce((acc, cur) => acc.then(() => action(cur)), Promise.resolve());
 }
 
 export function promisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T[]> {
@@ -8,12 +8,14 @@ export function promisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T
 	let crashCount = 0;
 
 	let result = Array(arr.length);
-	return new Promise((resolve, reject) => {
-		function passBaton(id:number) :Promise<T>{
+	return new Promise(resolve => {
+		function passBaton(id:number) {
 			if (id >= arr.length) {
-				if (++crashCount === boxedLimit) resolve(result);
+				if (++crashCount === boxedLimit) {
+					resolve(result);
+				}
 			} else {
-				return arr[id]()
+				arr[id]()
 					.then(x => result[id] = x)
 					.then(() => passBaton(next++))
 			}

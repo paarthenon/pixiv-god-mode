@@ -1,5 +1,5 @@
-import * as express from "express"
-import * as bodyParser from "body-parser"
+import * as express from 'express'
+import * as bodyParser from 'body-parser'
 
 import * as Proto from 'pixiv-assistant-common'
 import {IServerConfig} from './proto'
@@ -41,7 +41,7 @@ export class PixivAssistantServer {
 
 			app.use(bodyParser.json({limit: '1gb'}));
 
-			app.all('/ping', (req, res) => {
+			app.all('/ping', (_req, res) => {
 				// appLogger.trace('Message Received | Ping');
 				res.json({success: true, data:true});
 			});
@@ -64,7 +64,7 @@ export class PixivAssistantServer {
 					.then(result => res.json(result));
 			});
 
-			return new Promise<void>((resolve, reject) => {
+			return new Promise<void>(resolve => {
 				this.serverInstance = app.listen(this.config.port, resolve);
 			});
 		});

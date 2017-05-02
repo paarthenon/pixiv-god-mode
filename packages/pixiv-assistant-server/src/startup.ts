@@ -28,23 +28,25 @@ let defaultConfig = {
 	verboseLogging: false
 }
 
-defineService<IServerConfigProtocol>("ServerConfiguration", {
-	initialize: config => {
-		console.log('init');
-		let mergedConfig = Object.assign(defaultConfig, config);
-		server = new PixivAssistantServer(config);
-		return server.start();
-	},
-	close: () => {
-		let localInstance = server;
-		server = null;
-		return localInstance.close();
-	},
-	openFolderDialog: () => {
-		console.log('open');
-		return new Promise((resolve, reject) => {
-			dialog.showOpenDialog({properties: ['openDirectory']}, (fileNames) => resolve(fileNames[0]));
-		});
-	}
+export function init() {
+	defineService<IServerConfigProtocol>('ServerConfiguration', {
+		initialize: config => {
+			console.log('init');
+			let mergedConfig = Object.assign(defaultConfig, config);
+			server = new PixivAssistantServer(mergedConfig);
+			return server.start();
+		},
+		close: () => {
+			let localInstance = server;
+			server = null;
+			return localInstance.close();
+		},
+		openFolderDialog: () => {
+			console.log('open');
+			return new Promise(resolve => {
+				dialog.showOpenDialog({properties: ['openDirectory']}, (fileNames) => resolve(fileNames[0]));
+			});
+		}
 
-});
+	});
+}
