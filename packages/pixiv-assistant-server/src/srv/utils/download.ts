@@ -15,7 +15,7 @@ function pixivGet(pixivUrl:string) : Promise<http.IncomingMessage> {
 	let referer = urllib.resolve(pixivUrl, '/');
 	let url = urllib.parse(pixivUrl);
 
-	return new Promise(resolve => {
+	return new Promise<http.IncomingMessage>(resolve => {
 		http.get({
 			protocol: url.protocol,
 			hostname: url.hostname,

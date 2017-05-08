@@ -66,7 +66,7 @@ export class ImageRepo extends BaseRepo {
 				// load meta info
 				// logger.trace('Loading repository information');
 				dataStoreUtils.load<RegistryMetaInfo>(this.metaInfoPath)
-					.catch(() => null as RegistryMetaInfo) // swallow errors.
+					.catch(() => null) // swallow errors.
 					.then(dbInfo => {
 						let predicate :discoveryUtils.FinderFilter = () => true;
 						if (dbInfo) {
@@ -242,11 +242,15 @@ export class ImageRepo extends BaseRepo {
 		if (details) {
 			let location = path.resolve(this.config.path, this.getDownloadFolder(msg.artist), `${msg.image.id}.${details.mime.subtype}`);
 
+			// Necessary workaround for local variables not being narrowed in lambda function bodies.
+			// I created an issue at https://github.com/Microsoft/TypeScript/issues/15631
+			let content = details.content;
+
 			return makederp(path.dirname(location))
-				.then(() => downloadUtils.writeBase64(location, details.content))
+				.then(() => downloadUtils.writeBase64(location, content))
 				.catch(err => console.log(err));
 		} else {
-			return Promise.reject('unable to proecess request details');
+			return Promise.reject('unable to process request details');
 		}
 	}
 }

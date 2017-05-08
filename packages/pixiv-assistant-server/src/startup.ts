@@ -39,11 +39,11 @@ export function init() {
 		close: () => {
 			let localInstance = server;
 			server = null;
-			return localInstance.close();
+			return (localInstance) ? localInstance.close() : Promise.reject('Server null');
 		},
 		openFolderDialog: () => {
 			console.log('open');
-			return new Promise(resolve => {
+			return new Promise<string>(resolve => {
 				dialog.showOpenDialog({properties: ['openDirectory']}, (fileNames) => resolve(fileNames[0]));
 			});
 		}

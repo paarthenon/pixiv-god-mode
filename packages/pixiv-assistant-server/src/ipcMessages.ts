@@ -15,5 +15,5 @@ export interface SuccessfulResponse<T> extends ResponseMessage {
 export interface FailedResponse extends ResponseMessage {
 	errors: any
 }
-export function isSuccessfulResponse(msg: ResponseMessage): msg is SuccessfulResponse<any> { return msg.success }
+export function isSuccessfulResponse<T>(msg: ResponseMessage): msg is SuccessfulResponse<T> { return msg.success }
 export function isFailedResponse(msg: ResponseMessage): msg is FailedResponse { return !msg.success }

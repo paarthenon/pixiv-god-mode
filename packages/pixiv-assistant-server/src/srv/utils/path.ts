@@ -30,7 +30,7 @@ export function getImageIdFromFileName(fileName: string): number | undefined {
 	return undefined;
 }
 
-export function fileNameToImage(fileName: string): Model.Image {
+export function fileNameToImage(fileName: string): Model.Image | undefined {
 	let match = fileName.match(/^([0-9]+)(?:_big)?(?:_p([0-9]+))?(?:_master[0-9]+)?\.(.*)/);
 	let aniMatch = fileName.match(/^([0-9]+)\.webm$/);
 	let mangaMatch = fileName.match(/^([0-9]+)\.zip$/);

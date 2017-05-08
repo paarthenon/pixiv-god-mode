@@ -5,12 +5,12 @@ import * as Msg from './ipcMessages'
 import {IServerConfigProtocol} from './proto'
 
 function send<T, V>(target: Msg.BackendTarget, name:string, msg: T): Promise<V> {
-	return new Promise((resolve, reject) => {
+	return new Promise<V>((resolve, reject) => {
 		function responseHandler (response: Msg.ResponseMessage) {
 			if (response == undefined) {
 				reject('No valid response received')
 			} else {
-				if (Msg.isSuccessfulResponse(response)) {
+				if (Msg.isSuccessfulResponse<V>(response)) {
 					resolve(response.data);
 				}
 				if (Msg.isFailedResponse(response)) {
@@ -26,9 +26,9 @@ function send<T, V>(target: Msg.BackendTarget, name:string, msg: T): Promise<V> 
 	})
 }
 
-function generateMailman<T>(target:Msg.BackendTarget) {
-	return new Proxy(<T>{}, {
-		get: (_, name) => (msg: any) => send(target, name.toString(), msg)
+function generateMailman<T extends object>(target:Msg.BackendTarget) {
+	return new Proxy<T>({} as any, {
+		get: (_, name:PropertyKey) => (msg: any) => send(target, name.toString(), msg)
 	});
 }
 

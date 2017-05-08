@@ -1,7 +1,7 @@
 export interface IServerConfig {
-	path? :string
-	port? :number
-	verboseLogging? :boolean
+	path :string
+	port :number
+	verboseLogging :boolean
 }
 
 export interface IServerConfigProtocol {

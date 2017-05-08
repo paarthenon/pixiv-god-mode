@@ -11,7 +11,7 @@ import * as proto from '../proto'
 
 // LogCollector.initialize();
 
-class ServerConfigurationForm extends React.Component<{clickAction:(props:proto.IServerConfig) => any}, void> {
+class ServerConfigurationForm extends React.Component<{clickAction:(props:Partial<proto.IServerConfig>) => any}, void> {
 	private verboseInput :HTMLInputElement | undefined = undefined;
 
 	public get repoPathInput() {
@@ -76,7 +76,7 @@ class CloseServerForm extends React.Component<{clickAction:Function}, void> {
 	}
 }
 
-export class ServerStatus extends React.Component<void, any> {
+export class ServerStatus extends React.Component<{}, any> {
 	state = {started: false};
 	public handleStart(props:proto.IServerConfig) {
 		Mailman.ServerConfig.initialize(props).then(() => {

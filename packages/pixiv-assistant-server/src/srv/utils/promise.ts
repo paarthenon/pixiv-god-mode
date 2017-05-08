@@ -7,8 +7,8 @@ export function promisePool<T>(arr:(() => Promise<T>)[], limit:number):Promise<T
 	let next = boxedLimit;
 	let crashCount = 0;
 
-	let result = Array(arr.length);
-	return new Promise(resolve => {
+	let result = Array<T>(arr.length);
+	return new Promise<T[]>(resolve => {
 		function passBaton(id:number) {
 			if (id >= arr.length) {
 				if (++crashCount === boxedLimit) {

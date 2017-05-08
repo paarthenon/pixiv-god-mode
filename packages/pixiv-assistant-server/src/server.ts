@@ -58,9 +58,8 @@ export class PixivAssistantServer {
 				// appLogger.trace('Message Received | Perform action [', action, ']');
 
 				Promise.resolve(this.repoInstance.dispatch(action, message))
-					.then<Proto.Messages.Response>(
-						returnValue => ({ success: true, data: returnValue }),
-						failureReason => ({ success: false, errors: failureReason }))
+					.then<Proto.Messages.Response>(returnValue => ({ success: true, data: returnValue }))
+					.catch(failureReason => ({ success: false, errors: failureReason }))
 					.then(result => res.json(result));
 			});
 

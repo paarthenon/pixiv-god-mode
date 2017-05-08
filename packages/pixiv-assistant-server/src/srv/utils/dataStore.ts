@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 
 export function load<T>(path:string) : Promise<T> {
-	return new Promise((resolve, reject) => {
+	return new Promise<T>((resolve, reject) => {
 		fs.readFile(path, 'utf-8', (err, data) => {
 			if (err) {
 				reject(err);
