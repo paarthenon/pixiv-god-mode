@@ -1,24 +1,11 @@
-import {IServerConfigProtocol} from './proto'
-
 import {dialog} from 'electron'
-// import * as log4js from 'log4js'
+import {prefix} from 'daslog'
 
+import {IServerConfigProtocol} from './proto'
 import {defineService} from './defineService'
 import {PixivAssistantServer} from './server'
-// import * as electronAppender from './utils/electronAppender'
 
-// (<any>log4js).loadAppender(
-//     'electron', electronAppender
-// );
-
-// log4js.configure({
-// 	appenders: [
-// 		{ type: 'console' }
-// 	]
-// });
-// log4js.addAppender(log4js.appenders['electron']({}));
-
-console.log('test');
+let console = prefix('Startup');
 
 let server :PixivAssistantServer | null = null;
 

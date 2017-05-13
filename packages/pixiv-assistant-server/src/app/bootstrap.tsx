@@ -1,15 +1,8 @@
-// import * as log4js from 'log4js'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
-
 import Mailman from '../mailman'
 import * as proto from '../proto'
-// import * as LogCollector from './logCollector'
-
-// let logger = log4js.getLogger('Bootstrap');
-
-// LogCollector.initialize();
 
 class ServerConfigurationForm extends React.Component<{clickAction:(props:Partial<proto.IServerConfig>) => any}, void> {
 	private verboseInput :HTMLInputElement | undefined = undefined;
@@ -98,13 +91,3 @@ export class ServerStatus extends React.Component<{}, any> {
 		</div>
 	}
 }
-
-// class LogViewer extends React.Component<void, {log:any[]}> {
-// 	state = {log:[] as any[]};
-// 	componentDidMount(){
-// 		// LogCollector.register((log) => this.setState({log}));
-// 	}
-// 	public render() {
-// 		return <Bootstrap.Grid><pre>{this.state.log.map(x => `${(new Date(x.time)).toLocaleString()} [${x.level}] - ${x.category} - ${x.data.join(' ')}`).join('\n')}</pre></Bootstrap.Grid>;
-// 	}
-// }

@@ -1,6 +1,6 @@
 import {Features, Model, Messages} from 'pixiv-assistant-common'
 
-// import * as log4js from 'log4js'
+import {prefix} from 'daslog'
 import * as path from 'path'
 import * as fs from 'fs'
 import * as sanitize from 'sanitize-filename'
@@ -19,7 +19,7 @@ import {LokiRegistry} from './lokiRegistry'
 
 import * as opn from 'opn'
 
-// let logger = log4js.getLogger('ImageRepo');
+const console = prefix('ImageRepo');
 
 interface RegistryMetaInfo {
 	lastExecution: Date
@@ -60,28 +60,28 @@ export class ImageRepo extends BaseRepo {
 	}
 
 	public initialize() :Promise<void> {
-		// logger.info('Initializing repository');
+		console.info('Initializing repository');
 		return this.registry.initialize()
 			.then(() => {
 				// load meta info
-				// logger.trace('Loading repository information');
+				console.trace('Loading repository information');
 				dataStoreUtils.load<RegistryMetaInfo>(this.metaInfoPath)
 					.catch(() => null) // swallow errors.
 					.then(dbInfo => {
 						let predicate :discoveryUtils.FinderFilter = () => true;
 						if (dbInfo) {
-							// logger.info('Finding files since last load on', dbInfo.lastExecution);
+							console.info('Finding files since last load on', dbInfo.lastExecution);
 							predicate = (_path, stats) => stats.mtime > dbInfo.lastExecution;
 						} else {
-							// logger.info('Finding all files in repo to build initial registry');
+							console.info('Finding all files in repo to build initial registry');
 						}
 						let paths :string[] = [];
 						return discoveryUtils.findFilesAddedSince(this.config.path, predicate,
 							fPath => {
-								// logger.trace('Found file at',fPath);
+								console.trace('Found file at', fPath);
 								paths.push(fPath);
 								if (paths.length % 1000 == 0) { // If there's a large amount of content to be loaded offering some user feedback is helpful.
-									// logger.info('Found',paths.length,'files so far');
+									console.info('Found', paths.length, 'files so far');
 								}
 							}).then(() => {
 								return this.registry.addFromPaths(paths);
@@ -90,20 +90,20 @@ export class ImageRepo extends BaseRepo {
 
 			})
 			.then(() => {
-				// logger.info('Initializing file watcher')
+				console.info('Initializing file watcher')
 				return discoveryUtils.initializeFileWatcher(this.config.path, path => {
-					// logger.trace('while watching, found a new file',path)
+					console.trace('while watching, found a new file', path)
 					return this.registry.addFromPath(path)
 				})
 			})
 	}
 
 	public teardown() : Promise<void> {
-		// logger.info('Shutting down repo');
-		// logger.info('Saving metadata');
+		console.info('Shutting down repo');
+		console.info('Saving metadata');
 		return dataStoreUtils.save<RegistryMetaInfo>(this.metaInfoPath, {lastExecution: new Date()})
 			.then(() => {
-				// logger.info('Saving registry');
+				console.info('Saving registry');
 				return this.registry.teardown();
 			})
 	}
@@ -158,7 +158,7 @@ export class ImageRepo extends BaseRepo {
 		return this.registry.findImages(images.items.map(item => item.image.id))
 			.then(cache => Object.keys(cache))
 			.then(idList => {
-				// logger.info('returning positive hits on', idList);
+				console.info('returning positive hits on', idList);
 				return images.items.filter(item => idList.find(id => id == item.image.id.toString()))
 			});
 	}
@@ -191,7 +191,7 @@ export class ImageRepo extends BaseRepo {
 	 */
 	@ImageRepo.actions.register(Features.DownloadManga)
 	public downloadManga(msg: Messages.BulkRequest<Messages.ArtistUrlRequest>) : Promise<void> {
-		// logger.info('Beginning bulk download of', msg.items.length, 'items');
+		console.info('Beginning bulk download of', msg.items.length, 'items');
 
 		switch (this.config.mangaFormat) {
 			case MangaDownloadFormat.LOOSE:
@@ -207,7 +207,7 @@ export class ImageRepo extends BaseRepo {
 		let tasks = msg.items.map(msg => (() => this.downloadImage(msg)));
 		return promiseUtils.promisePool(tasks, 8)
 			.then(x => {
-				// logger.info('Completed download of',x.length,'files');
+				console.info('Completed download of', x.length, 'files');
 				return x;
 			})
 
@@ -222,7 +222,7 @@ export class ImageRepo extends BaseRepo {
 		}));
 		return promiseUtils.promisePool(tasks, 8)
 			.then(x => {
-				// logger.info('Completed download of',x.length,'files');
+				console.info('Completed download of', x.length, 'files');
 				return x;
 			})
 	}
@@ -238,16 +238,12 @@ export class ImageRepo extends BaseRepo {
 
 	@ImageRepo.actions.register(Features.DownloadAnimation)
 	public downloadAnimation(msg:Messages.ArtistImageRequest & {content:string}) {
-		let details = downloadUtils.getDataUrlDetails(msg.content);
+		const details = downloadUtils.getDataUrlDetails(msg.content);
 		if (details) {
-			let location = path.resolve(this.config.path, this.getDownloadFolder(msg.artist), `${msg.image.id}.${details.mime.subtype}`);
-
-			// Necessary workaround for local variables not being narrowed in lambda function bodies.
-			// I created an issue at https://github.com/Microsoft/TypeScript/issues/15631
-			let content = details.content;
+			const location = path.resolve(this.config.path, this.getDownloadFolder(msg.artist), `${msg.image.id}.${details.mime.subtype}`);
 
 			return makederp(path.dirname(location))
-				.then(() => downloadUtils.writeBase64(location, content))
+				.then(() => downloadUtils.writeBase64(location, details.content))
 				.catch(err => console.log(err));
 		} else {
 			return Promise.reject('unable to process request details');

@@ -1,9 +1,10 @@
-// import * as log4js from 'log4js'
+import {prefix} from 'daslog'
 import * as path from 'path'
 
 import {Model} from 'pixiv-assistant-common'
 
-// let logger = log4js.getLogger('Utils | Path');
+const console = prefix('PathUtils');
+
 export function avoidTrailingDot(path:string): string {
 	return (path[path.length - 1] === '.') ? path.substr(0, path.length - 1) : path
 }
@@ -54,7 +55,7 @@ export function fileNameToImage(fileName: string): Model.Image | undefined {
 			id: parseInt(mangaMatch[1])
 		}
 	}
-	// logger.error(`filename ${fileName} failed to match regex`);
+	console.error(`filename ${fileName} failed to match regex`);
 	return undefined;
 }
 
