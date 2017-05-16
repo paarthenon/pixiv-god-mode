@@ -34,20 +34,20 @@ export class PixivAssistantServer {
 			app.use(bodyParser.json({limit: '1gb'}));
 
 			app.all('/ping', (_req, res) => {
-				console.trace('Message Received | Ping');
+				console.log('Message Received | Ping');
 				res.json({success: true, data:true});
 			});
 
 			app.all('/supports/:action', (req, res) => {
 				let action: string = req.params.action;
-				console.trace('Message Received | Supports action [', action, ']');
+				console.log('Message Received | Supports action [', action, ']');
 				res.json({success: true, data: this.repoInstance.supports(action)});
 			});
 
 			app.post('/:action', (req, res) => {
 				let action: string = req.params.action;
 				let message: any = req.body;
-				console.trace('Message Received | Perform action [', action, ']');
+				console.log('Message Received | Perform action [', action, ']');
 
 				Promise.resolve(this.repoInstance.dispatch(action, message))
 					.then<Proto.Messages.Response>(returnValue => ({ success: true, data: returnValue }))

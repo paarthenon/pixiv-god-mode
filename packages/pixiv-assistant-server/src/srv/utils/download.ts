@@ -1,10 +1,14 @@
 import * as fs from 'fs'
 import * as http from 'http'
+import * as https from 'https'
 import * as path from 'path'
 import * as urllib from 'url'
 import * as archiver from 'archiver'
+import {prefix} from 'daslog'
 
 import {makederp} from './makederp'
+
+const console = prefix('DownloadUtils');
 
 interface DownloadMessage {
 	url: string
@@ -15,11 +19,14 @@ function pixivGet(pixivUrl:string) : Promise<http.IncomingMessage> {
 	let referer = urllib.resolve(pixivUrl, '/');
 	let url = urllib.parse(pixivUrl);
 
+	console.log('pixivGet url', url);
+	console.log('pixivGet referer', referer);
+
 	return new Promise<http.IncomingMessage>(resolve => {
-		http.get({
+		https.get({
 			protocol: url.protocol,
 			hostname: url.hostname,
-			port: url.port,
+			port: (url.port) ? parseInt(url.port, 10) : 443,
 			path: url.path,
 			headers: {
 				referer: referer
@@ -37,7 +44,12 @@ export function downloadFromPixiv(msg:DownloadMessage):Promise<boolean> {
 						resolve(msg)
 					})
 					.on('error', () => reject('error while writing to file'));
-		}))).then(() => true).catch(() => false);
+		})))
+		.then(() => true)
+		.catch(error => {
+			console.error('failure in downloading: ', error);
+			return false;
+		});
 }
 
 export function downloadFilesToZip(files: string[], zipPath:string) :Promise<void> {

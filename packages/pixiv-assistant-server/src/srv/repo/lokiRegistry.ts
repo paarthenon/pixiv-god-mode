@@ -44,7 +44,7 @@ export class LokiRegistry extends Registry {
 	}
 	public addFromPath(filePath:string) {
 		let imageId = pathUtils.getImageIdFromFilePath(filePath);
-		console.trace('Found id [', imageId, '] for path [', filePath, ']');
+		console.log('Found id [', imageId, '] for path [', filePath, ']');
 		if (!imageId) {
 			return Promise.resolve();
 		}

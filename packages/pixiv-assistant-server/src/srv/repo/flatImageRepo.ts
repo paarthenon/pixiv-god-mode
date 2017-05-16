@@ -64,7 +64,7 @@ export class ImageRepo extends BaseRepo {
 		return this.registry.initialize()
 			.then(() => {
 				// load meta info
-				console.trace('Loading repository information');
+				console.log('Loading repository information');
 				dataStoreUtils.load<RegistryMetaInfo>(this.metaInfoPath)
 					.catch(() => null) // swallow errors.
 					.then(dbInfo => {
@@ -78,7 +78,7 @@ export class ImageRepo extends BaseRepo {
 						let paths :string[] = [];
 						return discoveryUtils.findFilesAddedSince(this.config.path, predicate,
 							fPath => {
-								console.trace('Found file at', fPath);
+								console.log('Found file at', fPath);
 								paths.push(fPath);
 								if (paths.length % 1000 == 0) { // If there's a large amount of content to be loaded offering some user feedback is helpful.
 									console.info('Found', paths.length, 'files so far');
@@ -92,7 +92,7 @@ export class ImageRepo extends BaseRepo {
 			.then(() => {
 				console.info('Initializing file watcher')
 				return discoveryUtils.initializeFileWatcher(this.config.path, path => {
-					console.trace('while watching, found a new file', path)
+					console.log('while watching, found a new file', path)
 					return this.registry.addFromPath(path)
 				})
 			})

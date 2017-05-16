@@ -6,6 +6,7 @@ import {defineService} from './defineService'
 import {PixivAssistantServer} from './server'
 
 let console = prefix('Startup');
+console.log('Starting application');
 
 let server :PixivAssistantServer | null = null;
 

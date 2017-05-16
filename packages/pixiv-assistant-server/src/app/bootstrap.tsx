@@ -3,7 +3,10 @@ import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 import Mailman from '../mailman'
 import * as proto from '../proto'
+import {prefix} from 'daslog'
+const console = prefix('Bootstrap');
 
+console.log('test');
 class ServerConfigurationForm extends React.Component<{clickAction:(props:Partial<proto.IServerConfig>) => any}, void> {
 	private verboseInput :HTMLInputElement | undefined = undefined;
 
