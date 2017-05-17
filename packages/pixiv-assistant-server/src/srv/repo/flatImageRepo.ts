@@ -1,6 +1,6 @@
 import {Features, Model, Messages} from 'pixiv-assistant-common'
 
-import {prefix} from 'daslog'
+import log from 'daslog'
 import * as path from 'path'
 import * as fs from 'fs'
 import * as sanitize from 'sanitize-filename'
@@ -19,7 +19,7 @@ import {LokiRegistry} from './lokiRegistry'
 
 import * as opn from 'opn'
 
-const console = prefix('ImageRepo');
+const logger = log.prefix('ImageRepo');
 
 interface RegistryMetaInfo {
 	lastExecution: Date
@@ -60,28 +60,28 @@ export class ImageRepo extends BaseRepo {
 	}
 
 	public initialize() :Promise<void> {
-		console.info('Initializing repository');
+		logger.debug('Initializing repository');
 		return this.registry.initialize()
 			.then(() => {
 				// load meta info
-				console.log('Loading repository information');
+				logger.debug('Loading repository information');
 				dataStoreUtils.load<RegistryMetaInfo>(this.metaInfoPath)
 					.catch(() => null) // swallow errors.
 					.then(dbInfo => {
 						let predicate :discoveryUtils.FinderFilter = () => true;
 						if (dbInfo) {
-							console.info('Finding files since last load on', dbInfo.lastExecution);
+							logger.info('Finding files since last load on', dbInfo.lastExecution);
 							predicate = (_path, stats) => stats.mtime > dbInfo.lastExecution;
 						} else {
-							console.info('Finding all files in repo to build initial registry');
+							logger.info('Finding all files in repo to build initial registry');
 						}
 						let paths :string[] = [];
 						return discoveryUtils.findFilesAddedSince(this.config.path, predicate,
 							fPath => {
-								console.log('Found file at', fPath);
+								logger.debug('Found file at', fPath);
 								paths.push(fPath);
 								if (paths.length % 1000 == 0) { // If there's a large amount of content to be loaded offering some user feedback is helpful.
-									console.info('Found', paths.length, 'files so far');
+									logger.debug('Found', paths.length, 'files so far');
 								}
 							}).then(() => {
 								return this.registry.addFromPaths(paths);
@@ -90,20 +90,20 @@ export class ImageRepo extends BaseRepo {
 
 			})
 			.then(() => {
-				console.info('Initializing file watcher')
+				logger.info('Initializing file watcher')
 				return discoveryUtils.initializeFileWatcher(this.config.path, path => {
-					console.log('while watching, found a new file', path)
+					logger.debug('while watching, found a new file', path)
 					return this.registry.addFromPath(path)
 				})
 			})
 	}
 
 	public teardown() : Promise<void> {
-		console.info('Shutting down repo');
-		console.info('Saving metadata');
+		logger.info('Shutting down repo');
+		logger.info('Saving metadata');
 		return dataStoreUtils.save<RegistryMetaInfo>(this.metaInfoPath, {lastExecution: new Date()})
 			.then(() => {
-				console.info('Saving registry');
+				logger.info('Saving registry');
 				return this.registry.teardown();
 			})
 	}
@@ -158,7 +158,7 @@ export class ImageRepo extends BaseRepo {
 		return this.registry.findImages(images.items.map(item => item.image.id))
 			.then(cache => Object.keys(cache))
 			.then(idList => {
-				console.info('returning positive hits on', idList);
+				logger.info('returning positive hits on', idList);
 				return images.items.filter(item => idList.find(id => id == item.image.id.toString()))
 			});
 	}
@@ -191,7 +191,7 @@ export class ImageRepo extends BaseRepo {
 	 */
 	@ImageRepo.actions.register(Features.DownloadManga)
 	public downloadManga(msg: Messages.BulkRequest<Messages.ArtistUrlRequest>) : Promise<void> {
-		console.info('Beginning bulk download of', msg.items.length, 'items');
+		logger.info('Beginning bulk download of', msg.items.length, 'items');
 
 		switch (this.config.mangaFormat) {
 			case MangaDownloadFormat.LOOSE:
@@ -207,7 +207,7 @@ export class ImageRepo extends BaseRepo {
 		let tasks = msg.items.map(msg => (() => this.downloadImage(msg)));
 		return promiseUtils.promisePool(tasks, 8)
 			.then(x => {
-				console.info('Completed download of', x.length, 'files');
+				logger.info('Completed download of', x.length, 'files');
 				return x;
 			})
 
@@ -222,7 +222,7 @@ export class ImageRepo extends BaseRepo {
 		}));
 		return promiseUtils.promisePool(tasks, 8)
 			.then(x => {
-				console.info('Completed download of', x.length, 'files');
+				logger.info('Completed download of', x.length, 'files');
 				return x;
 			})
 	}
@@ -244,7 +244,7 @@ export class ImageRepo extends BaseRepo {
 
 			return makederp(path.dirname(location))
 				.then(() => downloadUtils.writeBase64(location, details.content))
-				.catch(err => console.log(err));
+				.catch(err => logger.error(err));
 		} else {
 			return Promise.reject('unable to process request details');
 		}

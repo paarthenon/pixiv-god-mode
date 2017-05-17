@@ -1,9 +1,9 @@
-import {prefix} from 'daslog'
+import log from 'daslog'
 import * as path from 'path'
 
 import {Model} from 'pixiv-assistant-common'
 
-const console = prefix('PathUtils');
+const logger = log.prefix('PathUtils');
 
 export function avoidTrailingDot(path:string): string {
 	return (path[path.length - 1] === '.') ? path.substr(0, path.length - 1) : path
@@ -55,7 +55,7 @@ export function fileNameToImage(fileName: string): Model.Image | undefined {
 			id: parseInt(mangaMatch[1])
 		}
 	}
-	console.error(`filename ${fileName} failed to match regex`);
+	logger.error(`filename ${fileName} failed to match regex`);
 	return undefined;
 }
 

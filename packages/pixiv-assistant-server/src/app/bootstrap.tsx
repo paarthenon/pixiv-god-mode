@@ -3,10 +3,11 @@ import * as ReactDOM from 'react-dom'
 import * as Bootstrap from 'react-bootstrap'
 import Mailman from '../mailman'
 import * as proto from '../proto'
-import {prefix} from 'daslog'
-const console = prefix('Bootstrap');
+import log from 'daslog'
 
-console.log('test');
+const console = log.prefix('Bootstrap');
+
+console.debug('test');
 class ServerConfigurationForm extends React.Component<{clickAction:(props:Partial<proto.IServerConfig>) => any}, void> {
 	private verboseInput :HTMLInputElement | undefined = undefined;
 
@@ -36,14 +37,14 @@ class ServerConfigurationForm extends React.Component<{clickAction:(props:Partia
 			<Bootstrap.Form>
 				<Bootstrap.FormGroup><Bootstrap.InputGroup>
 					<Bootstrap.InputGroup.Addon>Repository Path</Bootstrap.InputGroup.Addon>
-					<Bootstrap.FormControl type="text" placeholder="pixivRepository" ref="repoPath" />
+					<Bootstrap.FormControl type='text' placeholder='pixivRepository' ref='repoPath' />
 					<Bootstrap.InputGroup.Button>
 						<Bootstrap.Button onClick={this.handleBrowse.bind(this)}>Browse</Bootstrap.Button>
 					</Bootstrap.InputGroup.Button>
 				</Bootstrap.InputGroup></Bootstrap.FormGroup>
 				<Bootstrap.FormGroup><Bootstrap.InputGroup>
 					<Bootstrap.InputGroup.Addon>Port Number</Bootstrap.InputGroup.Addon>
-					<Bootstrap.FormControl type="text" defaultValue="50415" ref="port" />
+					<Bootstrap.FormControl type='text' defaultValue='50415' ref='port' />
 				</Bootstrap.InputGroup></Bootstrap.FormGroup>
 				<Bootstrap.Checkbox inputRef={ref => this.verboseInput = ref}>
 					Verbose Logging

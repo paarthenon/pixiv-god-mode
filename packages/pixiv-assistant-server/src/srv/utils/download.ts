@@ -4,11 +4,11 @@ import * as https from 'https'
 import * as path from 'path'
 import * as urllib from 'url'
 import * as archiver from 'archiver'
-import {prefix} from 'daslog'
+import log from 'daslog'
 
 import {makederp} from './makederp'
 
-const console = prefix('DownloadUtils');
+const logger = log.prefix('DownloadUtils');
 
 interface DownloadMessage {
 	url: string
@@ -19,8 +19,8 @@ function pixivGet(pixivUrl:string) : Promise<http.IncomingMessage> {
 	let referer = urllib.resolve(pixivUrl, '/');
 	let url = urllib.parse(pixivUrl);
 
-	console.log('pixivGet url', url);
-	console.log('pixivGet referer', referer);
+	logger.debug('pixivGet url', url);
+	logger.debug('pixivGet referer', referer);
 
 	return new Promise<http.IncomingMessage>(resolve => {
 		https.get({
@@ -47,7 +47,7 @@ export function downloadFromPixiv(msg:DownloadMessage):Promise<boolean> {
 		})))
 		.then(() => true)
 		.catch(error => {
-			console.error('failure in downloading: ', error);
+			logger.error('failure in downloading: ', error);
 			return false;
 		});
 }

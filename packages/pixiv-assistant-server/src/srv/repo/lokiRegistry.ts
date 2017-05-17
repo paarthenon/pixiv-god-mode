@@ -2,9 +2,9 @@ import {Registry} from './registry'
 import * as pathUtils from '../utils/path'
 import * as path from 'path'
 import * as Loki from 'lokijs'
-import {prefix} from 'daslog'
+import log from 'daslog'
 
-const console = prefix('Registry');
+const logger = log.prefix('Registry');
 
 interface Image {
 	id :number
@@ -44,7 +44,7 @@ export class LokiRegistry extends Registry {
 	}
 	public addFromPath(filePath:string) {
 		let imageId = pathUtils.getImageIdFromFilePath(filePath);
-		console.log('Found id [', imageId, '] for path [', filePath, ']');
+		logger.debug('Found id [', imageId, '] for path [', filePath, ']');
 		if (!imageId) {
 			return Promise.resolve();
 		}
@@ -61,11 +61,11 @@ export class LokiRegistry extends Registry {
 		return Promise.resolve();
 	}
 	public teardown() {
-		console.log(this.images.count());
+		logger.debug(this.images.count());
 		this.images.flushChanges();
 		return super.teardown().then(() => new Promise<void>((resolve, reject) => {
 			this.db.saveDatabase(err => {
-				console.warn('db should be saved');
+				logger.warn('db should be saved');
 				if (err) {
 					reject(err);
 				} else {

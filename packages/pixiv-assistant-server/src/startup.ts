@@ -1,12 +1,12 @@
 import {dialog} from 'electron'
-import {prefix} from 'daslog'
+import log from 'daslog'
 
 import {IServerConfigProtocol} from './proto'
 import {defineService} from './defineService'
 import {PixivAssistantServer} from './server'
 
-let console = prefix('Startup');
-console.log('Starting application');
+let logger = log.prefix('Startup');
+logger.debug('Starting application');
 
 let server :PixivAssistantServer | null = null;
 
@@ -19,7 +19,7 @@ let defaultConfig = {
 export function init() {
 	defineService<IServerConfigProtocol>('ServerConfiguration', {
 		initialize: config => {
-			console.log('init');
+			logger.debug('init');
 			let mergedConfig = Object.assign(defaultConfig, config);
 			server = new PixivAssistantServer(mergedConfig);
 			return server.start();
@@ -30,7 +30,7 @@ export function init() {
 			return (localInstance) ? localInstance.close() : Promise.reject('Server null');
 		},
 		openFolderDialog: () => {
-			console.log('open');
+			logger.debug('open');
 			return new Promise<string>(resolve => {
 				dialog.showOpenDialog({properties: ['openDirectory']}, (fileNames) => resolve(fileNames[0]));
 			});
