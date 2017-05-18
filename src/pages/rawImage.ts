@@ -1,4 +1,6 @@
+import * as $ from 'jquery'
 import {RootPage} from 'src/pages/root'
+import {ExecuteOnLoad} from 'src/utils/actionDecorators'
 
 import * as pathUtils from 'src/utils/path'
 
@@ -13,6 +15,14 @@ import * as pathUtils from 'src/utils/path'
  * else, probably the right-click menu.
  */
 export class RawImagePage extends RootPage {
+	@ExecuteOnLoad
+	public bindEvent(){
+		console.log('Binding event');
+		$('img').on('dblclick', () => {
+			console.log('double clicked');
+			this.returnToImage();
+		});
+	}
 	public returnToImage(){
 		window.location.href = pathUtils.generateImageLink(pathUtils.getImageIdFromSourceUrl(this.path));
 	}

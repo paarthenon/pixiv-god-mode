@@ -32,6 +32,7 @@ let patterns = {
 	tagOverview: /^http(s?):\/\/www.pixiv.net\/tags.php$/,
 	tagDetail: /http(s?):\/\/www.pixiv.net\/tags.php\?tag=.+/,
 	rawImage: /http(s?):\/\/i[0-9].pixiv.net/,
+	rawImage2: /http(s?):\/\/i.pximg.net/,
 	suggestedUsers: /http(s?):\/\/www.pixiv.net\/search_user.php$/,
 	home: /http(s?):\/\/www.pixiv.net\/$/,
 	wiki: /http(s?):\/\/dic.pixiv.net\/a\//,
@@ -85,7 +86,7 @@ export function dispatch(path:string):RootPage {
 	if (path.match(patterns.tagDetail)) {
 		return new TagDetailPage(path);
 	}
-	if (path.match(patterns.rawImage)) {
+	if (path.match(patterns.rawImage) || path.match(patterns.rawImage2)) {
 		return new RawImagePage(path);
 	}
 	if (path.match(patterns.suggestedUsers)) {
