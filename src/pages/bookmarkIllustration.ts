@@ -4,7 +4,7 @@ import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
 import {PixivAssistantServer} from 'src/services'
 import * as jQUtils from 'src/utils/document'
 import {Container as Deps} from 'src/deps'
-import {injectViewAllButton, ViewAllButtonElementId} from 'src/injectors/bookmarkDetailViewAll'
+import {injectViewAllButton} from 'src/injectors/bookmarkDetailViewAll'
 
 import SettingKeys from 'src/settingKeys'
 
@@ -30,30 +30,8 @@ export class BookmarkIllustrationPage extends RootPage {
 
 	@ExecuteOnLoad
 	public injectTrigger() {
-		document.addEventListener('pixivBookmarkIllustrationRecommenationLoaded', () => {
-			this.experimentalFade();
-			Deps.execOnPixiv(pixiv => pixiv.illustRecommend.completed).then(completed => {
-				console.log('completed status',completed);
-				if (completed) {
-					$(`#${ViewAllButtonElementId}`).hide();
-				}
-			})
-		});
-
-		Deps.execOnPixiv(pixiv => {
-			function issueNotification(){
-				var evt = new CustomEvent('pixivBookmarkIllustrationRecommenationLoaded', {});
-				document.dispatchEvent(evt);
-			}
-			function paWrapFunction(func:Function, context:any) {
-				return function() {
-					issueNotification();
-					func.call(context);
-				}
-			}
-
-			pixiv.scrollView.process = paWrapFunction(pixiv.scrollView.process, pixiv.scrollView);
-		});
+		new MutationObserver(this.experimentalFade.bind(this))
+			.observe($('section#illust-recommend ul')[0], { childList: true });
 	}
 
 	public experimentalFade() {
@@ -98,7 +76,7 @@ export class BookmarkIllustrationPage extends RootPage {
 	public loadAllBookmarks() {
 		Deps.execOnPixiv(pixiv => {
 			for (var i = 15; i < pixiv.context.illustRecommendLimit; i+=15) { 
-				pixiv.illustRecommend.load();
+				$('.js-recommend-load-more').click();
 			}
 		});
 	}
