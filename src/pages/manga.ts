@@ -10,6 +10,8 @@ import {injectMangaPreviousButton} from 'src/injectors/mangaPreviousButton'
 import {injectMangaDownloadButton} from 'src/injectors/mangaDownloadButton'
 import {injectMangaNextButton} from 'src/injectors/mangaNextButton'
 import {injectMangaOpenFolderButton} from 'src/injectors/mangaOpenFolderButton'
+import {injectDownload} from 'src/injectors/wrapImageHover'
+
 import {Model} from 'pixiv-assistant-common'
 
 /**
@@ -42,6 +44,19 @@ export class MangaPage extends RootPage {
 		injectMangaNextButton(this.goToNextPage.bind(this));
 		injectMangaDownloadButton(this.downloadMulti.bind(this));
 		injectMangaOpenFolderButton(this.openFolder.bind(this));
+	}
+
+	@ExecuteOnLoad
+	public wrapImages(){
+		$('img.image').toArray().forEach(image => {
+			let jQImage = $(image);
+
+			injectDownload(jQImage, () => this.downloadSingle(jQImage));
+		})
+	}
+
+	private downloadSingle(img:JQuery) {
+		PixivAssistantServer.download(this.artist,img.attr('data-src'))
 	}
 
 	@ExecuteIfSetting(SettingKeys.pages.manga.loadFullSize)

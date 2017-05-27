@@ -6,3 +6,18 @@
     // Use the chrome extension's fonts even when in the page context.
     @icon-font-path: "chrome-extension://__MSG_@@extension_id__/fonts/";
 }
+
+.pa-img-hover-container {
+    position: relative;
+}
+.pa-img-hover-container .pa-img-hover-content {
+    position: relative;
+    bottom: 55px;
+    margin: 0 auto;
+    opacity: 0;
+    transition: opacity .2s;
+}
+.pa-img-hover-container:hover .pa-img-hover-content {
+    opacity: 1;
+    transition: opacity .2s;
+}
