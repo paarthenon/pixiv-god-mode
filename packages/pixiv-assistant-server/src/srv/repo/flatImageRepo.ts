@@ -76,7 +76,7 @@ export class ImageRepo extends BaseRepo {
 							logger.info('Finding all files in repo to build initial registry');
 						}
 						let paths :string[] = [];
-						return discoveryUtils.findFilesAddedSince(this.config.path, predicate,
+						discoveryUtils.findFilesAddedSince(this.config.path, predicate,
 							fPath => {
 								logger.debug('Found file at', fPath);
 								paths.push(fPath);
@@ -84,6 +84,7 @@ export class ImageRepo extends BaseRepo {
 									logger.debug('Found', paths.length, 'files so far');
 								}
 							}).then(() => {
+								logger.debug('Found', paths.length, 'new files');
 								return this.registry.addFromPaths(paths);
 							})
 				})
