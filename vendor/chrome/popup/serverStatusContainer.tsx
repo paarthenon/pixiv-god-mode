@@ -3,7 +3,7 @@ import * as React from 'react'
 import {PixivAssistantServer} from 'vendor/chrome/services'
 import {ConnectionStatus, ServerStatus} from 'src/components/serverStatus'
 
-export class ServerStatusContainer extends React.Component<void, {status:ConnectionStatus}> {
+export class ServerStatusContainer extends React.Component<{}, {status:ConnectionStatus}> {
     state = {status: ConnectionStatus.Disconnected};
 
     componentWillMount() {

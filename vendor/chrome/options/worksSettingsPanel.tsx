@@ -4,7 +4,7 @@ import {IndividualSettingsPanel} from 'src/components/settings/individualSetting
 import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer'
 import SettingKeys from 'src/settingKeys'
 
-export const WorksSettingsPanel : React.StatelessComponent<void> = () =>
+export const WorksSettingsPanel : React.StatelessComponent<{}> = () =>
 	<IndividualSettingsPanel header="Works Page">
 		<BooleanSettingContainer 
 			settingKey={SettingKeys.pages.works.inject.openInTabs} 

@@ -5,7 +5,7 @@ import {InjectBootstrap} from 'src/components/util/injectBootstrap'
 export const containerClass = 'pa-img-hover-container';
 export const contentClass = 'pa-img-hover-content';
 
-export const Container: React.StatelessComponent<void> = () =>
+export const Container: React.StatelessComponent<{}> = () =>
     <div className={containerClass}></div>
 
 interface ContentProps {

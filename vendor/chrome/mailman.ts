@@ -38,7 +38,7 @@ function send<T, V>(target: Target, name:string, msg: T): Promise<V> {
 	})
 } 
 
-function generateMailman<T>(target:Target) {
+function generateMailman<T extends object>(target:Target) {
 	return new Proxy(<T>{}, {
 		get: (_, name) => (msg: any) => send(target, name.toString(), msg)
 	});

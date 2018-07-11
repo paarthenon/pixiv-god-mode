@@ -15,17 +15,17 @@ export class PAServer {
 	constructor(protected config:IConfig, protected ajax:AjaxFunction<any,any>) {}
 
 	public callEndpoint<Req, Res>(feature: string, request?: Req) :Promise<Res> {
-		return this.config.get(ConfigKeys.server_url).then(server_url => {
+		return this.config.get(ConfigKeys.server_url).then<Res>(server_url => {
 			return this.ajax({
 				type: 'POST',
 				url: resolve(server_url.toString(),feature),
 				data: request
 			})
-			.then((response:any) => {
+			.then<Res>((response:string) => {
 				console.debug('Received response');
 				let parsedResponse: Messages.Response = JSON.parse(response);
 				if(Messages.isPositiveResponse(parsedResponse)) {
-					return parsedResponse.data;
+					return parsedResponse.data as Res;
 				}
 				if(Messages.isNegativeResponse(parsedResponse)) {
 					console.error('Server returned failed response', parsedResponse.errors);
@@ -80,7 +80,7 @@ export class PAServer {
 
 	public bulkImageExists(entries: Messages.ArtistImageRequest[]) : Promise<Messages.ArtistImageRequest[]> {
 		console.debug(`bulkImagesExist called with ${entries.length} entries`);
-		return this.callEndpoint(Features.ImagesExist, { items: entries })
+		return this.callEndpoint<Messages.BulkRequest<Messages.ArtistImageRequest>, Messages.ArtistImageRequest[]>(Features.ImagesExist, { items: entries })
 			.then(result => {console.debug('received', result); return result; })
 	}
 

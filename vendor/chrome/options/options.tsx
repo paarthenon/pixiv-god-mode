@@ -13,7 +13,7 @@ import {WorksSettingsPanel} from 'vendor/chrome/options/worksSettingsPanel'
 
 import {DictionaryJSON} from 'vendor/chrome/popup/exportDict'
 
-const SettingsPage : React.StatelessComponent<void> = () =>
+const SettingsPage : React.StatelessComponent<{}> = () =>
     <Bootstrap.Grid>
         <TranslationSettingsPanel />
         <ServerSettingsPanel />

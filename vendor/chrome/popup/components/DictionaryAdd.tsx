@@ -66,7 +66,7 @@ export class DictionaryAdd extends React.Component<DictionaryAddProps,{updating?
 		let inputWidth={width:'289px'};
 		let buttonStyle={width:'150px'};
 
-		return <Bootstrap.Panel bsSize="small">
+		return <Bootstrap.Panel className="bs-small">
 			<Bootstrap.Form inline onSubmit={this.handleAdd.bind(this)} style={noBottomMargin}>
 				<Bootstrap.FormGroup>
 					<Bootstrap.FormControl type="text" placeholder="Translation" ref="translation" style={inputWidth}/>

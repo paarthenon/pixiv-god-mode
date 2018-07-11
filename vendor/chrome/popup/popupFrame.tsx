@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export class PopupWindowFrame extends React.Component<void, void> {
+export class PopupWindowFrame extends React.Component<{}, {}> {
 	protected style = {
 		width: '800px',
 		height: '600px',
@@ -13,7 +13,7 @@ export class PopupWindowFrame extends React.Component<void, void> {
 	}
 }
 
-export class PopupContentFrame extends React.Component<void, void> {
+export class PopupContentFrame extends React.Component<{}, {}> {
 	public render() {
 		let contentStyle = {
 			flex: 1,

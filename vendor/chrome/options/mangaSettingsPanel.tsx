@@ -4,7 +4,7 @@ import {IndividualSettingsPanel} from 'src/components/settings/individualSetting
 import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer'
 import SettingKeys from 'src/settingKeys'
 
-export const MangaSettingsPanel : React.StatelessComponent<void> = () =>
+export const MangaSettingsPanel : React.StatelessComponent<{}> = () =>
 	<IndividualSettingsPanel header={'Manga Page'}>
 		<BooleanSettingContainer 
 			settingKey={SettingKeys.pages.manga.inject.toolbox} 

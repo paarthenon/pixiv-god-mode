@@ -4,7 +4,7 @@ import {IndividualSettingsPanel} from 'src/components/settings/individualSetting
 import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer'
 import SettingKeys from 'src/settingKeys'
 
-export const BookmarkIllustrationSettingsPanel : React.StatelessComponent<void> = () =>
+export const BookmarkIllustrationSettingsPanel : React.StatelessComponent<{}> = () =>
 	<IndividualSettingsPanel header="Bookmark Illustration Page">
 		<BooleanSettingContainer 
 			settingKey={SettingKeys.pages.bookmarkIllustration.inject.viewAll} 

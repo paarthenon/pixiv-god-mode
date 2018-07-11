@@ -17,8 +17,8 @@ declare module 'react-bootstrap' {
 /**
  * A simple dropdown with label
  */
-export class DropdownSetting extends React.Component<DropdownSettingProps, void> {
-	private inputElement : HTMLInputElement;
+export class DropdownSetting extends React.Component<DropdownSettingProps, {}> {
+	// private inputElement : HTMLInputElement;
 	
 	handleExecute(event:React.FormEvent<HTMLInputElement>) {
         console.log('ev',(event.target as any).value); //TODO: confirm generic, consider currentTarget property
@@ -29,7 +29,7 @@ export class DropdownSetting extends React.Component<DropdownSettingProps, void>
         console.log('ref',ref);
 		if(ref) {
 			ref.value = this.props.selected;
-			this.inputElement = ref;
+			// this.inputElement = ref;
 		}
 	}
 

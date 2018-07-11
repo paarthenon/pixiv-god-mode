@@ -10,7 +10,7 @@ export interface DictStates {
 	cache: cachedDictionary
 }
 
-export class DictionaryJSON extends React.Component<void,DictStates> {
+export class DictionaryJSON extends React.Component<{},DictStates> {
 	state :DictStates = {global: {}, local: {}, cache: {cache: []}};
 
 	componentDidMount() {
@@ -55,7 +55,7 @@ const DictStats : React.StatelessComponent<DictStatsProps> = props =>
 		<p>Combined dictionary: {props.cacheCount}</p>
 	</div>
 
-class DictJSON extends React.Component<cachedDictionary,void> {
+class DictJSON extends React.Component<cachedDictionary, {}> {
 	protected get formattedCache() {
 		let contents = this.props.cache.map(entry => `\t"${entry.key}":"${entry.value}"`).join(',\n');
 		return `{\n${contents}\n}\n`
