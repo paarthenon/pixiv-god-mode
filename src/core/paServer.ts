@@ -21,13 +21,15 @@ export class PAServer {
 				url: resolve(server_url.toString(),feature),
 				data: request
 			})
-			.then((response:any) => {
+			.then(response => {
 				console.debug('Received response');
 				let parsedResponse: Messages.Response = JSON.parse(response);
-				if(Messages.isPositiveResponse(parsedResponse)) {
-					return parsedResponse.data;
+				if (Messages.isPositiveResponse(parsedResponse)) {
+					// see https://github.com/Microsoft/TypeScript/issues/17315#issuecomment-421069084
+					// for why we use Promise.resolve instead of the raw value
+					return Promise.resolve<Res>(parsedResponse.data as Res);
 				}
-				if(Messages.isNegativeResponse(parsedResponse)) {
+				if (Messages.isNegativeResponse(parsedResponse)) {
 					console.error('Server returned failed response', parsedResponse.errors);
 					return Promise.reject('Negative response: ' + JSON.stringify(parsedResponse.errors));
 				}
@@ -80,7 +82,7 @@ export class PAServer {
 
 	public bulkImageExists(entries: Messages.ArtistImageRequest[]) : Promise<Messages.ArtistImageRequest[]> {
 		console.debug(`bulkImagesExist called with ${entries.length} entries`);
-		return this.callEndpoint(Features.ImagesExist, { items: entries })
+		return this.callEndpoint<Messages.BulkRequest<Messages.ArtistImageRequest>, Messages.ArtistImageRequest[]>(Features.ImagesExist, { items: entries })
 			.then(result => {console.debug('received', result); return result; })
 	}
 

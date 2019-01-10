@@ -188,8 +188,9 @@ export class IllustrationPage extends RootPage {
 		function getBase64(blob:Blob) :Promise<string> {
 			return new Promise((resolve, reject) => {
 				var reader = new FileReader();
-				reader.readAsDataURL(blob);
-				reader.onloadend = () => resolve(reader.result);
+				reader.readAsDataURL(blob); // Forces the result to be of type 'string'
+				// https://developer.mozilla.org/en-US/docs/Web/API/FileReader/result
+				reader.onloadend = () => resolve(reader.result as string);
 				reader.onerror = err => reject(err);
 			});
 		}

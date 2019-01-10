@@ -1,7 +1,7 @@
 /**
  * Pull raw assets
  */
-export function getBlob(src:string) {
+export function getBlob(src:string): Promise<Blob> {
 	let req = new XMLHttpRequest();
 	req.open('GET', src);
 	req.responseType = 'blob';

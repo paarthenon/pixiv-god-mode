@@ -61,16 +61,19 @@ export class CachedDictionaryService {
 	}
 
 	public get cache() :Promise<cachedDictionary> {
-		return this.config.get(this.keys.cache)
-			.catch(() => this.recalculateCache());
+		const dict = this.config.get(this.keys.cache) as Promise<cachedDictionary>;
+
+		return dict.catch(() => this.recalculateCache().then(() => this.cache));
 	}
 	public get local() :Promise<naiveDictionary> {
-		return this.config.get(this.keys.local)
-			.catch(() => this.config.set(this.keys.local, {}).then(() => ({})));
+		const dict = this.config.get(this.keys.local) as Promise<naiveDictionary>;
+
+		return dict.catch(() => this.config.set(this.keys.local, {}).then(() => this.local))
 	}
 	public get global() :Promise<naiveDictionary> {
-		return this.config.get(this.keys.global)
-			.catch(() =>this.config.set(this.keys.global, {}).then(() => ({})));
+		const dict = this.config.get(this.keys.global) as Promise<naiveDictionary>;
+
+		return dict.catch(() =>this.config.set(this.keys.global, {}).then(() => this.global));
 	}
 	public getTranslation(key:string) {
 		return this.local.then(localDict => {
