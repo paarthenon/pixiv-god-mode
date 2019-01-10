@@ -18,6 +18,7 @@ function consoleCommand(cmd) {
 		});
 	});
 }
+
 gulp.task('build', () => consoleCommand('node ./node_modules/webpack/bin/webpack.js'));
 
 const popupProps = {
@@ -64,45 +65,45 @@ function buildLESS(src, dest) {
 gulp.task('build-less-popup', () => buildLESS('res/less/popup.less', 'build/css'));
 gulp.task('build-less-content', () =>  buildLESS('res/less/content.less', 'build/css'));
 
-gulp.task('build-less',['build-less-popup', 'build-less-content']);
+gulp.task('build-less', gulp.series('build-less-popup', 'build-less-content'));
 
-gulp.task('chrome-resources', ['build'], function(){
+gulp.task('chrome-resources', gulp.series('build', function(){
 	return Promise.all([
 		fileCopy('vendor/chrome/**/*.html', 'dist/chrome/vendor/chrome'),
 		fileCopy('vendor/chrome/resources/**/*', 'dist/chrome/resources'),
 		fileCopy('vendor/chrome/manifest.json', 'dist/chrome'),
 		fileCopy('config.js', 'dist/chrome'),
 	]);
-});
+}));
 
-gulp.task('chrome-code', ['build'], function(){
+gulp.task('chrome-code', gulp.series('build', function(){
 	return Promise.all(props.map(prop => fileCopy(prop.merged, prop.dest)));
-});
+}));
 
-gulp.task('chrome-css', ['build-less'], () => {
+gulp.task('chrome-css', gulp.series('build-less', () => {
 	return fileCopy('build/css/**/*.css', 'dist/chrome/css');
-})
+}));
 
 gulp.task('chrome-fonts', () => {
 	return fileCopy('res/fonts/**/*', 'dist/chrome/fonts');
-})
+});
 
-gulp.task('dev', [
+gulp.task('dev', gulp.series(
 	'chrome-code',
 	'chrome-resources',
 	'chrome-css',
 	'chrome-fonts',
-]);
+));
 
-gulp.task('release', [
+gulp.task('release', gulp.series(
 	'chrome-code',
 	'chrome-resources',
 	'chrome-css',
 	'chrome-fonts',
-]);
+));
 
 gulp.task('build-tests', () => consoleCommand('tsc -p test'));
 // TODO: Use alsatian's API like an adult.
-gulp.task('test', ['build-tests'], () => consoleCommand('node ./node_modules/alsatian/cli/alsatian-cli.js build/test/**/*.js'));
+gulp.task('test', gulp.series('build-tests', () => consoleCommand('node ./node_modules/alsatian/cli/alsatian-cli.js build/test/**/*.js')));
 
-gulp.task('default', ['dev']);
+gulp.task('default', gulp.series('dev'));
