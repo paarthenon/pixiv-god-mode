@@ -17,7 +17,7 @@ declare module 'react-bootstrap' {
 /**
  * A simple dropdown with label
  */
-export class DropdownSetting extends React.Component<DropdownSettingProps, void> {
+export class DropdownSetting extends React.Component<DropdownSettingProps, {}> {
 	private inputElement : HTMLInputElement;
 	
 	handleExecute(event:React.FormEvent<HTMLInputElement>) {

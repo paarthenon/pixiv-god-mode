@@ -16,7 +16,7 @@ export interface IllustrationToolbarProps {
 /**
  * A toolbar of actions that renders below the image preview on the illustration page.
  */
-export class IllustrationToolbar extends React.Component<IllustrationToolbarProps, void> {
+export class IllustrationToolbar extends React.Component<IllustrationToolbarProps, {}> {
     public render() {
         return <InjectBootstrap>
             <Bootstrap.InputGroup style={{width: 'auto', margin: 'auto', marginBottom: '20px'}}>

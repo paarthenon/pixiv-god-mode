@@ -10,7 +10,7 @@ export interface BooleanSettingProps {
 /**
  * A simple checkbox with label
  */
-export class BooleanSetting extends React.Component<BooleanSettingProps, void> {
+export class BooleanSetting extends React.Component<BooleanSettingProps, {}> {
 	private inputElement : HTMLInputElement;
 	
 	handleExecute() {

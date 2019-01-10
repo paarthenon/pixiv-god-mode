@@ -8,7 +8,7 @@ export enum GlobalDictUpdateState {
 	DOWNLOADING
 }
 
-export class GlobalDictionaryUpdater extends React.Component<{mode: GlobalDictUpdateState, updateAction:Function}, void> {
+export class GlobalDictionaryUpdater extends React.Component<{mode: GlobalDictUpdateState, updateAction:Function}, {}> {
 	protected dictionaryStatusText(){
 		switch (this.props.mode) {
 			case GlobalDictUpdateState.LOADING:

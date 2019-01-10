@@ -5,7 +5,7 @@ import {ServerStatusContainer} from 'vendor/chrome/popup/serverStatusContainer'
 
 const NavbarText = (Bootstrap.Navbar as any).Text;
 
-export class PopupNavbar extends React.Component<void, void> {
+export class PopupNavbar extends React.Component<{}, {}> {
 	handleOpenSettings() {
 		chrome.runtime.openOptionsPage();		
 	}

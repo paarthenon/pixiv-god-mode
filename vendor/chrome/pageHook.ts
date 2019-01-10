@@ -1,3 +1,8 @@
+// This is how you break the extension/page sandboxing present in chrome.
+// No this is not usually a good idea.
+// I create a script tag with a receiver listening for a custom event type. 
+// Props are passed separately because serialization can be funky.
+
 export function hijack(func: Function) {
 	var script = document.createElement('script');
 	script.appendChild(document.createTextNode(`(${func})();`));

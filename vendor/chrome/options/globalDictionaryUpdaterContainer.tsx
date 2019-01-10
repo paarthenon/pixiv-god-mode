@@ -5,7 +5,7 @@ import {DuplicateKeyReporter} from 'src/components/dictionary/duplicateKeyReport
 
 import {DictionaryService} from 'vendor/chrome/services'
 
-export class GlobalDictUpdaterContainer extends React.Component<void, {mode: GlobalDictUpdateState, dupeLocalKeys:string[]}> {
+export class GlobalDictUpdaterContainer extends React.Component<{}, {mode: GlobalDictUpdateState, dupeLocalKeys:string[]}> {
 	state = {mode: GlobalDictUpdateState.LOADING, dupeLocalKeys: undefined as string[]};
 
 	componentDidMount() {
