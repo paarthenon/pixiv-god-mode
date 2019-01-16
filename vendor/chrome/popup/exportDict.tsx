@@ -55,7 +55,7 @@ const DictStats : React.StatelessComponent<DictStatsProps> = props =>
 		<p>Combined dictionary: {props.cacheCount}</p>
 	</div>
 
-class DictJSON extends React.Component<cachedDictionary,{}> {
+class DictJSON extends React.Component<cachedDictionary, {}> {
 	protected get formattedCache() {
 		let contents = this.props.cache.map(entry => `\t"${entry.key}":"${entry.value}"`).join(',\n');
 		return `{\n${contents}\n}\n`
