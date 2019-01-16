@@ -5,7 +5,7 @@ import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingConta
 import {DropdownSettingContainer} from 'vendor/chrome/options/dropdownSettingContainer'
 import {default as SettingKeys, AddToBookmarksButtonType} from 'src/settingKeys'
 
-export const IllustrationSettingsPanel : React.StatelessComponent<void> = () =>
+export const IllustrationSettingsPanel : React.StatelessComponent<{}> = () =>
 	<IndividualSettingsPanel header="Illustration Page">
 		<DropdownSettingContainer 
 			settingKey={SettingKeys.pages.illust.addBookmarkButtonType} 

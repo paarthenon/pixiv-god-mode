@@ -6,7 +6,10 @@ import * as Bootstrap from 'react-bootstrap'
  */
 export class IndividualSettingsPanel extends React.Component<{header:string}, {}> {
 	public render() {
-		return <Bootstrap.Panel header={this.props.header}>
+		return <Bootstrap.Panel>
+			<Bootstrap.Panel.Heading>
+				{this.props.header}
+			</Bootstrap.Panel.Heading>
 			{this.props.children}
 		</Bootstrap.Panel>;
 	}

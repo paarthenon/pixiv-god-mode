@@ -18,8 +18,6 @@ declare module 'react-bootstrap' {
  * A simple dropdown with label
  */
 export class DropdownSetting extends React.Component<DropdownSettingProps, {}> {
-	private inputElement : HTMLInputElement;
-	
 	handleExecute(event:React.FormEvent<HTMLInputElement>) {
         console.log('ev',(event.target as any).value); //TODO: confirm generic, consider currentTarget property
 		this.props.onChange((event.target as any).value);
@@ -29,7 +27,6 @@ export class DropdownSetting extends React.Component<DropdownSettingProps, {}> {
         console.log('ref',ref);
 		if(ref) {
 			ref.value = this.props.selected;
-			this.inputElement = ref;
 		}
 	}
 

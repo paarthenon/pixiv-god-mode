@@ -4,7 +4,7 @@ import {IndividualSettingsPanel} from 'src/components/settings/individualSetting
 import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer'
 import SettingKeys from 'src/settingKeys'
 
-export const GlobalSettingsPanel : React.StatelessComponent<void> = () =>
+export const GlobalSettingsPanel : React.StatelessComponent<{}> = () =>
 	<IndividualSettingsPanel header="Global Settings">
 		<BooleanSettingContainer 
 			settingKey={SettingKeys.global.inject.pagingButtons} 

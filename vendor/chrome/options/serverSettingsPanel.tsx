@@ -5,7 +5,7 @@ import ConfigKeys from 'src/configKeys'
 
 import {IndividualSettingsPanel} from 'src/components/settings/individualSettingsPanel'
 
-export const ServerSettingsPanel : React.StatelessComponent<void> = () =>
+export const ServerSettingsPanel : React.StatelessComponent<{}> = () =>
     <IndividualSettingsPanel header={'Server Settings'}>
         <TextSettingContainer label="Server Url" settingKey={ConfigKeys.server_url} />
     </IndividualSettingsPanel>
