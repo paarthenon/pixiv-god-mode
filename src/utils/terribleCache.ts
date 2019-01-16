@@ -1,7 +1,7 @@
 import {OnLoadFunc} from 'src/core/IAction'
 
 /**
- * This is a quick and dirty implementaton that's used to store the registered data for a page class.
+ * This is a quick and dirty implementaton that's used to store the registered actions for a page class.
  * I created this when the extension was a greasemonkey script and I wanted to avoid the thousands of
  * lines of code that reflect-metadata would inject into my final distibution. At this point the
  * extension has enough dependencies that reflect-metadata would barely be noticed. 

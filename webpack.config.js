@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 process.traceDeprecation = true;
 
@@ -41,14 +42,21 @@ module.exports = {
             'react-dom': 'preact-compat/dist/preact-compat.js'
         }
     },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    mangle: false,
+                    output: {
+                        ascii_only: true
+                    }
+                }
+            }),
+        ]
+    },
     //TODO: separate these plugins between dev and prod.
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            mangle: false,
-            output: {
-                ascii_only: true
-            }
-        }),
+        
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         })
