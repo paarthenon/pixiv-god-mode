@@ -17,9 +17,10 @@ import {RawImagePage} from 'src/pages/rawImage'
 import {SuggestedUsersPage} from 'src/pages/suggestedUsers'
 import {HomePage} from 'src/pages/home'
 import {WikiArticlePage} from 'src/pages/wikiArticle'
+import log from 'src/log';
 
 let patterns = {
-	illust: /^http(s?):\/\/www.pixiv.net\/member_illust.php\?mode=medium&illust_id=[0-9]+/,
+	illust: /^http(s?):\/\/www.pixiv.net\/en\/artworks\/[0-9]+/,
 	manga: /^http(s?):\/\/www.pixiv.net\/member_illust.php\?mode=manga&illust_id=[0-9]+/,
 	works: /^http(s?):\/\/www.pixiv.net\/member_illust.php\?.*id=[0-9]+/,
 	bookmarks: /^http(s?)(s?):\/\/www.pixiv.net\/bookmark.php\?.*id=[0-9]+/,
@@ -43,6 +44,8 @@ let patterns = {
  * in the manifest.json and optimize the loading here. Eh.
  */
 export function dispatch(path:string):RootPage {
+	log.info('Dispatching on path', path);
+	
 	if (path.match(patterns.illust)) {
 		return new IllustrationPage(path);
 	}

@@ -1,10 +1,7 @@
 language: node_js
 node_js:
-  - "6.1"
+  - "10"
 before_script:
-  - npm install -g gulp
-  - npm install -g typescript
-  - npm install -g typings
-  - npm install
-  - typings install
-script: gulp
+  - npm i
+script: 
+  - npm run build

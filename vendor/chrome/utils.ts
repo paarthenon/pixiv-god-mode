@@ -1,4 +1,7 @@
-import {potentialData as IConfigValue} from 'src/core/IConfig'
+import {potentialData as IConfigValue} from 'src/core/IConfig';
+import _log from 'src/log';
+
+const log = _log.setCategory('Chrome Utils');
 
 export function getFromConfig(key: string): Promise<{[key:string]:IConfigValue}> {
 	return new Promise(resolve =>
@@ -43,6 +46,12 @@ export function isPageBookmarked(url:string) {
 	return new Promise<boolean>(resolve => chrome.bookmarks.search({url}, results => resolve(results.length > 0)));
 }
 export function download(data:string, filename:string) {
-	chrome.downloads.download({url:data, filename, saveAs: true});
-	return Promise.resolve(true);
+	log.info('Downloading file as', data, 'to name', filename);
+	return new Promise<boolean>(resolve => {
+		chrome.downloads.download({
+			url:data, 
+			filename,
+			saveAs: true,
+		}, () => resolve(true));
+	})
 }

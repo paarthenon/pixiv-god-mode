@@ -17,9 +17,7 @@ import * as pathUtils from 'src/utils/path'
 export class RawImagePage extends RootPage {
 	@ExecuteOnLoad
 	public bindEvent(){
-		console.log('Binding event');
 		$('img').on('dblclick', () => {
-			console.log('double clicked');
 			this.returnToImage();
 		});
 	}

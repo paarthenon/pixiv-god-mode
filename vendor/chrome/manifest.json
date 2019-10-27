@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Pixiv Assistant (BETA)",
   "description": "Adds tag translation, a suite of enhancements, and repository management to Pixiv",
-  "version": "0.2.6",
+  "version": "0.3.0",
 
   "browser_action": {
   	"default_icon": "resources/pa-icon-38.png",
@@ -34,6 +34,8 @@
     "storage",
     "bookmarks",
     "downloads",
+    "webRequest",
+    "webRequestBlocking",
     "*://*.pixiv.net/*",
     "*://*.pximg.net/*",
     "http://api.github.com/*",

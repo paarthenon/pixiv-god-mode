@@ -68,25 +68,31 @@ export class IllustrationToolbarContainer extends React.Component<IllustrationTo
 	componentWillMount() {
         this.state = {
             serverConnected: false,
-            mode: DownloadStates.LOADINGSTATUS,
-            progressText: 'Ready (Checking for server connection)',
+            mode: DownloadStates.DOWNLOADAVAILABLE,
+            progressText: 'Ready',
         }
+        // TODO Electron: Patch back in eventually.
+        // this.state = {
+        //     serverConnected: false,
+        //     mode: DownloadStates.LOADINGSTATUS,
+        //     progressText: 'Ready (Checking for server connection)',
+        // }
         
-		this.props.existsFunc().then(result => {
-            let dState = {
-                // If we got a result, the server connected.
-                serverConnected: true,
-                // Set image downloaded state.
-                mode: (result) ? DownloadStates.DOWNLOADED : DownloadStates.DOWNLOADAVAILABLE,
-                progressText: (result) ? 'Image is already downloaded' : 'Ready (Connected)'
-            }
+		// this.props.existsFunc().then(result => {
+        //     let dState = {
+        //         // If we got a result, the server connected.
+        //         serverConnected: true,
+        //         // Set image downloaded state.
+        //         mode: (result) ? DownloadStates.DOWNLOADED : DownloadStates.DOWNLOADAVAILABLE,
+        //         progressText: (result) ? 'Image is already downloaded' : 'Ready (Connected)'
+        //     }
             
-            this.patchState(this.state, dState);
-		}).catch(() => {
-            this.patchState(this.state, {
-                progressText: 'Ready (Browser Only)'
-            })
-        })
+        //     this.patchState(this.state, dState);
+		// }).catch(() => {
+        //     this.patchState(this.state, {
+        //         progressText: 'Ready (Browser Only)'
+        //     })
+        // })
 	}
 
     protected updateProgress(progressText?:string) {

@@ -68,17 +68,17 @@ gulp.task('build-less-content', () =>  buildLESS('res/less/content.less', 'build
 
 gulp.task('build-less', gulp.series('build-less-popup', 'build-less-content'));
 
-gulp.task('chrome-resources', gulp.series('build', function(){
+gulp.task('chrome-resources', function(){
 	return Promise.all([
 		fileCopy('vendor/chrome/**/*.html', 'dist/chrome/vendor/chrome'),
 		fileCopy('vendor/chrome/resources/**/*', 'dist/chrome/resources'),
 		fileCopy('vendor/chrome/manifest.json', 'dist/chrome'),
 	]);
-}));
+});
 
-gulp.task('chrome-code', gulp.series('build', function(){
+gulp.task('chrome-code', function(){
 	return Promise.all(props.map(prop => fileCopy(prop.merged, prop.dest)));
-}));
+});
 
 gulp.task('chrome-css', gulp.series('build-less', () => {
 	return fileCopy('build/css/**/*.css', 'dist/chrome/css');
@@ -89,6 +89,7 @@ gulp.task('chrome-fonts', () => {
 });
 
 gulp.task('dev', gulp.series(
+	'build',
 	'chrome-code',
 	'chrome-resources',
 	'chrome-css',
@@ -96,6 +97,7 @@ gulp.task('dev', gulp.series(
 ));
 
 gulp.task('release', gulp.series(
+	'build',
 	'chrome-code',
 	'chrome-resources',
 	'chrome-css',
@@ -106,4 +108,4 @@ gulp.task('build-tests', () => consoleCommand('tsc -p test'));
 // TODO: Use alsatian's API like an adult.
 gulp.task('test', gulp.series('build-tests', () => consoleCommand('node ./node_modules/alsatian/cli/alsatian-cli.js build/test/**/*.js')));
 
-gulp.task('default', gulp.series('dev'));
+gulp.task('default', gulp.task('dev'));

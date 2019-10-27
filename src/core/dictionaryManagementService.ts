@@ -3,8 +3,9 @@ import IConfig from 'src/core/IConfig'
 import {GithubDictionaryUtil} from 'src/core/githubDictionaryUtil'
 
 import ConfigKeys from 'src/configKeys'
-import {prefix} from 'src/utils/log'
-let console = prefix('Dictionary Management Service');
+
+import log from 'src/log';
+const console = log.setCategory('Dictionary Mgmt Svc');
 
 export interface AppKeys {
 	global :string
@@ -128,7 +129,7 @@ export class DictionaryManagementService extends CachedDictionaryService {
 	) {	super(config, keys); }
 
 	public get globalUpdateAvailable() : Promise<boolean> {
-		let methodConsole = prefix('globalUpdateAvailable', console);
+		let methodConsole = console.subCategory('globalUpdateAvailable');
 		methodConsole.debug('checking if there is a global dictionary update available');
 		return this.ghUtils.masterCommit.then(commitHash => {
 			return this.config.get(ConfigKeys.official_dict_hash).then<boolean>(currentHash => {

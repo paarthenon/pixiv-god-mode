@@ -6,8 +6,8 @@ import {Model} from 'pixiv-assistant-common'
 import {Container as Deps} from 'src/deps'
 import SettingKeys from 'src/settingKeys'
 
-import {prefix} from 'src/utils/log'
-let console = prefix('Follow Artist Page');
+import log from 'src/log';
+let console = log.subCategory('Follow Artist Page');
 
 export class FollowArtistPage extends RootPage {
 	public get artistId():number {

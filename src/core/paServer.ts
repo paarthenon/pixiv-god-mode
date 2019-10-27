@@ -4,8 +4,8 @@ import {AjaxFunction} from 'src/core/IAjax'
 import IConfig from 'src/core/IConfig'
 import ConfigKeys from 'src/configKeys'
 
-import {prefix} from 'src/utils/log'
-let console = prefix('Server Connection');
+import log from 'src/log';
+let console = log.subCategory('Server Connection');
 
 /**
  * Handles all functionality connecting to the database component. 

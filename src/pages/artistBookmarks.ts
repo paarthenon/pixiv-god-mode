@@ -10,8 +10,8 @@ import SettingKeys from 'src/settingKeys'
 
 import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
 
-import {prefix} from 'src/utils/log'
-let console = prefix("Artist's Bookmarks Page");
+import log from 'src/log';
+let console = log.subCategory("Artist's Bookmarks Page");
 
 /**
  * A listing of images that a specific artist has bookmarked.
@@ -89,7 +89,7 @@ export class ArtistBookmarksPage extends GalleryPage {
 
 	@ExecuteIfSetting(SettingKeys.global.directToManga)
 	public replaceMangaThumbnailLinksToFull(){
-		console.log('Replacing manga links to link to the viewer');
+		console.info('Replacing manga links to link to the viewer');
 		super.replaceMangaThumbnailLinksToFull();
 	}
 }

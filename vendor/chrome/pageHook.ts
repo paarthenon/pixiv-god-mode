@@ -29,7 +29,7 @@ export function pixivExec(){
 	document.addEventListener('pixivExec', function(event) {
 		let deets:PixivExecDetails = JSON.parse((<any>event).detail);
 		let func = eval(`(${deets.func})`);
-		let result = func((<any>window).pixiv, deets.props);
+		let result = func((<any>window).globalInitData, deets.props);
 
 		Promise.resolve(result).then(result => {
 			let detailObject = {

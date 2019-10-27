@@ -6,6 +6,7 @@ import {ExecBroker} from 'vendor/chrome/execBroker'
 import {getSetting} from 'vendor/chrome/userSettings'
 
 import * as Dependencies from 'src/deps'
+import log from 'src/log';
 
 let broker = new ExecBroker();
 
@@ -21,5 +22,7 @@ let deps: Dependencies.IDependencyContainer = {
 
 Dependencies.load(deps);
 
-import {dispatch} from 'src/dispatch'
+log.info('Initializing Pixiv Assistant. Preparing to dispatch');
+
+import {dispatch} from 'src/dispatch';
 dispatch(document.location.href);

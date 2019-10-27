@@ -5,22 +5,27 @@ import * as pathUtils from 'src/utils/path'
 import {tap} from 'src/utils/promise'
 import {RootPage} from 'src/pages/root'
 import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators'
-import {default as SettingKeys, AddToBookmarksButtonType} from 'src/settingKeys'
+import {default as SettingKeys} from 'src/settingKeys'
 import {PixivAssistantServer} from 'src/services'
 import {Container as Deps} from 'src/deps'
-import {Model, Messages} from 'pixiv-assistant-common'
+import {Model} from 'pixiv-assistant-common'
 import {UgokuInformation} from 'src/core/IUgoku'
-import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector'
-import {injectBookmarksClone} from 'src/injectors/addToBookmarksClone'
 import {injectIllustrationToolbar} from 'src/injectors/illustrationToolbar'
 
 import * as geomUtils from 'src/utils/geometry'
 import {getBlob} from 'src/utils/ajax'
 import {execSequentially} from 'src/utils/promise'
-import {toCanvasInstance} from 'src/utils/document'
+import {toCanvasInstance, awaitElement} from 'src/utils/document'
 import * as pixivBridge from 'src/utils/pixivBridge'
 
 import * as whammy from 'whammy'
+
+import baselog from 'src/log';
+import {Sigil} from 'daslog'
+import {saveAs} from 'file-saver';
+
+const log = baselog.subCategory('Illust Page');
+const hlog = log.append(Sigil.Label('[=|=]'));
 
 export enum IllustrationType {
 	Picture,
@@ -35,22 +40,51 @@ export enum IllustrationType {
 export class IllustrationPage extends RootPage {
 	public isBusy:boolean = false;
 
-	public get artistId():number {
-		return pathUtils.getArtistId($('a.user-link').attr('href'));
+	@ExecuteOnLoad
+	public async debug() {
+
+
+		const artist = await this.artist;
+		const thumbUrl = await this.thumbUrl;
+		const fullUrl = await this.fullImageUrl;
+		const userId = await Deps.execOnPixiv(pixiv => pixiv.userData.id);
+
+		hlog.debug('Artist info');
+		log.debug('Artist Id', artist.id)
+		log.debug('Artist Name:', artist.name);
+		hlog.debug('Picture info');
+		log.debug('Thumbnail:', thumbUrl);
+		log.debug('Full Url', fullUrl);
+		log.debug('Illust Id', this.imageId);
+		log.debug('Illust Type', this.illustrationType);
+		log.debug('User ID:', userId);
 	}
-	public get artistName():string {
-		return $('a.user-link h1').text();
+
+	public  get artistId() {
+		return awaitElement<HTMLAnchorElement>('#root aside section:nth-child(1) a')
+			.then($elem => $elem.attr('href'))
+			.then(pathUtils.getArtistId);
 	}
-	public get artist():Model.Artist {
-		return { id: this.artistId, name: this.artistName };
+	public get artistName() {
+		return awaitElement('#root aside section:nth-child(1) a').then($elem => $elem.text());
 	}
-	public get thumbUrl():string {
-		return $('.boxbody center img').attr('src');
+	public get artist(): Promise<Model.Artist> {
+		return Promise.all([this.artistId, this.artistName])
+			.then(([id, name]) => ({id, name}))
 	}
-	public get fullImageUrl():string {
-		return $('._illust_modal img').attr('data-src');
+	private get $image() {
+		return awaitElement('#root main figure img');
 	}
-	public get imageId():number {
+	public get thumbUrl() {
+		return this.$image.then(elem => elem.attr('src'));
+	}
+	public get fullImageUrl(): Promise<string> {
+		return Deps.execOnPixiv((p, props) => p.preload.illust[props.imageId].urls.original
+		, {
+			imageId: this.imageId,
+		});
+	}
+	public get imageId() {
 		return pathUtils.getImageId(this.path);
 	}
 	public get ugokuInfo():Promise<UgokuInformation> {
@@ -59,9 +93,11 @@ export class IllustrationPage extends RootPage {
 	public get ugokuCanvas():HTMLCanvasElement {
 		return $('._ugoku-illust-player-container canvas')[0] as HTMLCanvasElement;
 	}
-	public get imageDimensions():Promise<geomUtils.Rectangle> {
-		return Deps.execOnPixiv<number[]>(pixiv => pixiv.context.illustSize)
-			.then(dims => ({width:dims[0], height:dims[1]}));
+	public get imageDimensions(): Promise<geomUtils.Rectangle> {
+		return this.$image.then($img => ({
+			width: parseInt($img.attr('width')),
+			height: parseInt($img.attr('height')),
+		}));
 	}
 
 	public get illustrationType():IllustrationType {
@@ -81,10 +117,15 @@ export class IllustrationPage extends RootPage {
 		].map(tag => $(tag)).concat(super.getTagElements());
 	}
 
+	@ExecuteOnLoad
+	public log() {
+		log.info('Illustration page recognized');
+	}
+
 	@ExecuteIfSetting(SettingKeys.pages.illust.inject.toolbar)
 	public injectToolbar() {
 		injectIllustrationToolbar({
-			existsFunc: () => PixivAssistantServer.imageExistsInDatabase(this.artist, {id: this.imageId}),
+			existsFunc: async () => PixivAssistantServer.imageExistsInDatabase(await this.artist, {id: this.imageId}),
 			downloadInBrowser: this.downloadIllustrationLocal.bind(this),
 			downloadUsingServer: this.downloadIllustration.bind(this),
 			openToImage: () => PixivAssistantServer.openImageFolder({id: this.imageId}),
@@ -103,40 +144,25 @@ export class IllustrationPage extends RootPage {
 		});
 	}
 
-	@ExecuteOnLoad
-	public injectBookmarkButtonClone() {
-		Deps.getSetting(SettingKeys.pages.illust.addBookmarkButtonType).then(type => {
-			let enumType = parseInt(type as any); //Horrible and hacky, need to generalize getSetting.TODO.
-			switch (enumType) {
-				case AddToBookmarksButtonType.MODAL:
-					injectBookmarksClone(() => {
-						Deps.execOnPixiv(pixiv => {
-							pixiv.bookmarkModal.open();
-						});
-					});
-					break;
-				case AddToBookmarksButtonType.ONE_CLICK:
-					injectBookmarksClone(() => {
-						$('div.bookmark-add-modal div.submit-container input[type="submit"]').click()
-					}, 'Instant Add Bookmark');
-					break;
-			}
-		})
-	}
-
-	@ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
-	public injectOpenFolder() {
-		injectUserRelationshipButton(this.artist);
-	}
+	// TODO ELECTRON: Re-enable once server comes back.
+	// @ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
+	// public async injectOpenFolder() {
+	// 	injectUserRelationshipButton(await this.artist);
+	// }
 
 	@ExecuteIfSetting(SettingKeys.pages.illust.autoOpen)
-	public openImage(): void {
-		$("._layout-thumbnail.ui-modal-trigger").click()
+	public async openImage() {
+		log.info('Image will open as soon as it is loaded');
+		const $img = await awaitElement('main img');
+		log.info('Image loaded. Opening');
+		$img.click();
+		log.info('Image should be open');
 	}
 
+	// TODO: Evaluate if obsolete. Seems like it. 
 	@ExecuteIfSetting(SettingKeys.pages.illust.boxImage)
-	public resizeOpenedImage() : void {
-		let image = $('img.original-image');
+	public async resizeOpenedImage() {
+		let image = await awaitElement('div[role=presentation] > div > div > div > img');
 
 		let originalBounds = {
 			width: parseInt(image.attr('width')),
@@ -153,36 +179,37 @@ export class IllustrationPage extends RootPage {
 		image.height(newBounds.height);
 	}
 
-	@ExecuteOnLoad
-	public injectTrigger() {
-		new MutationObserver(this.fadeRecommendations.bind(this))
-			.observe($('section#illust-recommend ul')[0], { childList: true });
-	}
-	@ExecuteOnLoad
-	public fadeRecommendations() {
-		function recommendationDetails(li:JQuery) : Messages.ArtistImageRequest {
-			let img = li.find('a.work img._thumbnail');
-			let imageId = pathUtils.getImageIdFromSourceUrl(img.attr('src'));
-			let artistId = parseInt(img.attr('data-user-id'));
-			return {
-				artist: {
-					id: artistId,
-					name: '', //TODO: remove pending refactor of core protocol.
-				},
-				image: {
-					id: imageId,
-				}
-			}
-		}
-		$('section#illust-recommend li').toArray().map(x => $(x)).forEach(liElem => {
-			let msg = recommendationDetails(liElem);
-			PixivAssistantServer.imageExistsInDatabase(msg.artist, msg.image).then(exists => {
-				if (exists) {
-					liElem.addClass('pa-hidden-thumbnail');
-				}
-			})
-		});
-	}
+	// TODO ELECTRON: Fading needs library server
+	// @ExecuteOnLoad
+	// public injectTrigger() {
+	// 	new MutationObserver(this.fadeRecommendations.bind(this))
+	// 		.observe($('section#illust-recommend ul')[0], { childList: true });
+	// }
+	// @ExecuteOnLoad
+	// public fadeRecommendations() {
+	// 	function recommendationDetails(li:JQuery) : Messages.ArtistImageRequest {
+	// 		let img = li.find('a.work img._thumbnail');
+	// 		let imageId = pathUtils.getImageIdFromSourceUrl(img.attr('src'));
+	// 		let artistId = parseInt(img.attr('data-user-id'));
+	// 		return {
+	// 			artist: {
+	// 				id: artistId,
+	// 				name: '', //TODO: remove pending refactor of core protocol.
+	// 			},
+	// 			image: {
+	// 				id: imageId,
+	// 			}
+	// 		}
+	// 	}
+	// 	$('section#illust-recommend li').toArray().map(x => $(x)).forEach(liElem => {
+	// 		let msg = recommendationDetails(liElem);
+	// 		PixivAssistantServer.imageExistsInDatabase(msg.artist, msg.image).then(exists => {
+	// 			if (exists) {
+	// 				liElem.addClass('pa-hidden-thumbnail');
+	// 			}
+	// 		})
+	// 	});
+	// }
 
 	public downloadAnimation(updateText:(text:string) => void) {
 		function getBase64(blob:Blob) :Promise<string> {
@@ -200,10 +227,14 @@ export class IllustrationPage extends RootPage {
 			.then(video => 
 				getBase64(video).then(b64 => {
 					updateText('Server is downloading the video');
-					return PixivAssistantServer.downloadAnimation({
-						artist: this.artist,
-						image: { id: this.imageId, animation: true },
-					}, b64).then(tap(() => updateText('Download Completed')))
+					return this.artist
+						.then(artist => {
+							return PixivAssistantServer.downloadAnimation({
+								artist,
+								image: { id: this.imageId, animation: true },
+							}, b64);
+						})
+						.then(tap(() => updateText('Download Completed')))
 				})
 			).then(() => {this.isBusy = false});
 	}
@@ -231,11 +262,12 @@ export class IllustrationPage extends RootPage {
 		}
 	}
 
-	public downloadSinglePictureLocal() {
-		return Deps.download(this.fullImageUrl, this.fullImageUrl.split('/').pop());
+	public async downloadSinglePictureLocal() {
+		const url = await this.fullImageUrl;
+		saveAs(url, url.split('/').pop());
 	}
-	public downloadSinglePicture() {
-		return PixivAssistantServer.download(this.artist, this.fullImageUrl);
+	public async downloadSinglePicture() {
+		return PixivAssistantServer.download(await this.artist, await this.fullImageUrl);
 	}
 
 	protected generateMangaPageUrls() :Promise<string[]> {
@@ -252,11 +284,10 @@ export class IllustrationPage extends RootPage {
 		});
 	}
 	public downloadManga() {
-		return this.generateMangaPageUrls().then(urls => 
-			PixivAssistantServer.downloadMulti(this.artist, urls)
+		return this.generateMangaPageUrls().then(async urls => 
+			PixivAssistantServer.downloadMulti(await this.artist, urls)
 		)
 	}
-
 
 	public zipManga(updateText:(text:string) => void) {
 		updateText('Collecting image locations');
@@ -286,38 +317,36 @@ export class IllustrationPage extends RootPage {
 		})
 	}
 
-	protected makeWebM(updateText:(text:string) => void): Promise<Blob> {
+	protected async makeWebM(updateText:(text:string) => void): Promise<Blob> {
 		let video = new whammy.Video(undefined, 0.9);
 
 		this.isBusy = true;
 
-		return this.ugokuInfo
-			.then(tap(() => updateText('Downloading ugoira data')))
-			.then(info => getBlob(info.src))
-			.then(tap(() => updateText('Reading ugoira data')))
-			.then<jszip>(data => jszip().loadAsync(data))
-			.then(zip => {
-				let fileData: {[id:string]:Promise<string>} = {}	
-				zip.forEach((path, file) => {
-					fileData[path] = file.async('base64');
-				});
+		const info = await this.ugokuInfo;
+		updateText('Downloading ugoira data');
+		const rawData = await getBlob(info.src);
+		const zipData = await jszip().loadAsync(rawData);
 
-				let currentFrame = 1;
-				return this.ugokuInfo.then(info => 
-					execSequentially(info.frames, frame => {
-						updateText(`Processing frame ${currentFrame++} of ${info.frames.length}`);
-						return fileData[frame.file].then(rawData => 
-							this.imageDimensions.then(dims => {
-								let dataUrl = `data:${info.mime_type};base64,${rawData}`;
-								return toCanvasInstance(dataUrl, dims)
-									.then(canvas => video.add(canvas, frame.delay))
-							})
-						)
-					})
-				)
-			}).then(tap(() => updateText('Encoding video')))
-			.then(() => video.compile())
-			.then(tap(() => updateText('Video ready to download')));
+		let fileData: {[id:string]:Promise<string>} = {}	
+		zipData.forEach((path, file) => {
+			fileData[path] = file.async('base64');
+		});
+
+		let currentFrame = 1;
+		await execSequentially(info.frames, frame => {
+			updateText(`Processing frame ${currentFrame++} of ${info.frames.length}`);
+			return fileData[frame.file].then(rawData => 
+				this.imageDimensions.then(dims => {
+					let dataUrl = `data:${info.mime_type};base64,${rawData}`;
+					return toCanvasInstance(dataUrl, dims)
+						.then(canvas => video.add(canvas, frame.delay))
+				})
+			)
+		});
+
+		updateText('Encoding video')
+		updateText('Video ready to download');
+		return video.compile();
 	}
 
 }

@@ -1,6 +1,10 @@
 import {Model} from 'pixiv-assistant-common'
 import * as pathUtils from 'src/utils/path'
 import {Rectangle} from 'src/utils/geometry'
+import * as $ from 'jquery';
+import uLog from './log';
+
+const log = uLog.subCategory('Document').setMinimumLogLevel('warn');
 
 export function artistFromJQImage(image:JQuery):Model.Artist {
 	return {
@@ -22,6 +26,10 @@ export function hackedNewTab(jQ:JQueryStatic, url:string) {
 	jQ(`<a target="_blank" href="${url}"></a>`)[0].click();
 }
 
+export function hackedDL(jQ:JQueryStatic, url:string) {
+	jQ(`<a href="${url}"></a>`)[0].click();
+}
+
 export function toCanvasInstance(dataUrl:string, dims:Rectangle) {
 	return new Promise((resolve, reject) => {
 		let invisiCanvas = document.createElement('canvas') as HTMLCanvasElement;
@@ -38,5 +46,52 @@ export function toCanvasInstance(dataUrl:string, dims:Rectangle) {
 			reject(err);
 		})
 		img.src = dataUrl;
+	});
+}
+
+export function awaitElement<E extends HTMLElement = HTMLElement>(selector: string, baseElement = document.getElementById('root')): Promise<JQuery<E>> {
+	return new Promise(resolve => {
+		new MutationObserver((_list, _obs) => {
+			log.debug('Mutation observed from', baseElement);
+			log.debug('Mutation log:', _list);
+
+			const removed = _list.filter(m => m.removedNodes.length > 0 && $(m.removedNodes[0]).hasClass('pixiv-assistant')).map(m => m.removedNodes[0]);
+			if (removed.length > 0) {
+				log.warn('removed list includes pixiv assistant app', removed);
+			}
+
+			let $elem = $(selector) as JQuery<E>;
+			log.debug('elem is', $elem);
+			if ($elem.length > 0) {
+				log.debug('elem does indeed exist');
+				resolve($elem);
+			}
+		}).observe(baseElement, {
+			childList: true,
+			subtree: true,
+		});
+	});
+}
+
+export function awaitUntil<E extends HTMLElement = HTMLElement>(condition: () => JQuery<E> | false, baseElement = document.getElementById('root')): Promise<JQuery<E>> {
+	return new Promise(resolve => {
+		new MutationObserver((_list, _obs) => {
+			log.debug('Mutation observed from', baseElement);
+			log.debug('Mutation log:', _list);
+
+			const removed = _list.filter(m => m.removedNodes.length > 0 && $(m.removedNodes[0]).hasClass('pixiv-assistant')).map(m => m.removedNodes[0]);
+			if (removed.length > 0) {
+				log.warn('removed list includes pixiv assistant app', removed);
+			}
+
+			const $elem = condition();
+			if ($elem) {
+				_obs.disconnect();
+				resolve($elem);
+			}
+		}).observe(baseElement, {
+			childList: true,
+			subtree: true,
+		});
 	});
 }

@@ -1,3 +1,7 @@
+import utilLog from './log';
+
+const log = utilLog.subCategory('Path');
+
 // Lazy programmer
 function extract(str: string, re: RegExp):string {
 	if (str == undefined) return undefined;
@@ -5,11 +9,16 @@ function extract(str: string, re: RegExp):string {
 	return (out && out.length > 1)? out[1]:null
 }
 export function getImageId(path: string):number {
-	return parseInt(extract(path, /illust_id=([0-9]*)/));
+	const id = parseInt(extract(path, /artworks\/([0-9]*)/));
+	log.debug(`found id[${id}] from image path [${path}]`);
+	return id;
 }
 export function getArtistId(path: string):number {
-	return parseInt(extract(path, /^.*id=([0-9]*)/));
+	const id = parseInt(extract(path, /^.*id=([0-9]*)/));
+	log.debug(`found id [${id}] from [${path}]`);
+	return id;
 }
+
 export function getMaxSizeImageUrl(url: string):string {
 	return url
 		.replace(/(c\/(:600x600|1200x1200)\/)?img-master/, 'img-original')

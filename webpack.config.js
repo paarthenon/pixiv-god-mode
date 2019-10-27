@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 process.traceDeprecation = true;
 
@@ -18,17 +18,27 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.ts(x?)$/,
+                test: /\.tsx?$/,
                 exclude: /node_modules/,
                 use: [
                     {
                         loader: 'babel-loader',
-                        // TODO: revert to options object once babel-loader fully supports it.
-                        query: 'presets[]=es2015'
+                        options: {
+                            babelrc: false,
+                            presets: [
+                                ["@babel/preset-env", { "targets": { "node": "10" }, "modules": false }]
+                            ],
+                            plugins: [
+                                '@babel/plugin-transform-async-to-generator',
+                            ]
+                        }
                     },
-                    'ts-loader'
+                    {
+                        loader: 'ts-loader',
+                    }
                 ]
-            }
+
+            },
         ]
     },
     resolve: {
@@ -44,11 +54,11 @@ module.exports = {
     },
     optimization: {
         minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
+            new TerserPlugin({
+                terserOptions: {
                     mangle: false,
                     output: {
-                        ascii_only: true
+                        ascii_only: true,
                     }
                 }
             }),
@@ -56,7 +66,6 @@ module.exports = {
     },
     //TODO: separate these plugins between dev and prod.
     plugins: [
-        
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         })

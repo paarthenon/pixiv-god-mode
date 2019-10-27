@@ -19,19 +19,16 @@ declare module 'react-bootstrap' {
  */
 export class DropdownSetting extends React.Component<DropdownSettingProps, {}> {
 	handleExecute(event:React.FormEvent<HTMLInputElement>) {
-        console.log('ev',(event.target as any).value); //TODO: confirm generic, consider currentTarget property
 		this.props.onChange((event.target as any).value);
 	}
 
 	initializeElement(ref:HTMLInputElement){
-        console.log('ref',ref);
 		if(ref) {
 			ref.value = this.props.selected;
 		}
 	}
 
 	public render() {
-        // const PersonalFormControl:any = Bootstrap.FormControl; // TODO: fix missing 'inputRef' property on .d.ts
 		return <div>
             <Bootstrap.FormGroup controlId="formControlsSelect">
                 <Bootstrap.ControlLabel>{this.props.label}</Bootstrap.ControlLabel>

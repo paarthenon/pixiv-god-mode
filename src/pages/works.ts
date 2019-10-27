@@ -14,8 +14,8 @@ import {Container as Deps} from 'src/deps'
 
 import * as pixivBridge from 'src/utils/pixivBridge'
 
-import {prefix} from 'src/utils/log'
-let console = prefix('Works Page');
+import log from 'src/log';
+let console = log.subCategory('Works Page');
 
 /**
  * The listing of an artist's works. 
@@ -104,7 +104,7 @@ export class WorksPage extends GalleryPage {
 		
 		Deps.getSetting(SettingKeys.pages.works.openTabsImagesOnly).then(imagesOnly => {
 			if(imagesOnly) {
-				console.log('opening images only.')
+				console.info('opening images only.')
 				/*
 				For each image
 					- if a manga or ugoira page, return the viewing url directly

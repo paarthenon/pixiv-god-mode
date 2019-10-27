@@ -1,7 +1,7 @@
 import {AjaxFunction} from 'src/core/IAjax'
 
-import {prefix} from 'src/utils/log'
-let console = prefix('Google Translate API');
+import log from 'src/log';
+let console = log.subCategory('Google Translate API');
 
 /**
  * Takes advantage of an undocumented API. May stop working at any point, really. Living on the edge...

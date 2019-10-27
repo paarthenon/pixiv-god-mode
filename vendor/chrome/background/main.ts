@@ -69,6 +69,19 @@ function firstTimeSetup(){
 		}
 	});
 
+	chrome.webRequest.onBeforeSendHeaders.addListener(details => {
+		details.requestHeaders.push({
+			name: 'Referer',
+			value: 'https://www.pixiv.net/',
+		});
+		return {requestHeaders: details.requestHeaders};
+	}, {
+		urls: [
+			"*://*.pixiv.net/*",
+			"*://*.pximg.net/*",
+		]
+	}, ['blocking', 'requestHeaders', 'extraHeaders']);
+
 	// TODO: Create a more mature settings object and a default settings object
 	config.get(ConfigKeys.server_url).catch(() => config.set(ConfigKeys.server_url, 'http://localhost:50415/'));
 }
