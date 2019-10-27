@@ -1,12 +1,60 @@
 # Pixiv Assistant
 
-Pixiv Assistant is a chrome extension adding functionality to the popular gallery site Pixiv. It focuses on three main things.
+Pixiv Assistant is a chrome extension adding functionality to the popular gallery site Pixiv. It features enhanced tag translation, library management to help filter content and find new content, plus plenty of little changes for convenience. 
 
- 1. **Tag Translation**. 
- 1. **Convenience and Utility**. 
- 1. **Image Management**. 
+This project has been active on and off for a couple of years. There's a lot here, I'm currently modernizing the thing preparing it for a release. 
 
-# Feature Breakdown
+# Development
+
+The extension is written in Typescript + React. Main application logic is stored under the 'src' folder. Build-specific information (chrome vs. firefox, etc.) is set up in the vendor/ folders. The content script portion of the extension is set up as 'pages' that are dispatched to and actions defined on each page type.
+
+Building is straightforward
+
+```
+npm install
+npm run build
+```
+
+Currently this takes ~20-30 seconds. I'd like to get this down lower and get to watched rebuilds.
+
+****
+
+# Feature Inventory
+
+## Tags
+
+Tags have been implemented by pixiv but don't yet 
+
+## Page Modifications
+
+### Illustration
+
+Scrapes:
+ * artist (Id, Name)
+ * image
+   * id
+   * thumbnail url
+   * full resolution url
+   * illustration type
+ * user ID
+
+Features:
+ * Show closeup image immediately (Toggle on/off)
+ * Limit closeup view to window bounds (Toggle on/off)
+ * 1-click download of original hi-res images
+   * and manga as a .zip file (TODO Confirm)
+   * and animations as .gif or .webm (TODO Confirm)
+ * Injectable toolbar to manage download
+ * Seamless companion app downloads (TODO Confirm)
+
+### Raw Image (url is literal path to .jpg/.png)
+
+ * Double clicking the image brings you back to the pixiv artwork page for the image.
+
+
+**** 
+
+# Feature Breakdown (OUTDATED. Reference only)
 
 ## Tag translation
 
@@ -45,6 +93,3 @@ As you build up a collection of downloaded images, it can be harder and harder t
  - Visiting a work that's already been saved will show a button that will open the folder containing the image in your file explorer.
  - The downloading features from earlier work seamlessly with the server, including optional organizational schemes like saving to folders by organized by the image's artist.
   
-# Development
-
-The extension is written in Typescript + React. Main application logic is stored under the 'src' folder. Build-specific information (chrome vs. firefox, etc.) is set up in the vendor/ folders. The content script portion of the extension is set up as 'pages' that are dispatched to and actions defined on each page type.
