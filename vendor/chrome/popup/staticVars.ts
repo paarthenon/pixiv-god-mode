@@ -1,7 +1,7 @@
 // Kind of dumb but KISS.
 
 let defaults = {
-    buttonStyle: 'info'
-}
+    buttonStyle: 'info',
+};
 
 export default defaults;

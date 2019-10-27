@@ -1,58 +1,50 @@
 {
-  "manifest_version": 2,
-  "name": "Pixiv Assistant (BETA)",
-  "description": "Adds tag translation, a suite of enhancements, and repository management to Pixiv",
-  "version": "0.3.0",
+    "manifest_version": 2,
+    "name": "Pixiv Assistant (BETA)",
+    "description": "Adds tag translation, a suite of enhancements, and repository management to Pixiv",
+    "version": "0.3.0",
 
-  "browser_action": {
-  	"default_icon": "resources/pa-icon-38.png",
-  	"default_title": "Pixiv Assistant",
-  	"default_popup": "vendor/chrome/popup/popup.html"
-  },
-  "content_scripts": [{
-    "matches": [
-      "*://*.pixiv.net/*",
-      "*://*.pximg.net/*"
-  	],
-  	"js": [
-      "vendor/chrome/content.min.js"
-  	],
-    "css": [
-      "resources/css/inject.css",
-      "/css/content.css"
+    "browser_action": {
+        "default_icon": "resources/pa-icon-38.png",
+        "default_title": "Pixiv Assistant",
+        "default_popup": "vendor/chrome/popup/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.pixiv.net/*", "*://*.pximg.net/*"],
+            "js": ["vendor/chrome/content.min.js"],
+            "css": ["resources/css/inject.css", "/css/content.css"]
+        }
+    ],
+    "background": {
+        "scripts": ["vendor/chrome/background.min.js"]
+    },
+    "options_ui": {
+        "page": "vendor/chrome/options/index.html"
+    },
+    "permissions": [
+        "storage",
+        "bookmarks",
+        "downloads",
+        "webRequest",
+        "webRequestBlocking",
+        "*://*.pixiv.net/*",
+        "*://*.pximg.net/*",
+        "http://api.github.com/*",
+        "https://cdn.rawgit.com/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+    ],
+    "icons": {
+        "128": "resources/pa-icon-128.png"
+    },
+    "web_accessible_resources": [
+        "common/*",
+        "jspm_packages/*",
+        "src/*",
+        "resources/*",
+        "vendor/chrome/*",
+        "css/*",
+        "fonts/*"
     ]
-  }],
-  "background": {
-    "scripts": [
-      "vendor/chrome/background.min.js"
-    ]
-  },
-  "options_ui": {
-    "page": "vendor/chrome/options/index.html"
-  },
-  "permissions": [
-    "storage",
-    "bookmarks",
-    "downloads",
-    "webRequest",
-    "webRequestBlocking",
-    "*://*.pixiv.net/*",
-    "*://*.pximg.net/*",
-    "http://api.github.com/*",
-    "https://cdn.rawgit.com/*",
-    "http://localhost/*",
-    "http://127.0.0.1/*"
-  ],
-  "icons": {
-    "128": "resources/pa-icon-128.png"
-  },
-  "web_accessible_resources": [
-    "common/*",
-    "jspm_packages/*",
-    "src/*",
-    "resources/*",
-    "vendor/chrome/*",
-    "css/*",
-    "fonts/*"
-  ]
 }

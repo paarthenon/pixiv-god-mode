@@ -1,52 +1,58 @@
-import {potentialData as IConfigValue} from 'src/core/IConfig'
-import {AjaxRequest} from 'src/core/IAjax'
+import {potentialData as IConfigValue} from 'src/core/IConfig';
+import {AjaxRequest} from 'src/core/IAjax';
 
 export interface ConfigProtocol {
-	getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>
-	setConfig: (msg: ConfigSetMessage) => Promise<void>
-	listConfig: () => Promise<string[]>
+    getConfig: (msg: ConfigGetMessage) => Promise<ConfigGetResponse>;
+    setConfig: (msg: ConfigSetMessage) => Promise<void>;
+    listConfig: () => Promise<string[]>;
 }
 
 export interface Protocol extends ConfigProtocol {
-	ajax: (req:AjaxRequest<any>) => Promise<any>
-	newTab: (msg: UrlRequest) => Promise<void>
-	isPageBookmarked: (msg: UrlRequest) => Promise<boolean>
-	download: (msg: DownloadRequest) => Promise<boolean>
+    ajax: (req: AjaxRequest<any>) => Promise<any>;
+    newTab: (msg: UrlRequest) => Promise<void>;
+    isPageBookmarked: (msg: UrlRequest) => Promise<boolean>;
+    download: (msg: DownloadRequest) => Promise<boolean>;
 }
 
 export interface RequestWrapper<T> {
-	target: string
-	name: string
-	body: T
+    target: string;
+    name: string;
+    body: T;
 }
 /*
 	Config Messages
 */
 export interface ConfigGetMessage {
-	key: string
+    key: string;
 }
 export interface ConfigGetResponse {
-	value: IConfigValue
+    value: IConfigValue;
 }
-export interface ConfigSetMessage { 
-	key: string, 
-	value: IConfigValue 
+export interface ConfigSetMessage {
+    key: string;
+    value: IConfigValue;
 }
 export interface ResponseMessage {
-	success: boolean
+    success: boolean;
 }
 export interface SuccessfulResponse<T> extends ResponseMessage {
-	data:T
+    data: T;
 }
 export interface FailedResponse extends ResponseMessage {
-	errors: any
+    errors: any;
 }
-export function isSuccessfulResponse(msg: ResponseMessage): msg is SuccessfulResponse<any> { return msg.success }
-export function isFailedResponse(msg: ResponseMessage): msg is FailedResponse { return !msg.success }
+export function isSuccessfulResponse(
+    msg: ResponseMessage,
+): msg is SuccessfulResponse<any> {
+    return msg.success;
+}
+export function isFailedResponse(msg: ResponseMessage): msg is FailedResponse {
+    return !msg.success;
+}
 
 export interface UrlRequest {
-	url: string
+    url: string;
 }
 export interface DownloadRequest extends UrlRequest {
-	filename: string
+    filename: string;
 }

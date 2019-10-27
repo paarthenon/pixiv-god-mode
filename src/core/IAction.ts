@@ -1,9 +1,9 @@
 export interface HasExecutable {
-	execute: () => void
+    execute: () => void;
 }
 
 export interface IsConditional {
-	if?: () => boolean | Promise<boolean>
+    if?: () => boolean | Promise<boolean>;
 }
 
 export type OnLoadFunc = HasExecutable & IsConditional;

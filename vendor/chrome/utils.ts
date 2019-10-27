@@ -3,55 +3,64 @@ import _log from 'src/log';
 
 const log = _log.setCategory('Chrome Utils');
 
-export function getFromConfig(key: string): Promise<{[key:string]:IConfigValue}> {
-	return new Promise(resolve =>
-		chrome.storage.local.get(key, contents => resolve(contents)));
+export function getFromConfig(key: string): Promise<{[key: string]: IConfigValue}> {
+    return new Promise(resolve =>
+        chrome.storage.local.get(key, contents => resolve(contents)),
+    );
 }
 
-export function setConfig(key:string, value: any): Promise<void> {
-	return new Promise<void>(resolve =>
-		chrome.storage.local.set({ [key]: value }, () => resolve()));
+export function setConfig(key: string, value: any): Promise<void> {
+    return new Promise<void>(resolve =>
+        chrome.storage.local.set({[key]: value}, () => resolve()),
+    );
 }
 
-export function listConfigKeys() : Promise<string[]> {
-	return new Promise(resolve =>
-		chrome.storage.local.get({}, contents => resolve(Object.keys(contents))));
+export function listConfigKeys(): Promise<string[]> {
+    return new Promise(resolve =>
+        chrome.storage.local.get({}, contents => resolve(Object.keys(contents))),
+    );
 }
-export function handleError<T>(value: T):Promise<T> {
-	return new Promise((resolve, reject) => {
-		if (!chrome.runtime.lastError) {
-			resolve(value);
-		} else {
-			reject(chrome.runtime.lastError.message);
-		}
-	});
+export function handleError<T>(value: T): Promise<T> {
+    return new Promise((resolve, reject) => {
+        if (!chrome.runtime.lastError) {
+            resolve(value);
+        } else {
+            reject(chrome.runtime.lastError.message);
+        }
+    });
 }
 
-export function queryTabs(obj:chrome.tabs.QueryInfo) : Promise<chrome.tabs.Tab[]> {
-	return new Promise(resolve => {
-		chrome.tabs.query(obj, result => resolve(result));
-	});
+export function queryTabs(obj: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
+    return new Promise(resolve => {
+        chrome.tabs.query(obj, result => resolve(result));
+    });
 }
 
 export function getCurrentTab() {
-	return queryTabs({ active: true, currentWindow: true })
-		.then(tabs => tabs[0]);
+    return queryTabs({active: true, currentWindow: true}).then(tabs => tabs[0]);
 }
 
-export function newTab(url:string, background?:boolean) {
-	return new Promise<void>(resolve => chrome.tabs.create({url, active: !background}, () => resolve()));
+export function newTab(url: string, background?: boolean) {
+    return new Promise<void>(resolve =>
+        chrome.tabs.create({url, active: !background}, () => resolve()),
+    );
 }
 
-export function isPageBookmarked(url:string) {
-	return new Promise<boolean>(resolve => chrome.bookmarks.search({url}, results => resolve(results.length > 0)));
+export function isPageBookmarked(url: string) {
+    return new Promise<boolean>(resolve =>
+        chrome.bookmarks.search({url}, results => resolve(results.length > 0)),
+    );
 }
-export function download(data:string, filename:string) {
-	log.info('Downloading file as', data, 'to name', filename);
-	return new Promise<boolean>(resolve => {
-		chrome.downloads.download({
-			url:data, 
-			filename,
-			saveAs: true,
-		}, () => resolve(true));
-	})
+export function download(data: string, filename: string) {
+    log.info('Downloading file as', data, 'to name', filename);
+    return new Promise<boolean>(resolve => {
+        chrome.downloads.download(
+            {
+                url: data,
+                filename,
+                saveAs: true,
+            },
+            () => resolve(true),
+        );
+    });
 }

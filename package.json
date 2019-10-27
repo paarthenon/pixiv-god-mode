@@ -17,7 +17,8 @@
   "homepage": "https://github.com/paarthenon/pixiv-assistant#readme",
   "scripts": {
     "build": "gulp dev",
-    "test": "gulp test"
+    "test": "gulp test",
+    "prettier": "npx prettier --write src/** vendor/**"
   },
   "prettier": {
     "printWidth": 90,

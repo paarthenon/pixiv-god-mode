@@ -1,14 +1,21 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import SettingKeys from 'src/settingKeys'
+import SettingKeys from 'src/settingKeys';
 
-import {IndividualSettingsPanel} from 'src/components/settings/individualSettingsPanel'
-import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer'
-import {GlobalDictUpdaterContainer} from 'vendor/chrome/options/globalDictionaryUpdaterContainer'
+import {IndividualSettingsPanel} from 'src/components/settings/individualSettingsPanel';
+import {BooleanSettingContainer} from 'vendor/chrome/options/booleanSettingContainer';
+import {GlobalDictUpdaterContainer} from 'vendor/chrome/options/globalDictionaryUpdaterContainer';
 
-export const TranslationSettingsPanel : React.StatelessComponent<{}> = () =>
+export const TranslationSettingsPanel: React.FC<{}> = () => (
     <IndividualSettingsPanel header={'Translations Panel'}>
-        <BooleanSettingContainer settingKey={SettingKeys.global.translateTags} label={'Translate pixiv tags'}/>
-        <BooleanSettingContainer settingKey={SettingKeys.global.autoUpdateDictionary} label={'Automatically sync updates from the global dictionary'}/>
+        <BooleanSettingContainer
+            settingKey={SettingKeys.global.translateTags}
+            label={'Translate pixiv tags'}
+        />
+        <BooleanSettingContainer
+            settingKey={SettingKeys.global.autoUpdateDictionary}
+            label={'Automatically sync updates from the global dictionary'}
+        />
         <GlobalDictUpdaterContainer />
     </IndividualSettingsPanel>
+);
