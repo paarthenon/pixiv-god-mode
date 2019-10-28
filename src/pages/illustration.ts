@@ -120,6 +120,12 @@ export class IllustrationPage extends RootPage {
             .concat(super.getTagElements());
     }
 
+    protected getTagSelectors() {
+        return [
+            '.gtm-new-work-tag-event-click'
+        ];
+    }
+
     @ExecuteOnLoad
     public log() {
         log.info('Illustration page recognized');

@@ -1,3 +1,6 @@
+/**
+ * DEPRECATED FILE.
+ */
 import * as $ from 'jquery';
 import * as pathUtils from 'src/utils/path';
 import * as pixivBridge from 'src/utils/pixivBridge';
@@ -16,6 +19,8 @@ import {Model} from 'pixiv-assistant-common';
 
 /**
  * Pixiv's built in manga viewer.
+ * 
+ * DEPRECATED. This page is no longer used. The artwork page encompasses this functionality. 
  */
 export class MangaPage extends RootPage {
     public get artistName(): string {

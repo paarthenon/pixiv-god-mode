@@ -2,7 +2,7 @@ import * as $ from 'jquery';
 import * as pathUtils from 'src/utils/path';
 import * as jQUtils from 'src/utils/document';
 import {PixivAssistantServer} from 'src/services';
-import {ExecuteIfSetting, ExecuteOnLoad} from 'src/utils/actionDecorators';
+import {ExecuteOnLoad} from 'src/utils/actionDecorators';
 import {GalleryPage} from 'src/pages/gallery';
 import SettingKeys from 'src/settingKeys';
 import {Model} from 'pixiv-assistant-common';
@@ -21,11 +21,17 @@ let console = log.subCategory('Works Page');
  * The listing of an artist's works.
  */
 export class WorksPage extends GalleryPage {
+
+    @ExecuteOnLoad
+    public debug() {
+        log.info('Entered Works page');
+        log.info('Artist seen as', this.artist);
+    }
     public get artistId(): number {
         return pathUtils.getArtistId(this.path);
     }
     public get artistName(): string {
-        return $('h1.user').text();
+        return $('#root h1').first().text();
     }
     public get artist(): Model.Artist {
         return {id: this.artistId, name: this.artistName};
@@ -37,9 +43,13 @@ export class WorksPage extends GalleryPage {
     }
 
     protected getTagElements() {
-        return ['span.tag-badge', 'div.user-tags li a']
+        return ['a.gtm-gm-profile-work-list-tag-list-click div']
             .map(tag => $(tag))
             .concat(super.getTagElements());
+    }
+    protected getTagSelectors() {
+        log.info('returning relevant selectors');
+        return ['.gtm-gm-profile-work-list-tag-list-click div'].concat(super.getTagSelectors());
     }
 
     protected executeOnEachImage<T>(func: (image: JQuery) => T) {
@@ -48,16 +58,16 @@ export class WorksPage extends GalleryPage {
             .forEach(image => func($(image)));
     }
 
-    @ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
+    // @ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
     public injectOpenFolder() {
         injectUserRelationshipButton(this.artist);
     }
-    @ExecuteIfSetting(SettingKeys.pages.works.inject.openInTabs)
+    // @ExecuteIfSetting(SettingKeys.pages.works.inject.openInTabs)
     public injectOpenTabs() {
         injectOpenInTabs('Open in Tabs', this.openTabs.bind(this));
         injectOpenInTabs('Open all in Tabs', this.openAllInTabs.bind(this));
     }
-    @ExecuteOnLoad
+    // @ExecuteOnLoad
     public injectTotalWorks() {
         pixivBridge.userProfile(this.artistId).then(result => {
             let imageCount = result.body[0].illusts.reduce(
@@ -67,12 +77,12 @@ export class WorksPage extends GalleryPage {
             injectCountBadge(`${imageCount} total images`);
         });
     }
-    @ExecuteIfSetting(SettingKeys.global.inject.pagingButtons)
+    // @ExecuteIfSetting(SettingKeys.global.inject.pagingButtons)
     public injectPagingButtons() {
         super.injectPagingButtons();
     }
 
-    @ExecuteIfSetting(SettingKeys.global.fadeDownloadedImages)
+    // @ExecuteIfSetting(SettingKeys.global.fadeDownloadedImages)
     public experimentalFade() {
         let imageMap = this.allImages.reduce(
             (acc: {[id: string]: JQuery}, cur: JQuery) => {
@@ -170,7 +180,7 @@ export class WorksPage extends GalleryPage {
         });
     }
 
-    @ExecuteIfSetting(SettingKeys.global.directToManga)
+    // @ExecuteIfSetting(SettingKeys.global.directToManga)
     public replaceMangaThumbnailLinksToFull() {
         super.replaceMangaThumbnailLinksToFull();
     }

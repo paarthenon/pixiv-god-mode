@@ -27,3 +27,23 @@ log.info('Initializing Pixiv Assistant. Preparing to dispatch');
 
 import {dispatch} from 'src/dispatch';
 dispatch(document.location.href);
+
+import {ElementObserver} from 'src/core/elementObserver';
+
+// This works but *may* end up causing glitches as pages don't clean up their
+// listeners before they transition away. TODO figure it out.
+
+// Oh right. It's necessary because pixiv finally became an SPA and page loads
+// don't mean what they used to. I'm now just checking for routing differences
+// whenever the app's root node mutates. There's probably a better way but this
+// sure does work right now. 
+const obs = new ElementObserver(document.getElementById('root'));
+let oldLocation = document.location.href;
+obs.subscribe(() => {
+    const newLocation = document.location.href;
+    if (oldLocation !== newLocation) {
+        log.info('Detected a location change');
+        oldLocation = newLocation
+        dispatch(newLocation);
+    }
+})
