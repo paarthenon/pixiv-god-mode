@@ -9,7 +9,6 @@ import {default as SettingKeys} from 'src/settingKeys';
 import {PixivAssistantServer} from 'src/services';
 import {Container as Deps} from 'src/deps';
 import {Model} from 'pixiv-assistant-common';
-import {UgokuInformation} from 'src/core/IUgoku';
 import {injectIllustrationToolbar} from 'src/injectors/illustrationToolbar';
 
 import * as geomUtils from 'src/utils/geometry';
@@ -46,6 +45,7 @@ export class IllustrationPage extends RootPage {
         const thumbUrl = await this.thumbUrl;
         const fullUrl = await this.fullImageUrl;
         const userId = await Deps.execOnPixiv(pixiv => pixiv.userData.id);
+        const illustType = await this.illustrationType;
 
         hlog.debug('Artist info');
         log.debug('Artist Id', artist.id);
@@ -54,7 +54,7 @@ export class IllustrationPage extends RootPage {
         log.debug('Thumbnail:', thumbUrl);
         log.debug('Full Url', fullUrl);
         log.debug('Illust Id', this.imageId);
-        log.debug('Illust Type', this.illustrationType);
+        log.debug('Illust Type', illustType);
         log.debug('User ID:', userId);
     }
 
@@ -91,27 +91,31 @@ export class IllustrationPage extends RootPage {
     public get imageId() {
         return pathUtils.getImageId(this.path);
     }
-    public get ugokuInfo(): Promise<UgokuInformation> {
-        return Deps.execOnPixiv(pixiv => pixiv.context.ugokuIllustFullscreenData);
+    public get ugokuInfo() {
+        return pixivBridge.ugoiraDetails(this.imageId);
     }
     public get ugokuCanvas(): HTMLCanvasElement {
-        return $('._ugoku-illust-player-container canvas')[0] as HTMLCanvasElement;
+        return $('#root main canvas')[0] as HTMLCanvasElement;
     }
     public get imageDimensions(): Promise<geomUtils.Rectangle> {
-        return this.$image.then($img => ({
-            width: parseInt($img.attr('width')),
-            height: parseInt($img.attr('height')),
-        }));
+        return pixivBridge.illustDetail(this.imageId)
+            .then(x => x.body);
     }
 
-    public get illustrationType(): IllustrationType {
-        if ($('.works_display a.multiple').length) {
-            return IllustrationType.Manga;
-        }
-        if ($('div.works_display > div._ugoku-illust-player-container').length) {
-            return IllustrationType.Animation;
-        }
-        return IllustrationType.Picture;
+    public get illustrationType(): Promise<IllustrationType> {
+        log.debug('Illustration type requested');
+        return new Promise(resolve => {
+            awaitElement('#root main section figure a')
+                .then($elem => {
+                    if ($elem.length > 1) {
+                        resolve(IllustrationType.Manga);
+                    } else {
+                        resolve(IllustrationType.Picture);
+                    }
+                });
+            awaitElement('#root main canvas')
+                .then(() => resolve(IllustrationType.Animation));
+        });
     }
 
     protected getTagElements(): JQuery[] {
@@ -258,22 +262,25 @@ export class IllustrationPage extends RootPage {
             });
     }
 
-    public downloadIllustrationLocal(updateText: (text: string) => void): Promise<void> {
+    public async downloadIllustrationLocal(updateText: (text: string) => void): Promise<void> {
         updateText('Downloading');
-        switch (this.illustrationType) {
+        switch (await this.illustrationType) {
             case IllustrationType.Picture:
+                log.info('Discovered Picture');
                 return this.downloadSinglePictureLocal().then(() =>
                     updateText('Downloaded'),
                 );
             case IllustrationType.Manga:
+                log.info('Discovered Manga');
                 return this.zipManga(updateText);
             case IllustrationType.Animation:
+                log.info('Discovered Animation');
                 return this.localWebM(updateText);
         }
     }
-    public downloadIllustration(updateText: (text: string) => void): Promise<void> {
+    public async downloadIllustration(updateText: (text: string) => void): Promise<void> {
         updateText('Downloading');
-        switch (this.illustrationType) {
+        switch (await this.illustrationType) {
             case IllustrationType.Picture:
                 return this.downloadSinglePicture().then(() => updateText('Downloaded'));
             case IllustrationType.Manga:
@@ -291,42 +298,34 @@ export class IllustrationPage extends RootPage {
         return PixivAssistantServer.download(await this.artist, await this.fullImageUrl);
     }
 
-    protected generateMangaPageUrls(): Promise<string[]> {
-        return pixivBridge.illustDetail(this.imageId).then((response: any) => {
-            let extension = response.body[this.imageId].illust_ext;
-            let pageCount = response.body[this.imageId].illust_page_count;
-
-            let url = $('div.works_display div._layout-thumbnail img').attr('src');
-            let fullResUrl = pathUtils.experimentalMaxSizeImageUrl(url, extension);
-
-            let fullUrls = pathUtils.explodeImagePathPages(fullResUrl, pageCount);
-
-            return Promise.resolve(fullUrls);
-        });
+    protected async generateMangaPageUrls() {
+        const $imageAnchors = await awaitElement('#root main section figure a') as JQuery<HTMLAnchorElement>;
+        return $imageAnchors.toArray().map(anchor => anchor.href);
     }
+
     public downloadManga() {
         return this.generateMangaPageUrls().then(async urls =>
             PixivAssistantServer.downloadMulti(await this.artist, urls),
         );
     }
 
-    public zipManga(updateText: (text: string) => void) {
+    public async zipManga(updateText: (text: string) => void) {
         updateText('Collecting image locations');
-        return this.generateMangaPageUrls().then(urls => {
-            let zip = new jszip();
-            urls.forEach((url, i) => {
-                updateText('Registering file ' + i);
-                let fileName = url.split('/').pop();
-                zip.file(fileName, getBlob(url));
-            });
-            updateText('Generating zip file');
-            zip.generateAsync({type: 'blob'}).then(zipFile => {
-                let zipString = URL.createObjectURL(zipFile);
-                updateText('Zip ready to download');
-                Deps.download(zipString, this.imageId + '.zip').then(() =>
-                    updateText('Zip Downloaded'),
-                );
-            });
+        const urls = await this.generateMangaPageUrls();
+
+        let zip = new jszip();
+        urls.forEach((url, i) => {
+            updateText('Registering file ' + i);
+            let fileName = url.split('/').pop();
+            zip.file(fileName, getBlob(url));
+        });
+        updateText('Generating zip file');
+        zip.generateAsync({type: 'blob'}).then(zipFile => {
+            let zipString = URL.createObjectURL(zipFile);
+            updateText('Zip ready to download');
+            Deps.download(zipString, this.imageId + '.zip').then(() =>
+                updateText('Zip Downloaded'),
+            );
         });
     }
 
@@ -347,27 +346,26 @@ export class IllustrationPage extends RootPage {
 
         this.isBusy = true;
 
-        const info = await this.ugokuInfo;
+        const msg = await this.ugokuInfo;
+        const info = msg.body;
+        log.info('Msg', msg, typeof msg, 'info', info, typeof info);
         updateText('Downloading ugoira data');
-        const rawData = await getBlob(info.src);
-        const zipData = await jszip().loadAsync(rawData);
+        const rawZipData = await getBlob(info.originalSrc);
+        const zipData = await jszip().loadAsync(rawZipData);
 
+        log.info('Preparing to load file data');
         let fileData: {[id: string]: Promise<string>} = {};
         zipData.forEach((path, file) => {
             fileData[path] = file.async('base64');
         });
 
         let currentFrame = 1;
-        await execSequentially(info.frames, frame => {
+        await execSequentially(info.frames, async frame => {
             updateText(`Processing frame ${currentFrame++} of ${info.frames.length}`);
-            return fileData[frame.file].then(rawData =>
-                this.imageDimensions.then(dims => {
-                    let dataUrl = `data:${info.mime_type};base64,${rawData}`;
-                    return toCanvasInstance(dataUrl, dims).then(canvas =>
-                        video.add(canvas, frame.delay),
-                    );
-                }),
-            );
+            const rawFrame = await fileData[frame.file];
+            const dims = await this.imageDimensions;
+            let dataUrl = `data:${info.mime_type};base64,${rawFrame}`;
+            return toCanvasInstance(dataUrl, dims).then(canvas => video.add(canvas, frame.delay));
         });
 
         updateText('Encoding video');

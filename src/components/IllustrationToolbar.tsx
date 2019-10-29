@@ -19,12 +19,10 @@ export interface IllustrationToolbarProps {
 export class IllustrationToolbar extends React.Component<IllustrationToolbarProps, {}> {
     public render() {
         return (
-            <InjectBootstrap>
-                <Bootstrap.InputGroup
-                    style={{width: 'auto', margin: 'auto', marginBottom: '20px'}}
-                >
+            <InjectBootstrap style={{paddingRight: '20px', alignSelf: 'center'}}>
+                <Bootstrap.InputGroup bsSize='sm'>
                     <Bootstrap.InputGroup.Button style={{width: 'auto'}}>
-                        <Bootstrap.Dropdown id='pa-download-dropdown'>
+                        {/* <Bootstrap.Dropdown id='pa-download-dropdown'> */}
                             {this.props.serverConnected ? (
                                 <DownloadButton
                                     downloadFunc={this.props.downloadUsingServer}
@@ -38,8 +36,8 @@ export class IllustrationToolbar extends React.Component<IllustrationToolbarProp
                                     Download
                                 </Bootstrap.Button>
                             )}
-                            <Bootstrap.Dropdown.Toggle bsStyle={this.props.bsStyle} />
-                            <Bootstrap.Dropdown.Menu>
+                            {/* <Bootstrap.Dropdown.Toggle bsStyle={this.props.bsStyle} /> */}
+                            {/* <Bootstrap.Dropdown.Menu>
                                 <Bootstrap.MenuItem
                                     eventKey='1'
                                     onClick={() => this.props.downloadInBrowser()}
@@ -53,9 +51,10 @@ export class IllustrationToolbar extends React.Component<IllustrationToolbarProp
                                 >
                                     Download w/ Server
                                 </Bootstrap.MenuItem>
-                            </Bootstrap.Dropdown.Menu>
-                        </Bootstrap.Dropdown>
-                        <Bootstrap.Button
+                            </Bootstrap.Dropdown.Menu> */}
+                        {/* </Bootstrap.Dropdown> */}
+                        {/* TODO ELECTRON: Maybe not here, but important. */}
+                        {/* <Bootstrap.Button
                             disabled={
                                 !(
                                     this.props.serverConnected &&
@@ -66,9 +65,9 @@ export class IllustrationToolbar extends React.Component<IllustrationToolbarProp
                             bsStyle={this.props.bsStyle}
                         >
                             Open
-                        </Bootstrap.Button>
+                        </Bootstrap.Button> */}
                     </Bootstrap.InputGroup.Button>
-                    <Bootstrap.InputGroup.Addon style={{width: 'auto'}}>
+                    <Bootstrap.InputGroup.Addon style={{width: 'auto'}} className={'alert-' + this.props.bsStyle}>
                         {this.props.progressText}
                     </Bootstrap.InputGroup.Addon>
                 </Bootstrap.InputGroup>
@@ -157,6 +156,7 @@ export class IllustrationToolbarContainer extends React.Component<
                 downloadInBrowser={this.handleBrowserDownload.bind(this)}
                 downloadUsingServer={this.handleServerDownload.bind(this)}
                 openToImage={this.props.openToImage}
+                bsStyle='primary'
             />
         );
     }

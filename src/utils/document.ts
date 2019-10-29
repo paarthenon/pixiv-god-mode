@@ -54,6 +54,10 @@ export function awaitElement<E extends HTMLElement = HTMLElement>(
     baseElement = document.getElementById('root'),
 ): Promise<JQuery<E>> {
     return new Promise(resolve => {
+        let $e = $(selector) as JQuery<E>;
+        if ($e.length > 0) {
+            resolve($e);
+        }
         new MutationObserver((_list, _obs) => {
             log.debug('Mutation observed from', baseElement);
             log.debug('Mutation log:', _list);

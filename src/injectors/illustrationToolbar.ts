@@ -19,8 +19,8 @@ export async function injectIllustrationToolbar(
     );
 
     let $target = await awaitUntil(() => {
-        const selector = '#root main > section > div';
-        if ($(selector).length === 3) {
+        const selector = '#root main > section > div section';
+        if ($(selector).length > 0) {
             return $(selector).first();
         } else {
             return false;
@@ -28,5 +28,5 @@ export async function injectIllustrationToolbar(
     });
 
     log.info('toolbar generated', component, 'adding to', $target, 'of', $target.length);
-    $(component).insertAfter($target);
+    $(component).appendTo($target);
 }
