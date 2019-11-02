@@ -1,6 +1,6 @@
 {
   "name": "pixiv-assistant",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "A chrome extension providing a suite of tools and convenience functions for pixiv.",
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "@types/react": "^16.9.11",
     "@types/react-bootstrap": "^0.32.10",
     "@types/react-dom": "^16.9.3",
+    "@types/uuid": "^3.4.5",
     "alsatian": "^3.1.0",
     "babel-loader": "^8.0.6",
     "bootstrap-less": "^3.3.8",
@@ -51,6 +52,7 @@
     "terser-webpack-plugin": "^2.2.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.6.4",
+    "uuid": "^3.3.3",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   },

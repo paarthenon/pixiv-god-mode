@@ -53,37 +53,15 @@ export function awaitElement<E extends HTMLElement = HTMLElement>(
     selector: string,
     baseElement = document.getElementById('root'),
 ): Promise<JQuery<E>> {
-    return new Promise(resolve => {
-        let $e = $(selector) as JQuery<E>;
-        if ($e.length > 0) {
-            resolve($e);
+
+    return awaitUntil(() => {
+        const $elem = $(selector);
+        if ($elem && $elem.length > 0) {
+            return $elem as JQuery<E>;
+        } else {
+            return false;
         }
-        new MutationObserver((_list, _obs) => {
-            log.debug('Mutation observed from', baseElement);
-            log.debug('Mutation log:', _list);
-
-            const removed = _list
-                .filter(
-                    m =>
-                        m.removedNodes.length > 0 &&
-                        $(m.removedNodes[0]).hasClass('pixiv-assistant'),
-                )
-                .map(m => m.removedNodes[0]);
-            if (removed.length > 0) {
-                log.warn('removed list includes pixiv assistant app', removed);
-            }
-
-            let $elem = $(selector) as JQuery<E>;
-            log.debug('elem is', $elem);
-            if ($elem.length > 0) {
-                log.debug('elem does indeed exist');
-                resolve($elem);
-            }
-        }).observe(baseElement, {
-            childList: true,
-            subtree: true,
-        });
-    });
+    }, baseElement);
 }
 
 export function awaitUntil<E extends HTMLElement = HTMLElement>(
@@ -91,6 +69,10 @@ export function awaitUntil<E extends HTMLElement = HTMLElement>(
     baseElement = document.getElementById('root'),
 ): Promise<JQuery<E>> {
     return new Promise(resolve => {
+        const $prospect = condition();
+        if ($prospect && $prospect.length > 0) {
+            resolve($prospect);
+        }
         new MutationObserver((_list, _obs) => {
             log.debug('Mutation observed from', baseElement);
             log.debug('Mutation log:', _list);

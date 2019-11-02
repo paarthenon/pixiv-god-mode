@@ -49,6 +49,7 @@ export function dispatch(path: string): RootPage {
     if (path.match(patterns.illust)) {
         return new IllustrationPage(path);
     }
+    //TODO: Deprecate
     if (path.match(patterns.manga)) {
         return new MangaPage(path);
     }

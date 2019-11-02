@@ -169,11 +169,19 @@ export class IllustrationPage extends RootPage {
 
     @ExecuteIfSetting(SettingKeys.pages.illust.autoOpen)
     public async openImage() {
-        log.info('Image will open as soon as it is loaded');
-        const $img = await awaitElement('main img');
-        log.info('Image loaded. Opening');
-        $img.click();
-        log.info('Image should be open');
+        switch(await this.illustrationType) {
+            case IllustrationType.Picture:
+                log.debug('Image will open as soon as it is loaded');
+                const $img = await awaitElement('main figure img');
+                $img.click();
+                log.debug('Image should be open');
+                break;
+            case IllustrationType.Manga:
+                log.debug('Opening manga');
+                const $button = await awaitElement('button:contains("See all")');
+                $button.click();
+        }
+
     }
 
     // TODO: Evaluate if obsolete. Seems like it.
