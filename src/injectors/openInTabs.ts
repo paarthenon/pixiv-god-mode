@@ -13,6 +13,7 @@ const id = uuid.v4();
 export async function injectOpenInTabs(text: string, actions: TagCellProps[] = []) {
     if ($(`#${id}`).length > 0) {
         // already done.
+        log.warn('Element already exists. Quitting out');
         return;
     }
 
@@ -22,8 +23,8 @@ export async function injectOpenInTabs(text: string, actions: TagCellProps[] = [
     );
     log.debug('Element created', component);
     await awaitUntil(() => {
-        const $elems = $('#root > div > div > div:nth-child(2) > div > div > div');
-        const $tags = $('#root > div > div > div > div > div > div > div > div > a > div');
+        const $elems = $('#root > div > div > div:nth-child(2) > div > section > div');
+        const $tags = $('#root > div > div > div > div > section > div > div > div > a > div');
         // wait until the header is initialized (has a header and content div) 
         // and the tags have rendered 
         if ($elems.length >= 2 && $tags.length > 0) {
@@ -31,7 +32,8 @@ export async function injectOpenInTabs(text: string, actions: TagCellProps[] = [
         }
         return false;
     });
-    const $elem = await awaitElement('#root > div > div > div > div > div > ul');
+    const $elem = await awaitElement('#root > div > div > div:nth-child(2) > div > section > ul');
+    log.debug('Conditions seem right');
     const children = $(component).children()
     children.first().attr('id', id);
     children.insertBefore($elem)
