@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Pixiv Assistant (BETA)",
+    "name": "Pixiv Assistant",
     "description": "Adds tag translation, a suite of enhancements, and repository management to Pixiv",
-    "version": "0.3.2",
+    "version": "1.0.0",
 
     "browser_action": {
         "default_icon": "resources/pa-icon-38.png",

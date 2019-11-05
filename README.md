@@ -2,7 +2,10 @@
 
 Pixiv Assistant is a chrome extension adding functionality to the popular gallery site Pixiv. It features enhanced tag translation, library management to help filter content and find new content, plus plenty of little changes for convenience. 
 
-This project has been active on and off for a couple of years. There's a lot here, I'm currently modernizing the thing preparing it for a release. 
+![Download anything](res/public/download.png)
+![Download anything](res/public/dictionary.png)
+![Download anything](res/public/translate.png)
+![Download anything](res/public/navigate.png)
 
 # Development
 
