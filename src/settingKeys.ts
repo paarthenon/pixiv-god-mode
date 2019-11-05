@@ -19,6 +19,9 @@ let settingKeys = {
             'GLOBAL_FADE_ARTIST_RECOMMENDATIONS_ALREADY_BOOKMARKED',
     },
     pages: {
+        artistProfile: {
+            skipPage: 'ARTIST_PROFILE_SKIP_PAGE',
+        },
         illust: {
             inject: {
                 toolbar: 'ILLUST_PAGE_INJECT_TOOLBAR',

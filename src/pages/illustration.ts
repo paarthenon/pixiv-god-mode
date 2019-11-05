@@ -118,12 +118,6 @@ export class IllustrationPage extends RootPage {
         });
     }
 
-    protected getTagElements(): JQuery[] {
-        return ['.tags-container li.tag a.text', 'div.user-tags li a']
-            .map(tag => $(tag))
-            .concat(super.getTagElements());
-    }
-
     protected getTagSelectors() {
         return [
             '.gtm-new-work-tag-event-click'
@@ -161,12 +155,6 @@ export class IllustrationPage extends RootPage {
         });
     }
 
-    // TODO ELECTRON: Re-enable once server comes back.
-    // @ExecuteIfSetting(SettingKeys.global.inject.openToArtistButton)
-    // public async injectOpenFolder() {
-    // 	injectUserRelationshipButton(await this.artist);
-    // }
-
     @ExecuteIfSetting(SettingKeys.pages.illust.autoOpen)
     public async openImage() {
         switch(await this.illustrationType) {
@@ -183,58 +171,6 @@ export class IllustrationPage extends RootPage {
         }
 
     }
-
-    // TODO: Evaluate if obsolete. Seems like it.
-    @ExecuteIfSetting(SettingKeys.pages.illust.boxImage)
-    public async resizeOpenedImage() {
-        let image = await awaitElement('div[role=presentation] > div > div > div > img');
-
-        let originalBounds = {
-            width: parseInt(image.attr('width')),
-            height: parseInt(image.attr('height')),
-        };
-
-        let windowBounds = {
-            width: window.innerWidth,
-            height: window.innerHeight,
-        };
-        let newBounds = geomUtils.resizeBounds(originalBounds, windowBounds);
-
-        image.width(newBounds.width);
-        image.height(newBounds.height);
-    }
-
-    // TODO ELECTRON: Fading needs library server
-    // @ExecuteOnLoad
-    // public injectTrigger() {
-    // 	new MutationObserver(this.fadeRecommendations.bind(this))
-    // 		.observe($('section#illust-recommend ul')[0], { childList: true });
-    // }
-    // @ExecuteOnLoad
-    // public fadeRecommendations() {
-    // 	function recommendationDetails(li:JQuery) : Messages.ArtistImageRequest {
-    // 		let img = li.find('a.work img._thumbnail');
-    // 		let imageId = pathUtils.getImageIdFromSourceUrl(img.attr('src'));
-    // 		let artistId = parseInt(img.attr('data-user-id'));
-    // 		return {
-    // 			artist: {
-    // 				id: artistId,
-    // 				name: '', //TODO: remove pending refactor of core protocol.
-    // 			},
-    // 			image: {
-    // 				id: imageId,
-    // 			}
-    // 		}
-    // 	}
-    // 	$('section#illust-recommend li').toArray().map(x => $(x)).forEach(liElem => {
-    // 		let msg = recommendationDetails(liElem);
-    // 		PixivAssistantServer.imageExistsInDatabase(msg.artist, msg.image).then(exists => {
-    // 			if (exists) {
-    // 				liElem.addClass('pa-hidden-thumbnail');
-    // 			}
-    // 		})
-    // 	});
-    // }
 
     public downloadAnimation(updateText: (text: string) => void) {
         function getBase64(blob: Blob): Promise<string> {

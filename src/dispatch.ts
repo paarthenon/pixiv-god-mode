@@ -4,7 +4,6 @@ import {RootPage} from 'src/pages/root';
 import {IllustrationPage} from 'src/pages/illustration';
 import {WorksPage} from 'src/pages/works';
 import {BookmarkIllustrationPage} from 'src/pages/bookmarkIllustration';
-import {MangaPage} from 'src/pages/manga';
 import {ArtistBookmarksPage} from 'src/pages/artistBookmarks';
 import {SearchPage} from 'src/pages/search';
 import {BookmarkAddPage} from 'src/pages/bookmarkAdd';
@@ -14,19 +13,16 @@ import {FollowArtistPage} from 'src/pages/followArtist';
 import {TagOverviewPage} from 'src/pages/tagOverview';
 import {TagDetailPage} from 'src/pages/tagDetail';
 import {RawImagePage} from 'src/pages/rawImage';
-import {SuggestedUsersPage} from 'src/pages/suggestedUsers';
 import {HomePage} from 'src/pages/home';
 import {WikiArticlePage} from 'src/pages/wikiArticle';
 import log from 'src/log';
 
 let patterns = {
     illust: /^http(s?):\/\/www.pixiv.net\/en\/artworks\/[0-9]+/,
-    manga: /^http(s?):\/\/www.pixiv.net\/member_illust.php\?mode=manga&illust_id=[0-9]+/,
     works: /^http(s?):\/\/www.pixiv.net\/member_illust.php\?.*id=[0-9]+/,
     bookmarks: /^http(s?)(s?):\/\/www.pixiv.net\/bookmark.php\?.*id=[0-9]+/,
     bookmarkDetail: /^http(s?):\/\/www.pixiv.net\/bookmark_detail.php\?illust_id=[0-9]+/,
-    bookmarkAdd_and_followArtist: /^http(s?):\/\/www.pixiv.net\/bookmark_add.php/,
-    bookmarkAddIllust: /^http(s?):\/\/www.pixiv.net\/bookmark_add.php\?type=illust&illust_id=[0-9]+/,
+    bookmarkAdd: /^http(s?):\/\/www.pixiv.net\/bookmark_add.php/,
     search: /^http(s?):\/\/www.pixiv.net\/search.php/,
     artistTagList: /^http(s?):\/\/www.pixiv.net\/member_tag_all.php\?id=[0-9]+/,
     artistProfile: /^http(s?):\/\/www.pixiv.net\/member.php\?id=[0-9]+/,
@@ -34,7 +30,6 @@ let patterns = {
     tagDetail: /http(s?):\/\/www.pixiv.net\/tags.php\?tag=.+/,
     rawImage: /http(s?):\/\/i[0-9].pixiv.net/,
     rawImage2: /http(s?):\/\/i.pximg.net/,
-    suggestedUsers: /http(s?):\/\/www.pixiv.net\/search_user.php$/,
     home: /http(s?):\/\/www.pixiv.net\/$/,
     wiki: /http(s?):\/\/dic.pixiv.net\/a\//,
 };
@@ -49,10 +44,6 @@ export function dispatch(path: string): RootPage {
     if (path.match(patterns.illust)) {
         return new IllustrationPage(path);
     }
-    //TODO: Deprecate
-    if (path.match(patterns.manga)) {
-        return new MangaPage(path);
-    }
     if (path.match(patterns.works)) {
         return new WorksPage(path);
     }
@@ -62,18 +53,17 @@ export function dispatch(path: string): RootPage {
     if (path.match(patterns.bookmarkDetail)) {
         return new BookmarkIllustrationPage(path);
     }
-    if (path.match(patterns.bookmarkAdd_and_followArtist)) {
+    if (path.match(patterns.bookmarkAdd)) {
         // Bookmarking an illustration and following an artist have the same
         // path (bookmark_add.php) so we're forced to differentiate by checking
         // for a unique element on the page.
         if ($('.bookmark-count._ui-tooltip').length > 0) {
             return new BookmarkIllustrationPage(path);
+        } else if ($('.bookmark-detail-unit .work').length > 0) {
+            return new BookmarkAddPage(path);
         } else {
             return new FollowArtistPage(path);
         }
-    }
-    if (path.match(patterns.bookmarkAddIllust)) {
-        return new BookmarkAddPage(path);
     }
     if (path.match(patterns.search)) {
         return new SearchPage(path);
@@ -92,9 +82,6 @@ export function dispatch(path: string): RootPage {
     }
     if (path.match(patterns.rawImage) || path.match(patterns.rawImage2)) {
         return new RawImagePage(path);
-    }
-    if (path.match(patterns.suggestedUsers)) {
-        return new SuggestedUsersPage(path);
     }
     if (path.match(patterns.home)) {
         return new HomePage(path);

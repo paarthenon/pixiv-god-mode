@@ -11,17 +11,6 @@ const log = olog.subCategory('Action tray injector');
 
 const id = uuid.v4();
 export async function injectOpenInTabs(text: string, actions: TagCellProps[] = []) {
-    if ($(`#${id}`).length > 0) {
-        // already done.
-        log.warn('Element already exists. Quitting out');
-        return;
-    }
-
-    log.debug('Injecting the "open in tabs" button');
-    let component = GenerateElement(
-        React.createElement(TagCellContainer, {header: text}, actions.map(action => React.createElement(TagCell, action))),
-    );
-    log.debug('Element created', component);
     await awaitUntil(() => {
         const $elems = $('#root > div > div > div:nth-child(2) > div > section > div');
         const $tags = $('#root > div > div > div > div > section > div > div > div > a > div');
@@ -33,6 +22,22 @@ export async function injectOpenInTabs(text: string, actions: TagCellProps[] = [
         return false;
     });
     const $elem = await awaitElement('#root > div > div > div:nth-child(2) > div > section > ul');
+
+    // needs to be after the awaits or else you expose yourself to async issues where the page triggered
+    // the injector X times before the requisite elements ever showed up and then it added the element
+    // X times because all 3 code points had passed the if statement.
+    if ($(`#${id}`).length > 0) {
+        // already done.
+        log.warn('Element already exists. Quitting out');
+        return;
+    }
+
+    log.debug('Injecting the "open in tabs" button');
+    let component = GenerateElement(
+        React.createElement(TagCellContainer, {header: text}, actions.map(action => React.createElement(TagCell, action))),
+    );
+    log.debug('Element created', component);
+
     log.debug('Conditions seem right');
     const children = $(component).children()
     children.first().attr('id', id);

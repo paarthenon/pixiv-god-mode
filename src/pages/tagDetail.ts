@@ -1,4 +1,3 @@
-import * as $ from 'jquery';
 import {RootPage} from 'src/pages/root';
 
 /**
@@ -6,14 +5,13 @@ import {RootPage} from 'src/pages/root';
  * links to the search and wiki pages for the tag.
  */
 export class TagDetailPage extends RootPage {
-    protected getTagElements() {
+    protected getTagSelectors() {
         return [
             'nav.breadcrumb > span > a > span',
             'span.self',
             'header.tags-portal-header h1.title a',
             'section.tags ul.items li a',
+            '.tag-value',
         ]
-            .map(tag => $(tag))
-            .concat(super.getTagElements());
     }
 }

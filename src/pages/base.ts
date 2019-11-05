@@ -1,11 +1,10 @@
 import {OnLoadFunc} from 'src/core/IAction';
-
 import {CacheRegistry} from 'src/utils/terribleCache';
 
 export class BasePage {
     protected get onLoadFunctions(): OnLoadFunc[] {
-        let name = (<any>this)['constructor']['name'];
-        let cache = CacheRegistry.onLoadFunctionCache[name] || [];
+        const name = (<any>this)['constructor']['name'];
+        const cache = CacheRegistry.onLoadFunctionCache[name] || [];
         // return cache.filter(func => func.if.call(this));
         return cache;
     }

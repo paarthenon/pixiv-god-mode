@@ -9,6 +9,9 @@ import SettingKeys from 'src/settingKeys';
 import log from 'src/log';
 let console = log.subCategory('Follow Artist Page');
 
+/**
+ * Deprecated, I believe. 
+ */
 export class FollowArtistPage extends RootPage {
     public get artistId(): number {
         return pathUtils.getArtistId(this.path);

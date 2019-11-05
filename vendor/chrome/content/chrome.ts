@@ -37,7 +37,7 @@ import {ElementObserver} from 'src/core/elementObserver';
 // don't mean what they used to. I'm now just checking for routing differences
 // whenever the app's root node mutates. There's probably a better way but this
 // sure does work right now. 
-const obs = new ElementObserver(document.getElementById('root'));
+const obs = new ElementObserver(document.body);
 let oldLocation = document.location.href;
 obs.subscribe(() => {
     const newLocation = document.location.href;

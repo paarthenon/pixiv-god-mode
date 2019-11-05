@@ -51,7 +51,7 @@ export function toCanvasInstance(dataUrl: string, dims: Rectangle) {
 
 export function awaitElement<E extends HTMLElement = HTMLElement>(
     selector: string,
-    baseElement = document.getElementById('root'),
+    baseElement = document.body,
 ): Promise<JQuery<E>> {
 
     return awaitUntil(() => {
@@ -66,8 +66,11 @@ export function awaitElement<E extends HTMLElement = HTMLElement>(
 
 export function awaitUntil<E extends HTMLElement = HTMLElement>(
     condition: () => JQuery<E> | false,
-    baseElement = document.getElementById('root'),
+    baseElement = document.body,
 ): Promise<JQuery<E>> {
+    if (baseElement == undefined) {
+        return Promise.reject('No root element');
+    }
     return new Promise(resolve => {
         const $prospect = condition();
         if ($prospect && $prospect.length > 0) {

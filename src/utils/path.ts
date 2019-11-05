@@ -3,7 +3,7 @@ import utilLog from './log';
 const log = utilLog.subCategory('Path');
 
 // Lazy programmer
-function extract(str: string, re: RegExp): string {
+function extract(str: string, re: RegExp): string | undefined {
     if (str == undefined) return undefined;
     let out = str.match(re);
     return out && out.length > 1 ? out[1] : null;
@@ -59,12 +59,16 @@ export function getPotentialTag(url: string): string {
 
     if (tagOfWorks) {
         return decodeURIComponent(tagOfWorks);
-    } else if (/s_mode=s_tag_full/.test(url) && tagOfSearch) {
+    } else if (/s_mode=s_tag(_full)?/.test(url) && tagOfSearch) {
         return decodeURIComponent(tagOfSearch);
     } else if (tagOfWiki) {
         return decodeURIComponent(tagOfWiki);
     }
     return '';
+}
+
+export function getSearchTerm(url: string) {
+    return decodeURIComponent(extract(url, /word=([^&]+)/) || '');
 }
 
 export function getImageIdFromSourceUrl(url: string) {

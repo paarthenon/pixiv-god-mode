@@ -1,11 +1,10 @@
 import * as $ from 'jquery';
 import * as pathUtils from 'src/utils/path';
-import {ExecuteOnLoad} from 'src/utils/actionDecorators';
+import {ExecuteOnLoad, ExecuteIfSetting} from 'src/utils/actionDecorators';
 import {RootPage} from 'src/pages/root';
-// import {injectUserRelationshipButton} from 'src/injectors/openFolderInjector';
 import {Model} from 'pixiv-assistant-common';
 import log from 'src/log';
-// import {awaitElement} from 'src/utils/document';
+import settingKeys from 'src/settingKeys';
 
 /**
  * The initial overview page of an artist.
@@ -23,20 +22,13 @@ export class ArtistProfilePage extends RootPage {
 
     @ExecuteOnLoad
     public debug() {
-        log.info('Artist Profile page reached')
+        log.info('Artist Profile page reached', this.artist)
     }
 
-    // @ExecuteOnLoad
-    // public injectPageElements() {
-    //     injectUserRelationshipButton(this.artist);
-    // }
-
-    // @ExecuteOnLoad
-    // public async skipToWorks() {
-    //     log.info('Skipping to works page')
-    //     // const $elem = await awaitElement(`a[href="/member_illust.php?id=${this.artistId}"]`);
-    //     const $elem = $(`< a href="/member_illust.php?id=${this.artistId}" ></a>`);
-    //     $elem.click();
-    //     log.info('Should be on other page. Why did you see this?');
-    // }
+    @ExecuteIfSetting(settingKeys.pages.artistProfile.skipPage)
+    public skipToWorks() {
+        log.info('Skipping to works page')
+        window.location.href = `/member_illust.php?id=${this.artistId}`;
+        log.warn('Should be on other page. Why did you see this?');
+    }
 }
