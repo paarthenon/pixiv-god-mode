@@ -5,6 +5,8 @@ import {IServerConfigProtocol} from './proto'
 import {defineService} from './defineService'
 import {PixivAssistantServer} from './server'
 
+import tasker from './srv/utils/task'
+
 let logger = log.prefix('Startup');
 logger.debug('Starting application');
 
@@ -38,3 +40,18 @@ export function init() {
 
 	});
 }
+
+tasker.subscribe(x => console.log('New task!', x));
+
+tasker.spawn('Init Task')
+	.queue('Testing', () => 4)
+	.queue('Testing2', num => {
+		tasker.spawn('sub task default')
+			.queue('sub 1', () => 4)
+			.queue('sub 2', num => num.toString())
+			.queue('sub 3', () => num)
+			.complete();
+	})
+	.complete();
+
+
