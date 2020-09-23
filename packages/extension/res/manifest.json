@@ -4,12 +4,29 @@
     "version": "0.0.1",
     "description": "The ultimate pixiv extension",
     "icons": {
-        "128": "res/pa-icon-128.png"
+        "128": "icons/kami-256.png"
+    },
+    "browser_action": {
+        "default_icon": "icons/kami-38.png",
+        "default_title": "Kami-sama",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": ["background.min.js"]
     },
     "content_scripts": [
         {
             "matches": ["*://*.pixiv.net/*", "*://*.pximg.net/*"],
             "js": ["content.min.js"]
         }
-    ]
+    ],
+    "permissions": [
+        "storage",
+        "downloads",
+        "webRequest",
+        "webRequestBlocking",
+        "*://*.pixiv.net/*",
+        "*://*.pximg.net/*"
+    ],
+    "web_accessible_resources": []
 }

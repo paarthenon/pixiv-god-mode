@@ -5,10 +5,10 @@
   "description": "Pixiv Assistant's server component",
   "main": "src/index.ts",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "lint": "tslint --project tsconfig.json --type-check --force"
+    "legacy:start": "electron-forge start",
+    "legacy:package": "electron-forge package",
+    "legacy:make": "electron-forge make",
+    "legacy:lint": "tslint --project tsconfig.json --type-check --force"
   },
   "repository": {
     "type": "git",

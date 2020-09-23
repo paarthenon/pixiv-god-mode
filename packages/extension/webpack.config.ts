@@ -6,8 +6,11 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const config: webpack.Configuration = {
     mode: 'development',
+    devtool: 'cheap-module-source-map',
     entry: {
+        background: './src/background',
         content: './src/content',
+        popup: './src/popup/index',
     },
     module: {
         rules: [
@@ -96,11 +99,13 @@ const config: webpack.Configuration = {
             template: 'src/popup.ejs',
             filename: 'popup.html',
             chunksSortMode: 'manual',
-            chunks: ['app'],
+            chunks: ['popup'],
         }),
-        new CopyWebpackPlugin([
-            {from: 'res'},
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                {from: 'res'},
+            ],
+        }),
     ]
 }
 

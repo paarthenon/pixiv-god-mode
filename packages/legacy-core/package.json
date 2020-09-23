@@ -5,8 +5,8 @@
   "main": "lib/proto.js",
   "typings": "lib/proto.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node ./node_modules/typescript/lib/tsc.js"
+    "legacy:test": "echo \"Error: no test specified\" && exit 1",
+    "legacy:build": "node ./node_modules/typescript/lib/tsc.js"
   },
   "repository": {
     "type": "git",
