@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Kami-sama",
-    "version": "0.0.1",
+    "version": "1.0.1",
     "description": "The ultimate pixiv extension",
     "icons": {
         "128": "icons/kami-256.png"
@@ -21,8 +21,6 @@
         }
     ],
     "permissions": [
-        "storage",
-        "downloads",
         "webRequest",
         "webRequestBlocking",
         "*://*.pixiv.net/*",

@@ -40,6 +40,7 @@
     "cash-dom": "^8.1.0",
     "daslog": "^0.4.3",
     "file-saver": "^2.0.2",
+    "form-data": "^3.0.0",
     "jszip": "^3.5.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

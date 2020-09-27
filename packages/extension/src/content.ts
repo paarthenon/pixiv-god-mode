@@ -2,18 +2,21 @@ import 'regenerator-runtime/runtime.js';
 
 import {dispatch} from 'page/dispatch';
 import log from 'page/log';
+import {ElementObserver} from 'util/elementObserver';
+import {browser} from 'webextension-polyfill-ts';
+import {match} from 'variant';
+import {BGCommand, CSCommand, PageCommand} from 'core/message';
+import {RootPage} from 'page/root';
 
 log.trace('Init - Content Script');
 
-const page = dispatch(window.location.href);
+const stash = {
+    page: undefined as (RootPage | undefined),
+};
 
-log.debug('got page', page);
+stash.page = dispatch(window.location.href);
 
-// NOTE: Should you need it, leagcy-extension has a mutation observer
-// that it claims to need because pixiv finally became an SPA.
-// I'm going without it for now.
-
-import {ElementObserver} from 'util/elementObserver';
+log.debug('got page', stash.page);
 
 // This works but *may* end up causing glitches as pages don't clean up their
 // listeners before they transition away. TODO figure it out.
@@ -29,6 +32,15 @@ obs.subscribe(() => {
     if (oldLocation !== newLocation) {
         log.info('Detected a location change');
         oldLocation = newLocation
-        dispatch(newLocation);
+        stash.page = dispatch(newLocation);
+        log.info('current page now')
     }
-})
+});
+
+browser.runtime.onMessage.addListener(msg => msgHandler(stash.page!, msg));
+
+const msgHandler = async (page: RootPage, msg: PageCommand) => match(msg, {
+    GetContext: _ => page.context,
+    GetActions: _ => page.getPageActions(),
+    PerformAction: ({payload}) => page.handlePageAction(payload),
+});

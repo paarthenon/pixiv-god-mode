@@ -54,7 +54,7 @@ export interface IllustrationInfo extends CommentInfo {
      *  0 - single image
      * 
      */
-    illustType: unknown
+    illustType: IllustrationType
 
 
     /**
@@ -115,6 +115,35 @@ export interface UgoiraMeta {
      */
     originalSrc: string;
     src: string;
+}
+
+export interface UserInfo {
+    acceptRequest: boolean;
+    /**
+     * Profile icon
+     */
+    image: string;
+    imageBig: string;
+    isBlocking: boolean;
+    isFollowed: boolean;
+    isMypixiv: boolean;
+    name: string;
+    premium: boolean;
+    userId: string;
+}
+
+export interface IllustPageInfo {
+    height: number;
+    width: number;
+    urls: PixivUrls
+}
+
+export interface PixivUrls {
+    original: string;
+
+    regular?: string;
+    small?: string;
+    thumb_mini?: string;
 }
 
 export interface ApiResponse<T = IllustrationInfo> {

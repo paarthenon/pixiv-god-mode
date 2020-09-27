@@ -18,7 +18,18 @@ import jszip from 'jszip';
 import {execSequentially} from 'util/promise';
 import {spawnCanvas} from 'util/document';
 import {explodeImagePathPages} from 'util/path';
+import {PageContext} from './context';
+import {fields, strEnum, TypeNames, variant, variantList, VariantOf} from 'variant';
+import {PageAction} from './pageAction';
+import {postBloom} from 'core/bloom';
 
+
+export const ArtworkAction = strEnum([
+    'Download',
+    'SendToBloom',
+    'SendToBloomSplit',
+]);
+export type ArtworkAction = keyof typeof ArtworkAction;
 export class ArtworkPage extends RootPage {
     public isBusy = false;
 
@@ -38,10 +49,69 @@ export class ArtworkPage extends RootPage {
             // add item to dom
             injectTrayButton('DL', () => {
                 log.trace('Clicked download button');
-                this.download(info.body);
+                this.simpleDownload();
             });
         } else {
             log.error('Could not parse ')
+        }
+    }
+    
+    protected async getContext() {
+        if (this.workID) {
+            const resp = await getIllustInfo(this.workID);
+            return PageContext.Artwork({
+                illustInfo: resp.body,
+            })
+        } else {
+            return super.getContext();
+        }
+
+    }
+    public async getPageActions(): Promise<PageAction[]> {
+        const info = await getIllustInfo(this.workID!);
+        
+        const baseOptions: PageAction[] = [
+            {
+                type: ArtworkAction.Download,
+                label: 'Download',
+                icon: 'download',
+            },
+            {
+                type: ArtworkAction.SendToBloom,
+                label: 'Send to Bloom',
+                icon: 'share',
+            },
+        ];
+
+        if (info.body.pageCount > 1) {
+            return [
+                ...baseOptions,
+                {
+                    type: ArtworkAction.SendToBloomSplit,
+                    label: 'Send to Bloom (split pages)',
+                    icon: 'share',
+                }
+            ]
+        } else {
+            return baseOptions;
+        }
+    }
+    public handlePageAction(action: PageAction) {
+        switch (action.type) {
+            case ArtworkAction.Download:
+                this.simpleDownload();
+                break;
+            case ArtworkAction.SendToBloom:
+                this.simpleSendBloom();
+                break;
+            case ArtworkAction.SendToBloomSplit:
+                getIllustInfo(this.workID!).then(info => {
+                    if (info.body.pageCount > 1) {
+                        this.simpleSendBloomSplit();
+                    } else {
+                        this.simpleSendBloom();
+                    }
+                })
         }
     }
 
@@ -52,6 +122,53 @@ export class ArtworkPage extends RootPage {
         }
     }
 
+    public async simpleDownload() {
+        if (this.workID) {
+            const info = await getIllustInfo(this.workID);
+            browser.runtime.sendMessage(BGCommand.setBadge({text: '...'}));
+            const ret = await this.download(info.body);
+            browser.runtime.sendMessage(BGCommand.setBadge({text: 'done!'}));
+            setTimeout(() => {
+                browser.runtime.sendMessage(BGCommand.setBadge({text: ''}))
+            }, 2500);
+            return ret;
+        }
+    }
+    public async simpleSendBloom() {
+        if (this.workID) {
+            const info = await getIllustInfo(this.workID);
+            switch(info.body.illustType) {
+                case IllustrationType.Picture:
+                    if (info.body.pageCount > 1) {
+                        const zip = await downloadManga(info.body);
+                        return postBloom(`${this.workID}.zip`, zip);
+                    } else {
+                        const url = info.body.urls.original;
+                        return postBloom(getFileName(url), await getBlob(url));
+                    }
+                case IllustrationType.Manga:
+                    const zip = await downloadManga(info.body);
+                    return postBloom(`${this.workID}.zip`, zip);
+                case IllustrationType.Animation:
+                    const metaResponse = await getUgoiraMeta(parseInt(info.body.illustId));
+                    const vid = await this.downloadAnimation(info.body, metaResponse.body)
+                    return postBloom(`${this.workID}.webm`, vid);
+            }
+        }
+    }
+
+    public async simpleSendBloomSplit() {
+        if (this.workID) {
+            const info = await getIllustInfo(this.workID!);
+            const urls = explodeImagePathPages(info.body.urls.original, info.body.pageCount);
+
+            log.trace('urls to split on', urls);
+
+            Promise.all(urls.map(async url => postBloom(getFileName(url), await getBlob(url))));
+            log.trace('Finished submitting');
+        }
+    }
+
     public async download(work: IllustrationInfo) {
         log.trace('DL Entered');
 
@@ -59,30 +176,34 @@ export class ArtworkPage extends RootPage {
             case IllustrationType.Picture:
                 if (work.pageCount > 1) {
                     log.trace('DL MULTIPAGE IMAGE');
-                    downloadManga(work);
+                    return this.saveManga(work);
                 } else {
                     log.trace('DL IMAGE');
-                    downloadImage(work.urls.original);
+                    return saveImage(work.urls.original);
                 }
-                break;
             case IllustrationType.Manga:
                 log.trace('DL MANGA');
-                downloadManga(work);
+                return this.saveManga(work);
             case IllustrationType.Animation:
                 log.trace('DL ANIMATION')
                 const metaResponse = await getUgoiraMeta(parseInt(work.illustId));
-                this.downloadAnimation(work, metaResponse.body);
+                return this.saveAnimation(work, metaResponse.body);
         }
     }
 
-    protected async downloadAnimation(work: IllustrationInfo, meta: UgoiraMeta) {
-        this.isBusy = true;
-        const blob = await processUgoira(work, meta, log.trace);
-
+    protected async saveAnimation(work: IllustrationInfo, meta: UgoiraMeta) {
+        const blob = await this.downloadAnimation(work, meta);
         saveAs(blob, `${work.illustId}.webm`);
     }
-    protected async downloadManga(work: IllustrationInfo) {
-        downloadManga(work);
+    protected async downloadAnimation(work: IllustrationInfo, meta: UgoiraMeta): Promise<Blob> {
+        this.isBusy = true;
+        const blob = await processUgoira(work, meta, log.trace);
+        return blob;
+    }
+    protected async saveManga(work: IllustrationInfo) {
+        const zippedFile = await downloadManga(work);
+        const objUrl = URL.createObjectURL(zippedFile);
+        saveAs(objUrl, `${work.illustId}.zip`);
     }
 }
 
@@ -124,7 +245,7 @@ async function processUgoira(
     return video.compile();
 }
 
-function downloadImage(url: string) {
+function saveImage(url: string) {
     log.trace('Downloading image from', url);
     const fileName = url.split('/').pop();
     saveAs(url, fileName);
@@ -140,6 +261,5 @@ async function downloadManga(work: IllustrationInfo) {
     })
 
     const zippedFile = await zip.generateAsync({type: 'blob'});
-    const objUrl = URL.createObjectURL(zippedFile);
-    saveAs(objUrl, `${work.illustId}.zip`);
+    return zippedFile;
 }

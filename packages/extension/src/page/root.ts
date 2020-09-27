@@ -1,8 +1,13 @@
+import {Tab} from '@blueprintjs/core';
+import {BGCommand, PageCommand} from 'core/message';
 import {gracefullyGet} from 'util/terribleCache';
-import {PageAction} from './pageAction';
+import {match} from 'variant';
+import {browser} from 'webextension-polyfill-ts';
+import {PageContext} from './context';
+import {PageAction, TriggeredPageAction} from './pageAction';
 
 export class RootPage {
-    protected get pageActions(): PageAction[] {
+    protected get triggeredPageActions(): TriggeredPageAction[] {
         const name = (<any>this)['constructor']['name'];
         const actions = gracefullyGet(name) ?? [];
         return actions;
@@ -11,10 +16,10 @@ export class RootPage {
     /**
      * Trigger the 'OnLoad' and 'IfThen' and such.
      */
-    private executePageActions() {
+    private executeTriggeredPageActions() {
         // Need to bind these functions to the 'this' object, they were stored at design time
         // when no instance existed
-        this.pageActions.forEach(action => {
+        this.triggeredPageActions.forEach(action => {
             Promise.resolve(action.if?.call(this) ?? false).then(predicateResult => {
                 if (predicateResult) {
                     action.execute.call(this);
@@ -22,8 +27,32 @@ export class RootPage {
             });
         });
     }
+
+    public async getPageActions(): Promise<PageAction[]> {
+        return [];
+    }
+
+    public handlePageAction(action: PageAction) {
+        
+    }
+
+    public context = this.getContext();
+    protected async getContext(): Promise<PageContext> {
+        return PageContext.Default({url: this.url});
+    }
     
     constructor(protected url: string) {
-        this.executePageActions();
+        this.executeTriggeredPageActions();
+
+        this.context.then(context => {
+            console.log('hahahaaaa', context);
+            browser.runtime.sendMessage(BGCommand.cacheContext({
+                tabId: 0,
+                context,
+            }))
+        });
     }
+
+
 }
+

@@ -38,6 +38,14 @@ export function generateImageLink(id: number): string {
 }
 
 /**
+ * Generate the artist link.
+ * @param id 
+ */
+export function generateUserLink(id: number): string {
+    return `https://www.pixiv.net/users/${id}`;
+}
+
+/**
  * Rather stupid, don't expect it to handle weird URLs.
  * just looks for text after final '/'
  * @param path 

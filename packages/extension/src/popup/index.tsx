@@ -1,9 +1,12 @@
+import 'regenerator-runtime/runtime.js';
 import {Callout, Card, Icon, Navbar} from '@blueprintjs/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {browser} from 'webextension-polyfill-ts';
 import './index.scss';
 
 import log from './log';
+import {CurrentTab} from './tabReporter';
 
 log.trace('Init - Popup page');
 
@@ -35,12 +38,14 @@ export const Hello: React.FC<HelloProps> = props => {
                 </Navbar.Group>
             </Navbar>
             <Callout style={{flexGrow: 1}}>
-                <Card>
-                    Actions
-                </Card>
+                <CurrentTab />
             </Callout>
         </div>
     )
 }
 
 ReactDOM.render(React.createElement(Hello, {}), document.getElementById('container'));
+
+async function messageTab() {
+    const [tab] = await browser.tabs.query({active: true, currentWindow: true});
+}

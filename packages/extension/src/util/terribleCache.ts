@@ -1,4 +1,4 @@
-import {PageAction} from 'page/pageAction';
+import {TriggeredPageAction} from 'page/pageAction';
 
 /**
  * This is a quick and dirty implementaton that's used to store the registered actions for a page class.
@@ -15,7 +15,7 @@ import {PageAction} from 'page/pageAction';
 // export module CacheRegistry {
 // }
 
-const cache: {[id: string]: PageAction[]} = {};
+const cache: {[id: string]: TriggeredPageAction[]} = {};
 
 export function pushToArrayCache<T>(cache: {[id: string]: T[]}, key: string, value: T) {
     let arr = cache[key];
@@ -27,10 +27,10 @@ export function pushToArrayCache<T>(cache: {[id: string]: T[]}, key: string, val
     cache[key] = arr;
 }
 
-export function gracefullyCache(key: string, value: PageAction) {
+export function gracefullyCache(key: string, value: TriggeredPageAction) {
     pushToArrayCache(cache, key, value);
 }
 
-export function gracefullyGet(key: string): PageAction[] {
+export function gracefullyGet(key: string): TriggeredPageAction[] {
     return cache[key] ?? [];
 }
