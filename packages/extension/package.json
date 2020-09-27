@@ -1,6 +1,6 @@
 {
   "name": "@kami-sama/extension",
-  "version": "0.0.1",
+  "version": "1.0.2",
   "description": "The ultimate pixiv extension",
   "main": "index.js",
   "scripts": {
