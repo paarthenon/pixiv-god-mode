@@ -4,9 +4,37 @@ import {PageContext} from 'page/context';
 import log from 'page/log';
 import {PageAction} from 'page/pageAction';
 import React, {useEffect, useState} from 'react'
+import { match } from 'variant';
 import {browser, Tabs} from 'webextension-polyfill-ts'
 import {ActionList} from './actionList';
+import {ArtistCard} from './artistCard';
+import {ArtworkCard} from './artworkCard';
 import {PageContextReport} from './pageContext';
+
+
+interface ContextCardsProps {
+    context: PageContext
+}
+export const ContextCards: React.FC<ContextCardsProps> = ({context}) => {
+    return (
+        <>
+            {match(context, {
+                Artwork: ({illustInfo, artist}) => <>
+                    <ArtistCard info={artist} />
+                    <ArtworkCard info={illustInfo} />
+                </>,
+                Default: _ => <>
+                    <Card>
+                        Url: {}
+                    </Card>
+                </>,
+            })}
+        </>
+    )
+}
+
+
+
 
 interface WiredActionListProps {
     tab: Tabs.Tab;
@@ -32,6 +60,7 @@ export const TabReporter: React.FC<WiredActionListProps> = ({tab}) => {
                     }
                 </Callout>
             </Card>
+            {context != undefined ? <ContextCards context={context} /> : null}
         </div>
     )
 }

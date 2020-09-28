@@ -40,3 +40,14 @@ body {
 .v-spaced {
     margin-bottom: 10px;
 }
+
+.artist-card-name {
+    font-weight: 500;
+    font-size: large;
+}
+
+.tag-list {
+    > * {
+        margin-right: 5px;
+    }
+}

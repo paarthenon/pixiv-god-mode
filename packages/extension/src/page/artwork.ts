@@ -3,7 +3,7 @@ import {RootPage} from './root';
 import _log from './log';
 const log = _log.setCategory('Artwork');
 
-import {getBlob, getIllustInfo, getUgoiraMeta} from 'core/API';
+import {getBlob, getIllustInfo, getUgoiraMeta, getUser} from 'core/API';
 import {extract, getFileName} from 'util/path';
 import {IllustrationInfo, IllustrationType, UgoiraMeta} from 'core/api/models';
 import {GenerateElement} from 'util/page';
@@ -59,8 +59,10 @@ export class ArtworkPage extends RootPage {
     protected async getContext() {
         if (this.workID) {
             const resp = await getIllustInfo(this.workID);
+            const artistResp = await getUser(parseInt(resp.body.userId));
             return PageContext.Artwork({
                 illustInfo: resp.body,
+                artist: artistResp.body,
             })
         } else {
             return super.getContext();

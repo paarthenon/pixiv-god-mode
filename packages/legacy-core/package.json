@@ -23,5 +23,8 @@
   "homepage": "https://github.com/paarthenon/pixiv-assistant-common#readme",
   "devDependencies": {
     "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "typescript": "^4.0.3"
   }
 }
