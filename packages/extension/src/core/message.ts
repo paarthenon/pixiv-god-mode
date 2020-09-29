@@ -1,6 +1,11 @@
+import {ArtworkAction} from 'page/artwork';
 import {PageContext} from 'page/context';
 import {PageAction} from 'page/pageAction';
 import {fields, payload, TypeNames, variant, variantList, VariantOf} from 'variant';
+
+export interface KamiSettings {
+    saveAction: typeof ArtworkAction.Download | typeof ArtworkAction.SendToBloom;
+}
 
 export const BGCommand = variantList([
     variant('downloadd', fields<{url: string}>()),
@@ -14,6 +19,17 @@ export const BGCommand = variantList([
     variant('getContext', fields<{
         tabId: number,
     }>()),
+    
+    variant('cacheActions', fields<{
+        actions: PageAction[],
+    }>()),
+    variant('getActions', fields<{
+        tabId: number,
+    }>()),
+
+    variant('getSettings'),
+    variant('setSettings', payload<Partial<KamiSettings>>()),
+    variant('createTabs', payload<string[]>()),
 ]);
 export type BGCommand<T extends TypeNames<typeof BGCommand> = undefined> = VariantOf<typeof BGCommand, T>;
 

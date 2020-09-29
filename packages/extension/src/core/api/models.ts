@@ -132,10 +132,27 @@ export interface UserInfo {
     userId: string;
 }
 
+export interface UserProfile {
+    illusts: {[id: string]: null};
+    manga: {[id: string]: null};
+    novels: {[id: string]: null};
+}
+
+export interface UserFollowerInfo {
+    extraData: unknown;
+    followUserTags: unknown[];
+    /**
+     * Total number of followers that the user has.
+     */
+    total: number;
+    users: unknown[];
+    zoneConfig: unknown;
+}
+
 export interface IllustPageInfo {
     height: number;
     width: number;
-    urls: PixivUrls
+    urls: PixivUrls;
 }
 
 export interface PixivUrls {

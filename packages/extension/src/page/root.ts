@@ -6,6 +6,11 @@ import {browser} from 'webextension-polyfill-ts';
 import {PageContext} from './context';
 import {PageAction, TriggeredPageAction} from './pageAction';
 
+/**
+ * Warning: magic.
+ * 
+ *  - manages actions, triggered actions, and communication with the background script.
+ */
 export class RootPage {
     protected get triggeredPageActions(): TriggeredPageAction[] {
         const name = (<any>this)['constructor']['name'];
@@ -50,6 +55,10 @@ export class RootPage {
                 tabId: 0,
                 context,
             }))
+        });
+
+        this.getPageActions().then(actions => {
+            browser.runtime.sendMessage(BGCommand.cacheActions({actions}));
         });
     }
 

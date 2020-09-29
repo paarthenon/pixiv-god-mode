@@ -3,7 +3,7 @@ import {RootPage} from './root';
 import _log from './log';
 const log = _log.setCategory('Artwork');
 
-import {getBlob, getIllustInfo, getUgoiraMeta, getUser} from 'core/API';
+import {getBlob, getIllustInfo, getIllustPages, getUgoiraMeta, getUser, getUserProfile} from 'core/API';
 import {extract, getFileName} from 'util/path';
 import {IllustrationInfo, IllustrationType, UgoiraMeta} from 'core/api/models';
 import {GenerateElement} from 'util/page';
@@ -20,9 +20,8 @@ import {spawnCanvas} from 'util/document';
 import {explodeImagePathPages} from 'util/path';
 import {PageContext} from './context';
 import {fields, strEnum, TypeNames, variant, variantList, VariantOf} from 'variant';
-import {PageAction} from './pageAction';
+import {DownloadConfig, PageAction} from './pageAction';
 import {postBloom} from 'core/bloom';
-
 
 export const ArtworkAction = strEnum([
     'Download',
@@ -37,6 +36,13 @@ export class ArtworkPage extends RootPage {
         return ArtworkPage.getArtworkId(this.url);
     }
 
+    get bloomTag() {
+        return this.context.then(c => {
+            const ctx = c as PageContext<'Artwork'>;
+            return `${ctx.artist.name} (${ctx.artist.userId})`  
+        })
+    }
+
     @OnLoad
     async testLog() {
         log.trace('Artwork Page loaded');
@@ -49,20 +55,28 @@ export class ArtworkPage extends RootPage {
             // add item to dom
             injectTrayButton('DL', () => {
                 log.trace('Clicked download button');
-                this.simpleDownload();
+                this.simpleDownload({});
             });
         } else {
             log.error('Could not parse ')
         }
+    }
+
+    async contextLoad() {
+
     }
     
     protected async getContext() {
         if (this.workID) {
             const resp = await getIllustInfo(this.workID);
             const artistResp = await getUser(parseInt(resp.body.userId));
+            const artistProfileResp = await getUserProfile(parseInt(resp.body.userId));
+            const pageResp = resp.body.pageCount > 1 ? await getIllustPages(this.workID) : undefined;
             return PageContext.Artwork({
                 illustInfo: resp.body,
                 artist: artistResp.body,
+                artistProfile: artistProfileResp.body,
+                pages: pageResp?.body,
             })
         } else {
             return super.getContext();
@@ -76,12 +90,12 @@ export class ArtworkPage extends RootPage {
             {
                 type: ArtworkAction.Download,
                 label: 'Download',
-                icon: 'download',
+                icon: 'import',
             },
             {
                 type: ArtworkAction.SendToBloom,
-                label: 'Send to Bloom',
-                icon: 'share',
+                label: 'Save to Bloom',
+                icon: 'document-share',
             },
         ];
 
@@ -90,9 +104,11 @@ export class ArtworkPage extends RootPage {
                 ...baseOptions,
                 {
                     type: ArtworkAction.SendToBloomSplit,
-                    label: 'Send to Bloom (split pages)',
-                    icon: 'share',
-                }
+                    label: 'Send to Bloom',
+                    icon: 'new-layers',
+                    subtitle: 'as separate files',
+                },
+
             ]
         } else {
             return baseOptions;
@@ -101,17 +117,17 @@ export class ArtworkPage extends RootPage {
     public handlePageAction(action: PageAction) {
         switch (action.type) {
             case ArtworkAction.Download:
-                this.simpleDownload();
+                this.simpleDownload(action.extra);
                 break;
             case ArtworkAction.SendToBloom:
-                this.simpleSendBloom();
+                this.simpleSendBloom(action.extra);
                 break;
             case ArtworkAction.SendToBloomSplit:
                 getIllustInfo(this.workID!).then(info => {
                     if (info.body.pageCount > 1) {
-                        this.simpleSendBloomSplit();
+                        this.simpleSendBloomSplit(action.extra);
                     } else {
-                        this.simpleSendBloom();
+                        this.simpleSendBloom(action.extra);
                     }
                 })
         }
@@ -124,11 +140,11 @@ export class ArtworkPage extends RootPage {
         }
     }
 
-    public async simpleDownload() {
+    public async simpleDownload(config: DownloadConfig = {}) {
         if (this.workID) {
             const info = await getIllustInfo(this.workID);
             browser.runtime.sendMessage(BGCommand.setBadge({text: '...'}));
-            const ret = await this.download(info.body);
+            const ret = await this.download(info.body, config);
             browser.runtime.sendMessage(BGCommand.setBadge({text: 'done!'}));
             setTimeout(() => {
                 browser.runtime.sendMessage(BGCommand.setBadge({text: ''}))
@@ -136,56 +152,57 @@ export class ArtworkPage extends RootPage {
             return ret;
         }
     }
-    public async simpleSendBloom() {
+    public async simpleSendBloom(config: DownloadConfig = {}) {
         if (this.workID) {
             const info = await getIllustInfo(this.workID);
             switch(info.body.illustType) {
                 case IllustrationType.Picture:
                     if (info.body.pageCount > 1) {
-                        const zip = await downloadManga(info.body);
-                        return postBloom(`${this.workID}.zip`, zip);
+                        const zip = await downloadManga(info.body, config);
+                        return postBloom(`${this.workID}.zip`, zip, [await this.bloomTag]);
                     } else {
                         const url = info.body.urls.original;
-                        return postBloom(getFileName(url), await getBlob(url));
+                        return postBloom(getFileName(url), await getBlob(url), [await this.bloomTag]);
                     }
                 case IllustrationType.Manga:
-                    const zip = await downloadManga(info.body);
-                    return postBloom(`${this.workID}.zip`, zip);
+                    const zip = await downloadManga(info.body, config);
+                    return postBloom(`${this.workID}.zip`, zip, [await this.bloomTag]);
                 case IllustrationType.Animation:
                     const metaResponse = await getUgoiraMeta(parseInt(info.body.illustId));
                     const vid = await this.downloadAnimation(info.body, metaResponse.body)
-                    return postBloom(`${this.workID}.webm`, vid);
+                    return postBloom(`${this.workID}.webm`, vid, [await this.bloomTag]);
             }
         }
     }
 
-    public async simpleSendBloomSplit() {
+    public async simpleSendBloomSplit(config: DownloadConfig) {
         if (this.workID) {
             const info = await getIllustInfo(this.workID!);
-            const urls = explodeImagePathPages(info.body.urls.original, info.body.pageCount);
+            const urls = explodeImagePathPages(info.body.urls.original, info.body.pageCount)
+                .filter((_, i) => config.checked?.[String(i)] ?? true);
 
             log.trace('urls to split on', urls);
 
-            Promise.all(urls.map(async url => postBloom(getFileName(url), await getBlob(url))));
+            Promise.all(urls.map(async url => postBloom(getFileName(url), await getBlob(url), [await this.bloomTag])));
             log.trace('Finished submitting');
         }
     }
 
-    public async download(work: IllustrationInfo) {
+    public async download(work: IllustrationInfo, config: DownloadConfig = {}) {
         log.trace('DL Entered');
 
         switch (work.illustType) {
             case IllustrationType.Picture:
                 if (work.pageCount > 1) {
                     log.trace('DL MULTIPAGE IMAGE');
-                    return this.saveManga(work);
+                    return this.saveManga(work, config);
                 } else {
                     log.trace('DL IMAGE');
                     return saveImage(work.urls.original);
                 }
             case IllustrationType.Manga:
                 log.trace('DL MANGA');
-                return this.saveManga(work);
+                return this.saveManga(work, config);
             case IllustrationType.Animation:
                 log.trace('DL ANIMATION')
                 const metaResponse = await getUgoiraMeta(parseInt(work.illustId));
@@ -202,8 +219,8 @@ export class ArtworkPage extends RootPage {
         const blob = await processUgoira(work, meta, log.trace);
         return blob;
     }
-    protected async saveManga(work: IllustrationInfo) {
-        const zippedFile = await downloadManga(work);
+    protected async saveManga(work: IllustrationInfo, config: DownloadConfig) {
+        const zippedFile = await downloadManga(work, config);
         const objUrl = URL.createObjectURL(zippedFile);
         saveAs(objUrl, `${work.illustId}.zip`);
     }
@@ -253,13 +270,16 @@ function saveImage(url: string) {
     saveAs(url, fileName);
 }
 
-async function downloadManga(work: IllustrationInfo) {
+async function downloadManga(work: IllustrationInfo, config: DownloadConfig = {}) { // TODO: This optional thing is *actually* a dirty hack, figure out why config isn't being included.
     log.trace('Downloading manga, found', work.pageCount, 'pages');
     
     const zip = new jszip();
     const urls = explodeImagePathPages(work.urls.original, work.pageCount);
-    urls.forEach(url => {
-        zip.file(getFileName(url), getBlob(url));
+
+    urls.forEach((url, i) => {
+        if (config.checked?.[String(i)] ?? true) {
+            zip.file(getFileName(url), getBlob(url));
+        }
     })
 
     const zippedFile = await zip.generateAsync({type: 'blob'});

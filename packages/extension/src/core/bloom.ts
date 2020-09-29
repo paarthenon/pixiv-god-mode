@@ -1,4 +1,4 @@
-export const postBloom = async (filename: string, blah: Blob) => {
+export const postBloom = async (filename: string, blah: Blob, assertTags: string[] = []) => {
     const fd = new FormData();
     fd.append('thing', blah);
 
@@ -6,6 +6,7 @@ export const postBloom = async (filename: string, blah: Blob) => {
         name: filename,
         title: filename,
         attributes: [],
+        assertTags,
     }))
     const res = await fetch(`http://localhost:13183/drop`, {
         method: 'POST',

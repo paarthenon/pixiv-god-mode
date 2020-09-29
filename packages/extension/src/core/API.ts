@@ -1,5 +1,5 @@
 import _log from 'log';
-import {ApiResponse, IllustPageInfo, IllustrationInfo, UgoiraMeta, UserInfo} from './api/models';
+import {ApiResponse, IllustPageInfo, IllustrationInfo, UgoiraMeta, UserFollowerInfo, UserInfo, UserProfile} from './api/models';
 const log = _log.setCategory('API');
 
 async function apiCall<T = any>(url: string): Promise<T> {
@@ -30,4 +30,15 @@ export async function getUgoiraMeta(id: number) {
 export async function getUser(id: number) {
     const ret = await apiCall<ApiResponse<UserInfo>>(`https://www.pixiv.net/ajax/user/${id}`);
     return ret;
+}
+
+export async function getUserProfile(id: number) {
+    const ret = await apiCall<ApiResponse<UserProfile>>(`https://www.pixiv.net/ajax/user/${id}/profile/all`);
+    return ret;
+}
+
+export async function getUserFollowers(id:number, limit = 1) {
+    const ret = await apiCall<ApiResponse<UserFollowerInfo>>(`https://www.pixiv.net/ajax/user/${id}/following?offset=0&limit=24&rest=show`);
+    return ret;
+    
 }

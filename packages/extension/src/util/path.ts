@@ -33,7 +33,7 @@ export function explodeImagePathPages(url: string, pages: number): string[] {
  * Generate the artwork link based on the id. Useful for the double click feature.
  * @param id 
  */
-export function generateImageLink(id: number): string {
+export function generateImageLink(id: number | string): string {
     return `https://www.pixiv.net/artworks/${id}`;
 }
 
@@ -43,6 +43,15 @@ export function generateImageLink(id: number): string {
  */
 export function generateUserLink(id: number): string {
     return `https://www.pixiv.net/users/${id}`;
+}
+
+type galleryScopes = 'artworks' | 'illustrations' | 'manga' | 'novels';
+/**
+ * Generate the artist link.
+ * @param id 
+ */
+export function generateUserGalleryLink(id: number, scope: galleryScopes = 'artworks'): string {
+    return `https://www.pixiv.net/users/${id}/${scope}`;
 }
 
 /**

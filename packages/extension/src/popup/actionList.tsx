@@ -8,7 +8,7 @@ interface ActionListProps {
 }
 export const ActionList: React.FC<ActionListProps> = ({actions, onClick}) => {
     return (
-        <ButtonGroup fill vertical large>
+        <ButtonGroup fill vertical large minimal>
             {actions.map(action => <PageActionButton key={action.type} action={action} onClick={onClick} />)}
         </ButtonGroup>
     )
@@ -20,6 +20,12 @@ interface PageActionButtonProps {
 }
 export const PageActionButton: React.FC<PageActionButtonProps> = ({action, onClick}) => {
     return (
-        <Button outlined text={action.label} icon={action.icon} rightIcon={<span>{action.subtitle}</span>} onClick={() => onClick?.(action)} />
+        <Button
+            intent='primary'
+            text={action.label}
+            icon={action.icon}
+            rightIcon={<span className='hellish' style={{fontStyle: 'italic', fontSize: '80%'}}>{action.subtitle}</span>} 
+            onClick={() => onClick?.(action)}
+        />
     )
 }

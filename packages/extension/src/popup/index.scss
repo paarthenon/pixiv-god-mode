@@ -14,7 +14,7 @@ body {
 }
 
 #container {
-    width: 400px;
+    width: 420px;
     height: 600px;
 }
 
@@ -49,5 +49,67 @@ body {
 .tag-list {
     > * {
         margin-right: 5px;
+    }
+}
+
+.packed-card {
+    padding: 5px;
+}
+
+.packed-callout {
+    padding: 8px;
+}
+
+.stunted {
+    flex-grow: 0;
+}
+
+.hellish {
+    color: #666 !important;
+}
+
+.medium-grey {
+    color: #787878 !important;
+}
+
+.faded {
+    opacity: .8;
+
+    :hover {
+        opacity: 1.0 !important;
+    }
+}
+
+.fucking-center-it {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.detail-callout {
+    border-radius: 7px;
+    margin: 0 25px 8px;
+}
+
+.thin-tag {
+    margin: 0px 1px 0 3px;
+    padding: 2px 3px;
+}
+
+.mono {
+    font-family: monospace;
+}
+
+table.bp3-html-table.bp3-html-table-condensed.extra-thin-table {
+    td {
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+    }
+}
+
+.popover-win {
+    border-radius: 10px;
+    img {
+        border-radius: 10px;
     }
 }

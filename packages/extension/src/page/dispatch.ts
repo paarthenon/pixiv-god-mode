@@ -1,7 +1,9 @@
 import * as $ from 'cash-dom';
 import log from 'page/log';
 import {ArtworkPage} from './artwork';
+import {GalleryPage} from './gallery';
 import {RootPage} from './root';
+import {UserPage} from './user';
 
 // import {RootPage} from 'src/pages/root';
 // import {IllustrationPage} from 'src/pages/illustration';
@@ -39,6 +41,8 @@ const OLD_PATTERNS = {
 
 const pattern = {
     artwork: /^http(s?):\/\/www.pixiv.net\/[A-Za-z]+\/artworks\/[0-9]+/,
+    userPage: /^http(s?):\/\/www.pixiv.net\/[A-Za-z]+\/users\/[0-9]+/,
+    userGalleryPage: /^http(s?):\/\/www.pixiv.net\/[A-Za-z]+\/users\/[0-9]+\/(artworks|illustrations|novels|manga)/,
 }
 
 /**
@@ -49,6 +53,8 @@ export function dispatch(path: string): RootPage {
     log.debug('Dispatching on url: ', path);
     const pageCtrs: [RegExp, () => RootPage][] = [
         [pattern.artwork, () => new ArtworkPage(path)],
+        [pattern.userGalleryPage, () => new GalleryPage(path)],
+        [pattern.userPage, () => new UserPage(path)],
     ];
 
     for(const [regexp, ctr] of pageCtrs) {
