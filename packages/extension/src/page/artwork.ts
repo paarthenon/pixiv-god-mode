@@ -157,6 +157,7 @@ export class ArtworkPage extends RootPage {
             const info = await getIllustInfo(this.workID);
             switch(info.body.illustType) {
                 case IllustrationType.Picture:
+                case IllustrationType.Manga:
                     if (info.body.pageCount > 1) {
                         const zip = await downloadManga(info.body, config);
                         return postBloom(`${this.workID}.zip`, zip, [await this.bloomTag]);
@@ -164,9 +165,6 @@ export class ArtworkPage extends RootPage {
                         const url = info.body.urls.original;
                         return postBloom(getFileName(url), await getBlob(url), [await this.bloomTag]);
                     }
-                case IllustrationType.Manga:
-                    const zip = await downloadManga(info.body, config);
-                    return postBloom(`${this.workID}.zip`, zip, [await this.bloomTag]);
                 case IllustrationType.Animation:
                     const metaResponse = await getUgoiraMeta(parseInt(info.body.illustId));
                     const vid = await this.downloadAnimation(info.body, metaResponse.body)
@@ -193,6 +191,7 @@ export class ArtworkPage extends RootPage {
 
         switch (work.illustType) {
             case IllustrationType.Picture:
+            case IllustrationType.Manga:
                 if (work.pageCount > 1) {
                     log.trace('DL MULTIPAGE IMAGE');
                     return this.saveManga(work, config);
@@ -200,9 +199,6 @@ export class ArtworkPage extends RootPage {
                     log.trace('DL IMAGE');
                     return saveImage(work.urls.original);
                 }
-            case IllustrationType.Manga:
-                log.trace('DL MANGA');
-                return this.saveManga(work, config);
             case IllustrationType.Animation:
                 log.trace('DL ANIMATION')
                 const metaResponse = await getUgoiraMeta(parseInt(work.illustId));

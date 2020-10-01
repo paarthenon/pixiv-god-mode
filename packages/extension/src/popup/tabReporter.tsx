@@ -24,7 +24,12 @@ export const ContextCards: React.FC<ContextCardsProps> = ({context, checked, set
                     <H4>Artist</H4>
                     <ArtistCard info={artist} profile={artistProfile} />
                     <H4>Artwork</H4>
-                    <ArtworkCard info={illustInfo} pages={pages} checked={checked} setChecked={setChecked} />
+                    <ArtworkCard 
+                        info={illustInfo}
+                        pages={pages}
+                        checked={checked}
+                        setChecked={setChecked}
+                    />
                 </>,
                 Default: _ => <>
                     <Card>
