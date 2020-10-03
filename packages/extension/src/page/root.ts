@@ -18,6 +18,10 @@ export class RootPage {
         return actions;
     }
 
+    protected setBadgeText(text: string, timer = 0) {
+        browser.runtime.sendMessage(BGCommand.setBadge(text, timer));
+    }
+
     /**
      * Trigger the 'OnLoad' and 'IfThen' and such.
      */

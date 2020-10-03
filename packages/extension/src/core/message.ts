@@ -9,9 +9,7 @@ export interface KamiSettings {
 
 export const BGCommand = variantList([
     variant('downloadd', fields<{url: string}>()),
-    variant('setBadge', fields<{
-        text: string,
-    }>()),
+    variant('setBadge', (text: string, timer = 0) => ({text, timer})),
     variant('cacheContext', fields<{
         tabId: number,
         context: PageContext,

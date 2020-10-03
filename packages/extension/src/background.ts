@@ -39,9 +39,21 @@ browser.runtime.onMessage.addListener(async (msg: BGCommand, sender) => {
             log.trace('BG DL 2:', url);
             browser.downloads.download({url, filename: 'picture.jpg', saveAs: true});
         },
-        setBadge: ({text}) => {
+        setBadge: async ({text, timer}) => {
             log.trace('BG set badge', text);
-            browser.browserAction.setBadgeText({text});
+            await browser.browserAction.setBadgeText({text});
+            if (timer > 0) {
+                const badgeText = browser.browserAction.getBadgeText({});
+                // This is actually better without await. The handler can return
+                // and this can cleanup later.
+                setTimeout(async () => {
+                    const bText = await badgeText;
+                    log.trace('SETBADGE', bText, text);
+                    if (bText === text) {
+                        browser.browserAction.setBadgeText({text: ''});
+                    }
+                }, timer);
+            }
         },
         cacheContext: ({context}) => {
             log.trace('Storing context for tabId', sender.tab?.id);

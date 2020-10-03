@@ -22,6 +22,7 @@ import {PageContext} from './context';
 import {fields, strEnum, TypeNames, variant, variantList, VariantOf} from 'variant';
 import {DownloadConfig, PageAction} from './pageAction';
 import {postBloom} from 'core/bloom';
+import {update} from 'lodash';
 
 export const ArtworkAction = strEnum([
     'Download',
@@ -31,6 +32,18 @@ export const ArtworkAction = strEnum([
 export type ArtworkAction = keyof typeof ArtworkAction;
 export class ArtworkPage extends RootPage {
     public isBusy = false;
+
+    @OnLoad
+    public injectUnloadCallback() {
+        const message = 'Pixiv Assistant is currently processing. Please leave the page open';
+        window.addEventListener('beforeunload', event => {
+            if (this.isBusy) {
+                event.returnValue = message;
+                return message;
+            }
+            return undefined;
+        });
+    }
 
     get workID() {
         return ArtworkPage.getArtworkId(this.url);
@@ -114,22 +127,27 @@ export class ArtworkPage extends RootPage {
             return baseOptions;
         }
     }
-    public handlePageAction(action: PageAction) {
+    public async handlePageAction(action: PageAction) {
         switch (action.type) {
             case ArtworkAction.Download:
                 this.simpleDownload(action.extra);
                 break;
             case ArtworkAction.SendToBloom:
-                this.simpleSendBloom(action.extra);
+                this.isBusy = true;
+                this.simpleSendBloom(action.extra).then(() => {
+                    this.isBusy = false;
+                })
                 break;
             case ArtworkAction.SendToBloomSplit:
-                getIllustInfo(this.workID!).then(info => {
+                this.isBusy = true;
+                getIllustInfo(this.workID!).then(async info => {
                     if (info.body.pageCount > 1) {
-                        this.simpleSendBloomSplit(action.extra);
+                        await this.simpleSendBloomSplit(action.extra);
                     } else {
-                        this.simpleSendBloom(action.extra);
+                        await this.simpleSendBloom(action.extra);
                     }
-                })
+                    this.isBusy = false;
+                });
         }
     }
 
@@ -143,12 +161,11 @@ export class ArtworkPage extends RootPage {
     public async simpleDownload(config: DownloadConfig = {}) {
         if (this.workID) {
             const info = await getIllustInfo(this.workID);
-            browser.runtime.sendMessage(BGCommand.setBadge({text: '...'}));
+            browser.runtime.sendMessage(BGCommand.setBadge('...'));
+            this.isBusy = true;
             const ret = await this.download(info.body, config);
-            browser.runtime.sendMessage(BGCommand.setBadge({text: 'done!'}));
-            setTimeout(() => {
-                browser.runtime.sendMessage(BGCommand.setBadge({text: ''}))
-            }, 2500);
+            this.isBusy = false;
+            browser.runtime.sendMessage(BGCommand.setBadge('done!', 2500));
             return ret;
         }
     }
@@ -212,7 +229,9 @@ export class ArtworkPage extends RootPage {
     }
     protected async downloadAnimation(work: IllustrationInfo, meta: UgoiraMeta): Promise<Blob> {
         this.isBusy = true;
-        const blob = await processUgoira(work, meta, log.trace);
+        const blob = await processUgoira(work, meta, text => {
+            this.setBadgeText(text);
+        });
         return blob;
     }
     protected async saveManga(work: IllustrationInfo, config: DownloadConfig) {
@@ -238,11 +257,11 @@ async function processUgoira(
 
     log.info('Processing ugoira', work.illustId, meta.originalSrc);
 
-    updateText('Downloading frames');
+    log.trace('Downloading frames');
     const zipBlob = await getBlob(meta.originalSrc);
     const zip$ = await jszip().loadAsync(zipBlob);
 
-    updateText('Loading frames');
+    log.trace('Loading frames');
     let fileData: {[id: string]: Promise<string>} = {};
     zip$.forEach((path, file) => {
         fileData[path] = file.async('base64');
@@ -250,13 +269,14 @@ async function processUgoira(
 
     let currentFrame = 1;
     await execSequentially(meta.frames, async frame => {
-        updateText(`Processing frame ${currentFrame++} of ${meta.frames.length}`);
+        updateText(`${Math.round((100.0 * currentFrame++) / meta.frames.length)}%`);
+        log.trace(`Processing frame ${currentFrame} of ${meta.frames.length}`);
         const rawFrame = await fileData[frame.file];
         let dataUrl = `data:${meta.mime_type};base64,${rawFrame}`;
         return spawnCanvas(dataUrl, work).then(canvas => video.add(canvas, frame.delay));
     });
 
-    updateText('Finishing encode');
+    updateText('done!');
     return video.compile();
 }
 
