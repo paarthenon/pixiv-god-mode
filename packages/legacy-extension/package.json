@@ -54,7 +54,7 @@
     "typescript": "^3.6.4",
     "uuid": "^3.3.3",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@paarth/variant": "^0.2.1",
